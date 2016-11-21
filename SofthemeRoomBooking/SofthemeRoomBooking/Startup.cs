@@ -8,7 +8,8 @@ namespace SofthemeRoomBooking
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            var container = SimpleInjectorConfiguration.Initialize(app);
+            ConfigureAuth(app,container);
         }
     }
 }
