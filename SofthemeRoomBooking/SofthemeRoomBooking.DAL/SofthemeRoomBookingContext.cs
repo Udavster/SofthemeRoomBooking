@@ -5,10 +5,10 @@ namespace SofthemeRoomBooking.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class RoomContext : DbContext
+    public partial class SofthemeRoomBookingContext : DbContext
     {
-        public RoomContext()
-            : base("name=RoomContext")
+        public SofthemeRoomBookingContext()
+            : base("name=SofthemeRoomBookingContext")
         {
         }
 

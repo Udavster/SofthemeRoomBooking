@@ -13,7 +13,6 @@ using SimpleInjector;
 using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
-using SofthemeRoomBooking.DAL.Package;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Services.Package;
 
@@ -27,7 +26,7 @@ namespace SofthemeRoomBooking
             container.RegisterPackages(
                 new[]
                     {
-                        typeof(ServicesPackage).Assembly, typeof(DalPackage).Assembly
+                        typeof(ServicesPackage).Assembly
                     });
        //     container.Verify();
 

@@ -283,6 +283,24 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_DateTimePartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupConfirmationPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_RoomsPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_MapPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_CalendarPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_EventDetailsPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_EventEditPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentUserPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentAdminPartial.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Feedback.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Profile.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Users.cshtml" />
+    <Content Include="Views\ViewsToDo\ToDoViews\Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,10 +315,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SofthemeRoomBooking.DAL\SofthemeRoomBooking.DAL.csproj">
-      <Project>{5df54ca2-e972-4920-8f1e-d76d6d31ae9b}</Project>
-      <Name>SofthemeRoomBooking.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SofthemeRoomBooking.Services\SofthemeRoomBooking.Services.csproj">
       <Project>{58e2c1f5-c60b-46d5-96f7-c0c5ab04f2b5}</Project>
       <Name>SofthemeRoomBooking.Services</Name>
