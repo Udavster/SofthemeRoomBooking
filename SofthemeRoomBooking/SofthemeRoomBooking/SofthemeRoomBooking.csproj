@@ -214,6 +214,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ViewsToDoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,6 +222,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="MvcPackage.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleInjectorConfiguration.cs" />
     <Compile Include="Startup.cs" />
@@ -228,6 +230,45 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\contact-bg.png" />
+    <Content Include="Content\Images\Icons\icon-board.png" />
+    <Content Include="Content\Images\Icons\icon-laptop.png" />
+    <Content Include="Content\Images\Icons\icon-print.png" />
+    <Content Include="Content\Images\Icons\icon-proect.png" />
+    <Content Include="Content\Images\Icons\icon-table.png" />
+    <Content Include="Content\Images\Line Details\line-details-einstein.png" />
+    <Content Include="Content\Images\Line Details\line-details-empty.png" />
+    <Content Include="Content\Images\Line Details\line-details-english.png" />
+    <Content Include="Content\Images\Line Details\line-details-hr.png" />
+    <Content Include="Content\Images\Line Details\line-details-info.png" />
+    <Content Include="Content\Images\Line Details\line-details-newton.png" />
+    <Content Include="Content\Images\Line Details\line-details-tesla.png" />
+    <Content Include="Content\Images\Line Details\line-details-web-1.png" />
+    <Content Include="Content\Images\Line Details\line-details-web-2.png" />
+    <Content Include="Content\Images\Line Details\line-details-web-3.png" />
+    <Content Include="Content\Images\login.png" />
+    <Content Include="Content\Images\logo-gray.png" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\Path\path-einstein.png" />
+    <Content Include="Content\Images\Path\path-empty.png" />
+    <Content Include="Content\Images\Path\path-hr.png" />
+    <Content Include="Content\Images\Path\path-ienglish.png" />
+    <Content Include="Content\Images\Path\path-info.png" />
+    <Content Include="Content\Images\Path\path-newton.png" />
+    <Content Include="Content\Images\Path\path-tesla.png" />
+    <Content Include="Content\Images\Path\path-web-1.png" />
+    <Content Include="Content\Images\Path\path-web-2.png" />
+    <Content Include="Content\Images\Path\path-web-3.png" />
+    <Content Include="Content\Images\popup-triangle.png" />
+    <Content Include="Content\Images\Slider\today-active-bottom.png" />
+    <Content Include="Content\Images\Slider\today-active-top.png" />
+    <Content Include="Content\Images\Slider\today-bottom.png" />
+    <Content Include="Content\Images\Slider\today-top.png" />
+    <Content Include="Content\Images\walls.png" />
+    <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\feedback.css" />
+    <Content Include="Content\Styles\input_styles.css" />
+    <Content Include="Content\Styles\layout.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -237,7 +278,9 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Styles\login.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -293,7 +336,7 @@
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentAdminPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Feedback.cshtml" />
+    <Content Include="Views\ViewsToDo\Feedback.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />

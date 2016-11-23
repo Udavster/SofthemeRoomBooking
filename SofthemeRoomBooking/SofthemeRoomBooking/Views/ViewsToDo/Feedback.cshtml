@@ -1,0 +1,61 @@
+﻿@model SofthemeRoomBooking.Models.Feedback
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    html {
+        min-height: 1000px;
+    }
+</style>
+
+<p class="content__title">
+    Написать сообщение
+</p>
+<div class="content__cover">
+    <p class="content__text">
+        Напишите, если у вас есть идеи, предложения, замечания или вопросы.
+    </p>
+    <img src="~/Content/Images/contact-bg.png">
+</div>
+
+@using (Html.BeginForm(" ", " ", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
+{
+    @Html.EditorFor(model => model.Name, new
+{
+    htmlAttributes = new
+    {
+        @class = "input-text feedback-form__field-fname",
+        placeholder = "Имя"
+    }
+})
+
+    @Html.EditorFor(model => model.Surname, new
+{
+    htmlAttributes = new
+    {
+        @class = "input-text feedback-form__field-lname",
+        placeholder = "Фамилия"
+    }
+})
+
+    @Html.EditorFor(model => model.Email, new
+{
+    htmlAttributes = new
+    {
+        @class = "input-text feedback-form__field-email",
+        placeholder = "Адрес электронной почты"
+    }
+})
+
+    @Html.EditorFor(model => model.Message, new
+{
+    htmlAttributes = new
+    {
+        @class = "input-textarea feedback-form__field-comment"
+    }
+})
+
+    <input class="input-submit feedback-form__submit" type="submit" value="Отправить" />
+}

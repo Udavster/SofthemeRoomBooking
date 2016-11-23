@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace SofthemeRoomBooking
 {
@@ -23,9 +22,14 @@ namespace SofthemeRoomBooking
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/common").Include(
+                        "~/Scripts/common.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Styles/common.css",
+                      "~/Content/Styles/input_styles.css",
+                      "~/Content/Styles/layout.css",
+                      "~/Content/Styles/feedback.css"));
         }
     }
 }

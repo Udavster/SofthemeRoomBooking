@@ -1,0 +1,49 @@
+.content__title{
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    padding-left: 120px;
+    font-family: Arial;
+    font-size: 28px;
+    color: #4A5158;
+}
+
+.content__cover{
+    width: 50%;
+    font-family: Arial;
+    float: left;
+    padding-left: 120px;
+}
+
+.content__text{
+    margin-bottom: 20px; 
+}
+
+.feedback-form{
+    display: inline-block;
+    width: 50%;
+}
+
+.feedback-form__field-fname{
+    width: 250px;
+}
+
+.feedback-form__field-lname{
+    width: 300px;
+}
+
+.feedback-form__field-email{
+    width: 565px;
+}
+
+.feedback-form__field-comment{
+    width: 565px;
+    height: 180px;
+    display: block;
+}
+
+.feedback-form__submit{
+    display: block;
+    width: 160px;
+    margin: 20px 210px;
+}
