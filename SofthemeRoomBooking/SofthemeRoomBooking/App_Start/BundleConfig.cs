@@ -31,7 +31,9 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/common.css",
                       "~/Content/Styles/input_styles.css",
                       "~/Content/Styles/layout.css",
-                      "~/Content/Styles/feedback.css"));
+                      "~/Content/Styles/feedback.css",
+                      "~/Content/Styles/map.css",
+                      "~/Content/Styles/room.css"));
         }
     }
 }
