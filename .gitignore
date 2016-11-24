@@ -88,5 +88,5 @@ _[Ss]cripts
 *.vspx
 *.sap
 =======
-*.vs/
+.vs/
 
