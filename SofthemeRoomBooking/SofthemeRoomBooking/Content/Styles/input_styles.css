@@ -3,6 +3,7 @@
     margin: 10px 5px;
     display: inline-block;
     border: none;
+    -ms-border-radius: 20px;
     border-radius: 20px;
     background-color: #F5F6FB;
     font-size: 14px;
