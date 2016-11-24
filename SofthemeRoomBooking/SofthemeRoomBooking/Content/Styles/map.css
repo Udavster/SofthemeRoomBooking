@@ -1,0 +1,38 @@
+﻿#map {
+    height: 330px;
+}
+
+.map__name {
+    font-family: Arial;
+    font-size: 30pt;
+    padding-bottom: 10px;
+    color: #4A5158;
+}
+
+.map__adress {
+    font-family: Arial, Helvetica;
+    font-size: 17pt;
+    padding-bottom: 20px;
+    color: #4A5158;
+}
+
+.map__web {
+    font-family: Helvetica;
+    font-size: 13pt;
+    padding-bottom: 10px;
+    color: #4A5158;
+}
+
+.map__sitelogo {
+    background-image: url(../../Content/Images/Map/icon-globe.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 28px;
+}
+
+.map__emaillogo {
+    background-image: url(../../Content/Images/Map/icon-envelope.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-left: 28px;
+}
