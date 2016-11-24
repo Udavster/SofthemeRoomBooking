@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Room]
+(
+	id INT IDENTITY PRIMARY KEY,
+	name NVARCHAR(35)
+)

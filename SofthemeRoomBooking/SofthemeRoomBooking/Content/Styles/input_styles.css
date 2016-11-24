@@ -1,0 +1,52 @@
+.input-text {
+    padding: 12px 20px;
+    margin: 10px 5px;
+    display: inline-block;
+    border: none;
+    border-radius: 20px;
+    background-color: #F5F6FB;
+    font-size: 14px;
+    outline: none;
+}
+
+.input-text::-webkit-input-placeholder {color: #C7C8CB;}
+.input-text::-moz-placeholder          {color: #C7C8CB;}/* Firefox 19+ */
+.input-text:-moz-placeholder           {color: #C7C8CB;}/* Firefox 18- */
+.input-text:-ms-input-placeholder      {color: #C7C8CB;}
+.input-text:focus::-webkit-input-placeholder {color: transparent}
+.input-text:focus::-moz-placeholder          {color: transparent}
+.input-text:focus:-moz-placeholder           {color: transparent}
+.input-text:focus:-ms-input-placeholder      {color: transparent}
+
+
+.input-textarea{
+    padding: 12px 20px;
+    display: inline-block;
+    border: none;
+    border-radius: 20px;
+    background-color: #F5F6FB;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+}
+
+.input-submit {
+    background-color: #C8CEDA;
+    color: #858B94;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none; 
+}
+
+.input-submit:hover {
+    background-color: #F15754;
+    color:white;
+}
+
+.input-submit:disabled {
+    background-color: #F5F6FB; 
+}
