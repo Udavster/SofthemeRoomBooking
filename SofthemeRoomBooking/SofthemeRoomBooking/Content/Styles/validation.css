@@ -1,0 +1,23 @@
+﻿.group-input-error {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.error-box {
+    display: block;
+}
+
+.error-box__signal {
+    color: red;
+    margin-right: 10px;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.error-box__text-danger {
+    font-size: 12px;
+    font-family: Arial;
+}

@@ -1,6 +1,16 @@
 $(document).ready(function() {
     $('.menu li a').on('click', function(event) {
-        $('.menu li a').removeClass('menu__link-active');
         $(this).addClass('menu__link-active');
+    });
+});
+
+$(document).ready(function () {
+    $.validator.setDefaults({
+        unhighlight: function (element) {
+            $(element).siblings('div.error-box').addClass('hidden');
+        },
+        highlight: function (element) {
+            $(element).siblings('div.error-box').removeClass('hidden');
+        }
     });
 });

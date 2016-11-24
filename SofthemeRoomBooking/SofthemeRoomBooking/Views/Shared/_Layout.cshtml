@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Softheme Room Booking</title>
+    <title>Softheme Room Booking</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -15,9 +15,9 @@
                 <img src="~/Content/Images/logo.png">
             </div>
             <ul class="menu">
-                <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Обратная связь", "Feedback", "Home", new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Home", new { @class = "menu__link" })</li>
+                <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new { @class = "menu__link" })</li>
+                <li class="menu__item">@Html.ActionLink("Обратная связь", "Feedback", "Home", null, new { @class = "menu__link" })</li>
+                <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Home", null, new { @class = "menu__link" })</li>
             </ul>
         </div>
 
@@ -44,8 +44,8 @@
 
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/common")
-    @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

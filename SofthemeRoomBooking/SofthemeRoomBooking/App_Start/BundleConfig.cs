@@ -10,7 +10,7 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            bundles.Add(new ScriptBundle("~/bundles/validation").Include(
                         "~/Scripts/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -26,6 +26,8 @@ namespace SofthemeRoomBooking
                         "~/Scripts/common.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/font-awesome.css",
+                      "~/Content/Styles/validation.css",
                       "~/Content/Styles/common.css",
                       "~/Content/Styles/input_styles.css",
                       "~/Content/Styles/layout.css",

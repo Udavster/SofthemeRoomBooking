@@ -1,4 +1,4 @@
-.content__title{
+.content__title {
     width: 100%;
     padding-top: 60px;
     padding-bottom: 40px;
@@ -8,42 +8,42 @@
     color: #4A5158;
 }
 
-.content__cover{
+.content__cover {
     width: 50%;
     font-family: Arial;
     float: left;
     padding-left: 120px;
 }
 
-.content__text{
-    margin-bottom: 20px; 
-}
+.content__text { margin-bottom: 20px; }
 
-.feedback-form{
+.feedback-form {
     display: inline-block;
     width: 50%;
 }
 
-.feedback-form__field-fname{
+.feedback-form__field-fname {
     width: 250px;
 }
 
-.feedback-form__field-lname{
+.feedback-form__field-lname {
     width: 300px;
 }
 
-.feedback-form__field-email{
+.feedback-form__field-email {
     width: 565px;
 }
 
-.feedback-form__field-comment{
+.feedback-form__field-message {
     width: 565px;
     height: 180px;
     display: block;
+    margin: 10px 5px;
 }
 
-.feedback-form__submit{
+.feedback-form__submit {
     display: block;
     width: 160px;
     margin: 20px 210px;
 }
+
