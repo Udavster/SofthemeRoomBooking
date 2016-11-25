@@ -43,7 +43,7 @@
 }
 
 .feedback-form__submit {
-    display: block;
+    display: inline-block;
     width: 160px;
     margin: 20px 210px;
 }

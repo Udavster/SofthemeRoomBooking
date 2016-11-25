@@ -12,7 +12,7 @@ namespace SofthemeRoomBooking.Models
         public String Name { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
-        [StringLength(256, ErrorMessage = "Фамилия не может быть длиннее 50 символов")]
+        [StringLength(50, ErrorMessage = "Фамилия не может быть длиннее 50 символов")]
         public String Surname { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
@@ -20,6 +20,7 @@ namespace SofthemeRoomBooking.Models
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [StringLength(500, ErrorMessage = "Сообщение не может быть длиннее 500 символов")]
         [DataType(DataType.MultilineText)]
         public String Message { get; set; }
 

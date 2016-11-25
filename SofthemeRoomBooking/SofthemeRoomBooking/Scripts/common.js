@@ -11,14 +11,10 @@ $(document).ready(function ($) {
 $(document).ready(function () {
     $.validator.setDefaults({
         unhighlight: function (element) {
-            $(element).siblings('div.error-box').addClass('hidden');
-            $('.input-submit').attr('disabled', false);
+            $(element).siblings('div .error-box').addClass('hidden');
         },
         highlight: function (element) {
-            $(element).siblings('div.error-box').removeClass('hidden');
-            if ($('.div.error-box.hidden') === 0) {
-                $('.input-submit').attr('disabled', true);
-            }
+            $(element).siblings('div .error-box').removeClass('hidden');
         }
     });
 });
