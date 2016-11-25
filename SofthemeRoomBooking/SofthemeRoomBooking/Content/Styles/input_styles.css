@@ -3,6 +3,7 @@
     margin: 5px;
     display: inline-block;
     border: none;
+    color: #A6ABB6;
     -ms-border-radius: 20px;
     border-radius: 20px;
     background-color: #F5F6FB;
@@ -26,6 +27,7 @@
     border: none;
     border-radius: 20px;
     background-color: #F5F6FB;
+    color: #A6ABB6;
     font-size: 16px;
     resize: none;
     outline: none;

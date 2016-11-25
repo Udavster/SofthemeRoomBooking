@@ -14,8 +14,14 @@
     margin-right: 10px;
 }
 
+.error-box__signal-big {
+    position: relative;
+    top: 5px;
+    font-size: 25px !important;
+}
+
 .hidden {
-    display: none !important;
+    display: none;
     visibility: hidden !important;
 }
 
