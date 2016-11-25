@@ -8,7 +8,7 @@ namespace SofthemeRoomBooking.Models
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
-        [StringLength(3, ErrorMessage = "Имя не может быть длиннее 50 символов")]
+        [StringLength(50, ErrorMessage = "Имя не может быть длиннее 50 символов")]
         public String Name { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
