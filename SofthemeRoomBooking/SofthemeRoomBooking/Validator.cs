@@ -10,6 +10,7 @@ namespace SofthemeRoomBooking
 {
     public static class Validator
     {
+
         public static MvcHtmlString SignalValidationMessageFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> ex, object htmlAttributes)
         {
             var expression = ExpressionHelper.GetExpressionText(ex);
@@ -51,6 +52,35 @@ namespace SofthemeRoomBooking
             containerBuilder.AddCssClass("hidden");
             //return MvcHtmlString.Create(string.Format("<div class=\"error-box hidden\"><i class=\"fa fa-exclamation-circle error-box__signal\" aria-hidden=\"true\"></i>{0}</div>", result.ToHtmlString()));
 
+            return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
+        }
+        public static MvcHtmlString BigInvalidMessage<TModel>(this HtmlHelper<TModel> htmlHelper, string message, object htmlAttributes)
+        {
+            var validationMessage = message;
+
+            TagBuilder containerBuilder = new TagBuilder("div");
+            containerBuilder.AddCssClass("error-box");
+            containerBuilder.AddCssClass("form__big-error");
+
+            TagBuilder signalBuilder = new TagBuilder("i");
+            signalBuilder.AddCssClass("fa");
+            signalBuilder.AddCssClass("fa-exclamation-circle");
+            signalBuilder.AddCssClass("error-box__signal");
+            signalBuilder.AddCssClass("error-box__signal-big");
+            signalBuilder.MergeAttribute("aria-hidden", "true");
+
+            TagBuilder textBuilder = new TagBuilder("span");
+            var @class = htmlAttributes.GetType().GetProperty("class").GetValue(htmlAttributes) as String;
+            if (@class != null)
+            {
+                textBuilder.AddCssClass(@class);
+            }
+            textBuilder.InnerHtml += validationMessage.ToString();
+
+            containerBuilder.InnerHtml += signalBuilder.ToString(TagRenderMode.Normal);
+            containerBuilder.InnerHtml += textBuilder.ToString(TagRenderMode.Normal);
+
+            
             return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
         }
     }

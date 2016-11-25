@@ -1,0 +1,221 @@
+body {
+    font-size: 14px;
+    background-color: #f4f6fb;
+}
+
+.compl-background {
+    position: absolute;
+    right: 0;
+    top: calc((100% - 600px) / 2);
+    width: 1180px;
+    height: 600px;
+    -ms-background-size: cover;
+    background-size: cover;
+    background: url(../../Content/Images/Login/Login.png) no-repeat;
+}
+
+.compl-background__form {
+    position: absolute !important;
+    top: 210px;
+    right: 310px;
+}
+
+.button {
+    width: 150px;
+    height: 36px;
+    border-radius: 17px;
+    border: none;
+    background-color: #c8cdd9;
+    color: #e9ebf0;
+}
+
+    .button:hover {
+        color: white;
+        background-color: #f95752;
+    }
+
+.button-active {
+    color: white;
+    background-color: #f95752;
+}
+
+.text-input {
+    height: 36px;
+    padding: 0 10px 0 10px;
+    border-radius: 17px;
+    border: none;
+    color: #a6abb6;
+    background-color: #f5f6fb;
+    outline: none;
+}
+
+.form {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 310px;
+    height: 260px;
+}
+
+.form__label {
+    margin-bottom: 75px;
+    font-size: 25px;
+    color: white;
+}
+
+.form__big-error {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+
+.form__text-input {
+    width: 300px;
+}
+
+.form__text-input-last {
+    margin-bottom: 15px;
+}
+
+.form__text-input::-webkit-input-placeholder {
+    color: #c7c8cb;
+}
+
+.form__text-input::-moz-placeholder {
+    color: #c7c8cb;
+}
+
+.form__text-input:-moz-placeholder {
+    color: #c7c8cb;
+}
+
+.form__text-input:-ms-input-placeholder {
+    color: #c7c8cb;
+}
+
+.form__text-input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+.form__text-input:focus::-moz-placeholder {
+    color: transparent;
+}
+
+.form__text-input:focus:-moz-placeholder {
+    color: transparent;
+}
+
+.form__text-input:focus:-ms-input-placeholder {
+    color: transparent;
+}
+
+.form__button {
+    display: table;
+    margin: 0 auto;
+}
+
+.form__success {
+    text-align: center;
+}
+
+.form__text {
+    color: #656d7f;
+    text-align: center;
+    padding: 0 0 22px 0;
+    margin: 0;
+}
+
+.form__row {
+    width: 100%;    
+}
+
+.left-menu {
+    position: absolute;
+    right: 1060px;
+    top: calc(50% - 220px / 2 + 15px);
+    height: 220px;
+}
+
+.left-menu__header {
+    width: 165px;
+    height: 35px;
+    margin-bottom: 45px;
+    background-size: contain;
+}
+
+.left-menu__list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.left-menu__options {
+    padding-bottom: 25px;
+}
+
+.left-menu__options-chosen {
+    font-weight: bold;
+}
+
+.left-menu__link {
+    color: #b0b6c8;
+}
+
+    .left-menu__link:hover {
+        border-color: #b0b6c8;
+    }
+
+.link {
+    text-decoration: none;
+}
+
+    .link:hover {
+        border-bottom: 1px solid;
+    }
+
+.whole-el-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.logo {
+    background: url(../../Content/Images/Login/logo.png) no-repeat;
+}
+
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.feedback-form__field-fname {
+    width: 250px;
+}
+
+.group-input-error {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.error-box {
+    display: block;
+}
+
+.error-box__signal {
+    color: red;
+    margin-right: 10px;
+}
+
+.error-box__signal-big {
+    position: relative;
+    top: 5px;
+    font-size: 25px !important;
+}
+
+.error-box__text-danger {
+    font-size: 12px;
+    font-family: Arial;
+}

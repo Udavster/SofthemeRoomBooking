@@ -1,0 +1,53 @@
+﻿@model SofthemeRoomBooking.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    ViewBag.Registration = true;
+    Layout = "~/Views/Login/_Layout.cshtml";
+}
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "compl-background__form form", enctype = "multipart/form-data" }))
+{
+    <div class="form__label">Регистрация</div>
+    @Html.AntiForgeryToken()
+    <div class="group-input-error">
+        <input class="text-input form__text-input" type="text" placeholder="Имя Фамилия">
+    </div>
+    <div class="group-input-error">
+        @Html.SignalValidationMessageFor(model => model.Email, new { @class = "error-box__text-danger" })
+        @Html.EditorFor(model => model.Email, new
+        {
+            htmlAttributes = new
+            {
+                @class = "text-input form__text-input",
+                type="text",
+                placeholder = "Aдрес электронной почты"
+            }
+        })
+    </div>
+    <div class="group-input-error">
+        @Html.SignalValidationMessageFor(model => model.Password, new { @class = "error-box__text-danger" })
+        @Html.EditorFor(model => model.Password, new
+        {
+            htmlAttributes = new
+            {
+                @class = "text-input form__text-input",
+                placeholder = "Пароль"
+            }
+        })
+    </div>
+
+    <div class="group-input-error">
+        @Html.SignalValidationMessageFor(model => model.ConfirmPassword, new { @class = "error-box__text-danger" })
+        @Html.EditorFor(model => model.ConfirmPassword, new
+        {
+            htmlAttributes = new
+            {
+                @class = "text-input form__text-input form__text-input-last",
+                placeholder = "Повторите пароль"
+            }
+        })
+    </div>
+    <button class="button  form__button" type="submit">Зарегестрироваться</button>
+}
+

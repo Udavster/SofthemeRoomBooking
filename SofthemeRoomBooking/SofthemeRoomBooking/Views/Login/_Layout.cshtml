@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - Softheme Room Booking</title>
+    @Styles.Render("~/Login/cssn")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    <div class="left-menu">
+        <div class="left-menu__header logo"><a class="left-menu__link link whole-el-link" href="/"></a></div>
+        <ul class="left-menu__list">
+            <li class="left-menu__options @if (ViewBag.Login!=null){@Html.Raw("left-menu__options-chosen")} ">
+                @Html.ActionLink("Вход", "Login", "Account", null,
+                    new { @class = "left-menu__link link" })
+            </li>
+            <li class="left-menu__options @if (ViewBag.Registration!=null){@Html.Raw("left-menu__options-chosen")} ">
+                @Html.ActionLink("Регистрация", "Register", "Account", null,
+                    new { @class = "left-menu__link link" })
+            </li>
+            <li class="left-menu__options @if (ViewBag.ChangePassword!=null){@Html.Raw("left-menu__options-chosen")} ">
+                @Html.ActionLink("Смена пароля", "ForgotPassword", "Account", null,
+                    new { @class = "left-menu__link link" })
+            </li>
+        </ul>
+    </div>
+
+    <div class="compl-background">
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

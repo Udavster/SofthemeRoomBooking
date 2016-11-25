@@ -1,0 +1,39 @@
+﻿@model SofthemeRoomBooking.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    ViewBag.Login = true;
+    Layout = "~/Views/Login/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "compl-background__form form", enctype = "multipart/form-data" }))
+{
+    <div class="form__label">Вход</div>
+    if (ViewBag.InvalidCredentials!=null)
+    {
+        @Html.BigInvalidMessage("Неверные данные", new { @class = "error-box__text-danger" })
+    }
+    @Html.AntiForgeryToken()
+    <div class="group-input-error">
+        @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
+        @Html.EditorFor(model => model.Email, new
+        {
+            htmlAttributes = new
+            {
+                @class = "text-input form__text-input",
+                placeholder = "Адрес электронной почты"
+            }
+        })
+    </div>
+    <div class="group-input-error">
+        @Html.SignalValidationMessageFor(model => model.Password, new { @class = "error-box__text-danger" })
+        @Html.EditorFor(model => model.Password, new
+        {
+            htmlAttributes = new
+            {
+                @class = "text-input form__text-input form__text-input-last",
+                placeholder = "Пароль"
+            }
+        })
+    </div>
+    <button class="button  form__button" type="submit">Войти</button>
+}
