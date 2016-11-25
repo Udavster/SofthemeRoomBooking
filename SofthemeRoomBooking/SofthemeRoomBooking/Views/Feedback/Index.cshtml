@@ -20,7 +20,7 @@
     <img src="~/Content/Images/contact-bg.png">
 </div>
 
-@using (Html.BeginForm(" ", " ", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Send", "Feedback", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
 {
     <div class="group-input-error feedback-form__field-fname">
         @Html.SignalValidationMessageFor(model => model.Name, new { @class = "error-box__text-danger" })
@@ -34,20 +34,20 @@
         })
     </div>
 
-    <div class="group-input-error feedback-form__field-lname">
+    <div class="group-input-error feedback-form__field-sname">
         @Html.SignalValidationMessageFor(model => model.Surname, new {@class = "error-box__text-danger"})
         @Html.EditorFor(model => model.Surname, new
         {
             htmlAttributes = new
             {
-                @class = "input-text feedback-form__field-lname",
+                @class = "input-text feedback-form__field-sname",
                 placeholder = "Фамилия"
             }
         })
     </div>
 
     <div class="group-input-error feedback-form__field-email">
-        @Html.SignalValidationMessageFor(model => model.Surname, new {@class = "error-box__text-danger"})
+        @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
         @Html.EditorFor(model => model.Email, new
         {
             htmlAttributes = new
@@ -59,7 +59,7 @@
     </div>
 
     <div class="group-input-error feedback-form__field-message">
-        @Html.SignalValidationMessageFor(model => model.Surname, new {@class = "error-box__text-danger"})
+        @Html.SignalValidationMessageFor(model => model.Message, new {@class = "error-box__text-danger"})
         @Html.EditorFor(model => model.Message, new
         {
             htmlAttributes = new
@@ -73,5 +73,5 @@
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/validation")
+    @Scripts.Render("~/bundles/jqueryval")
 }
