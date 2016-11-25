@@ -24,9 +24,10 @@
 
 .feedback-form__field-fname {
     width: 250px;
+    margin-right: 5px;
 }
 
-.feedback-form__field-lname {
+.feedback-form__field-sname {
     width: 300px;
 }
 
@@ -38,7 +39,7 @@
     width: 565px;
     height: 180px;
     display: block;
-    margin: 10px 5px;
+    margin: 5px;
 }
 
 .feedback-form__submit {
