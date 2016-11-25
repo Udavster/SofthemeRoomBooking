@@ -29,8 +29,9 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("~/Views/Login/Index.cshtml");
         }
 
         //
@@ -42,24 +43,27 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("~/Views/Login/Index.cshtml", model);
             }
 
             // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            // To enable password failures to trigger account lockout, change to shouldLockout: trues
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    return View("~/Views/Home/Index.cshtml");
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
+                    ViewBag.InvalidCredentials = true;
+                    return View("~/Views/Login/Index.cshtml", model);
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    return View("~/Views/Login/Index.cshtml", model);
             }
         }
 
@@ -111,7 +115,7 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return View("~/Views/Login/Register.cshtml");
         }
 
         //
@@ -141,7 +145,7 @@ namespace SofthemeRoomBooking.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("~/Views/Login/Register.cshtml", model);
         }
 
         //
@@ -162,7 +166,7 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View();
+            return View("~/Views/Login/ChangePassword.cshtml");
         }
 
         //
@@ -178,7 +182,7 @@ namespace SofthemeRoomBooking.Controllers
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View("~/Views/Login/ResetPassword.cshtml");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -190,7 +194,7 @@ namespace SofthemeRoomBooking.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("~/Views/Login/ChangePassword.cshtml",model);
         }
 
         //
@@ -240,7 +244,7 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
-            return View();
+            return View("~/Views/Login/ChangePassword.cshtml");
         }
 
         //

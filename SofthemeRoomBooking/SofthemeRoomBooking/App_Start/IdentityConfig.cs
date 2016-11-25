@@ -38,6 +38,7 @@ namespace SofthemeRoomBooking
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
+            PasswordValidator = new MinimumLengthValidator(1);
         }
     }
 

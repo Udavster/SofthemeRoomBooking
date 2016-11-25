@@ -7,6 +7,7 @@ namespace SofthemeRoomBooking.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [DataType(DataType.Text)]
         public string Email { get; set; }
     }
 
@@ -51,6 +52,7 @@ namespace SofthemeRoomBooking.Models
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
+        [DataType(DataType.Text)]
         public string Email { get; set; }
 
         [Required]
@@ -59,14 +61,16 @@ namespace SofthemeRoomBooking.Models
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        public bool RememberMe { get; set; }   
     }
+
 
     public class RegisterViewModel
     {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [DataType(DataType.Text)]
         public string Email { get; set; }
 
         [Required]
@@ -86,6 +90,7 @@ namespace SofthemeRoomBooking.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [DataType(DataType.Text)]
         public string Email { get; set; }
 
         [Required]
@@ -107,6 +112,7 @@ namespace SofthemeRoomBooking.Models
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [DataType(DataType.Text)]
         public string Email { get; set; }
     }
 }
