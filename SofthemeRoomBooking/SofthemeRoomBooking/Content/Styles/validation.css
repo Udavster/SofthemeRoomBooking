@@ -15,8 +15,6 @@
 }
 
 .error-box__signal-big {
-    position: relative;
-    top: 5px;
     font-size: 25px !important;
 }
 
@@ -28,4 +26,8 @@
 .error-box__text-danger {
     font-size: 11px;
     font-family: Arial;
+    color: #656d7f;
+}
+.error-box__text-centered {
+    align-self: center;
 }
