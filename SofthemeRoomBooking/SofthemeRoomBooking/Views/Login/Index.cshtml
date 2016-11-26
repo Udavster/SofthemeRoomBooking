@@ -10,7 +10,7 @@
     <div class="form__label">Вход</div>
     if (ViewBag.InvalidCredentials!=null)
     {
-        @Html.BigInvalidMessage("Неверные данные", new { @class = "error-box__text-danger" })
+        @Html.BigInvalidMessage("Неверные данные", new {@class= "error-box__text-centered" });
     }
     @Html.AntiForgeryToken()
     <div class="group-input-error">

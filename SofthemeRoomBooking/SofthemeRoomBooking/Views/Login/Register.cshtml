@@ -11,7 +11,7 @@
     <div class="form__label">Регистрация</div>
     @Html.AntiForgeryToken()
     <div class="group-input-error">
-        <input class="text-input form__text-input" type="text" placeholder="Имя Фамилия">
+        <input class="input-text form__text-input" type="text" placeholder="Имя Фамилия">
     </div>
     <div class="group-input-error">
         @Html.SignalValidationMessageFor(model => model.Email, new { @class = "error-box__text-danger" })
@@ -19,7 +19,7 @@
         {
             htmlAttributes = new
             {
-                @class = "text-input form__text-input",
+                @class = "input-text form__text-input",
                 type="text",
                 placeholder = "Aдрес электронной почты"
             }
@@ -31,7 +31,7 @@
         {
             htmlAttributes = new
             {
-                @class = "text-input form__text-input",
+                @class = "input-text form__text-input",
                 placeholder = "Пароль"
             }
         })
@@ -43,7 +43,7 @@
         {
             htmlAttributes = new
             {
-                @class = "text-input form__text-input form__text-input-last",
+                @class = "input-text form__text-input form__text-input-last",
                 placeholder = "Повторите пароль"
             }
         })

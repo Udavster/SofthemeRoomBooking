@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 
 namespace SofthemeRoomBooking
 {
@@ -22,66 +23,51 @@ namespace SofthemeRoomBooking
                 : modelErrors.FirstOrDefault(m => !String.IsNullOrEmpty(m.ErrorMessage)) ?? modelErrors[0];
             var validationMessage = htmlHelper.ValidationMessageFor(ex);
 
-            TagBuilder containerBuilder = new TagBuilder("div");
-            containerBuilder.AddCssClass("error-box");
-
-            TagBuilder signalBuilder = new TagBuilder("i");
-            signalBuilder.AddCssClass("fa");
-            signalBuilder.AddCssClass("fa-exclamation-circle");
-            signalBuilder.AddCssClass("error-box__signal");
-            signalBuilder.MergeAttribute("aria-hidden", "true");
-
-            TagBuilder textBuilder = new TagBuilder("span");
-            var @class = htmlAttributes.GetType().GetProperty("class").GetValue(htmlAttributes) as String;
-            if (@class != null)
-            {
-                textBuilder.AddCssClass(@class);
-            }
-            textBuilder.InnerHtml += validationMessage.ToString();
-            
-            containerBuilder.InnerHtml += signalBuilder.ToString(TagRenderMode.Normal);
-            containerBuilder.InnerHtml += textBuilder.ToString(TagRenderMode.Normal);
+            var containerBuilder = GetMessageContainerBuilder<TModel>(validationMessage.ToString(), htmlAttributes);
 
             if (modelError != null)
             {
                 return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
-
-                //return MvcHtmlString.Create(string.Format("<div class=\"error-box\"><i class=\"fa fa-exclamation-circle error-box__signal\" aria-hidden=\"true\"></i>{0}</div>", result.ToHtmlString()));
             }
-
             containerBuilder.AddCssClass("hidden");
-            //return MvcHtmlString.Create(string.Format("<div class=\"error-box hidden\"><i class=\"fa fa-exclamation-circle error-box__signal\" aria-hidden=\"true\"></i>{0}</div>", result.ToHtmlString()));
 
             return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
         }
-        public static MvcHtmlString BigInvalidMessage<TModel>(this HtmlHelper<TModel> htmlHelper, string message, object htmlAttributes)
+        public static MvcHtmlString BigInvalidMessage<TModel>(this HtmlHelper<TModel> htmlHelper, string message, object messageHtmlAttributes)
         {
-            var validationMessage = message;
+            object signalHtmlAttributes = new { @class = "error-box__signal-big" };
+            object containerHtmlAttributes = new { @class = "form__big-error" };
+            var containerBuilder = GetMessageContainerBuilder<TModel>(message, messageHtmlAttributes,
+                signalHtmlAttributes, containerHtmlAttributes);
 
+            //containerBuilder.AddCssClass("hidden");
+
+            return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
+        }
+
+        private static TagBuilder GetMessageContainerBuilder<TModel>(string validationMessage, object messageHtmlAttributes,
+            object signalHtmlAttributes = null, object containerHtmlAttributes = null)
+        {
             TagBuilder containerBuilder = new TagBuilder("div");
+            containerBuilder.MergeAttributes(new RouteValueDictionary(containerHtmlAttributes));
             containerBuilder.AddCssClass("error-box");
-            containerBuilder.AddCssClass("form__big-error");
+            var dict = new RouteValueDictionary(containerHtmlAttributes);
 
             TagBuilder signalBuilder = new TagBuilder("i");
+            signalBuilder.MergeAttributes(new RouteValueDictionary(signalHtmlAttributes));
             signalBuilder.AddCssClass("fa");
             signalBuilder.AddCssClass("fa-exclamation-circle");
             signalBuilder.AddCssClass("error-box__signal");
-            signalBuilder.AddCssClass("error-box__signal-big");
             signalBuilder.MergeAttribute("aria-hidden", "true");
 
             TagBuilder textBuilder = new TagBuilder("span");
-            var @class = htmlAttributes.GetType().GetProperty("class").GetValue(htmlAttributes) as String;
-            if (@class != null)
-            {
-                textBuilder.AddCssClass(@class);
-            }
+            textBuilder.MergeAttributes(new RouteValueDictionary(messageHtmlAttributes));
             textBuilder.InnerHtml += validationMessage.ToString();
 
             containerBuilder.InnerHtml += signalBuilder.ToString(TagRenderMode.Normal);
             containerBuilder.InnerHtml += textBuilder.ToString(TagRenderMode.Normal);
 
-            
-            return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
+            return containerBuilder;
         }
     }
 }
