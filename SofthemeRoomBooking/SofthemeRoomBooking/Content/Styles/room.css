@@ -1,31 +1,57 @@
 ﻿.room {
     margin-top: 7px;
-    position: relative;
     background: #ebeef7;
     height: 520px;
-    width : 1520px
+    width: auto;
 }
+
 .room__image {
-    position: relative;
-    z-index: 2;
+    z-index: 5;
+    width: 1021px;
+    height: 494px;
     padding-top: 40px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-.room_tesla {
     position: relative;
-    z-index: 4;
+}
+.room__equipment {
+    z-index: 2;
+    position: absolute;
+    bottom: 10px;
+    right: 350px;
+}
+
+
+.room__tesla {
+    z-index: 2;
     padding: 22px;
     position: absolute;
-    bottom: 135px;
-    right: 770px;
+    bottom: 107px;
+    right: 519px;
     background: #f95752;
     opacity: 0.8;
     height: 87px;
     width: 190px;
 }
-.room_teslatext {
+
+.room__teslaarrow {
+    width: 36px;
+    height: 71px;
+    position: absolute;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-tesla.png);
+}
+.room__teslapath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+.room__tesla:hover > .room__teslaarrow {
+    display: block;
+}
+.room__teslatext {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
@@ -38,20 +64,61 @@
     height: 43px;
 }
 
-.room_hr {
-    position: relative;
+.room__newton {
+    z-index: 2;
+    padding: 22px;
+    position: absolute;
+    bottom: 107px;
+    right: 327px;
+    background: #d7d9de;
+    opacity: 0.6;
+    height: 87px;
+    width: 190px;
+}
+
+.room__newtontext {
+    font-family: Times New Roman;
+    font-size: 13pt;
+    color: white;
+    text-align: center;
+    border-radius: 21%;
+    background: #acb0b6;
+    width: 50%;
+    margin: 0 auto;
+    width: 100px;
+    height: 43px;
+}
+.room__newtonpath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+.room__newtonarrow {
+    width: 125px;
+    height: 112px;
+    position: absolute;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-newton.png);
+}
+
+.room__newton:hover > .room__newtonarrow {
+    display: block;
+}
+
+.room__hr {
     z-index: 2;
     padding: 28px;
     position: absolute;
-    bottom: 271px;
-    right: 860px;
+    bottom: 248px;
+    right: 610px;
     background: #d7d9de;
     opacity: 0.6;
     height: 100px;
     width: 223px;
 }
 
-.room_hrtext {
+.room__hrtext {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
@@ -64,19 +131,36 @@
     height: 40px;
 }
 
-.room_einstein {
-    position: relative;
+.room__hrarrow {
+    width: 148px;
+    height: 218px;
+    position: absolute;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-hr.png);
+}
+
+.room__hr:hover > .room__hrarrow {
+    display: block;
+}
+.room__hrpath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__einstein {
     z-index: 2;
     padding: 30px;
     position: absolute;
-    bottom: 271px;
-    right: 673px;
+    bottom: 248px;
+    right: 423px;
     background: #d7d9de;
     opacity: 0.6;
     height: 100px;
     width: 185px;
 }
-.room_einsteintext {
+.room__einsteintext {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
@@ -88,23 +172,37 @@
     width: 100px;
     height: 43px;
 }
-
-.room_info {
-    position: relative;
-    z-index: 2;
-    padding: 30px 15px;
+.room__einsteinarrow {
+    width: 54px;
+    height: 213px;
     position: absolute;
-    bottom: 271px;
-    right: 587px;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-einstein.png);
+}
+.room__einstein:hover > .room__einsteinarrow {
+    display: block;
+}
+
+.room__einsteinpath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__info {
+    z-index: 2;
+    padding: 27px 15px;
+    position: absolute;
+    bottom: 248px;
+    right: 337px;
     background: #d7d9de;
     opacity: 0.6;
     height: 100px;
     width: 84px;
 }
 
-.room_infotext {
-    position: relative;
-    z-index: 2;
+.room__infotext {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
@@ -116,23 +214,40 @@
     width: 55px;
     height: 43px;
 }
-
-.room_web1 {
-    position: relative;
-    z-index: 2;
-    padding: 25px 6px;
+.room__infoarrow {
+    width: 239px;
+    height: 204px;
     position: absolute;
-    bottom: 281px;
-    right: 488px;
+    display: none;
+    right: 34px;
+    bottom: -188px;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-info.png);
+}
+
+.room__info:hover > .room__infoarrow {
+    display: block;
+}
+
+.room__infopath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__web1 {
+    z-index: 2;
+    padding: 17px 6px;
+    position: absolute;
+    bottom: 249px;
+    right: 238px;
     background: #d7d9de;
     opacity: 0.6;
     height: 90px;
     width: 95px;
 }
 
-.room_webtext {
-    position: relative;
-    z-index: 2;
+.room__webtext {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
@@ -145,48 +260,108 @@
     height: 43px;
 }
 
-.room_web2 {
-    position: relative;
+.room__webarrow {
+    width: 325px;
+    height: 211px;
+    position: absolute;
+    right: 45px;
+    bottom: -190px;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-1.png);
+}
+.room__web1path {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__web1:hover > .room__webarrow {
+    display: block;
+}
+
+.room__web2 {
     z-index: 2;
     padding: 25px 6px;
     position: absolute;
-    bottom: 271px;
-    right: 394px;
+    bottom: 248px;
+    right: 144px;
     background: #d7d9de;
     opacity: 0.6;
     height: 100px;
     width: 91px;
 }
 
-.room_web3 {
-    position: relative;
+.room__web2arrow {
+    width: 440px;
+    height: 209px;
+    position: absolute;
+    right: 35px;
+    bottom: -190px;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-2.png);
+}
+.room__web2:hover > .room__web2arrow {
+    display: block;
+}
+.room__web2path {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__web3 {
     z-index: 2;
     padding: 25px 6px;
     position: absolute;
-    bottom: 271px;
-    right: 300px;
+    bottom: 248px;
+    right: 48px;
     background: #d7d9de;
     opacity: 0.6;
     height: 100px;
     width: 93px;
 }
-
-.room_english {
+.room__web3arrow {
+    width: 530px;
+    height: 212px;
     position: absolute;
-    bottom: 229px;
-    right: 260px;
+    right: 40px;
+    bottom: -190px;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-3.png);
+}
+.room__web3:hover > .room__web3arrow {
+    display: block;
+}
+.room__web3path {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
+.room__english {
+    z-index: 2;
+    position: absolute;
+    bottom: 203px;
+    right: 10px;
     background: #d7d9de;
     opacity: 0.6;
     height: 140px;
     width: 40px;
 }
-.room_englishtext {
+
+.room__englishtext {
+    z-index: 2;
+    margin-left: 10px;
     position: absolute;
-    bottom: 287px;
-    right: 226px;
+    bottom: 267px;
+    right: -25px;
     transform: rotate(90deg);
     font-family: Times New Roman;
     font-size: 13pt;
+    opacity: 0.6;
     color: white;
     text-align: center;
     border-radius: 21%;
@@ -197,30 +372,26 @@
     height: 20px;
 }
 
-.room_newton {
-    position: relative;
-    z-index: 2;
-    padding: 22px;
+.room__englisharrow {
+    width: 599px;
+    height: 167px;
     position: absolute;
-    bottom: 135px;
-    right: 581px;
-    background: #d7d9de;
-    opacity: 0.6;
-    height: 87px;
-    width: 190px;
+    right: 10px;
+    bottom: -150px;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-english.png);
 }
 
-.room_newtontext {
-    font-family: Times New Roman;
-    font-size: 13pt;
-    color: white;
-    text-align: center;
-    border-radius: 21%;
-    background: #acb0b6;
-    width: 50%;
-    margin: 0 auto;
-    width: 100px;
-    height: 43px;
+.room__english:hover > .room__englisharrow {
+    display: block;
 }
+
+.room__englishpath {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+
 
 

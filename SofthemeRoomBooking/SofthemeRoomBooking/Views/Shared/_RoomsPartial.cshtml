@@ -1,48 +1,86 @@
 ﻿    <div class="room">
-        <img class="room__image" src="~/Content/Images/walls.png" />
-        <div class="room_tesla">
-            <div class="room_teslatext">
+    <div class="room__image">
+        <img src="~/Content/Images/walls.png" />
+        <img class="room__path room__teslapath" id="teslapath" src="~/Content/Images/Path/path-tesla.png"/>
+        <img class="room__path room__newtonpath" id="newtonpath" src="~/Content/Images/Path/path-newton.png"/>
+        <img class="room__path room__hrpath" id="hrpath" src="~/Content/Images/Path/path-hr.png" />
+        <img class="room__path room__einsteinpath" id="einsteinpath" src="~/Content/Images/Path/path-einstein.png" />
+        <img class="room__path room__infopath" id="infopath" src="~/Content/Images/Path/path-info.png" />
+        <img class="room__path room__web1path" id="web1path" src="~/Content/Images/Path/path-web-1.png" />
+        <img class="room__path room__web2path" id="web2path" style="z-index: 3" src="~/Content/Images/Path/path-web-2.png" />
+        <img class="room__path room__web3path" id="web3path" src="~/Content/Images/Path/path-web-3.png" />
+        <img class="room__path room__englishpath" id="englishpath" src="~/Content/Images/Path/path-ienglish.png" />
+
+        <div data-num="12" data-pathid="teslapath" class="room__general room__tesla">
+            <div class="room__teslatext">
                 Tesla Classroom
             </div>
+            <div class="room__teslaarrow">
+            </div>
         </div>
-        <div class="room_hr">
-            <div class="room_hrtext">
+
+        <div data-num="15" data-pathid="hrpath" class="room__general  room__hr">
+            <div class="room__hrtext">
                 HR office
             </div>
+            <div class="room__hrarrow">
+            </div>
         </div>
-        <div class="room_einstein">
-            <div class="room_einsteintext">
+
+        <div data-pathid="einsteinpath" class="room__general  room__einstein">
+            <div class="room__einsteintext">
                 Einstein Classroom
             </div>
+            <div class="room__einsteinarrow">
+            </div>
         </div>
-        <div class="room_info">
-            <div class="room_infotext">
+
+        <div data-pathid="infopath" class="room__general  room__info">
+            <div class="room__infotext">
                 Info Центр
             </div>
-        </div>
-        <div class="room_web1">
-            <div class="room_webtext">
-                Web & Marketing
+            <div class="room__infoarrow">
             </div>
         </div>
-        <div class="room_web2">
-            <div class="room_webtext">
+
+        <div data-pathid="web1path"  class="room__general  room__web1">
+            <div class="room__webtext">
                 Web & Marketing
             </div>
+            <div class="room__webarrow"></div>
         </div>
-        <div class="room_web3">
-            <div class="room_webtext">
+
+        <div data-pathid="web2path"  class="room__general room__web2">
+            <div class="room__webtext">
                 Web & Marketing
             </div>
+            <div class="room__web2arrow"></div>
         </div>
-        <div class="room_english">
+
+        <div data-pathid="web3path" class="room__general room__web3">
+            <div class="room__webtext">
+                Web & Marketing
+            </div>
+            <div class="room__web3arrow"></div>
         </div>
-        <div class="room_englishtext">
+
+        <div data-pathid="englishpath" class="room__general room__english">
+            <div class="room__englisharrow"></div>
+        </div>
+        <div data-pathid="englishpath" class="room__englishtext">
             English
         </div>
-        <div class="room_newton">
-            <div class="room_newtontext">
+
+        <div  class="room__general room__newton" data-pathid="newtonpath">
+            <div class="room__newtontext">
                 Newton Classroom
             </div>
-        </div>  
+            <div class="room__newtonarrow"></div>
+        </div>
+
+        <div class="room__equipment equipmentuser" style="display: none">
+            @Html.Partial("_PopupEquipmentUserPartial")
+        </div>
+        </div>
     </div>
+

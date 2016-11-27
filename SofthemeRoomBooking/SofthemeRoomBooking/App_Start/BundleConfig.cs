@@ -33,7 +33,8 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/layout.css",
                       "~/Content/Styles/feedback.css",
                       "~/Content/Styles/map.css",
-                      "~/Content/Styles/room.css"));
+                      "~/Content/Styles/room.css",
+                      "~/Content/Styles/equipment.css"));
             bundles.Add(new StyleBundle("~/Login/cssn").Include(
                       "~/Content/Styles/login.css",
                       "~/Content/Styles/input_styles.css",
