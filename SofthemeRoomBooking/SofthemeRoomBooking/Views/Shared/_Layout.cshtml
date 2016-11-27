@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@model SofthemeRoomBooking.Models.ApplicationUser
+
+@{ var anonym = Model == null;}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,43 +13,70 @@
 
 </head>
 <body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo">
-                <img src="~/Content/Images/logo.png">
-            </div>
-            <ul class="menu">
-                <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Обратная связь", "Index", "Feedback", null, new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Account", null, new { @class = "menu__link" })</li>
-            </ul>
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">
+            <img src="~/Content/Images/logo.png">
         </div>
+        <ul class="menu">
+            @if (!anonym)
+            {
+                <li class="menu__item">
+                    <button class="menu__button">
+                        <div class="background-plus"></div>
+                        <i class="fa fa-plus-square plus" aria-hidden="true"></i>
+                    </button>
+                </li>
+            }
+            <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new {@class = "menu__link"})</li>
 
-        <div class="content">
-            @RenderBody()
-        </div>
+            @if (!anonym)
+            {
+                <li class="menu__item">@Html.ActionLink("Пользователи", "Index", "Feedback", null, new {@class = "menu__link"})</li>
+            }
+            <li class="menu__item">@Html.ActionLink("Обратная связь", "Index", "Feedback", null, new {@class = "menu__link"})</li>
 
-        <div class="footer">
-            <ul class="footer__list">
-                <li class="footer__item">
-                    <img src="~/Content/Images/logo-gray.png">
+            @if (!anonym)
+            {
+                <li class="menu__item">
+                    <a href="@Url.Action("LogIn", "Account")" class="menu__link">
+                        <i class="fa fa-user user-icon" aria-hidden="true"></i>
+                        <span>@Model.UserName</span>
+                    </a>
                 </li>
-                <li class="footer__item">
-                    <hr color="#C6CDDB" size="1px"></hr>
-                </li>
-                <li class="footer__item">
-                    <p class="footer__copyright">
-                        Все права защищены &copy; 2016
-                    </p>
-                </li>
-            </ul>
-        </div>
+            }
+            else
+            {
+                <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Account", null, new {@class = "menu__link"})</li>
+            }
+        </ul>
     </div>
 
+    <div class="content">
+        @RenderBody()
+    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/common")
-    @RenderSection("scripts", required: false)
+    <div class="footer">
+        <ul class="footer__list">
+            <li class="footer__item">
+                <img src="~/Content/Images/logo-gray.png">
+            </li>
+            <li class="footer__item">
+                <hr color="#C6CDDB" size="1px"></hr>
+            </li>
+            <li class="footer__item">
+                <p class="footer__copyright">
+                    Все права защищены &copy; 2016
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/common")
+@RenderSection("scripts", required: false)
 </body>
 </html>

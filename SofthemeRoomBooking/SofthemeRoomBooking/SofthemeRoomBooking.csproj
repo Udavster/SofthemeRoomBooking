@@ -273,6 +273,7 @@
     <Content Include="Content\Images\Slider\today-top.png" />
     <Content Include="Content\Images\walls.png" />
     <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\hr_department.css" />
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
     <Content Include="Content\Styles\validation.css" />
@@ -291,6 +292,7 @@
     <Content Include="Content\Styles\login.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\hr_department.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -352,7 +354,7 @@
     <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Profile.cshtml" />
+    <Content Include="Views\HRDepartment\Profile.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Users.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Layout.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
@@ -367,7 +369,6 @@
     <Folder Include="Converters\" />
     <Folder Include="Package\" />
     <Folder Include="Views\Event\" />
-    <Folder Include="Views\HRDepartment\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>

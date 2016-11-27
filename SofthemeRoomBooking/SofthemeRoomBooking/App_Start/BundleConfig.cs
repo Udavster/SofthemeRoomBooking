@@ -25,6 +25,9 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/common.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/hr_department").Include(
+                        "~/Scripts/hr_department.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/font-awesome.css",
                       "~/Content/Styles/validation.css",
@@ -32,8 +35,10 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/input_styles.css",
                       "~/Content/Styles/layout.css",
                       "~/Content/Styles/feedback.css",
+                      "~/Content/Styles/hr_department.css",
                       "~/Content/Styles/map.css",
                       "~/Content/Styles/room.css"));
+
             bundles.Add(new StyleBundle("~/Login/cssn").Include(
                       "~/Content/Styles/login.css",
                       "~/Content/Styles/input_styles.css",

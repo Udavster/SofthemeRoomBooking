@@ -1,21 +1,24 @@
+.content__feedback {
+    padding: 0 40px;
+}
 .content__title {
     width: 100%;
     padding-top: 60px;
     padding-bottom: 40px;
-    padding-left: 120px;
     font-family: Arial;
     font-size: 28px;
     color: #4A5158;
 }
 
 .content__cover {
-    width: 50%;
-    font-family: Arial;
     float: left;
-    padding-left: 120px;
+    width: 50%;
 }
 
-.content__text { margin-bottom: 20px; }
+.content__text {
+    margin-bottom: 20px;
+    font-family: Arial;
+}
 
 .feedback-form {
     display: inline-block;
@@ -23,22 +26,25 @@
 }
 
 .feedback-form__field-fname {
-    width: 250px;
-    margin-right: 5px;
+    width: 220px;
+    margin: 5px;
+    margin-right: 10px;
 }
 
 .feedback-form__field-sname {
-    width: 300px;
+    width: 280px;
+    margin: 5px;
 }
 
 .feedback-form__field-email {
-    width: 565px;
+    width: 520px;
+    margin: 5px;
 }
 
 .feedback-form__field-message {
-    width: 565px;
-    height: 180px;
     display: block;
+    width: 520px;
+    height: 180px;
     margin: 5px;
 }
 
