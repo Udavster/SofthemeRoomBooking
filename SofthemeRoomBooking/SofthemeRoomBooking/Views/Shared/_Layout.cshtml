@@ -1,4 +1,4 @@
-﻿@model SofthemeRoomBooking.Models.ApplicationUser
+﻿@model SofthemeRoomBooking.Models.CurrentUserViewModel
 
 @{ var anonym = Model == null;}
 
@@ -39,7 +39,7 @@
             @if (!anonym)
             {
                 <li class="menu__item">
-                    <a href="@Url.Action("LogIn", "Account")" class="menu__link">
+                    <a href="@Url.Action("Index", "HrDepartment")" class="menu__link">
                         <i class="fa fa-user user-icon" aria-hidden="true"></i>
                         <span>@Model.UserName</span>
                     </a>

@@ -52,7 +52,7 @@ namespace SofthemeRoomBooking.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return View("~/Views/Home/Index.cshtml");
+                    return View("~/Views/Home/Index.cshtml", model);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -127,6 +127,11 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (ModelState.IsValid)
             {
+                CurrentUserViewModel currentUser = new CurrentUserViewModel()
+                {
+                    UserName = model.UserName
+                };
+               
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -139,7 +144,7 @@ namespace SofthemeRoomBooking.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", currentUser);
                 }
                 AddErrors(result);
             }

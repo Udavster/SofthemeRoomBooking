@@ -1,12 +1,13 @@
 ﻿using System.Web.Mvc;
+using SofthemeRoomBooking.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(CurrentUserViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         public ActionResult About()

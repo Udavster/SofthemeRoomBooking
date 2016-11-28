@@ -89,6 +89,10 @@
     font-family: Arial;
 }
 
+.container-change-password__form-group {
+    display: block;
+}
+
 .container-change-password__input-text {
     width: 340px;
     margin: 10px;

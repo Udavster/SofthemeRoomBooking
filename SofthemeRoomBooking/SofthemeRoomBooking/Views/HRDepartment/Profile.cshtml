@@ -66,7 +66,7 @@
 
     @using (Html.BeginForm("Save", "HrDepartment", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
-        <div class="group-input-error">
+        <div class="group-input-error container-change-password__form-group">
             @Html.SignalValidationMessageFor(model => model.UserName, new {@class = "error-box__text-danger"})
             @Html.EditorFor(model => model.UserName, new
             {
@@ -78,7 +78,7 @@
             })
         </div>
 
-        <div class="group-input-error">
+        <div class="group-input-error container-change-password__form-group">
             @Html.SignalValidationMessageFor(model => model.UserName, new {@class = "error-box__text-danger"})
             @Html.EditorFor(model => model.UserName, new
             {
@@ -90,7 +90,7 @@
             })
         </div>
 
-        <div class="group-input-error">
+        <div class="group-input-error container-change-password__form-group">
             @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
             @Html.EditorFor(model => model.Email, new
             {
