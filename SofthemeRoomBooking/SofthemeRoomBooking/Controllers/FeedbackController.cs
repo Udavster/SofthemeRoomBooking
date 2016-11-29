@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using SofthemeRoomBooking.Models;
 
 namespace SofthemeRoomBooking.Controllers
@@ -17,6 +19,10 @@ namespace SofthemeRoomBooking.Controllers
         [HttpPost]
         public ActionResult Save(Feedback model)
         {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext("SofthemeRoomBooking")));
+            var user= manager.FindByIdAsync(User.Identity.GetUserId());
+            user.
+
             if (ModelState.IsValid)
             {
 

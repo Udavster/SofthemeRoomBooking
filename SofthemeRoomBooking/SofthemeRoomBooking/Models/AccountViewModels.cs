@@ -68,7 +68,10 @@ namespace SofthemeRoomBooking.Models
     public class RegisterViewModel
     {
         [Required]
-        public string UserName { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        public string Surname { get; set; }
 
         [Required]
         [EmailAddress]

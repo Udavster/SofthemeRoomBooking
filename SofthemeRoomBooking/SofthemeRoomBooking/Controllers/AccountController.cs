@@ -129,10 +129,17 @@ namespace SofthemeRoomBooking.Controllers
             {
                 CurrentUserViewModel currentUser = new CurrentUserViewModel()
                 {
-                    UserName = model.UserName
+                    UserName = model.Name
                 };
                
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Email = model.Email,
+                    UserName = model.Email
+                };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

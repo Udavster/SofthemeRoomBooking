@@ -219,6 +219,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611291454339_AddName.cs" />
+    <Compile Include="Migrations\201611291454339_AddName.Designer.cs">
+      <DependentUpon>201611291454339_AddName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CurrentUserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -385,6 +390,11 @@
       <Project>{58e2c1f5-c60b-46d5-96f7-c0c5ab04f2b5}</Project>
       <Name>SofthemeRoomBooking.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611291454339_AddName.resx">
+      <DependentUpon>201611291454339_AddName.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
