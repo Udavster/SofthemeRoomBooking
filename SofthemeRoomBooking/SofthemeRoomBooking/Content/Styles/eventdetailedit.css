@@ -1,6 +1,6 @@
 ﻿.eventdetailedit {
-    width: 300px;
-    height: 250px;
+    width: 400px;
+    height: 300px;
     background: #ffffff;
     border: 1px solid #f95752
 }
@@ -10,8 +10,22 @@
     height: 35px;
     background: #f95752;
 }
-.eventdetailedit__main {
-    
+.eventdetailedit__main div {
+    margin: 10px 10px
+}
+
+.eventdetailedit__email-button {
+    width: 320px;
+}
+
+.eventdetailedit__icons i{
+    font-size: 25px;
+    color: #a4aab9;
+    margin: 10px 10px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-position: center;
 }
 
 .eventdetailedit-change {
