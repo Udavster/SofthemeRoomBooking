@@ -21,6 +21,12 @@
     bottom: 10px;
     right: 350px;
 }
+.room__equipmentadmin {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    right: 325px;
+}
 
 
 .room__tesla {

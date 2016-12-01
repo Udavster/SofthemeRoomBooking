@@ -1,0 +1,41 @@
+﻿.eventdetailedit {
+    width: 300px;
+    height: 250px;
+    background: #ffffff;
+    border: 1px solid #f95752
+}
+
+.eventdetailedit__title {
+    width: auto;
+    height: 35px;
+    background: #f95752;
+}
+.eventdetailedit__main {
+    
+}
+
+.eventdetailedit-change {
+    display: inline-block;
+    background-color: #e74845;
+    color: Black;
+    padding: 2px 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius:10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none;
+}
+
+.eventdetailedit-cancel {
+    display: inline-block;
+    background-color: #a15455;
+    color: White;
+    padding: 2px 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none; 
+}

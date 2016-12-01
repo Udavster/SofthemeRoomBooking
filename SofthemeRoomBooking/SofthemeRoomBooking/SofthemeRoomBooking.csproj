@@ -289,8 +289,11 @@
     <Content Include="Content\Images\walls.png" />
     <Content Include="Content\Styles\common.css" />
     <Content Include="Content\Styles\equipment.css" />
+    <Content Include="Content\Styles\eventdetail.css" />
+    <Content Include="Content\Styles\eventdetailedit.css" />
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
+    <Content Include="Content\Styles\roombooking.css" />
     <Content Include="Content\Styles\validation.css" />
     <Content Include="Content\Styles\feedback.css" />
     <Content Include="Content\Styles\input_styles.css" />
@@ -359,7 +362,7 @@
     <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Shared\_MapPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_CalendarPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_EventDetailsPartial.cshtml" />
+    <Content Include="Views\Shared\_EventDetailsPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_EventEditPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
@@ -378,6 +381,8 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_RoomBooking.cshtml" />
+    <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

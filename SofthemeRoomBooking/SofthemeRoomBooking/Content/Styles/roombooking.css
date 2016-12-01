@@ -1,0 +1,52 @@
+﻿.roombooking {
+    width: 500px;
+    background: #ffffff;
+    height: 600px;
+    border: 1px solid #9fa6b6;
+}
+.roombooking div {
+    margin: 20px 15px;
+}
+.roombooking__title {
+    margin: 0;
+    padding: 5px 10px;
+    height: 60px;
+    width: auto;
+    background: #9fa6b6;
+}
+.roombooking__dropdown {
+    margin-left: 10px;
+    width: 200px;
+    border-radius: 20px;
+    height: 20px;
+    border: 1px solid #ebeef7;
+}
+.roombooking__input-title {
+    width: 470px;
+    height: 30px;
+    background: #ffffff;
+    border: 1px solid #ebeef7;
+}
+
+.roombooking__input-addinfo {
+    width: 470px;
+    height: 100px;
+    background: #ffffff;
+    border: 1px solid #ebeef7;
+}
+
+.roombooking-submit {
+    background-color: #c8ceda;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    outline: none;
+}
+
+input[type=checkbox] {
+    background-color: #ffffff;
+    width: 20px;
+    height: 20px;
+}
