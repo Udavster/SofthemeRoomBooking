@@ -1,11 +1,12 @@
 ﻿using System.Web.Mvc;
 using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Models.UserViewModels;
 
 namespace SofthemeRoomBooking.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(CurrentUserViewModel model)
+        public ActionResult Index(LayoutUserViewModel model)
         {
             return View(model);
         }
@@ -21,11 +22,6 @@ namespace SofthemeRoomBooking.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-        public ActionResult Feedback()
-        {
             return View();
         }
     }

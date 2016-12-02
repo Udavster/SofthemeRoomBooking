@@ -17,11 +17,10 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save(Feedback model)
+        public ActionResult Save(FeedbackViewModel model)
         {
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext("SofthemeRoomBooking")));
             var user= manager.FindByIdAsync(User.Identity.GetUserId());
-            user.
 
             if (ModelState.IsValid)
             {

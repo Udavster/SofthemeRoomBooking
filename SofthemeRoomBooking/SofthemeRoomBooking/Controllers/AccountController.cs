@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
 
 namespace SofthemeRoomBooking.Controllers
@@ -53,7 +54,6 @@ namespace SofthemeRoomBooking.Controllers
             {
                 case SignInStatus.Success:
                     return View("~/Views/Home/Index.cshtml", model);
-                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -126,12 +126,7 @@ namespace SofthemeRoomBooking.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                CurrentUserViewModel currentUser = new CurrentUserViewModel()
-                {
-                    UserName = model.Name
-                };
-               
+            {              
                 var user = new ApplicationUser
                 {
                     Name = model.Name,
@@ -143,6 +138,7 @@ namespace SofthemeRoomBooking.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var layoutUserViewModel = user.ToLayoutUserViewModel();
                     await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -151,7 +147,7 @@ namespace SofthemeRoomBooking.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home", currentUser);
+                    return RedirectToAction("Index", "Home", layoutUserViewModel);
                 }
                 AddErrors(result);
             }
