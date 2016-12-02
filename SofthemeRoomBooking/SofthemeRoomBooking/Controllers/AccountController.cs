@@ -53,7 +53,14 @@ namespace SofthemeRoomBooking.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return View("~/Views/Home/Index.cshtml", model);
+                {
+                       var currentUser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
+                        //ApplicationUser currentUser = _userManager.Users.FirstOrDefault(x => x.Id == User.Identity.GetUserId());
+                    var layoutUserViewModel = currentUser.ToLayoutUserViewModel();
+                    ViewBag.CurrentUser = currentUser;
+
+                    return View("~/Views/Home/Index.cshtml", layoutUserViewModel);
+                }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -138,6 +145,8 @@ namespace SofthemeRoomBooking.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    ViewBag.CurrentUser = user;
+
                     var layoutUserViewModel = user.ToLayoutUserViewModel();
                     await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     

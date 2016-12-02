@@ -17,6 +17,7 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(FeedbackViewModel model)
         {
             var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext("SofthemeRoomBooking")));

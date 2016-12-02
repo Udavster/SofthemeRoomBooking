@@ -28,6 +28,7 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/hr_department").Include(
                         "~/Scripts/hr_department.js"));
 
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/font-awesome.css",
                       "~/Content/Styles/validation.css",

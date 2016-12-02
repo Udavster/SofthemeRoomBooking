@@ -1,4 +1,5 @@
-﻿@model SofthemeRoomBooking.Models.CurrentUserViewModel
+﻿@using System.Security.Claims
+@model SofthemeRoomBooking.Models.UserViewModels.ProfileUserViewModel
 
 <div class="container-button">
     <button id="exitButton" class="button button-control hidden">Удалить</button>
@@ -7,14 +8,14 @@
 
 <div class="container container-info">
     <p class="container-info__title">
-        @Model.UserName
+        Ольга Таран
         <label class="admin-label">admin</label>
     </p>
 
     <p class="container-info__info">
         <span><b>Email: </b></span>
-        <span>@Model.Email</span>
-    </p>
+        <span>nagayko.WebMail.ru</span>
+    </p>@((User.Identity as ClaimsIdentity).Claims.FirstOrDefault(x => x.Type == "firstname"))>
     <p class="container-info__info">
         <span><b>Количество активных событий: </b></span>
         <span>12</span>
@@ -26,7 +27,7 @@
 </div>
 
 <div class="container container-edit-profile hidden">
-    @using (Html.BeginForm("Save", "HrDepartment", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    @using (Html.BeginForm("Save", "Profile", FormMethod.Post, new {enctype = "multipart/form-data"}))
     {
         <div class="group-input-error">
             @Html.SignalValidationMessageFor(model => model.UserName, new {@class = "error-box__text-danger"})
@@ -106,7 +107,7 @@
     }
 </div>*@
 
-@Html.Partial("_ChangePasswordPartial");
+@Html.Partial("_ChangePasswordPartial", null);
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

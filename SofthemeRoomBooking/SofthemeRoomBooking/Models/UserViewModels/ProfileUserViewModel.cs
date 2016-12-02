@@ -9,5 +9,7 @@
         public int ActiveEvents { get; set; }
 
         public bool AdminRole { get; set; }
+
+        public ChangePasswordViewModel ChangePasswordViewModel { get; set; }
     }
 }
