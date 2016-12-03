@@ -65,10 +65,10 @@
     <Build Include="AspNetUserLogins.sql" />
     <Build Include="AspNetUserRoles.sql" />
     <Build Include="AspNetUsers.sql" />
-    <Build Include="Room.sql" />
-    <Build Include="Event.sql" />
     <Build Include="Equipment.sql" />
     <Build Include="EquipmentRooms.sql" />
     <Build Include="Feedback.sql" />
+    <Build Include="Events.sql" />
+    <Build Include="Rooms.sql" />
   </ItemGroup>
 </Project>

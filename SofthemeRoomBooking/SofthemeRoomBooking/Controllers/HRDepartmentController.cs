@@ -9,7 +9,7 @@ namespace SofthemeRoomBooking.Controllers
     public class HrDepartmentController : Controller
     {
         // GET: HRDepartment
-        public ActionResult Index()
+        public ActionResult Users()
         {
             return View();
         }
