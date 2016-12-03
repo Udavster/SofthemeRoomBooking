@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Room]
+﻿CREATE TABLE [dbo].[Rooms]
 (
 	id INT IDENTITY PRIMARY KEY,
 	name NVARCHAR(35)

@@ -383,6 +383,9 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_RoomBooking.cshtml" />
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
+    <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\HRDepartment\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -390,7 +393,6 @@
     <Folder Include="Package\" />
     <Folder Include="Scripts\NewFolder1\" />
     <Folder Include="Views\Event\" />
-    <Folder Include="Views\HRDepartment\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>
