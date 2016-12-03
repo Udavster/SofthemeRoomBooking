@@ -361,13 +361,15 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\HRDepartment\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Converters\" />
     <Folder Include="Package\" />
     <Folder Include="Views\Event\" />
-    <Folder Include="Views\HRDepartment\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>
