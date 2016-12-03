@@ -191,6 +191,7 @@ namespace SofthemeRoomBooking.Controllers
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                return View("~/Views/Login/ResetPassword.cshtml");
             }
 
             // If we got this far, something failed, redisplay form
@@ -202,7 +203,7 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            return View("~/Views/Login/ResetPasswordConfirmation.cshtml");
         }
 
         //
