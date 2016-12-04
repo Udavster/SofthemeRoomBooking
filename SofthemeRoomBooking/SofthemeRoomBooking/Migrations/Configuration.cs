@@ -10,6 +10,7 @@ namespace SofthemeRoomBooking.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "SofthemeRoomBooking.Models.ApplicationDbContext";
         }
 
         protected override void Seed(SofthemeRoomBooking.Models.ApplicationDbContext context)

@@ -220,9 +220,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201611291454339_AddName.cs" />
-    <Compile Include="Migrations\201611291454339_AddName.Designer.cs">
-      <DependentUpon>201611291454339_AddName.cs</DependentUpon>
+    <Compile Include="Migrations\201612032120020_Name.cs" />
+    <Compile Include="Migrations\201612032120020_Name.Designer.cs">
+      <DependentUpon>201612032120020_Name.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -374,6 +374,9 @@
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\HRDepartment\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -396,8 +399,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201611291454339_AddName.resx">
-      <DependentUpon>201611291454339_AddName.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612032120020_Name.resx">
+      <DependentUpon>201612032120020_Name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

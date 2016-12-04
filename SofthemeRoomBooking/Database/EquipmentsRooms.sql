@@ -1,7 +1,11 @@
 ﻿CREATE TABLE [dbo].[EquipmentsRooms]
 (
 	id INT IDENTITY PRIMARY KEY,
-	id_room INT,
-	id_equipment INT,
-	quantity INT
+	id_room INT NOT NULL,
+	id_equipment INT NOT NULL,
+	quantity INT NOT NULL
+	CONSTRAINT fk_ERtoRoom FOREIGN KEY (id_room)
+		REFERENCES Rooms(id),
+	CONSTRAINT fk_ERtoEquipment FOREIGN KEY (id_equipment)
+		REFERENCES Equipment(id)
 )

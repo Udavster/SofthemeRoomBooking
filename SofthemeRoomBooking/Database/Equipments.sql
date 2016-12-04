@@ -1,5 +1,5 @@
-﻿CREATE TABLE [dbo].[Equipments]
+﻿﻿CREATE TABLE [dbo].[Equipments]
 (
 	id INT IDENTITY PRIMARY KEY,
-	name NVARCHAR(35)
-)
+	name NVARCHAR(35) NOT NULL
+) 
