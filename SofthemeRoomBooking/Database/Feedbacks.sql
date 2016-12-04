@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Feedback]
+﻿CREATE TABLE [dbo].[Feedbacks]
 (
 	id INT IDENTITY PRIMARY KEY,
 	email NVARCHAR(256),

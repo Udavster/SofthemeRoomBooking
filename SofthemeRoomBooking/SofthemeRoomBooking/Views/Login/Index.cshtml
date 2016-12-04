@@ -1,6 +1,5 @@
 ﻿@model SofthemeRoomBooking.Models.LoginViewModel
 @{
-    ViewBag.Title = "Login";
     ViewBag.Login = true;
     Layout = "~/Views/Login/_Layout.cshtml";
 }
@@ -8,10 +7,12 @@
 @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "compl-background__form form", enctype = "multipart/form-data" }))
 {
     <div class="form__label">Вход</div>
-    if (ViewBag.InvalidCredentials!=null)
+
+    if (ViewBag.InvalidCredentials != null)
     {
         @Html.BigInvalidMessage("Неверные данные", new {@class= "error-box__text-centered" });
     }
+
     @Html.AntiForgeryToken()
     <div class="group-input-error">
         @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})

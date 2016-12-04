@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNet.Identity
+@model SofthemeRoomBooking.Models.UserViewModels.ProfileUserViewModel
+
+<div class="container-button">
+    @using (Html.BeginForm("Delete", "Profile", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input class="input-submit button-control hidden" type="submit" value="Удалить" />
+    }
+
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input class="input-submit button-control" type="submit" value="Выйти" />
+    }
+</div>
+
+<div class="container container-info">
+    <p class="container-info__title">
+        @Model.UserName
+        @if (Model.AdminRole)
+        {
+            <label class="admin-label">admin</label>
+        }
+    </p>
+
+    <p class="container-info__info">
+        <span><b>Email: </b></span>
+        <span>@Model.Email</span>
+    </p>
+    <p class="container-info__info">
+        <span><b>Количество активных событий: </b></span>
+        <span>@Model.ActiveEvents</span>
+    </p>
+
+    <div class="container-info__button">
+        <button id="editButton" class="button button-control">Изменить</button>
+    </div>
+</div>
+
+@Html.Action("Edit", new { userId = Model.Id });
+
+@if (Model.Id == User.Identity.GetUserId())
+{
+    @Html.Action("ChangePassword");
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/hr_department")
+}
+

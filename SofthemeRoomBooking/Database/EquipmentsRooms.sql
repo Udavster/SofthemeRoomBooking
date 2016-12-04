@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[EquipmentRooms]
+﻿CREATE TABLE [dbo].[EquipmentsRooms]
 (
 	id INT IDENTITY PRIMARY KEY,
 	id_room INT,

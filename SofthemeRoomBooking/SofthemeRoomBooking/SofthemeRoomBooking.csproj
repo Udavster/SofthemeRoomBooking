@@ -228,6 +228,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\ProfileUserViewModel.cs" />
     <Compile Include="MvcPackage.cs" />
@@ -348,7 +349,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_DateTimePartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupConfirmationPartial.cshtml" />
+    <Content Include="Views\Shared\_PopupConfirmationPartial.cshtml" />
     <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Shared\_MapPartial.cshtml" />
     <Content Include="Views\Shared\_CalendarPartial.cshtml" />
@@ -369,9 +370,10 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
-    <Content Include="Views\Profile\Profile.cshtml" />
-    <Content Include="Views\Profile\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

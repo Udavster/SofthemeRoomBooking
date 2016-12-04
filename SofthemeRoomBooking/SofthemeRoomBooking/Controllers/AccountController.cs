@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Models.UserViewModels;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -30,7 +32,6 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
             ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Login/Index.cshtml");
         }
@@ -54,12 +55,7 @@ namespace SofthemeRoomBooking.Controllers
             {
                 case SignInStatus.Success:
                 {
-                       var currentUser = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-                        //ApplicationUser currentUser = _userManager.Users.FirstOrDefault(x => x.Id == User.Identity.GetUserId());
-                    var layoutUserViewModel = currentUser.ToLayoutUserViewModel();
-                    ViewBag.CurrentUser = currentUser;
-
-                    return View("~/Views/Home/Index.cshtml", layoutUserViewModel);
+                    return RedirectToAction("Index", "Home");
                 }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -133,21 +129,12 @@ namespace SofthemeRoomBooking.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
-            {              
-                var user = new ApplicationUser
-                {
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    Email = model.Email,
-                    UserName = model.Email
-                };
+            {
+                var user = model.ToApplicationUser();
 
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    ViewBag.CurrentUser = user;
-
-                    var layoutUserViewModel = user.ToLayoutUserViewModel();
                     await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -156,7 +143,7 @@ namespace SofthemeRoomBooking.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home", layoutUserViewModel);
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
