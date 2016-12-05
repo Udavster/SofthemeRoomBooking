@@ -67,6 +67,7 @@
     <Compile Include="Contracts\IFeedbackService.cs" />
     <Compile Include="Contracts\IHRDepartmentService.cs" />
     <Compile Include="Contracts\IRoomService.cs" />
+    <Compile Include="Converters\ToEventModel.cs" />
     <Compile Include="Implementations\RoomService.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventsList.cs" />

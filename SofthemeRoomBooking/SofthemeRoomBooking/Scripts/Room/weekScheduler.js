@@ -1,21 +1,23 @@
 ﻿$(document).ready(function () {
     var currentDate = new Date();
     var prevDate = new Date();
-    var scheduler = new RoomCalendar();
-    //if sunday
+    //0 - sunday, 6 - saturday
     if (currentDate.getDay() === 0) {
         prevDate.setDate(currentDate.getDate() - 2);
     }
     else {
         prevDate.setDate(currentDate.getDate() - 1);
     }
-    var data = {date : currentDate.toISOString().slice(0,10)}
-    $.getJSON("/Home/Events",data, function (jsonObject) {
+    var data = {
+        date: prevDate.toISOString().slice(0, 10),
+        id: 1
+}
+    $.getJSON("/Room/Events",data, function (jsonObject) {
 
         for (var i = 0; i < 8; i++) {
-            scheduler.generateCalendarCol(prevDate, jsonObject[i], i);
+                generateCalendarCol(prevDate, jsonObject[i], i);
             if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
-                scheduler.drawCursor(prevDate);
+                    drawCursor(prevDate);
             }
             if (prevDate.getDay() === 6) {
                 prevDate.setDate(prevDate.getDate() + 2);
@@ -29,13 +31,13 @@
     $('#calendar').show();
 });
 // calendar = new roomCalendar
-function RoomCalendar() {
-    this.roomWidth = 60;
+//function RoomCalendar() {
+//    this.roomWidth = 60;
     //this.generate... = function(){}.bind(this)
     function generateCalendarCol(date, events, iteration) {
         var calendar = $('#calendar');
         var ttt = iteration;
-        var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+        var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
         //Generate HTML strucrure
 
         //set column border active if date = current date
@@ -43,7 +45,7 @@ function RoomCalendar() {
         if (new Date().setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) && date.getDay() != 6) {
             var structure = '<div class="calendar-col-active c-' + ttt + '">';
         } else {
-            if (date.getDay() == 6 || date.getDay() == 0) {
+            if (date.getDay() === 6 || date.getDay() === 0) {
                 var structure = '<div class="calendar-col-weekend c-' + ttt + '">';
             } else {
                 var structure = '<div class="calendar-col c-' + ttt + '">';
@@ -125,4 +127,4 @@ function RoomCalendar() {
             'px"><div class="cursor__arrows cursor__left-arrow"><i class="fa fa-caret-right" style="color:gray; font-size:25px" aria-hidden="true"></i></div><div class="cursor__arrows cursor__right-arrow"><i class="fa fa-caret-left" style="color:gray ;font-size:25px" aria-hidden="true"></i></div></div>';
         $(ctimeDiv).appendTo($(currentItem));
     }
-}
+//}

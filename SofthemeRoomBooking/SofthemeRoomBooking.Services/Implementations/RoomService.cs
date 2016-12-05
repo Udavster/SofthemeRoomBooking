@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
+using SofthemeRoomBooking.Services.Converters;
 using SofthemeRoomBooking.Services.Models;
 
 
@@ -10,46 +13,44 @@ namespace SofthemeRoomBooking.Services.Implementations
 {
     public class RoomService : IRoomService
     {
-        public void GetEventsByWeek(DateTime time)
+        private SofhemeRoomBookingContext _context;
+        public RoomService(SofhemeRoomBookingContext context)
         {
-            //SofhemeRoomBookingContext context = new SofhemeRoomBookingContext();
-            //EventsList events = new EventsList();
-            //Event event1 = new Event()
-            //{
-            //    Description = "sdfsdfsd",
-            //    Finish = "2016-12-04 15:40",
-            //    Id = 1,
-            //    Publicity = true,
-            //    Start = "2016-12-04 15:00",
-            //    Title = "dfsdfsd"
-            //};
-            //Event event2 = new Event()
-            //{
-            //    Description = "sdfsdfsd",
-            //    Finish = "2016-12-04 13:00",
-            //    Id = 2,
-            //    Publicity = true,
-            //    Start = "2016-12-04 13:20",
-            //    Title = "dfsdfsd"
-            //};
-            //Event event3 = new Event()
-            //{
-            //    Description = "sdfsdfsd",
-            //    Finish = "2016-12-04 14:00",
-            //    Id = 3,
-            //    Publicity = true,
-            //    Start = "2016-12-04 14:30",
-            //    Title = "dfsdfsd"
-            //};
+            _context = context;
+        }
+        public string GetEventsByWeek(string date, int id)
+        {
+            DateTime currentDate = DateTime.ParseExact(date,
+                      "yyyy-MM-dd",
+                      CultureInfo.InvariantCulture);
 
-            //events.Events.Add(event1);
+            List<List<Event>> events = new List<List<Event>>();
 
-            //events.Events.Add(event2);
+            for (int i = 0; i < 8; i++)
+            {
+                List<Event> day = new List<Event>();
+                var eventsList =
+                    _context.Events.Where(
+                        ev =>
+                            ev.Start.Day == currentDate.Day && ev.Start.Month == currentDate.Month &&
+                            ev.Id_room == id);
+                foreach (var item in eventsList)
+                {
+                    day.Add(item.ToEvent());
+                }
+                events.Add(day);
+                if (currentDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    currentDate = currentDate.AddDays(2);
+                }
+                else
+                {
+                    currentDate = currentDate.AddDays(1);
+                }
+            }
 
-            //events.Events.Add(event3);
-
-           // var result = JsonConvert.SerializeObject(events);
-
+            var result = JsonConvert.SerializeObject(events);
+            return result;
         }
     }
 }
