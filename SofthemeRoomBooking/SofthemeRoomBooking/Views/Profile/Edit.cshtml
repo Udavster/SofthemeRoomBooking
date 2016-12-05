@@ -45,13 +45,16 @@
             })
         </div>
 
-        if (ViewBag.AdminRole && Model.Id != User.Identity.GetUserId())
+        var hidden = "hidden";
+        if(ViewBag.AdminRole && Model.Id != User.Identity.GetUserId())
         {
-            <div class="container-edit-profile__checkbox">
-                @Html.CheckBoxFor(model => model.AdminRole, new { @class = "checkbox" })
-                @Html.LabelFor(model => model.AdminRole, "Администратор")
-            </div>
+            hidden = "";
         }
+        <div class="container-edit-profile__checkbox @hidden">
+            @Html.CheckBoxFor(model => model.AdminRole, new {@class = "checkbox"})
+            @Html.LabelFor(model => model.AdminRole, "Администратор")
+        </div>
+
 
         <div class="container-edit-profile__container-submit">
             <input class="input-submit container-edit-profile__submit" type="submit" value="Сохранить" />

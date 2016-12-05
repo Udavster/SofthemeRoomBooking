@@ -50,7 +50,7 @@ namespace SofthemeRoomBooking.Controllers
 
             if (model != null)
             {
-                ViewBag.AdminRole = _profileService.IsAdmin(userId);
+                ViewBag.AdminRole = _profileService.IsAdmin(User.Identity.GetUserId());
 
                 return View(model);
             }
@@ -64,7 +64,7 @@ namespace SofthemeRoomBooking.Controllers
         {
             var result = await _profileService.Edit(model);
 
-            if (result)
+            if (!result)
             {
                 ModelState.AddModelError("", "Что-то пошло не так");
                 return View(model);
