@@ -34,58 +34,63 @@ namespace SofthemeRoomBooking.Controllers
             return View();
         }
         [HttpGet]
-        public JsonResult Events(string date)
+        public ActionResult Events()
         {
-            DateTime dt = DateTime.ParseExact(date,
-                                  "yyyy-MM-dd",
-                                  CultureInfo.InvariantCulture);
-            List<EventsList> events = new List<EventsList>();
-            EventsList day1 = new EventsList() { events = new List<Event>() };
-            EventsList day2 = new EventsList() { events = new List<Event>() };
-            EventsList day3 = new EventsList() { events = new List<Event>() };
+            //DateTime dt = DateTime.ParseExact(date,
+            //                      "yyyy-MM-dd",
+            //                      CultureInfo.InvariantCulture);
+         //   List<EventsList> events = new List<EventsList>();
 
-        EventsList day4 = new EventsList() { events = new List<Event>() };
-        EventsList day5 = new EventsList() { events = new List<Event>() };
-        EventsList day6 = new EventsList() { events = new List<Event>() };
-        EventsList day7 = new EventsList() { events = new List<Event>() };
-        EventsList day8 = new EventsList() { events = new List<Event>() };
+        //EventsList day4 = new EventsList() { events = new List<Event>() };
+        //EventsList day5 = new EventsList() { events = new List<Event>() };
+        //EventsList day6 = new EventsList() { events = new List<Event>() };
+        //EventsList day7 = new EventsList() { events = new List<Event>() };
+        //EventsList day8 = new EventsList() { events = new List<Event>() };
         Event event1 = new Event()
         {
-            description = "sdfsdfsd",
-            endDate = "2016-12-04 13:40",
-            eventId = 1,
-            isPrivate = true,
-            startDate = "2016-12-04 13:00",
-            title = "dfsdfsd"
+            Description = "sdfsdfsd",
+            Finish = "2016-12-04 15:40",
+            Id = 1,
+            Publicity = true,
+            Start = "2016-12-04 15:00",
+            Title = "dfsdfsd"
         };
         Event event2 = new Event()
         {
-            description = "sdfsdfsd",
-            endDate = "2016-12-04 14:40",
-            eventId = 1,
-            isPrivate = true,
-            startDate = "2016-12-04 14:00",
-            title = "dfsdfsd"
+            Description = "sdfsdfsd",
+            Finish = "2016-12-04 14:40",
+            Id = 1,
+            Publicity = true,
+            Start = "2016-12-04 14:00",
+            Title = "dfsdfsd"
         };
         Event event3 = new Event()
         {
-            description = "sdfsdfsd",
-            endDate = "2016-12-04 15:40",
-            eventId = 1,
-            isPrivate = true,
-            startDate = "2016-12-04 15:00",
-            title = "dfsdfsd"
+            Description = "sdfsdfsd",
+            Finish = "2016-12-04 13:40",
+            Id = 1,
+            Publicity = true,
+            Start = "2016-12-04 13:00",
+            Title = "dfsdfsd"
         };
+        List<Event> day1 = new List<Event>();
+        List<Event> day2 = new List<Event>();
+        List<Event> day3 = new List<Event>();
+        List<Event> day4 = new List<Event>();
+        List<Event> day5 = new List<Event>();
+        List<Event> day6 = new List<Event>();
+        List<Event> day7 = new List<Event>();
+        List<Event> day8 = new List<Event>();
+        List<List<Event>> events = new List<List<Event>>();
 
-        day1.events.Add(event1);
-            day1.events.Add(event2);
+            day1.Add(event1);
+            day1.Add(event2);
+            day1.Add(event3);
 
-            day1.events.Add(event3);
+            day2.Add(event1);
+            day2.Add(event2);
 
-            day2.events.Add(event1);
-            day2.events.Add(event2);
-
-            day2.events.Add(event3);
+            day2.Add(event3);
             events.Add(day1);
             events.Add(day2);
             events.Add(day3);
@@ -94,8 +99,9 @@ namespace SofthemeRoomBooking.Controllers
             events.Add(day6);
             events.Add(day7);
             events.Add(day8);
+            var result = JsonConvert.SerializeObject(events);
 
-            return Json(events, JsonRequestBehavior.AllowGet);
+            return Content(result, "application/json");
     }
 }
 }

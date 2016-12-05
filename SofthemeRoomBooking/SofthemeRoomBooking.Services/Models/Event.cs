@@ -10,16 +10,16 @@ namespace SofthemeRoomBooking.Services.Models
     public class Event
     {
         [JsonProperty(PropertyName = "eventId")]
-        public int eventId { get; set; }
+        public int Id { get; set; }
         [JsonProperty(PropertyName = "title")]
-        public string title { get; set; }
+        public string Title { get; set; }
         [JsonProperty(PropertyName = "description")]
-        public string description { get; set; }
+        public string Description { get; set; }
         [JsonProperty(PropertyName = "startDate")]
-        public string startDate { get; set; }
+        public string Start { get; set; }
         [JsonProperty(PropertyName = "endDate")]
-        public string endDate { get; set; }
+        public string Finish { get; set; }
         [JsonProperty(PropertyName = "isPrivate")]
-        public bool isPrivate { get; set; }
+        public bool Publicity { get; set; }
     }
 }
