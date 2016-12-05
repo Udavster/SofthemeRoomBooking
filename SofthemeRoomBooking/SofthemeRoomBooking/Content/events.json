@@ -1,0 +1,64 @@
+﻿{
+  "events": {
+    "0": [
+      {
+        "startDate": "2016-12-01 15:00",
+        "endDate": "2016-12-01 15:40",
+        "title": "New Event",
+        "description": "Useless event",
+        "eventId": 123,
+        "isPrivate": true
+      },
+      {
+        "startDate": "2016-12-01 12:20",
+        "endDate": "2016-12-01 13:20",
+        "title": "New Event 2",
+        "description": "Useless event",
+        "eventId": 124,
+        "isPrivate": true
+      }
+    ],
+    "1": [
+      {
+        "startDate": "2016-12-02 11:00",
+        "endDate": "2016-12-02 11:40",
+        "title": "New Event",
+        "description": "Useless event",
+        "eventId": 123,
+        "isPrivate": false
+      },
+      {
+        "startDate": "2016-12-02 13:20",
+        "endDate": "2016-12-02 13:40",
+        "title": "New Event 2",
+        "description": "Useless event",
+        "eventId": 124,
+        "isPrivate": false
+      }
+    ],
+    "2": [
+      {
+        "startDate": "2016-12-02 11:00",
+        "endDate": "2016-12-02 11:40",
+        "title": "New Event",
+        "description": "Useless event",
+        "eventId": 123,
+        "isPrivate": false
+      },
+      {
+        "startDate": "2016-12-02 13:20",
+        "endDate": "2016-12-02 13:40",
+        "title": "New Event 2",
+        "description": "Useless event",
+        "eventId": 124,
+        "isPrivate": false
+      }
+    ],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": [],
+    "8": []
+  }
+}
