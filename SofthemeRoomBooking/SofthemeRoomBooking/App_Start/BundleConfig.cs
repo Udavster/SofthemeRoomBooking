@@ -45,10 +45,10 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/validation.css",
                       "~/Content/font-awesome.css"));
 
-            bundles.Add(new StyleBundle("~/Content/styles/feedback").Include(
+            bundles.Add(new StyleBundle("~/Content/Styles/feedback").Include(
                 "~/Content/Styles/feedback.css"));
 
-            bundles.Add(new StyleBundle("~/Content/styles/users").Include(
+            bundles.Add(new StyleBundle("~/Content/Styles/users").Include(
                 "~/Content/Styles/users.css"));
 
             bundles.Add(new StyleBundle("~/Content/Styles/profile").Include(
