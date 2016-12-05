@@ -52,12 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Equipment.cs" />
-    <Compile Include="EquipmentRoom.cs" />
-    <Compile Include="Event.cs" />
+    <Compile Include="EquipmentRooms.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Room.cs" />
-    <Compile Include="SofthemeRoomBookingContext.cs" />
+    <Compile Include="Rooms.cs" />
+    <Compile Include="SofhemeRoomBookingContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

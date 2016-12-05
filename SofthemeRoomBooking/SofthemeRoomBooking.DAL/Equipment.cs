@@ -9,9 +9,19 @@ namespace SofthemeRoomBooking.DAL
     [Table("Equipment")]
     public partial class Equipment
     {
-        public int id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Equipment()
+        {
+            EquipmentRooms = new HashSet<EquipmentRooms>();
+        }
 
+        public int Id { get; set; }
+
+        [Required]
         [StringLength(35)]
-        public string name { get; set; }
+        public string Name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipmentRooms> EquipmentRooms { get; set; }
     }
 }

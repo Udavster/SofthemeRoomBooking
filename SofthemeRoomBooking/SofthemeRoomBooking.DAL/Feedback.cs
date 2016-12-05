@@ -9,21 +9,25 @@ namespace SofthemeRoomBooking.DAL
     [Table("Feedback")]
     public partial class Feedback
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         [StringLength(256)]
-        public string email { get; set; }
+        public string Email { get; set; }
 
+        [Required]
         [StringLength(500)]
-        public string message { get; set; }
+        public string Message { get; set; }
 
+        [Required]
         [StringLength(50)]
-        public string name { get; set; }
+        public string Name { get; set; }
 
+        [Required]
         [StringLength(50)]
-        public string surname { get; set; }
+        public string Surname { get; set; }
 
         [Column(TypeName = "smalldatetime")]
-        public DateTime? created { get; set; }
+        public DateTime Created { get; set; }
     }
 }
