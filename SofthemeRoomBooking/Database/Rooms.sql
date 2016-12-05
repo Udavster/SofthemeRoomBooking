@@ -2,4 +2,6 @@
 (
 	id INT IDENTITY PRIMARY KEY,
 	name NVARCHAR(35)
-)
+);
+
+GO

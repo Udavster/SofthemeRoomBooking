@@ -1,0 +1,30 @@
+﻿@model SofthemeRoomBooking.Models.ConfirmationViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="confirmation">
+    <div class="confirmation__title">
+        <i class="fa fa-ban confirmation__sign" aria-hidden="true"></i>
+        <span class="confirmation__message">@Model.Question</span>
+    </div>
+    <div class="confirmation__body">
+        <span>@Model.Message</span>
+        <button id="cancelButton" class="button confirmation__button button-cancel">Нет</button>
+
+        @using (Html.BeginForm(Model.Action, Model.Controller, FormMethod.Post, new { @class = "confirmation__button" }))
+        {
+            @Html.Hidden("id", Model.DataId)
+            <button id="okButton" class="button button-ok" type="submit">Да</button>
+        }
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('#cancelButton').bind('click', function() {
+            $('#popup-confirmation').hide();
+        });
+    });
+</script>

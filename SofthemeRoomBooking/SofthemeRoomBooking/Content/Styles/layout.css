@@ -12,9 +12,9 @@
 }
 
 .content {
+    display: block;
     height: 100%;
     padding-bottom: 14%;
-    display: block;
 }
 
 .footer {
@@ -39,7 +39,7 @@
     float: right;
     list-style-type: none;
     margin-left: auto;
-    margin-right: 5%;
+    margin-right: 6%;
     overflow: hidden;
 }
 
@@ -70,6 +70,38 @@
 .menu__link-active {
     background: #F4F6FB;
     border-bottom: 3px solid red;
+}
+
+.menu__button {
+    position: relative;
+    margin: auto;
+    margin-right: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 45px;
+    background: transparent; 
+    outline: none; 
+}
+
+.plus {
+    position: absolute;
+    top: -25px;
+    left: -20px;
+    color: #858B94;
+}
+
+.background-plus {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
+    background-color: #C8CEDA;
+}
+
+.user-icon {
+    font-size: 20px;
+    margin: auto 0;
 }
 
 .footer__list {

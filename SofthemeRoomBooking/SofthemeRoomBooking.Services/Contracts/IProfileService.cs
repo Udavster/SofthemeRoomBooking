@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SofthemeRoomBooking.Services.Contracts
 {
-    public interface IAccountService
+    public interface IProfileService
     {
+
     }
 }

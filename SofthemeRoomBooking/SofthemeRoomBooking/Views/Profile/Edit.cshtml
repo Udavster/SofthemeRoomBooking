@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNet.Identity
+@model SofthemeRoomBooking.Models.UserViewModels.EditUserViewModel
+
+@{
+    Layout = null;
+}
+
+<div class="container container-edit-profile hidden">
+    @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="group-input-error">
+            @Html.SignalValidationMessageFor(model => model.Name, new {@class = "error-box__text-danger"})
+            @Html.EditorFor(model => model.Name, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text container-edit-profile__input-text",
+                }
+            })
+        </div>
+
+        <div class="group-input-error">
+            @Html.SignalValidationMessageFor(model => model.Surname, new {@class = "error-box__text-danger"})
+            @Html.EditorFor(model => model.Surname, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text container-edit-profile__input-text",
+                }
+            })
+        </div>
+
+        <div class="group-input-error">
+            @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
+            @Html.EditorFor(model => model.Email, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text container-edit-profile__input-text",
+                }
+            })
+        </div>
+
+        if (ViewBag.AdminRole && Model.Id != User.Identity.GetUserId())
+        {
+            <div class="container-edit-profile__checkbox">
+                @Html.CheckBoxFor(model => model.AdminRole, new { @class = "checkbox" })
+                @Html.LabelFor(model => model.AdminRole, "Администратор")
+            </div>
+        }
+
+        <div class="container-edit-profile__container-submit">
+            <input class="input-submit container-edit-profile__submit" type="submit" value="Сохранить" />
+        </div>
+    }
+</div>
+
+
