@@ -16,7 +16,7 @@ namespace SofthemeRoomBooking.Models
         public String Surname { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
-        [StringLength(256, MinimumLength = 6, ErrorMessage = "Email не может быть короче 6 или длиннее 256 символов")]
+        [RegularExpression(@"^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$", ErrorMessage = "Неверный адрес электронной почты")]
         public String Email { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]

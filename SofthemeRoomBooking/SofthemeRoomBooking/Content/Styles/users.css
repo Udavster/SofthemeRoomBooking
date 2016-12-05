@@ -131,3 +131,19 @@
         font-size: 11px;
         text-align: center;
     }
+
+    .admin-label {
+    display: inline-block;
+    width: 60px;
+    height: 22px;
+    vertical-align: top;
+    text-align: center;
+    padding: 2px;
+    border: none;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    background: #F15754;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 14px;
+}

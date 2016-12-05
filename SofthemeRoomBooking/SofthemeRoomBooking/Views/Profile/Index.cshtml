@@ -1,20 +1,24 @@
 ﻿@using Microsoft.AspNet.Identity
 @model SofthemeRoomBooking.Models.UserViewModels.ProfileUserViewModel
 
-<div class="container-button">
-    @using (Html.BeginForm("Delete", "Profile", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        <input class="input-submit button-control hidden" type="submit" value="Удалить" />
-    }
+@section Styles {
+    @Styles.Render("~/Content/Styles/profile")
+}
 
-    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+<div id="popup-confirmation" class="overlay"></div>
+
+<div class="container-button">
+    <input id="deleteButton" class="input-submit container-button-form button-control hidden" type="submit" value="Удалить"/>
+
+    @if (Model.Id == User.Identity.GetUserId())
     {
-        @Html.AntiForgeryToken()
-        <input class="input-submit button-control" type="submit" value="Выйти" />
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoffButton", @class = "container-button-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <input class="input-submit button-control" type="submit" value="Выйти" />
+        }
     }
 </div>
-
 <div class="container container-info">
     <p class="container-info__title">
         @Model.UserName
@@ -38,15 +42,41 @@
     </div>
 </div>
 
-@Html.Action("Edit", new { userId = Model.Id });
+@Html.Action("Edit", new { userId = Model.Id })
 
 @if (Model.Id == User.Identity.GetUserId())
 {
-    @Html.Action("ChangePassword");
+    <div class="container container-change-password">
+        @Html.Action("ChangePassword", new {userId = Model.Id})
+    </div>
 }
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/hr_department")
+    @Scripts.Render("~/bundles/jqueryval");
 }
 
+<script>
+    $('#editButton').click(function () {
+        $('#logoffButton').addClass('hidden');
+        $('#deleteButton').removeClass('hidden');
+
+        $('.container-info').addClass('hidden');
+        $('.container-edit-profile').removeClass('hidden');
+    });
+
+    $('#deleteButton').bind('click', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '@Url.Action("Delete")',
+            method: 'GET',
+            cache: true,
+            data: { userId: '@Model.Id' },
+            dataType: 'html',
+            success: function(result) {
+                $('#popup-confirmation').html(result);
+                $('#popup-confirmation').show();
+            }
+        });
+    });
+</script>

@@ -13,4 +13,6 @@
  		REFERENCES Rooms(id),
  	CONSTRAINT fk_EventCreator FOREIGN KEY (id_user)
  		REFERENCES AspNetUsers(id)
-)
+);
+
+GO

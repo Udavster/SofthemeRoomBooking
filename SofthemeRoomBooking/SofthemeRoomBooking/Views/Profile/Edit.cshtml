@@ -33,25 +33,23 @@
                 }
             })
         </div>
-        
+
         <div class="group-input-error">
-            @Html.SignalValidationMessageFor(model => model.Email, new { @class = "error-box__text-danger" })
+            @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
             @Html.EditorFor(model => model.Email, new
-       {
-           htmlAttributes = new
-           {
-               @class = "input-text container-edit-profile__input-text",
-           }
-       })
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text container-edit-profile__input-text",
+                }
+            })
         </div>
 
-        if (ViewBag.IsAdmin && Model.Id != User.Identity.GetUserId())
+        if (ViewBag.AdminRole && Model.Id != User.Identity.GetUserId())
         {
             <div class="container-edit-profile__checkbox">
                 @Html.CheckBoxFor(model => model.AdminRole, new { @class = "checkbox" })
                 @Html.LabelFor(model => model.AdminRole, "Администратор")
-                @*<input type="checkbox" id="AdminRole" class="checkbox" value="@Model.AdminRole" />*@
-                @*<label for="AdminRole">Администратор</label>*@
             </div>
         }
 

@@ -1,50 +1,57 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Models.UserViewModels;
+using SofthemeRoomBooking.Services.Contracts;
 
 namespace SofthemeRoomBooking.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly SignInManager<ApplicationUser, string> _signInManager;
-        private readonly ApplicationUserManager _userManager;
+        private readonly IProfileService _profileService;
 
-        public ProfileController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ProfileController(IProfileService profileService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _profileService = profileService;
         }
 
         public ActionResult Index(string userId)
         {
-            var user = _userManager.FindById(userId);
+            var model = _profileService.GetProfileUserViewModelById(userId);
 
-            if (user != null)
+            if (model != null)
             {
-                var model = user.ToProfileUserViewModel(_userManager);
                 return View(model);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult Users()
+        {
+            var isAdmin = _profileService.IsAdmin(User.Identity.GetUserId());
+
+            if (isAdmin)
+            {
+                var model = _profileService.GetAllProfileUserViewModels();
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");            
+        }
+
         [HttpGet]
         public ActionResult Edit(string userId)
         {
-            var user = _userManager.FindById(userId);
-            if (user != null)
-            {
-                ViewBag.IsAdmin = _userManager.GetRoles(User.Identity.GetUserId()).Count != 0;
+            var model = _profileService.GetEditUserViewModelById(userId);
 
-                var model = user.ToEditUserViewModel(_userManager);
+            if (model != null)
+            {
+                ViewBag.AdminRole = _profileService.IsAdmin(userId);
+
                 return View(model);
             }
 
@@ -55,71 +62,72 @@ namespace SofthemeRoomBooking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(EditUserViewModel model)
         {
-            var user = await _userManager.FindByIdAsync(model.Id);
+            var result = await _profileService.Edit(model);
 
-            if (user != null)
+            if (result)
             {
-                user = model.ToApplicationUser(user);
-
-                IdentityResult result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    //_dbContext.SaveChanges();
-                    return RedirectToAction("Index", "Profile", new { userId = user.Id });
-                }
-
                 ModelState.AddModelError("", "Что-то пошло не так");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Пользователь не найден");
+                return View(model);
             }
 
-            return View(model);
+            return RedirectToAction("Index", "Profile", new { userId = model.Id });
         }
 
 
         [HttpGet]
-        public ActionResult Delete()
+        public ActionResult Delete(string userId)
         {
-            //redirect to confirmation popup
-            return View();
-        }
+            var user = _profileService.GetUserById(userId);
 
-        [HttpPost]
-        public async Task<ActionResult> Delete(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded)
+                var model = new ConfirmationViewModel
                 {
-                    if (userId == User.Identity.GetUserId())
-                    {
-                        return RedirectToAction("Login", "Account");
-                    }
-                    else
-                    {
-                        //to Users
-                        //return RedirectToAction("", "");
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                ModelState.AddModelError("", "Что-то пошло не так");
-            }
-            else
-            {
-                ModelState.AddModelError("", "Пользователь не найден");
+                    Question = "Вы уверены, что хотите удалить этот аккаунт?",
+                    Message = "",
+                    Action = "Delete",
+                    Controller = "Profile",
+                    DataId = userId
+                };
+
+                return PartialView("_PopupConfirmationPartial", model);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public ActionResult ChangePassword()
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<ActionResult> DeleteConfirmation(string id)
         {
-            return View();
+            var result = await _profileService.Delete(id);
+
+            if (result)
+            {
+                if (id == User.Identity.GetUserId())
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+
+                return RedirectToAction("Users", "Profile");
+            }
+
+            ModelState.AddModelError("", "Что-то пошло не так");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword(string userId)
+        {
+            var user = _profileService.GetUserById(userId);
+
+            if (user != null)
+            {
+                return PartialView();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -128,25 +136,21 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
 
-            var result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            var result = await _profileService.ChangePasswordAsync(model);
+
+            if (result)
             {
-                var user = await _userManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError("", "Что-то пошло не так");
+                ViewBag.PasswordSuccessfulyChanged = true;
 
-                return RedirectToAction("Index", "Profile");
+                return PartialView();
             }
-            ModelState.AddModelError("", "Что-то пошло не так");
 
-            return View(model);
+            ModelState.AddModelError("", "Неверный старый пароль");
+
+            return PartialView(model);
         }
     }
 }

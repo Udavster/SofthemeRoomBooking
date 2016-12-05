@@ -14,6 +14,7 @@ using SimpleInjector.Advanced;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Package;
 using SofthemeRoomBooking.Services.Package;
 
 namespace SofthemeRoomBooking
@@ -23,42 +24,34 @@ namespace SofthemeRoomBooking
         public static Container Initialize(IAppBuilder app)
         {
             var container = GetInitializeContainer(app);
-            container.RegisterPackages(
-                new[]
+            container.RegisterPackages(new[]
                     {
-                        typeof(ServicesPackage).Assembly
+                        typeof(ServicesPackage).Assembly, typeof(MvcPackage).Assembly
                     });
        //     container.Verify();
 
-            DependencyResolver.SetResolver(
-                new SimpleInjectorDependencyResolver(container));
+            DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
             return container;
         }
-        public static Container GetInitializeContainer(
-                 IAppBuilder app)
+        public static Container GetInitializeContainer(IAppBuilder app)
         {
             var container = new Container();
 
             container.RegisterSingleton<IAppBuilder>(app);
 
-            container.RegisterPerWebRequest<
-                   ApplicationUserManager>();
+            container.RegisterPerWebRequest<ApplicationUserManager>();
 
             container.RegisterPerWebRequest<ApplicationDbContext>(()
-              => new ApplicationDbContext(
-               "SofthemeRoomBooking"));
+              => new ApplicationDbContext("SofthemeRoomBooking"));
 
-            container.RegisterPerWebRequest<IUserStore<
-                ApplicationUser>>(() =>
-                new UserStore<ApplicationUser>(
-                  container.GetInstance<ApplicationDbContext>()));
+            container.RegisterPerWebRequest<IUserStore<ApplicationUser>>(() =>
+                new UserStore<ApplicationUser>(container.GetInstance<ApplicationDbContext>()));
 
-            container.RegisterInitializer<ApplicationUserManager>(
-                manager => InitializeUserManager(manager, app));
+            container.RegisterInitializer<ApplicationUserManager>(manager => InitializeUserManager(manager, app));
 
-            container.RegisterMvcControllers(
-                    Assembly.GetExecutingAssembly());
+            container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
+
             container.RegisterPerWebRequest<SignInManager<ApplicationUser, string>, ApplicationSignInManager>();
 
             container.RegisterPerWebRequest<IAuthenticationManager>(() =>
@@ -69,8 +62,7 @@ namespace SofthemeRoomBooking
             return container;
         }
 
-        private static void InitializeUserManager(
-            ApplicationUserManager manager, IAppBuilder app)
+        private static void InitializeUserManager(ApplicationUserManager manager, IAppBuilder app)
         {
             manager.UserValidator =
              new UserValidator<ApplicationUser>(manager)
@@ -86,7 +78,7 @@ namespace SofthemeRoomBooking
                 RequireNonLetterOrDigit = false,
                 RequireDigit = true,
                 RequireLowercase = true,
-                RequireUppercase = true,
+                RequireUppercase = true
             };
 
             var dataProtectionProvider =

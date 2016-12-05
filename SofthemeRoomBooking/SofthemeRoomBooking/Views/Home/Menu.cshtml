@@ -14,9 +14,9 @@
     }
     <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new {@class = "menu__link"})</li>
 
-    @if (authorized)
+    @if (authorized && ViewBag.AdminRole)
     {
-        <li class="menu__item">@Html.ActionLink("Пользователи", "Index", "Feedback", null, new {@class = "menu__link"})</li>
+        <li class="menu__item">@Html.ActionLink("Пользователи", "Users", "Profile", null, new {@class = "menu__link"})</li>
     }
     <li class="menu__item">@Html.ActionLink("Обратная связь", "Index", "Feedback", null, new {@class = "menu__link"})</li>
 

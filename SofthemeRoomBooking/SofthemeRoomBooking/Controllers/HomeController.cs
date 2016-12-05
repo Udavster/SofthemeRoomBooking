@@ -1,17 +1,18 @@
-﻿using System.Linq;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using SofthemeRoomBooking.Converters;
-using SofthemeRoomBooking.Models;
-using SofthemeRoomBooking.Models.UserViewModels;
+using SofthemeRoomBooking.Services.Contracts;
 
 namespace SofthemeRoomBooking.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IProfileService _profileService;
+
+        public HomeController(IProfileService profileService)
+        {
+            _profileService = profileService;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -21,13 +22,11 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                var user = manager.FindById(User.Identity.GetUserId());
-
-                if (user != null)
+                var model = _profileService.GetLayoutUserViewModelById(User.Identity.GetUserId());
+                if (model != null)
                 {
-                    var model = user.ToLayoutUserViewModel();
-
+                    ViewBag.AdminRole = _profileService.IsAdmin(User.Identity.GetUserId());
+                                    
                     return PartialView("Menu", model);
                 }
             }

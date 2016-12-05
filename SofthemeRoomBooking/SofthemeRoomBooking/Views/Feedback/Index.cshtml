@@ -1,19 +1,8 @@
 ﻿@model SofthemeRoomBooking.Models.FeedbackViewModel
 
-@{
-    ViewBag.Title = "Feedback";
+@section Styles {
+    @Styles.Render("~/Content/Styles/feedback")
 }
-
-<style>
-    html { min-height: 1000px; }
-
-    .content {
-        display: block;
-        height: 100%;
-        padding-bottom: 14%;
-        margin: 0 10%;
-    }
-</style>
 
 <p class="content__title">
     Написать сообщение

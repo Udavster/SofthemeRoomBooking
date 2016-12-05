@@ -1,0 +1,218 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using SofthemeRoomBooking.Converters;
+using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Models.UserViewModels;
+using SofthemeRoomBooking.Services.Contracts;
+
+namespace SofthemeRoomBooking.Services.Implementation
+{
+    public class ProfileService : IProfileService, IDisposable
+    {
+        private SignInManager<ApplicationUser, string> _signInManager;
+        private ApplicationUserManager _userManager;
+
+        private bool _disposed;
+
+        public ProfileService(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+        }
+
+        public bool IsAdmin(string userId)
+        {         
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var roles = _userManager.GetRoles(userId);
+
+                return roles.Count != 0;
+            }
+
+            return false;
+        }
+
+        public ApplicationUser GetUserById(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return _userManager.FindById(userId);
+            }
+
+            return null;
+        }
+
+        public EditUserViewModel GetEditUserViewModelById(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var user = GetUserById(userId);
+                if (user != null)
+                {
+                    return user.ToEditUserViewModel(_userManager);
+                }
+            }
+
+            return null;
+        }
+
+        public LayoutUserViewModel GetLayoutUserViewModelById(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var user = GetUserById(userId);
+                if (user != null)
+                {
+                    return user.ToLayoutUserViewModel();
+                }
+            }
+
+            return null;
+        }
+
+        public ProfileUserViewModel GetProfileUserViewModelById(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var user = GetUserById(userId);
+                if (user != null)
+                {
+                    return user.ToProfileUserViewModel(_userManager);
+                }
+            }
+
+            return null;
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            List<ApplicationUser> users;
+
+            using (var dbContext = new ApplicationDbContext("SofthemeRoomBooking"))
+            {
+                users = dbContext.Users.Take(20).ToList();
+            }
+
+            return users;
+        }
+
+        public List<ProfileUserViewModel> GetAllProfileUserViewModels()
+        {
+            var users = GetAllUsers();
+            var profileModels = new List<ProfileUserViewModel>();
+
+            if (users != null)
+            {
+                profileModels = users.Select(user => user.ToProfileUserViewModel(_userManager)).ToList();
+            }
+
+            return profileModels;
+        }
+
+        public async Task<bool> ChangePasswordAsync(ChangePasswordViewModel model)
+        {
+            if (model == null)
+            {
+                return false;
+            }
+            
+            var result = await _userManager.ChangePasswordAsync(HttpContext.Current.User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByIdAsync(HttpContext.Current.User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public async Task<bool> Edit(EditUserViewModel model)
+        {
+            if (model == null)
+            {
+                return false;
+            }
+
+            var user = GetUserById(model.Id);
+            if (user != null)
+            {
+                user = model.ToApplicationUser(user);
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    var isAdmin = IsAdmin(user.Id);
+
+                    if (!isAdmin && model.AdminRole)
+                    {
+                        await _userManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+
+                    if (isAdmin && !model.AdminRole)
+                    {
+                        await _userManager.RemoveFromRoleAsync(user.Id, "Admin");
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> Delete(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var user = GetUserById(userId);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return true;
+                    }
+                }
+            }          
+            return false;
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_userManager != null)
+                    {
+                        _userManager.Dispose();
+                        _userManager = null;
+                    }
+
+                    if (_signInManager != null)
+                    {
+                        _signInManager.Dispose();
+                        _signInManager = null;
+                    }
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+    }
+}
