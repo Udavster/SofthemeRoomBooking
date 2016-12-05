@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace SofthemeRoomBooking.Services.Models
 {
-    public class Event
+    public class EventModel
     {
         [JsonProperty(PropertyName = "eventId")]
         public int Id { get; set; }
@@ -21,5 +21,7 @@ namespace SofthemeRoomBooking.Services.Models
         public string Finish { get; set; }
         [JsonProperty(PropertyName = "isPrivate")]
         public bool Publicity { get; set; }
+        public int Id_room { get; set; }
+        public string Nickname { get; set; }
     }
 }

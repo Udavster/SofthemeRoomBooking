@@ -24,11 +24,11 @@ namespace SofthemeRoomBooking.Services.Implementations
                       "yyyy-MM-dd",
                       CultureInfo.InvariantCulture);
 
-            List<List<Event>> events = new List<List<Event>>();
+            List<List<EventModel>> events = new List<List<EventModel>>();
 
             for (int i = 0; i < 8; i++)
             {
-                List<Event> day = new List<Event>();
+                List<EventModel> day = new List<EventModel>();
                 var eventsList =
                     _context.Events.Where(
                         ev =>

@@ -68,9 +68,9 @@
     <Compile Include="Contracts\IHRDepartmentService.cs" />
     <Compile Include="Contracts\IRoomService.cs" />
     <Compile Include="Converters\ToEventModel.cs" />
+    <Compile Include="Implementations\EventService.cs" />
     <Compile Include="Implementations\RoomService.cs" />
-    <Compile Include="Models\Event.cs" />
-    <Compile Include="Models\EventsList.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Package\ServicesPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
