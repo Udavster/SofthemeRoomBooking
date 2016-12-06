@@ -61,11 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\IAccountService.cs" />
     <Compile Include="Contracts\ICalendarService.cs" />
     <Compile Include="Contracts\IEventService.cs" />
     <Compile Include="Contracts\IFeedbackService.cs" />
-    <Compile Include="Contracts\IHRDepartmentService.cs" />
     <Compile Include="Contracts\IRoomService.cs" />
     <Compile Include="Converters\ToEventModel.cs" />
     <Compile Include="Implementations\EventService.cs" />

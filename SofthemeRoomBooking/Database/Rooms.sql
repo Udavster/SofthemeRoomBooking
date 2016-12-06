@@ -3,3 +3,5 @@
 	[Id] INT IDENTITY PRIMARY KEY,
 	[Name] NVARCHAR(35)
 )
+
+GO

@@ -6,45 +6,40 @@
     <title>Softheme Room Booking</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @RenderSection("Styles", required: false)
 </head>
 <body>
-    <div class="wrapper">
-        <div class="header">
-            <div class="logo">
-                <img src="~/Content/Images/logo.png">
-            </div>
-            <ul class="menu">
-                <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Обратная связь", "Index", "Feedback", null, new { @class = "menu__link" })</li>
-                <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Account", null, new { @class = "menu__link" })</li>
-            </ul>
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">
+            <img src="~/Content/Images/logo.png">
         </div>
-
-        <div class="content">
-            @RenderBody()
-            
-        </div>
-
-        <div class="footer">
-            <ul class="footer__list">
-                <li class="footer__item">
-                    <img src="~/Content/Images/logo-gray.png">
-                </li>
-                <li class="footer__item">
-                    <hr color="#C6CDDB" size="1px"></hr>
-                </li>
-                <li class="footer__item">
-                    <p class="footer__copyright">
-                        Все права защищены &copy; 2016
-                    </p>
-                </li>
-            </ul>
-        </div>
+        @Html.Action("Menu", "Home")
     </div>
-
+    <div class="content">
+        @RenderBody()
+    </div>
+    <div class="footer">
+        <ul class="footer__list">
+            <li class="footer__item">
+                <img src="~/Content/Images/logo-gray.png">
+            </li>
+            <li class="footer__item">
+                <hr color="#C6CDDB" size="1px"/>
+            </li>
+            <li class="footer__item">
+                <p class="footer__copyright">
+                    Все права защищены &copy; 2016
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
 
     @Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/jqueryajax")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/Room/weekScheduler.js")
     @Scripts.Render("~/Scripts/Room/room.js")

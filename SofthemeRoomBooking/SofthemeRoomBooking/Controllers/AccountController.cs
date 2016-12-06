@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Models.UserViewModels;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -29,7 +32,6 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-
             ViewBag.ReturnUrl = returnUrl;
             return View("~/Views/Login/Index.cshtml");
         }
@@ -52,8 +54,9 @@ namespace SofthemeRoomBooking.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return View("~/Views/Home/Index.cshtml");
-                    return RedirectToLocal(returnUrl);
+                {
+                    return RedirectToAction("Index", "Home");
+                }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -127,7 +130,8 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = model.ToApplicationUser();
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

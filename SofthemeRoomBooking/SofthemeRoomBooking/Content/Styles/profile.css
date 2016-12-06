@@ -1,0 +1,143 @@
+﻿.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.content {
+    display: block;
+    height: 100%;
+    padding-bottom: 14%;
+    margin: 0 6%;
+}
+
+.container-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.container-button-form {
+    margin: auto;
+    margin-right: 0;
+}
+
+.button-control {
+    width: 160px;
+    font-size: 14px;
+}
+
+.container {
+    display: inline-block;
+    width: 35%;
+    height: 380px;
+}
+
+.container-info {
+    margin-left: 20px;
+}
+
+.container-info__title {
+    margin: 40px 0;
+    font-size: 32px;
+    font-family: Arial;
+}
+
+.container-info__info {
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-family: Arial;
+}
+
+.container-info__button {
+    width: 100%;
+    text-align: center;
+}
+
+.container-edit-profile {
+    margin-top: 40px;
+}
+
+.container-edit-profile__input-text {
+    width: 400px;
+    margin: 10px;
+    background-color: white;
+    border: 2px solid #F5F6FB;
+}
+
+.container-edit-profile__checkbox {
+    margin: 15px;
+}
+
+.container-edit-profile__container-submit {
+    display: block;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+}
+
+.container-edit-profile__submit {
+    width: 160px;
+}
+
+.container-change-password {
+    float: right;
+    width: 40%;
+    text-align: center;
+    background-color: #F5F6FB;
+}
+
+.container-change-password__title {
+    margin: 20px 0;
+    margin-top: 40px;
+    font-size: 24px;
+    font-family: Arial;
+}
+
+.container-change-password__form-group {
+    display: block;
+}
+
+.container-change-password__input-text {
+    width: 340px;
+    margin: 10px;
+    background-color: white;
+}
+
+.container-change-password__submit {
+    width: 160px;
+}
+
+.container-success {
+    display: flex;
+}
+
+.success-sign {
+    margin: auto;
+    margin-right: 5px;
+    font-size: 30px;
+}
+
+.success-message {
+    margin: auto;
+    margin-left: 5px;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.admin-label {
+    display: inline-block;
+    width: 60px;
+    height: 22px;
+    vertical-align: top;
+    text-align: center;
+    padding: 2px;
+    border: none;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    background: #F15754;
+    color: #FFFFFF;
+    font-family: Arial;
+    font-size: 14px;
+}
+

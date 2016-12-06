@@ -1,0 +1,54 @@
+﻿.confirmation {
+    position: absolute;
+    left: 35%;
+    top: 10%;
+    width: 450px;
+    height: 200px;
+    background: white;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    -ms-box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 5;
+}
+
+.confirmation__title {
+    display: flex;
+    width: 100%;
+    height: 30%;
+    background: grey;
+}
+
+.confirmation__sign {
+    color: white;
+    margin: auto 5px;
+    margin-left: 20px;
+    font-size: 35px !important;
+}
+
+.confirmation__message {
+    margin: auto 5px;
+    font-family: Arial;
+    font-size: 14px;
+    cursor: default;
+    color: white;
+}
+
+.confirmation__body {
+    display: flex;
+    align-items: center;
+    
+    width: 100%;
+    height: 70%;
+}
+
+.confirmation__button {
+    margin: auto;
+}
+
+.button-ok {
+    margin-left: 10px;
+}
+
+.button-cancel {
+    margin-right: 10px;
+}

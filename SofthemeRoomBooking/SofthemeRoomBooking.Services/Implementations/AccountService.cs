@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SofthemeRoomBooking.Services.Contracts
+namespace SofthemeRoomBooking.Services.Implementations
 {
-    public interface IHRDepartmentService
+    class AccountService
     {
     }
 }

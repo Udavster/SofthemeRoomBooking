@@ -46,7 +46,7 @@
 }
 
 .input-submit:hover {
-    background-color: #F15754;
+    background-color: #F95752;
     color:white;
 }
 
@@ -54,3 +54,75 @@
     background-color: #F5F6FB;
     color: #C8CEDA;
 }
+
+.checkbox {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 17px;
+    height: 17px;
+}
+
+.checkbox:not(checked) {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkbox:not(checked) ~ label {
+    position: relative;
+    padding: 0 0 0 80px;
+}
+
+.checkbox:not(checked) ~ label:before {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 52px;
+    height: 26px;
+    content: '';
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    border: 1px solid #F95752;
+    background: #FFFFFF;
+}
+
+.checkbox:not(checked) ~ label:after {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 27px;
+    height: 27px;
+    content: '';
+    background: #F95752;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+}
+
+.checkbox:checked ~ label:after {
+    left: 26px;
+}
+
+.button {
+    width: 150px;
+    height: 36px;
+    border: none;
+    border-radius: 20px;
+    background-color: #C8CDD9;
+    color: #E9EBF0;
+    outline: none;
+}
+
+.button:hover {
+    color: white;
+    background-color: #F95752;
+}
+
+.button-active {
+    color: white;
+    background-color: #F95752;
+}
+

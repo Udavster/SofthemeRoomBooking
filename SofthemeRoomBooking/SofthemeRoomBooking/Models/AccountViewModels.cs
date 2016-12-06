@@ -67,21 +67,27 @@ namespace SofthemeRoomBooking.Models
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [StringLength(50, ErrorMessage = "Имя не может быть длиннее 50 символов")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [StringLength(50, ErrorMessage = "Фамилия не может быть длиннее 50 символов")]
+        public string Surname { get; set; }
+
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [RegularExpression(@"^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$", ErrorMessage = "Неверный адрес электронной почты")]
         [DataType(DataType.Text)]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [StringLength(20, ErrorMessage = "Пароль не может быть длиннее 20 символов")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 

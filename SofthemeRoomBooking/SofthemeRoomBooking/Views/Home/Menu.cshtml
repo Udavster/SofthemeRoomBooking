@@ -1,0 +1,36 @@
+﻿@model SofthemeRoomBooking.Models.UserViewModels.LayoutUserViewModel
+
+@{ var authorized = Model != null; }
+
+<ul class="menu">
+    @if (authorized)
+    {
+        <li class="menu__item">
+            <button class="menu__button">
+                <div class="background-plus"></div>
+                <i class="fa fa-plus-square plus" aria-hidden="true"></i>
+            </button>
+        </li>
+    }
+    <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new {@class = "menu__link"})</li>
+
+    @if (authorized && ViewBag.AdminRole)
+    {
+        <li class="menu__item">@Html.ActionLink("Пользователи", "Users", "Profile", null, new {@class = "menu__link"})</li>
+    }
+    <li class="menu__item">@Html.ActionLink("Обратная связь", "Index", "Feedback", null, new {@class = "menu__link"})</li>
+
+    @if (authorized)
+    {
+        <li class="menu__item">
+            <a href="@Url.Action("Index", "Profile", new { userId = Model.Id })" class="menu__link">
+                <i class="fa fa-user user-icon" aria-hidden="true"></i>
+                <span>@Model.UserName</span>
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Account", null, new {@class = "menu__link"})</li>
+    }
+</ul>

@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Events](
+CREATE TABLE [dbo].[Events](
 	[Id] INT IDENTITY PRIMARY KEY,
 	[Title] NVARCHAR(100),
 	[Description] NVARCHAR(500),
@@ -13,3 +13,5 @@
 	CONSTRAINT fk_EventCreator FOREIGN KEY ([Id_user])
 		REFERENCES AspNetUsers(id)
 )
+
+GO

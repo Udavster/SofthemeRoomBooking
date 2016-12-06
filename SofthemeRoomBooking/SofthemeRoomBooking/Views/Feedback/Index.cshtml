@@ -1,14 +1,8 @@
-﻿@model SofthemeRoomBooking.Models.Feedback
+﻿@model SofthemeRoomBooking.Models.FeedbackViewModel
 
-@{
-    ViewBag.Title = "Feedback";
+@section Styles {
+    @Styles.Render("~/Content/Styles/feedback")
 }
-
-<style>
-    html {
-        min-height: 1000px;
-    }
-</style>
 
 <p class="content__title">
     Написать сообщение
@@ -22,6 +16,8 @@
 
 @using (Html.BeginForm("Send", "Feedback", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken();
+
     <div class="group-input-error feedback-form__field-fname">
         @Html.SignalValidationMessageFor(model => model.Name, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.Name, new

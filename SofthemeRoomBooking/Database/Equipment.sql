@@ -1,4 +1,7 @@
-﻿CREATE TABLE [dbo].[Equipment](
+CREATE TABLE [dbo].[Equipment]
+(
 	[Id] INT IDENTITY PRIMARY KEY,
 	[Name] NVARCHAR(35) NOT NULL
 ) 
+
+GO

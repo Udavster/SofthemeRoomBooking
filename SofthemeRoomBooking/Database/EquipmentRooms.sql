@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[EquipmentRooms](
+CREATE TABLE [dbo].[EquipmentRooms]
+(
 	[Id] INT IDENTITY PRIMARY KEY,
 	[Id_room] INT NOT NULL,
 	[Id_equipment] INT NOT NULL,
@@ -8,3 +9,5 @@
 	CONSTRAINT fk_ERtoEquipment FOREIGN KEY ([Id_equipment])
 		REFERENCES Equipment([Id])
 )
+
+GO

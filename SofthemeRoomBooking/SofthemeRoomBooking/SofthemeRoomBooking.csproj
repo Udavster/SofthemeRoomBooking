@@ -214,19 +214,26 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\HrDepartmentController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Converters\ApplicationUserConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ConfirmationViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="MvcPackage.cs" />
-    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
+    <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
+    <Compile Include="Models\UserViewModels\ProfileUserViewModel.cs" />
+    <Compile Include="Models\FeedbackViewModel.cs" />
+    <Compile Include="Package\MvcPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Contracts\IProfileService.cs" />
+    <Compile Include="Services\Implementation\ProfileService.cs" />
     <Compile Include="SimpleInjectorConfiguration.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validator.cs" />
@@ -289,6 +296,9 @@
     <Content Include="Content\Images\Slider\today-bottom.png" />
     <Content Include="Content\Images\Slider\today-top.png" />
     <Content Include="Content\Images\walls.png" />
+    <Content Include="Content\Styles\Calendar\calendarCommon.css" />
+    <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
+    <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\eventdetail.css" />
@@ -296,6 +306,9 @@
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
     <Content Include="Content\Styles\roombooking.css" />
+    <Content Include="Content\Styles\popup-confirmation.css" />
+    <Content Include="Content\Styles\profile.css" />
+    <Content Include="Content\Styles\users.css" />
     <Content Include="Content\Styles\validation.css" />
     <Content Include="Content\Styles\feedback.css" />
     <Content Include="Content\Styles\input_styles.css" />
@@ -313,20 +326,28 @@
     <Content Include="Content\Styles\login.css" />
     <Content Include="Content\events.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Calendar\calendarDatepicker.js" />
+    <Content Include="Scripts\Calendar\calendarEvents.js" />
+    <Content Include="Scripts\Calendar\commonCalendar.js" />
     <Content Include="Scripts\common.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.min.map" />
+    <None Include="Scripts\Validation\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\Validation\jquery.validate.js" />
+    <Content Include="Scripts\Validation\jquery.validate.min.js" />
+    <Content Include="Scripts\Validation\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\Validation\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Map\initMap.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Room\room.js" />
     <Content Include="Scripts\Room\weekScheduler.js" />
+    <Content Include="Scripts\Validation\validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -363,21 +384,20 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_DateTimePartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupConfirmationPartial.cshtml" />
+    <Content Include="Views\Shared\_PopupConfirmationPartial.cshtml" />
     <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Shared\_MapPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_CalendarPartial.cshtml" />
     <Content Include="Views\Shared\_EventDetailsPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_EventEditPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentAdminPartial.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Shared\_CalendarPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Profile.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Users.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Layout.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
@@ -388,9 +408,6 @@
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_RoomBooking.cshtml" />
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
-    <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
-    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\HRDepartment\Users.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +415,16 @@
     <Folder Include="Converters\" />
     <Folder Include="Package\" />
     <Folder Include="Scripts\NewFolder1\" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Home\Menu.cshtml" />
+    <Content Include="Views\Profile\ChangePassword.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
+    <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Profile\Users.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
@@ -407,7 +434,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SofthemeRoomBooking.Services\SofthemeRoomBooking.Services.csproj">
