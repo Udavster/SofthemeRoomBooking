@@ -1,0 +1,150 @@
+.hidden{
+    display: none;
+    visibility: hidden;
+}
+
+#datepicker {
+    margin: 5px;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    text-align: center;
+    font-family: Arial;
+    display: table;
+    color: #697184;
+}
+
+#datepicker #datepicker-header {
+    position: relative;
+    line-height: 40px;
+}
+
+#datepicker #datepicker-header span{
+    display: inline-block;
+    line-height: 40px;
+}
+
+#datepicker #datepicker-header .to-prev-month,
+#datepicker #datepicker-header .to-next-month {
+    cursor: pointer;
+    font-size: 34px;
+}
+
+#datepicker #datepicker-header .to-prev-month:hover,
+#datepicker #datepicker-header .to-next-month:hover {
+    color:#000000;
+}
+
+#datepicker #datepicker-header .to-prev-month {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#datepicker #datepicker-header .to-next-month {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#datepicker #datepicker-header .current-month{
+    width: 100%;
+    text-align: center;
+}
+
+#datepicker #datepicker-body{
+    margin-top: 7px;
+    width: 100%;
+    text-align: center;
+}
+
+#datepicker #datepicker-body table{
+    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+}
+
+#datepicker #datepicker-body table td{
+    width: 32px;
+    height: 32px;
+    text-align: center;
+}
+
+#datepicker #datepicker-body tbody td span.day{
+    display: table-cell;
+    vertical-align: middle;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+}
+
+#datepicker #datepicker-body tbody td span.day:hover{
+    background: #C8CEDA;
+    color: #858B94;
+}
+
+#datepicker #datepicker-body tbody td.disable{
+    color: #C8CEDA;
+    cursor: default;
+}
+
+#datepicker #datepicker-body tbody td span.selected {
+  background: #F95752;
+  color: #FFFFFF;
+}
+
+#datepicker #datepicker-body tbody td span.today {
+  color: #000000;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#datepicker #datepicker-footer{
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+}
+
+#datepicker #datepicker-footer span{
+    font-size: 12px;
+}
+
+#datepicker #datepicker-footer .label-today{ 
+    position: absolute;
+    top: 8px;
+    left: 42%;
+}
+
+#datepicker #datepicker-footer .back-to-today-left,
+#datepicker #datepicker-footer .back-to-today-right{
+    position: absolute;
+    top: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#datepicker #datepicker-footer .back-to-today-left:hover,
+#datepicker #datepicker-footer .back-to-today-right:hover{
+    color: #000000;
+}
+
+#datepicker #datepicker-footer .back-to-today-left span,
+#datepicker #datepicker-footer .back-to-today-right span{
+    vertical-align: bottom;
+    margin: 0 5px;
+}
+
+#datepicker #datepicker-footer .back-to-today-left{
+    left: 0;
+}
+
+#datepicker #datepicker-footer .back-to-today-right{
+    right: 0;
+}
+
+
+

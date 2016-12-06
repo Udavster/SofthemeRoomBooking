@@ -1,0 +1,26 @@
+	.calendars{
+        position: relative;
+        left: 10px;
+
+	    display: flex;
+	    justify-content: space-around;
+	    
+		width: 100%;
+    	min-width: 1024px;
+        padding-top: 50px;
+	}
+	.calendars__day{
+		position: relative;
+		top: 9px;
+		/*float: left;*/
+		display:inline-block;
+	}
+	.calendars__month{
+		/*float: right;*/
+		display: inline-block;
+	}
+
+	.calendar-events{
+		width: 1025px;
+        margin-bottom: 83px;
+	}
