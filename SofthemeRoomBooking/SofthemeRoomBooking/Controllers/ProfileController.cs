@@ -7,6 +7,7 @@ using SofthemeRoomBooking.Services.Contracts;
 
 namespace SofthemeRoomBooking.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IProfileService _profileService;
@@ -33,14 +34,31 @@ namespace SofthemeRoomBooking.Controllers
         {
             var isAdmin = _profileService.IsAdmin(User.Identity.GetUserId());
 
-            if (isAdmin)
+            if (!isAdmin)
             {
-                var model = _profileService.GetAllProfileUserViewModels();
-
-                return View(model);
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index", "Home");            
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult UsersTable(int page = 1, string searchString = null)
+        {
+            var isAdmin = _profileService.IsAdmin(User.Identity.GetUserId());
+
+            if (isAdmin)
+            {
+                var itemsOnPage = 20;
+
+                var model = !string.IsNullOrWhiteSpace(searchString)
+                    ? _profileService.GetUsersByNameOrEmailByPage(searchString, page, itemsOnPage)
+                    : _profileService.GetAllUsersByPage(page, itemsOnPage);
+
+                return PartialView(model);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -104,12 +122,7 @@ namespace SofthemeRoomBooking.Controllers
 
             if (result)
             {
-                if (id == User.Identity.GetUserId())
-                {
-                    return RedirectToAction("Login", "Account");
-                }
-
-                return RedirectToAction("Users", "Profile");
+                return id == User.Identity.GetUserId() ? RedirectToAction("Login", "Account") : RedirectToAction("Users");
             }
 
             ModelState.AddModelError("", "Что-то пошло не так");

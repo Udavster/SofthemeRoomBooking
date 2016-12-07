@@ -1,0 +1,28 @@
+﻿.pagination {
+    margin: 5px;
+}
+
+.page-link {
+    margin-left: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #4A5158;
+    text-decoration: none;
+}
+
+.page-link:hover {
+    font-size: 16px;
+}
+
+.page-link__active {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.page-dots {
+    cursor: default;
+}
+
+.page-dots:hover {
+    font-size: 14px;
+}

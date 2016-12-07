@@ -17,6 +17,12 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
                         "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Login").Include(
+                         "~/Scripts/jquery-{version}.js",
+                       "~/Scripts/Validation/jquery.validate*",
+                        "~/Scripts/Validation/validation.js"));
+
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -51,6 +57,8 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/eventdetail.css",
                       "~/Content/Styles/eventdetailedit.css",
                       "~/Content/Styles/weekScheduler.css"));
+                      "~/Content/Styles/users.css",
+                      "~/Content/Styles/pagination.css"));
             bundles.Add(new StyleBundle("~/Login/cssn").Include(
                       "~/Content/Styles/login.css",
                       "~/Content/Styles/input_styles.css",
@@ -61,7 +69,8 @@ namespace SofthemeRoomBooking
                 "~/Content/Styles/feedback.css"));
 
             bundles.Add(new StyleBundle("~/Content/Styles/users").Include(
-                "~/Content/Styles/users.css"));
+                "~/Content/Styles/users.css",
+                "~/Content/Styles/pagination.css"));
 
             bundles.Add(new StyleBundle("~/Content/Styles/profile").Include(
                 "~/Content/Styles/profile.css"));

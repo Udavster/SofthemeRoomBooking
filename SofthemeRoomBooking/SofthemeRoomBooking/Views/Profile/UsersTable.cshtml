@@ -1,0 +1,82 @@
+﻿@model SofthemeRoomBooking.Models.UserViewModels.PageableUsersViewModel
+@using SofthemeRoomBooking.Helpers
+
+@{
+    Layout = null;
+}
+
+<div id="popup-confirmation" class="overlay"></div>
+
+<div class="users-container__subtitle subtitle-users-num">
+    <span class="users-num">Всего: @Model.ItemsCount</span>
+</div>
+
+<table class="users-table">
+    @foreach (var user in Model.List)
+    {
+        <tr class="users-table__row" data-href='@Url.Action("Index", "Profile", new {userId = user.Id})'>
+            <td class="users-table__name">
+                <label class="user-label">@user.UserName</label>
+                @if (user.AdminRole)
+                {
+                    <label class="admin-label">admin</label>
+                }
+            </td>
+            <td class="users-table__email">@user.Email</td>
+            <td class="users-table__events-num">
+                <i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;
+                <span class="events-num">@user.ActiveEvents</span>
+            </td>
+            <td class="user-table__delete-sign">
+                <i id="@user.Id" class="fa fa-times delete-sign" aria-hidden="true"></i>
+            </td>
+        </tr>
+    }
+</table>
+
+@Html.PageLinks(Model.PageNumber, Model.CountPage, x => Url.Action("Users", new {page = x}), new {@class = "users-pagination"}, new {@class = "num-page page-link"})
+
+<script>
+    $('.num-page').bind('click', function(e) {
+        e.preventDefault();
+
+        var url = $(this).attr("href");
+        var page = $(this).html();
+        if (url === '#') {
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("UsersTable")',
+            method: 'GET',
+            data: { page: page },
+            dataType: 'html',
+            beforeSend: function () {
+                Loading(true, '.users-container-table');
+            },
+            complete: function () {
+                Loading(false);
+            },
+            success: function (result) {
+                $(".users-container-table").html(result);
+            }
+        });
+    });
+
+    $('.delete-sign').bind('click', function(e) {
+        e.preventDefault();
+        var userId = $(this).attr('id');
+
+        $.ajax({
+            url: '@Url.Action("Delete")',
+            method: 'GET',
+            data: { userId: userId },
+            dataType: 'html',
+            success: function(result) {
+                $('#popup-confirmation').html(result);
+                $('#popup-confirmation').show();
+            }
+        });
+    });
+</script>
+
