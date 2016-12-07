@@ -37,6 +37,17 @@
 @Html.PageLinks(Model.PageNumber, Model.CountPage, x => Url.Action("Users", new {page = x}), new {@class = "users-pagination"}, new {@class = "num-page page-link"})
 
 <script>
+    $('.users-table__row').bind('click', function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr('data-href');
+        if (!url) {
+            return;
+        }
+
+        window.location = url;
+    });
+
     $('.num-page').bind('click', function(e) {
         e.preventDefault();
 
