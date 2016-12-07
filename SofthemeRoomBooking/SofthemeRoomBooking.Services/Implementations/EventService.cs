@@ -17,20 +17,20 @@ namespace SofthemeRoomBooking.Services.Implementations
             _context = context;
         }
 
-
         public void AddEvent(EventModel model, string userId)
         {
+            DateTime startTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month+"-"+model.Day+" "+model.StartHour+":"+model.StartMinute);
+            DateTime endTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month +"-"+model.Day+" "+model.EndHour+":"+model.EndMinute);
             Events newEvent = new Events()
             {
-                Start = DateTime.Parse(model.Start),
-                Finish = DateTime.Parse(model.Finish),
+                Start = startTime,
+                Finish = endTime,
                 Title = model.Title,
                 Description = model.Description,
                 Id_room = model.Id_room,
                 Nickname = model.Nickname,
                 Publicity = model.Publicity,
                 Id_user = userId
-
             };
 
             _context.Events.Add(newEvent);

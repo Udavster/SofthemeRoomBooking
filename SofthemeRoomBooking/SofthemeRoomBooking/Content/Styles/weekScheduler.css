@@ -1,6 +1,10 @@
 ﻿#calendar{
     display: none;
+    margin: 0 auto;
+    width: 920px;
+    color: #697184;
 }
+
 
 .calendar-col{
     display: inline-block;
@@ -75,12 +79,8 @@
     position:absolute;
     z-index: 6;
     background-color:gray;
-    width:120px;
+    width:116px;
     height:3px;
-}
-
-.cursor__arrows{
-    
 }
 
 .cursor__left-arrow{
@@ -93,4 +93,10 @@
     position:absolute;
     top: -11px;
     right: -7px;
+}
+
+.scheduler__header {
+    width: 910px;
+    height: 35px;
+    font-size: 34px;
 }

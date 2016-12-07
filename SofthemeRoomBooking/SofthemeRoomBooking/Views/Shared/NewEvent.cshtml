@@ -1,0 +1,397 @@
+﻿@model SofthemeRoomBooking.Models.EventViewModel
+
+<div class="roombooking">
+
+    @using (Html.BeginForm("AddEvent", "Event", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="roombooking__title">
+            <i class="fa fa-calendar-o" aria-hidden="true" ></i>
+            <span class="roombooking__title-name">Зарезервировать аудиторию</span>
+            <i class="fa fa-times roombooking__close" aria-hidden="true" ></i>
+        </div>
+        <div class="roombooking__date">
+            Когда
+            <div class="plus-day roombooking__plus-day">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="day roombooking__day-label">
+                @Html.LabelFor(m => m.Day, new
+                { 
+                    @class = "day"
+                })
+            </div>
+            
+            @*<div class="day"></div>*@
+            <div class="minus-day roombooking__minus-day">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+
+            <div class="plus-month roombooking__plus-month">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="roombooking__month-label ">
+                @Html.LabelFor(m => m.Month, new
+                {
+                    @class = "month"
+                })
+            </div>
+            
+           @* <div class="month roombooking__monthlabel">Мая</div>*@
+            <div class="minus-month roombooking__minus-month">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+
+            <div class="plus-start-hour roombooking__plus-start-hour">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="roombooking__start-hour-label">
+                @Html.LabelFor(m => m.StartHour, new
+                {
+                     @class = "start-hour"
+                })
+            </div>
+            @*<div class="start-hour" style="">18</div>*@
+            <div class="minus-start-hour roombooking__minus-start-hour">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <div style="position: absolute; top: -20px; left: 174px">:</div>
+            <div class="plus-start-minute roombooking__plus-start-minute">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="roombooking__start-minute-label">
+               @Html.LabelFor(m => m.StartMinute, new
+               {
+                    @class = "start-minute"
+               }) 
+            </div>
+            
+            @*<div class="start-minute" style="">00</div>*@
+            <div class="minus-start-minute roombooking__minus-start-minute">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <div style="position: absolute; top: -20px; left: 200px">-</div>
+            <div class="plus-finish-hour roombooking__plus-finish-hour">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="roombooking__end-hour-label">
+                @Html.LabelFor(m => m.EndHour, new
+                {
+                        @class = "end-hour"
+                })
+            </div>
+            @*<div class="end-hour" style="">19</div>*@
+            <div class="minus-finish-hour roombooking__minus-finish-hour">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+            <div style="position: absolute; top: -20px; left: 224px">:</div>
+            <div class="plus-finish-minute roombooking__plus-finish-minute">
+                <i class="fa fa-caret-up" aria-hidden="true"></i>
+            </div>
+            <div class="roombooking__end-minute-label">
+                @Html.LabelFor(m => m.EndMinute, new
+                {
+                     @class = "end-minute"
+                })
+            </div>
+           @* <div class="end-minute" style="position: absolute; top: -19px; left: 230px">00</div>*@
+            <div class="minus-finish-minute roombooking__minus-finish-minute">
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </div>
+
+        </div>
+        @Html.Hidden("Start", "2016-12-04 15:00");
+        @Html.HiddenFor(model => model.Start)
+        @Html.HiddenFor(model => model.Finish,"2016-12-04 15:40")
+        @Html.HiddenFor(model => model.Publicity, true)
+        <div class="roombooking__dropdown-block">
+            Где
+            @Html.DropDownListFor(model => model.Id_room, Model.Rooms, new
+       {
+           @class = "roombooking__dropdown"
+       })
+
+        </div>
+
+        <div class="roombooking__input-title-block">
+            @Html.EditorFor(model => model.Title, new
+       {
+           htmlAttributes = new
+           {
+               @class = "input-text roombooking__input-title",
+               placeholder = "Заголовок"
+           }
+       })
+            @* <input type="text" class="input-text roombooking__input-title" placeholder="Заголовок">*@
+        </div>
+
+        <div class="roombooking__input-title-block">
+            @Html.EditorFor(model => model.Description, new
+       {
+           htmlAttributes = new
+           {
+               @class = "roombooking__input-addinfo",
+               placeholder = "Дополнительная информация"
+           }
+       })
+            @*  <textarea type="text" class="input-textarea roombooking__input-addinfo" placeholder="Дополнительная информация"></textarea>*@
+        </div>
+
+        <div class="roombooking__publicity">
+            <div class="roombooking__checkbox">
+                <input type="checkbox" />
+                Регистрация желающих
+            </div>
+
+            <div class="container-edit-profile__checkbox" style="margin: 5px 19px;">
+                Публично
+                @Html.CheckBoxFor(model => model.Publicity, new { @class = "checkbox" })
+                @Html.LabelFor(model => model.Publicity, "Приватно")
+            </div>
+        </div>
+
+        <div class="roombooking__organizator">
+            <input type="checkbox" id="checkBox"/>
+            Показать автора или
+            @Html.EditorFor(model => model.Nickname, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "input-text roombooking__organizator-name",
+                           placeholder = "Указать организатора"
+                       }
+                   })
+           @* <input type="text"class="input-text" placeholder="Указать организатора">*@
+        </div>
+        <div class="roombooking__submit">
+            <input class="roombooking-submit" type="submit" value="Создать" />
+        </div>
+    }
+
+</div>
+<script>
+    $("#checkBox").click(function () {
+        $('.roombooking__organizator-name').attr("disabled", $(this).is(":checked")).val('');
+    });
+</script>
+
+<script>
+    var currentYear = new Date().getFullYear();
+    var currentDay = new Date().getDate();
+    var currentMonth = new Date().getMonth() + 1;
+    var currentYear = new Date().getYear();
+    var startHour = 9 > new Date().getHours() > 19 ? new Date().getHours() : 15;
+    var endHour = 9 > new Date().getHours() > 19 ? new Date().getHours() : 15;
+    var startMinute = 0;
+    var endMinute = 0;
+    var startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+    var endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);;
+
+    var monthArr = [
+        'Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября',
+        'Декабря'
+    ];
+
+    $('.day').text(tformat(currentDay));
+    $('.month').text(monthArr[currentMonth - 1]);
+    $('.start-hour').text(tformat(startHour));
+    $('.start-minute').text(tformat(startMinute));
+    $('.end-hour').text(endHour);
+    $('.end-minute').text(tformat(endMinute));
+
+    $('.plus-day').click(function () {
+        if (getDaysInMonth(currentMonth, currYear) === currentDay) {
+            currentDay = 1;
+            currentMonth += 1;
+            $('.day').text(tformat(currentDay));
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            currentDay += 1;
+            $('.day').text(currentDay);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.minus-day').click(function () {
+        if (currentDay === 1) {
+            currentMonth -= 1;
+            currentDay = getDaysInMonth(currentMonth, currYear);
+            $('.day').text(currentDay);
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            currentDay -= 1;
+            $('.day').text(currentDay);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.plus-month').click(function () {
+        if (currentMonth === 12) {
+            currentMonth = 1;
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            currentMonth += 1;
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.minus-month').click(function () {
+        if (currentMonth === 1) {
+            currentMonth = 12;
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            currentMonth = currentMonth - 1;
+            $('.month').text(monthArr[currentMonth - 1]);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.plus-start-hour').click(function () {
+        if (startHour === 19) {
+            startHour = 9;
+            $('.start-hour').text(startHour);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        } else {
+            startHour += 1;
+            $('.start-hour').text(startHour);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        }
+    });
+    $('.minus-start-hour').click(function () {
+        if (startHour === 9) {
+            startHour = 19;
+            $('.start-hour').text(startHour);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        } else {
+            startHour -= 1;
+            $('.start-hour').text(startHour);
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        }
+    });
+    $('.plus-start-minute').click(function () {
+        if (startMinute === 59) {
+            startMinute = 0;
+            $('.start-minute').text(tformat(startMinute));
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        } else {
+            startMinute += 1;
+            $('.start-minute').text(tformat(startMinute));
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        }
+    });
+    $('.minus-start-minute').click(function () {
+        if (startMinute === 0) {
+            startMinute = 59;
+            $('.start-minute').text(tformat(startMinute));
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        } else {
+            startMinute -= 1;
+            $('.start-minute').text(tformat(startMinute));
+            startDate = getStartDate(currentMonth, currentDay, startHour, startMinute);
+            console.log(startDate);
+        }
+    });
+    $('.plus-finish-hour').click(function () {
+        if (endHour === 19) {
+            endHour = 9;
+            $('.end-hour').text(endHour);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            endHour += 1;
+            $('.end-hour').text(endHour);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.minus-finish-hour').click(function () {
+        if (endHour === 9) {
+            endHour = 19;
+            $('.end-hour').text(endHour);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            endHour -= 1;
+            $('.end-hour').text(endHour);
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.plus-finish-minute').click(function () {
+        if (endMinute === 59) {
+            endMinute = 0;
+            $('.end-minute').text(tformat(endMinute));
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            endMinute += 1;
+            $('.end-minute').text(tformat(endMinute));
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+    $('.minus-finish-minute').click(function () {
+        if (endMinute === 0) {
+            endMinute = 59;
+            $('.end-minute').text(tformat(endMinute));
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        } else {
+            endMinute -= 1;
+            $('.end-minute').text(tformat(endMinute));
+            endDate = getEndDate(currentMonth, currentDay, endHour, endMinute);
+            console.log(endDate);
+        }
+    });
+
+    var stDate = 2016 + '-' + currentMonth + '-' + currentDay + ' ' + startHour + ':' + startMinute + 0;
+    console.log(stDate);
+
+    function getStartDate(currentMonth, currentDay, startHour, startMinute) {
+        var stDate = new Date().getFullYear() + '-' + currentMonth + '-' + currentDay + ' ' + startHour + ':' + startMinute;
+        return new Date(stDate);
+    }
+    function getEndDate(currentMonth, currentDay, endHour, endMinute) {
+        var stDate = new Date().getFullYear() + '-' + currentMonth + '-' + currentDay + ' ' + endHour + ':' + endMinute;
+        return new Date(stDate);
+    }
+    console.log(startDate);
+    
+    var getDaysInMonth = function (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+    function tformat(num){
+                return ("0" + num).slice(-2);
+            }
+</script>

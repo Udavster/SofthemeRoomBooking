@@ -20,12 +20,8 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult Events(string date, int id)
+        public ActionResult Events(DateTime date, int id)
         {
-            if (date == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Bad request");
-            }
             var result = _roomService.GetEventsByWeek(date, id);
             return Content(result, "application/json");
         }

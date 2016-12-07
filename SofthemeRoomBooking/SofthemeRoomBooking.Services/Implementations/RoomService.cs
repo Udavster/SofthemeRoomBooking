@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using SofthemeRoomBooking.DAL;
@@ -18,11 +17,11 @@ namespace SofthemeRoomBooking.Services.Implementations
         {
             _context = context;
         }
-        public string GetEventsByWeek(string date, int id)
+        public string GetEventsByWeek(DateTime date, int id)
         {
-            DateTime currentDate = DateTime.ParseExact(date,
-                      "yyyy-MM-dd",
-                      CultureInfo.InvariantCulture);
+            //DateTime currentDate = DateTime.ParseExact(date,
+            //          "yyyy-MM-dd",
+            //          CultureInfo.InvariantCulture);
 
             List<List<EventModel>> events = new List<List<EventModel>>();
 
@@ -32,25 +31,36 @@ namespace SofthemeRoomBooking.Services.Implementations
                 var eventsList =
                     _context.Events.Where(
                         ev =>
-                            ev.Start.Day == currentDate.Day && ev.Start.Month == currentDate.Month &&
+                            ev.Start.Day == date.Day && ev.Start.Month == date.Month &&
                             ev.Id_room == id);
                 foreach (var item in eventsList)
                 {
                     day.Add(item.ToEvent());
                 }
                 events.Add(day);
-                if (currentDate.DayOfWeek == DayOfWeek.Saturday)
+                if (date.DayOfWeek == DayOfWeek.Saturday)
                 {
-                    currentDate = currentDate.AddDays(2);
+                    date = date.AddDays(2);
                 }
                 else
                 {
-                    currentDate = currentDate.AddDays(1);
+                    date = date.AddDays(1);
                 }
             }
 
             var result = JsonConvert.SerializeObject(events);
             return result;
+        }
+
+        public List<RoomModel> GetAllRooms()
+        {
+            List<RoomModel> roomsList = new List<RoomModel>(); 
+            var rooms = _context.Rooms;
+            foreach (var roomEntity in rooms)
+            {
+                roomsList.Add(roomEntity.ToRoom());
+            }
+            return roomsList;
         }
     }
 }

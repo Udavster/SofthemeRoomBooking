@@ -8,16 +8,31 @@
     else {
         prevDate.setDate(currentDate.getDate() - 1);
     }
+    initCalendar(prevDate);
+    $('#calendar').find("#next-week").click(function () {
+        var date1 = new Date();
+        date1.setDate(prevDate.getDate());
+        prevDate.setDate(date1.getDate());
+        initCalendar(date1);
+    }
+);
+    $('#calendar').show();
+});
+
+function initCalendar(prevDate) {
     var data = {
         date: prevDate.toISOString().slice(0, 10),
         id: 1
-}
+    }
+    generateMenu();
+
     $.getJSON("/Room/Events",data, function (jsonObject) {
 
         for (var i = 0; i < 8; i++) {
-                generateCalendarCol(prevDate, jsonObject[i], i);
+
+            generateCalendarCol(prevDate, jsonObject[i], i);
             if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
-                    drawCursor(prevDate);
+                drawCursor(prevDate);
             }
             if (prevDate.getDay() === 6) {
                 prevDate.setDate(prevDate.getDate() + 2);
@@ -25,15 +40,27 @@
             else {
                 prevDate.setDate(prevDate.getDate() + 1);
             }
+            if (i === 7) {
+                getMonthYear(prevDate);
 
+            }
         }
     });
-    $('#calendar').show();
-});
+}
 // calendar = new roomCalendar
 //function RoomCalendar() {
 //    this.roomWidth = 60;
-    //this.generate... = function(){}.bind(this)
+//this.generate... = function(){}.bind(this)
+    function generateMenu() {
+        var calendar = $('#calendar');
+        var $controls = $('<div class="scheduler__header"></div>');
+        $controls.append('<div id="prev-week" class="calendar-events__prev-day-control control"><i class="fa fa-caret-left" aria-hidden="true"></i> </div>');
+        $controls.append('<div id="next-week" class="calendar-events__next-day-control control"><i class="fa fa-caret-right" aria-hidden="true"></i></div>');
+        $controls.append('<div id="weekscheduler__month-year" class="calendar-events__today"></div>');
+
+        calendar.append($controls);
+    }
+
     function generateCalendarCol(date, events, iteration) {
         var calendar = $('#calendar');
         var ttt = iteration;
@@ -126,5 +153,15 @@
             top +
             'px"><div class="cursor__arrows cursor__left-arrow"><i class="fa fa-caret-right" style="color:gray; font-size:25px" aria-hidden="true"></i></div><div class="cursor__arrows cursor__right-arrow"><i class="fa fa-caret-left" style="color:gray ;font-size:25px" aria-hidden="true"></i></div></div>';
         $(ctimeDiv).appendTo($(currentItem));
+    }
+    
+    function getMonthYear(date) {
+        var monthArr = [
+    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь','Декабрь'
+        ];
+        var currentItem = $('#calendar').find('#weekscheduler__month-year');
+        var currentMonth = monthArr[date.getMonth()];
+        var currentYear = date.getFullYear();
+        currentItem.text(currentMonth + ',' + currentYear);
     }
 //}
