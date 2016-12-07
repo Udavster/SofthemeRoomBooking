@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -89,52 +90,49 @@ namespace SofthemeRoomBooking.Services.Implementation
             return null;
         }
 
-        public List<ApplicationUser> GetAllUsers()
+        public IQueryable<ApplicationUser> GetAllUsers()
         {
-            List<ApplicationUser> users;
+            return _userManager.Users;
+        }
 
-            using (var dbContext = new ApplicationDbContext("SofthemeRoomBooking"))
+        public IQueryable<ApplicationUser> GetUsersByNameOrEmail(string searchString)
+        {
+            var searchPattern = searchString.ToLowerInvariant()
+                                            .Trim()
+                                            .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var regex = string.Format(CultureInfo.InvariantCulture, "({0})", string.Join("|", searchPattern));
+
+            IQueryable<ApplicationUser> users = null;
+            foreach (var pattern in searchPattern)
             {
-                users = dbContext.Users.Take(20).ToList();
+                var request = _userManager.Users.Where(model => model.Name.Contains(pattern) ||
+                                                                model.Surname.Contains(pattern) ||
+                                                                model.Email.Contains(pattern))
+                                                .Select(model => model);
+
+                if (users == null)
+                {
+                    users = request;
+                }
+                else
+                {
+                    users = users.Union(request);
+                }
             }
 
             return users;
         }
 
-        public List<ProfileUserViewModel> GetAllProfileUserViewModels()
+        public PageableUsersViewModel GetAllUsersByPage(int page, int itemsOnPage)
         {
-            var users = GetAllUsers();
-            var profileModels = new List<ProfileUserViewModel>();
-
-            if (users != null)
-            {
-                profileModels = users.Select(user => user.ToProfileUserViewModel(_userManager)).ToList();
-            }
-
-            return profileModels;
+            return new PageableUsersViewModel(GetAllUsers(), page, itemsOnPage);
         }
 
-        public async Task<bool> ChangePasswordAsync(ChangePasswordViewModel model)
+        public PageableUsersViewModel GetUsersByNameOrEmailByPage(string searchPattern, int page, int itemsOnPage)
         {
-            if (model == null)
-            {
-                return false;
-            }
-            
-            var result = await _userManager.ChangePasswordAsync(HttpContext.Current.User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await _userManager.FindByIdAsync(HttpContext.Current.User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return true;
-                }
-            }
-
-            return false;
+            return new PageableUsersViewModel(GetUsersByNameOrEmail(searchPattern), page, itemsOnPage);
         }
-
 
         public async Task<bool> Edit(EditUserViewModel model)
         {
@@ -183,6 +181,27 @@ namespace SofthemeRoomBooking.Services.Implementation
                     }
                 }
             }          
+            return false;
+        }
+
+        public async Task<bool> ChangePasswordAsync(ChangePasswordViewModel model)
+        {
+            if (model == null)
+            {
+                return false;
+            }
+
+            var result = await _userManager.ChangePasswordAsync(HttpContext.Current.User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByIdAsync(HttpContext.Current.User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    return true;
+                }
+            }
+
             return false;
         }
 

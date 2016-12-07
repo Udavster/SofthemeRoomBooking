@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 
-namespace SofthemeRoomBooking
+namespace SofthemeRoomBooking.Helpers
 {
     public static class Validator
     {
@@ -51,7 +49,6 @@ namespace SofthemeRoomBooking
             TagBuilder containerBuilder = new TagBuilder("div");
             containerBuilder.MergeAttributes(new RouteValueDictionary(containerHtmlAttributes));
             containerBuilder.AddCssClass("error-box");
-            var dict = new RouteValueDictionary(containerHtmlAttributes);
 
             TagBuilder signalBuilder = new TagBuilder("i");
             signalBuilder.MergeAttributes(new RouteValueDictionary(signalHtmlAttributes));
@@ -62,7 +59,7 @@ namespace SofthemeRoomBooking
 
             TagBuilder textBuilder = new TagBuilder("span");
             textBuilder.MergeAttributes(new RouteValueDictionary(messageHtmlAttributes));
-            textBuilder.InnerHtml += validationMessage.ToString();
+            textBuilder.InnerHtml += validationMessage;
 
             containerBuilder.InnerHtml += signalBuilder.ToString(TagRenderMode.Normal);
             containerBuilder.InnerHtml += textBuilder.ToString(TagRenderMode.Normal);

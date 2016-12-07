@@ -45,7 +45,9 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/layout.css",
                       "~/Content/Styles/popup-confirmation.css",
                       "~/Content/Styles/map.css",
-                      "~/Content/Styles/room.css"));
+                      "~/Content/Styles/room.css",
+                      "~/Content/Styles/users.css",
+                      "~/Content/Styles/pagination.css"));
 
             bundles.Add(new StyleBundle("~/Login/cssn").Include(
                       "~/Content/Styles/login.css",
@@ -57,7 +59,8 @@ namespace SofthemeRoomBooking
                 "~/Content/Styles/feedback.css"));
 
             bundles.Add(new StyleBundle("~/Content/Styles/users").Include(
-                "~/Content/Styles/users.css"));
+                "~/Content/Styles/users.css",
+                "~/Content/Styles/pagination.css"));
 
             bundles.Add(new StyleBundle("~/Content/Styles/profile").Include(
                 "~/Content/Styles/profile.css"));

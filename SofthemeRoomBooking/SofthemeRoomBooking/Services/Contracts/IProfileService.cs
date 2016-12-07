@@ -1,5 +1,5 @@
 ﻿using SofthemeRoomBooking.Models;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SofthemeRoomBooking.Models.UserViewModels;
 
@@ -17,9 +17,13 @@ namespace SofthemeRoomBooking.Services.Contracts
 
         ProfileUserViewModel GetProfileUserViewModelById(string userId);
 
-        List<ApplicationUser> GetAllUsers();
+        IQueryable<ApplicationUser> GetAllUsers();
 
-        List<ProfileUserViewModel> GetAllProfileUserViewModels();
+        IQueryable<ApplicationUser> GetUsersByNameOrEmail(string searchString);
+
+        PageableUsersViewModel GetAllUsersByPage(int page, int itemsOnPage);
+
+        PageableUsersViewModel GetUsersByNameOrEmailByPage(string searchPattern, int page, int itemsOnPage);
 
         Task<bool> ChangePasswordAsync(ChangePasswordViewModel model);
 

@@ -220,6 +220,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Pagination.cs" />
     <Compile Include="Migrations\201612032120020_Name.cs" />
     <Compile Include="Migrations\201612032120020_Name.Designer.cs">
       <DependentUpon>201612032120020_Name.cs</DependentUpon>
@@ -231,6 +232,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
+    <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
     <Compile Include="Models\UserViewModels\ProfileUserViewModel.cs" />
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Package\MvcPackage.cs" />
@@ -239,7 +241,7 @@
     <Compile Include="Services\Implementation\ProfileService.cs" />
     <Compile Include="SimpleInjectorConfiguration.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Validator.cs" />
+    <Compile Include="Helpers\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -288,6 +290,7 @@
     <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
     <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\map.css" />
@@ -374,11 +377,8 @@
     <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentAdminPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Users.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Layout.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Login\_Layout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -392,6 +392,7 @@
     <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
     <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Profile\Users.cshtml" />
+    <Content Include="Views\Profile\UsersTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
