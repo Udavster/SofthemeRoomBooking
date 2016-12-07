@@ -286,6 +286,9 @@
     <Content Include="Content\Images\Slider\today-bottom.png" />
     <Content Include="Content\Images\Slider\today-top.png" />
     <Content Include="Content\Images\walls.png" />
+    <Content Include="Content\Styles\Calendar\calendarCommon.css" />
+    <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
+    <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
@@ -308,6 +311,9 @@
     </Content>
     <Content Include="Content\Styles\login.css" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Calendar\calendarDatepicker.js" />
+    <Content Include="Scripts\Calendar\calendarEvents.js" />
+    <Content Include="Scripts\Calendar\commonCalendar.js" />
     <Content Include="Scripts\common.js" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

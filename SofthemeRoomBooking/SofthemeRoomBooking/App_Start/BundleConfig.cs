@@ -29,6 +29,14 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/common").Include(
                         "~/Scripts/common.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/Calendar/calendarDatepicker.js",
+                        "~/Scripts/Calendar/calendarEvents.js",
+                        "~/Scripts/Calendar/commonCalendar.js"
+                        ));
+
+            //./scripts/calendar.js
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/font-awesome.css",
                       "~/Content/Styles/validation.css",
@@ -56,6 +64,12 @@ namespace SofthemeRoomBooking
 
             bundles.Add(new StyleBundle("~/Content/Styles/profile").Include(
                 "~/Content/Styles/profile.css"));
+
+            bundles.Add(new StyleBundle("~/Content/Styles/calendar").Include(
+                "~/Content/Styles/Calendar/calendarDatepicker.css",
+                "~/Content/Styles/Calendar/calendarEvents.css",
+                "~/Content/Styles/Calendar/calendarCommon.css"
+                ));
         }
     }
 }
