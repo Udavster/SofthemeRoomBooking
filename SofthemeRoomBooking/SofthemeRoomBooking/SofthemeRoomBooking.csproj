@@ -378,7 +378,6 @@
     <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentAdminPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Login\_Layout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
