@@ -265,6 +265,8 @@
     <Content Include="Content\Images\Line Details\line-details-web-2.png" />
     <Content Include="Content\Images\Line Details\line-details-web-3.png" />
     <Content Include="Content\Images\login.png" />
+    <Content Include="Content\Images\Login\Login.png" />
+    <Content Include="Content\Images\Login\logo.png" />
     <Content Include="Content\Images\logo-gray.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\Map\icon-envelope.png" />
