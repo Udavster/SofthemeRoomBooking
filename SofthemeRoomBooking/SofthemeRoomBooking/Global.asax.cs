@@ -18,6 +18,7 @@ namespace SofthemeRoomBooking
         protected void Application_Start()
         {
             //InitializeDataBase();
+            //InsertUsers(100);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -50,6 +51,34 @@ namespace SofthemeRoomBooking
             if (result.Succeeded)
             {
                 userManager.AddToRole(admin.Id, adminRole.Name);
+            }
+
+            dbContext.Dispose();
+        }
+
+        private void InsertUsers(int count)
+        {
+            var dbContext = new ApplicationDbContext("SofthemeRoomBooking");
+
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(dbContext));
+
+            for (int i = 0; i < count; i++)
+            {
+                var admin = new ApplicationUser
+                {
+                    Name = $"User {i}",
+                    Surname = "Surname",
+                    Email = $"mail{i}@admin.com",
+                    UserName = $"mail{i}@admin.com"
+                };
+                string password = "123qweQ!";
+
+                var result = userManager.Create(admin, password);
+
+                if (!result.Succeeded)
+                {
+                    break;
+                }
             }
 
             dbContext.Dispose();

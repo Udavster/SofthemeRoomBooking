@@ -1,138 +1,150 @@
-    .user-list {
-        width: 725px;
-    }
+.container {
+    font-family: Arial;
+    font-size: 14px;
+}
 
-    .user-list {
-        padding-left: 120px;
-        padding-right: calc(100% - 120px - 725px);
-        width: 100%;
-    }
-     .user-list__line-header {
-        line-height: 40px;
-        height: 40px;
-    }
+.users-container {
+    position: relative;
+    width: 60%;
+    margin-left: 10%;
+    margin-top: 3%;
+}
 
-    .user-list__search {
-        float: right;
-        width: 220px;
-    }
+.users-container__title {
+    font-size: 26px;
+    cursor: default;
+}
 
-    .link {
-        text-decoration: none;
-    }
-    .user-list__link {
-        color: #4a5158;
-    }
-    .user-list__line {
-        /*height: 45px;*/
-    }
-    .table {
-        border: none;
-        border-collapse: collapse;
-    }
-    .table__row {
-        border: none;
-    }
-    .table-cell {
-        border: none;
-        margin: 0;
-        position: relative;
-        left: -1px;
-    }
+.users-container__subtitle {
+    margin: 15px 0;
+    margin-left: 20px;
+}
 
-    .user-list__total-users-num {
-        width: 200px;
-        float: left;
-    }
+.subtitle-users-num {
+    margin-bottom: 35px;
+}
 
-    .user-list__table {
-        table-layout:fixed;
-        margin-top: 25px;
-    }
+.subtitle-search {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    top: 40px;
+}
 
-    .user-list__row {
-        /*width: 715px;*/
-        height: 45px;
-    }
-    .user-list__row:hover {
-        position: relative;
-        background-color: #ebeef7;
-        cursor: pointer;
-    }
-    .user-list__delete-row {
-        position: absolute;
-        top: 10px;
-        right: 35px;
-        visibility: hidden;
-        font-size: 25px;
-        color: #4a5158;
-        cursor: pointer;
-    }
-    .user-list__row:hover .user-list__delete-row {
-        visibility: visible;
-    }
-    .user-list__name {
-        width: 240px;
-    }
-    .user-list__email {
-        width: 280px;
-    }
-    .user-list__events-num {
-        position: relative;
-        width: 200px;
-    }
-    .user-list__pagination {
-        float: right;
-        margin-top: 45px;
-    }
-    
+.users-container-table {
+    width: 100%;
+    margin: 15px 0;
+    margin-top: 40px;
+}
 
-    .content__title {
-        padding-left: 0;
-    }
+.users-container__total-users-num {
+    margin: auto;
+    margin-left: 20px;
+}
 
-    .content__line {
-        width: 100%;
-    }
+.users-num {
+    cursor: default;
+}
 
-    .table__row:hover {
-        background-color: #ebeef7;
-    }
+.user-container__search-container {
+    width: 300px;
+    z-index: 100;
+    margin: auto;
+    margin-right: 0;
+}
 
-    .search__input {
-        height: 40px;
-        padding: 5px 10px 5px 10px;
-        border: 1px solid #ebeef7;
-        border-radius: 20px;
-        color: #c0c4cf;
-        outline: none;
-    }
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebeef7;
+    height: 40px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+}
 
-    .search__image {
-        position: relative;
-        right: 30px;
-        top: 1px;
-        color: #c0c4cf;
-    }
-    .pagination__element {
-        margin-right: 5px;
-    }
-    .admin-elipse {
-        position: relative;
-        display: inline-block;
-        top: -2px;
-        left: 5px;
-        width: 54px;
-        height: 20px;
-        padding-top: 2px;
-        border-radius: 20px;
-        background-color: #f95752;
-        color: white;
-        font-size: 11px;
-        text-align: center;
-    }
+.search__input {
+    margin: auto;
+    margin-right: 0;
+    width: 85%;
+    height: 30px;
+    border: none;
+    color: #c0c4cf;
+    outline: none;
+}
 
-    .admin-label {
+.search__image {
+    margin: auto;
+    margin-right: 10px;
+    color: #c0c4cf;
+    cursor: pointer;
+}
+
+.search__image:hover {
+    color: #4A5158;
+}
+
+.users-table {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+}
+
+.users-table__row {
+    height: 45px;
+    border: none;
+}
+
+.users-table__name {
+    width: 35%;
+}
+
+.user-label {
+    margin-left: 20px;
+    cursor: default;
+}
+
+.users-table__email {
+    width: 35%;
+}
+
+.users-table__events-num {
+    width: 20%;
+}
+
+.users-table__delete-sign {
+    width: 10%;
+}
+
+.events-num {
+    margin: 0 5px;
+}
+
+.users-table__row:hover {
+    background-color: #EBEEF7;
+    cursor: pointer;
+}
+
+.users-table__row:hover .delete-sign {
+    visibility: visible;
+}
+
+.delete-sign {
+    visibility: hidden;
+    font-size: 25px;
+    color: #4A5158;
+    cursor: pointer;
+}
+
+.delete-sign:hover {
+    font-size: 30px;
+}
+
+.users-pagination {
+    float: right;
+    margin-top: 45px;
+}
+
+.admin-label {
     display: inline-block;
     width: 60px;
     height: 22px;

@@ -28,4 +28,21 @@ html, body{
     display: none;
 }
 
+#loading {
+    display: none;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    height: 300px;
+    text-align: center;
+}
+
+.loading-sign {
+    margin: auto;
+    font-size: 120px;
+    color: #A6ABB6;
+}
+
 
