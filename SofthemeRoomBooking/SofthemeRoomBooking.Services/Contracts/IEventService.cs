@@ -9,6 +9,6 @@ namespace SofthemeRoomBooking.Services.Contracts
 {
     public interface IEventService
     {
-        void AddEvent(EventModel model, string userId);
+        void AddEvent(NewEventModel model, string userId);
     }
 }

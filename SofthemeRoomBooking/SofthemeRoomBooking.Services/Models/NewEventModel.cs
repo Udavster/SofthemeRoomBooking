@@ -1,21 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SofthemeRoomBooking.Models
+namespace SofthemeRoomBooking.Services.Models
 {
-    public class EventViewModel
+    public class NewEventModel
     {
-        public int Id { get; set; }
         public string Title { get; set; }
-        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        public string Start { get; set; }
-        public string Finish { get; set; }
         public bool Publicity { get; set; }
-        public int Id_room { get; set; }
+        public int IdRoom { get; set; }
         public string Nickname { get; set; }
-        public IEnumerable<SelectListItem> Rooms { get; set; }
         public int Day { get; set; }
         public int Month { get; set; }
         public int StartHour { get; set; }

@@ -22,7 +22,8 @@ namespace SofthemeRoomBooking.Controllers
         [HttpGet]
         public ActionResult Events(DateTime date, int id)
         {
-            var result = _roomService.GetEventsByWeek(date, id);
+            var events = _roomService.GetEventsByWeek(date, id);
+            var result = JsonConvert.SerializeObject(events);
             return Content(result, "application/json");
         }
 

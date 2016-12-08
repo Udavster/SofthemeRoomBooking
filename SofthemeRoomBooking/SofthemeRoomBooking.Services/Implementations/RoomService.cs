@@ -17,7 +17,7 @@ namespace SofthemeRoomBooking.Services.Implementations
         {
             _context = context;
         }
-        public string GetEventsByWeek(DateTime date, int id)
+        public List<List<EventModel>> GetEventsByWeek(DateTime date, int id)
         {
             //DateTime currentDate = DateTime.ParseExact(date,
             //          "yyyy-MM-dd",
@@ -48,8 +48,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                 }
             }
 
-            var result = JsonConvert.SerializeObject(events);
-            return result;
+            return events;
         }
 
         public List<RoomModel> GetAllRooms()
