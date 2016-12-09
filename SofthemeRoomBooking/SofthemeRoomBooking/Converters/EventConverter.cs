@@ -5,9 +5,9 @@ namespace SofthemeRoomBooking.Converters
 {
     public static class EventConverter
     {
-        public static EventModel ToEventModel(this EventViewModel eventViewModel)
+        public static NewEventModel ToNewEventModel(this NewEventViewModel eventViewModel)
         {
-            return new EventModel()
+            return new NewEventModel()
             {
                 Day = eventViewModel.Day,
                 Month = eventViewModel.Month,
@@ -17,7 +17,7 @@ namespace SofthemeRoomBooking.Converters
                 EndMinute = eventViewModel.EndMinute,
                 Title = eventViewModel.Title,
                 Description = eventViewModel.Description,
-                Id_room = eventViewModel.Id_room,
+                IdRoom = eventViewModel.IdRoom,
                 Nickname = eventViewModel.Nickname,
                 Publicity = eventViewModel.Publicity
             };

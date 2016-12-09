@@ -25,9 +25,9 @@ namespace SofthemeRoomBooking.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult AddEvent(EventViewModel viewModel)
+        public ActionResult AddEvent(NewEventViewModel viewModel)
         {
-            var model = viewModel.ToEventModel();
+            var model = viewModel.ToNewEventModel();
             var userId = User.Identity.GetUserId();
             _eventService.AddEvent(model, userId);
             return Redirect("Home/Index");
@@ -40,16 +40,16 @@ namespace SofthemeRoomBooking.Controllers
             var dropDownList = rooms.Select(r => new SelectListItem
             {
                 Text = r.Name,
-                Value = r.Id_room.ToString(),
-                Selected = "select" == r.Id_room.ToString()
+                Value = r.IdRoom.ToString(),
+                Selected = "select" == r.IdRoom.ToString()
             }).ToList();
 
-            EventViewModel evemtModel = new EventViewModel()
+            NewEventViewModel eventModel = new NewEventViewModel()
             {
                 Rooms = dropDownList
             };
 
-            return PartialView(evemtModel);
+            return PartialView(eventModel);
         }
     }
 }

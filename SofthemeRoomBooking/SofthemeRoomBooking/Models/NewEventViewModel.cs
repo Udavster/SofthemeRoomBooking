@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace SofthemeRoomBooking.Services.Models
+namespace SofthemeRoomBooking.Models
 {
-    public class EventModel
+    public class NewEventViewModel
     {
-        public int Id { get; set; }
         public string Title { get; set; }
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        public string Start { get; set; }
-        public string Finish { get; set; }
         public bool Publicity { get; set; }
         public int IdRoom { get; set; }
         public string Nickname { get; set; }
+        public IEnumerable<SelectListItem> Rooms { get; set; }
         public int Day { get; set; }
         public int Month { get; set; }
         public int StartHour { get; set; }

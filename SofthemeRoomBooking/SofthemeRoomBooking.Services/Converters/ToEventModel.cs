@@ -21,6 +21,6 @@ namespace SofthemeRoomBooking.Services.Converters
                 Id = events.Id,
                 Publicity = events.Publicity
             };
-        }
+        } 
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
+using SofthemeRoomBooking.Services.Converters;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Services.Implementations
@@ -17,21 +18,12 @@ namespace SofthemeRoomBooking.Services.Implementations
             _context = context;
         }
 
-        public void AddEvent(EventModel model, string userId)
+        public void AddEvent(NewEventModel model, string userId)
         {
             DateTime startTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month+"-"+model.Day+" "+model.StartHour+":"+model.StartMinute);
             DateTime endTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month +"-"+model.Day+" "+model.EndHour+":"+model.EndMinute);
-            Events newEvent = new Events()
-            {
-                Start = startTime,
-                Finish = endTime,
-                Title = model.Title,
-                Description = model.Description,
-                Id_room = model.Id_room,
-                Nickname = model.Nickname,
-                Publicity = model.Publicity,
-                Id_user = userId
-            };
+
+            Events newEvent = model.ToEventsEntity(startTime, endTime, userId);
 
             _context.Events.Add(newEvent);
             _context.SaveChanges();

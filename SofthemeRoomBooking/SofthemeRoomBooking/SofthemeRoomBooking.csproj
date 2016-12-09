@@ -230,9 +230,10 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
-    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NewEventViewModel.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />

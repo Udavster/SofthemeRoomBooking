@@ -8,7 +8,7 @@ namespace SofthemeRoomBooking.Services.Models
 {
     public class RoomModel
     {
-        public int Id_room { get; set; }
+        public int IdRoom { get; set; }
 
         public string Name { get; set; }
     }

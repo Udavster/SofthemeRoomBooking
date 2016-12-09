@@ -14,7 +14,7 @@ namespace SofthemeRoomBooking.Services.Converters
         {
             return new RoomModel()
             {
-                Id_room = roomEntity.Id,
+                IdRoom = roomEntity.Id,
                 Name = roomEntity.Name
             };
         }

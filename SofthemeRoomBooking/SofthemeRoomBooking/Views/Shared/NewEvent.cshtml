@@ -1,4 +1,4 @@
-﻿@model SofthemeRoomBooking.Models.EventViewModel
+﻿@model SofthemeRoomBooking.Models.NewEventViewModel
 
 <div class="roombooking">
 
@@ -99,13 +99,9 @@
             </div>
 
         </div>
-        @Html.Hidden("Start", "2016-12-04 15:00");
-        @Html.HiddenFor(model => model.Start)
-        @Html.HiddenFor(model => model.Finish,"2016-12-04 15:40")
-        @Html.HiddenFor(model => model.Publicity, true)
         <div class="roombooking__dropdown-block">
             Где
-            @Html.DropDownListFor(model => model.Id_room, Model.Rooms, new
+            @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new
        {
            @class = "roombooking__dropdown"
        })
