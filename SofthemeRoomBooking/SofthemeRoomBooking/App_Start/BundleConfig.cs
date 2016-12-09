@@ -45,7 +45,7 @@ namespace SofthemeRoomBooking
             //
             bundles.Add(new StyleBundle("~/bundles/Layout/css").Include(
                       //"~/Content/font-awesome.css",
-                      "~/fonts/font-awesome.css",
+                      //"~/fonts/font-awesome.css",
                       "~/Content/Styles/validation.css",
                       "~/Content/Styles/common.css",
                       "~/Content/Styles/input_styles.css",
@@ -59,8 +59,9 @@ namespace SofthemeRoomBooking
             bundles.Add(new StyleBundle("~/bundles/Login/css").Include(
                       "~/Content/Styles/login.css",
                       "~/Content/Styles/input_styles.css",
-                      "~/Content/Styles/validation.css",
-                      "~/Content/font-awesome.css"));
+                      "~/Content/Styles/validation.css"
+                      //"~/Content/font-awesome.css"
+                      ));
 
             bundles.Add(new StyleBundle("~/bundles/Styles/feedback").Include(
                 "~/Content/Styles/feedback.css"));
