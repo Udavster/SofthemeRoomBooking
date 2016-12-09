@@ -4,7 +4,16 @@
     height: 520px;
     width: auto;
 }
-
+.room__number {
+    position: absolute;
+    top: 63px;
+    left: 458px;
+    font-size: 36px;
+    color: #81868d;
+}
+.room__general {
+    cursor: pointer;
+}
 .room__image {
     z-index: 5;
     width: 1021px;
