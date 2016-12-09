@@ -235,7 +235,7 @@
                        // console.log('#room-'+i);
                         $room.css('top', (currentHeight)+'px');
                         for(var j=0;j<events.length;j++){
-                            //console.log(events[j]['name']+' '+events[j]['startTime']);
+                            //console.log(events[j]['Title']+' '+events[j]['Start']);
                            // $room.append('<div class="calendar__room-event" style="width: 40px; left: 20px"></div>');
                            this.addEvent($room, events[j]);
                         }
@@ -244,21 +244,21 @@
                 }
 
                 addEvent($room, event){
-                    var startTime = event["startTime"];
-                    var endTime = event["endTime"];
+                    var startTime = event['Start'];
+                    var endTime = event['Finish'];
                     var duration = (60*(endTime["h"] - startTime["h"])+(endTime["m"] - startTime["m"]))/60.0;
                     var width = duration * this.hourWidth - 2;
                     var left = (startTime["h"]+startTime["m"]/60.0)*this.hourWidth;
                     var time = tformat(startTime["h"])+":"+tformat(startTime["m"])+"-"+tformat(endTime["h"])+":"+tformat(endTime["m"]);
-                    //{'name':'event-room1', 'startTime': {'h':0,'m':0}, 'endTime': {'h':3,'m':50}}
+                    //{'Title':'event-room1', 'Start': {'h':0,'m':0}, 'Finish': {'h':3,'m':50}}
                     var eventTag = '<div class="'+this.name+'__room-event event" style="width: '+width+'px; left: '+left+'px">';
                         if(duration>0.5) eventTag+= '<div class="event__time">'+time+'</div>';
                         else eventTag+= '<div class="event__time event__time-center">'+tformat(startTime["h"])+":"+tformat(startTime["m"])+'</div>'+'<div class="event__time event__time-center">-</div>'+'<div class="event__time event__time-center">'+tformat(endTime["h"])+":"+tformat(endTime["m"])+'</div>';
-                        if(duration>0.5) eventTag+='<div>'+event['name']+'</div>';
+                        if(duration>0.5) eventTag+='<div>'+event['Title']+'</div>';
                     eventTag+='</div>';
                     $room.append(eventTag);
                     //$room.append('<div class="calendar__room-event event" style="width: '+width+'px; left: '+left+'px">'+
-                      //  '<div class="event__time">'+time+'</div><div>'+event['name']+'</div></div>');
+                      //  '<div class="event__time">'+time+'</div><div>'+event['Title']+'</div></div>');
                 }
 
                 constructBase($calendar){

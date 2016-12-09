@@ -28,10 +28,19 @@ namespace SofthemeRoomBooking.Controllers
         [HttpGet]
         public ActionResult Index(string date)
         {
-            DateTime day = DateTime.ParseExact(date,
-                     "yyyyMMdd",
-                     CultureInfo.InvariantCulture);
-            
+            DateTime day;
+            try
+            {
+                day = DateTime.ParseExact(date,
+                    "yyyyMMdd",
+                    CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                //?
+                return Content("{\n\"error\": \n\"true\"\n}", "application/json");
+            }
+
             var calendarEvent = _eventService.GetEventsByDate(date);
             var rooms = _roomService.GetUnlockedRoomsByDate(day);
 
