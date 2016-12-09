@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using Newtonsoft.Json;
 using SofthemeRoomBooking.DAL;
@@ -17,39 +19,42 @@ namespace SofthemeRoomBooking.Services.Implementations
         {
             _context = context;
         }
-        public string GetEventsByWeek(DateTime date, int id)
+        public List<List<EventRoomModel>> GetEventsByWeek(DateTime date, int id)
         {
-            //DateTime currentDate = DateTime.ParseExact(date,
-            //          "yyyy-MM-dd",
-            //          CultureInfo.InvariantCulture);
 
-            List<List<EventModel>> events = new List<List<EventModel>>();
-
+            List<List<EventRoomModel>> events = new List<List<EventRoomModel>>();
+            var endTime  = date.Date.Add(TimeSpan.FromDays(10));
+            var event1 =
+                _context.Events.Where(
+                    ev => DbFunctions.TruncateTime(ev.Start) >= DbFunctions.TruncateTime(date) &&
+                    DbFunctions.TruncateTime(ev.Start) <= DbFunctions.TruncateTime(endTime)
+                    && ev.Id_room == id);
+            var currentDate = date;
             for (int i = 0; i < 8; i++)
             {
-                List<EventModel> day = new List<EventModel>();
-                var eventsList =
-                    _context.Events.Where(
-                        ev =>
-                            ev.Start.Day == date.Day && ev.Start.Month == date.Month &&
-                            ev.Id_room == id);
-                foreach (var item in eventsList)
+                List<EventRoomModel> day = new List<EventRoomModel>();
+                if (currentDate.DayOfWeek == DayOfWeek.Sunday)
                 {
-                    day.Add(item.ToEvent());
+                    events.Add(day);
+                    currentDate = currentDate.AddDays(1);
+                    continue;
+                }
+                if (currentDate.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    events.Add(day);
+                   currentDate = currentDate.AddDays(2);
+                    continue;
+                }
+                var currDay = event1.Where(ev => ev.Start.Day == currentDate.Day);
+                foreach (var eventItem in currDay)
+                {
+                    day.Add(eventItem.ToEvent());
                 }
                 events.Add(day);
-                if (date.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    date = date.AddDays(2);
-                }
-                else
-                {
-                    date = date.AddDays(1);
-                }
-            }
+                currentDate = currentDate.AddDays(1);
 
-            var result = JsonConvert.SerializeObject(events);
-            return result;
+            }
+            return events;
         }
 
         public List<RoomModel> GetAllRooms()
@@ -62,5 +67,6 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
             return roomsList;
         }
+
     }
 }

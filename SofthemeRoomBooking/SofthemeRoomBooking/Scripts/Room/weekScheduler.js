@@ -47,10 +47,6 @@ function initCalendar(prevDate) {
         }
     });
 }
-// calendar = new roomCalendar
-//function RoomCalendar() {
-//    this.roomWidth = 60;
-//this.generate... = function(){}.bind(this)
     function generateMenu() {
         var calendar = $('#calendar');
         var $controls = $('<div class="scheduler__header"></div>');
@@ -129,7 +125,7 @@ function initCalendar(prevDate) {
             var differense = (eventEndHours - eventStartHours) * 60 + (eventEndMinutes - eventStartMinutes);
             var top = Math.round((eventStartMinutes) / 60 * 70);
             var height = Math.round(differense / 60 * 70);
-            if (events[i].isPrivate) {
+            if (!events[i].isPublic) {
                 var eventInfo = '<div class="event-private" style="top:' + top + 'px;height:' + height + 'px;">';
             } else {
                 var eventInfo = '<div class="event-info" style="top:' + top + 'px;height:' + height + 'px;">';
