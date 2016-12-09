@@ -8,10 +8,11 @@ CREATE TABLE [dbo].[Events](
 	[Start] SMALLDATETIME NOT NULL,
 	[Finish] SMALLDATETIME NOT NULL, --turns out that 'end' is a keyword
 	[Publicity] BIT NOT NULL,
+	[Cancelled] BIT DEFAULT(0),
 	CONSTRAINT fk_EventRoom FOREIGN KEY ([Id_room])
 		REFERENCES Rooms([Id]),
 	CONSTRAINT fk_EventCreator FOREIGN KEY ([Id_user])
-		REFERENCES AspNetUsers(id)
+		REFERENCES AspNetUsers(Id)
 )
 
 GO

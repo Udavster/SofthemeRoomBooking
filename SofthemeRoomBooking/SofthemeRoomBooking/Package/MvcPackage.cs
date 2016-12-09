@@ -3,6 +3,7 @@ using SimpleInjector.Packaging;
 using SofthemeRoomBooking.Services;
 using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Implementation;
+using SofthemeRoomBooking.Services.Implementations;
 
 namespace SofthemeRoomBooking.Package
 {

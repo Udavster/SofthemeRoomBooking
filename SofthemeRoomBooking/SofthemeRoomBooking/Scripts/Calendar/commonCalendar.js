@@ -27,7 +27,7 @@
 			cal.init(null, function(date, dayOfWeek){
 				var weekdays = ["Пн","Вт","Ср","Чт","Пт"];
 				a.setToday(tformat(date)+", "+weekdays[dayOfWeek]);
-				if(dayOfWeek%2==1){
+				if(dayOfWeek%2===1){
 					a.constructFromMemo(calendarMemo2);
 				}else{
 					a.constructFromMemo(calendarMemo);
@@ -36,9 +36,9 @@
 			$("#"+a.name+"-fw-control").click(function(){
 				
 				$("#datepicker").hide();
-			    $(".calendars__month").css('display','none');
-				$(this).attr('active','false');
-				$("#" + a.name + "-pw-control").attr('active', 'true');
+    		    $(".calendars__month").css('display','none');
+    			$(this).attr('active','false');
+    			$("#" + a.name + "-pw-control").attr('active', 'true');
 				a.changeWidth("calc(100% - 100px)");
 			});
 			$("#"+a.name+"-pw-control").click(function(){

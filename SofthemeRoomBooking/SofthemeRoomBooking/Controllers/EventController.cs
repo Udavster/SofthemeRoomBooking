@@ -8,13 +8,17 @@ namespace SofthemeRoomBooking.Controllers
     public class EventController : Controller
     {
         private IEventService _eventService;
-        public EventController(IEventService eventService)
+        private ICalendarService _calendarService;
+        public EventController(IEventService eventService, ICalendarService calendarService)
         {
             _eventService = eventService;
+            _calendarService = calendarService;
         }
         // GET: Event
-        public ActionResult Index()
+        public ActionResult Index(string date)
         {
+            //_eventService.GetEventsByDate(date);
+            _calendarService.GetEventsByDate(date);
             return View();
         }
 

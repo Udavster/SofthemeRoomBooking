@@ -6,4 +6,21 @@
 @Html.Partial("_CalendarPartial")
 <div class="clearfix"></div>
 @Html.Partial("_MapPartial")
+<script>
+    $(document)
+        .ready(function() {
+            $.ajax({
+                url: 'http://localhost:36252/Calendar?date=20140511',             // указываем URL и
+                dataType: "json",                     // тип загружаемых данных
+                success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+                    console.log(data);
+                    var data2 = {};
+                    for (var i = 0; i < data.Events.length; i++) {
+                        data2[data.Rooms[i].Name] = data.Events[i];
+                    }
+                    console.log(data2);
+                }
+            });
+        }); 
+</script>
 

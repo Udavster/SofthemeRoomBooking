@@ -211,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -223,6 +224,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -411,10 +413,6 @@
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Converters\" />
-    <Folder Include="Package\" />
-    <Folder Include="Scripts\NewFolder1\" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
@@ -425,6 +423,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\NewFolder1\" />
+    <Folder Include="Views\Calendar\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
