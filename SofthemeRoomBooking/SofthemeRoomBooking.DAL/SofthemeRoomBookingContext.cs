@@ -8,7 +8,7 @@ namespace SofthemeRoomBooking.DAL
     public partial class SofthemeRoomBookingContext : DbContext
     {
         public SofthemeRoomBookingContext()
-            : base("name=SofthemeRoomBookingContext")
+            : base("SofthemeRoomBooking")
         {
         }
 
