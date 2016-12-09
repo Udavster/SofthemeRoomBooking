@@ -12,7 +12,18 @@
         <img class="room__path room__englishpath" id="englishpath" src="~/Content/Images/Path/path-ienglish.png" />
         
         <div class="room__number">Этаж 10</div>
-
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="button room__open">
+                Открыть
+            </div>
+            <div class="button room__close">
+                Закрыть
+            </div>
+            <div class="button room__change">
+                Изменить
+            </div>
+        }
         <div data-num="12" data-pathid="teslapath" class="room__general room__tesla">
             <div class="room__teslatext">
                 Tesla Classroom

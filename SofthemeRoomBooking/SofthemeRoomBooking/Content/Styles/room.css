@@ -14,6 +14,34 @@
 .room__general {
     cursor: pointer;
 }
+.room__open {
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #747b87;
+}
+.room__change {
+    position: absolute;
+    top: 85px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #c8ceda;
+    color: #555c63;
+}
+.room__close {
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #747b87;
+}
 .room__image {
     z-index: 5;
     width: 1021px;
