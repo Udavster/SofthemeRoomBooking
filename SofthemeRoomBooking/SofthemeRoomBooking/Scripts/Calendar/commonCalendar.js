@@ -46,7 +46,7 @@
 			    $(".calendars__month").css('display', 'block');
 			    $(this).attr('active', 'false');
 			    $("#" + a.name + "-fw-control").attr('active', 'true');
-			    a.changeWidth(1024);
+			    a.changeWidth(990);
 			    
 			});
 		});
