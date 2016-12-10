@@ -16,7 +16,7 @@ namespace SofthemeRoomBooking.Services.Models
 
         public DateTime Start { get; set; }
 
-        public DateTime? Finish { get; set; }
+        public DateTime Finish { get; set; }
 
         public bool? Publicity { get; set; }
 

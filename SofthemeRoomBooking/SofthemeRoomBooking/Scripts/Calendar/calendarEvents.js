@@ -12,7 +12,6 @@
 
                 this.getBoundingLeftRight = function(elementName){
                     $box = $(elementName);
-                    console.log(elementName+" "+"left: "+$box.offset().left);
 
                     return {
                         "left":$box.offset().left + 2, //border
@@ -73,11 +72,10 @@
                 }.bind(this);
 
                 this.setBoundingWidth = function(width, update){
-                    console.log("done");
-                    if(!this.bounding||update){
+
+                    if (!this.bounding || update) {
                         this.bounding = this.getBoundingLeftRight(this.boundingElName);
                     }
-                    console.log(this.bounding);
                     
                     if(width){
                         this.forcedBoundingWidth = width;
@@ -91,9 +89,9 @@
 
                 this.changeTime = function(hours, minutes){
                     var part = (minutes/60.0 +hours)/24.0;
-                    console.log(this.bounding.width);
-                    var x = (part*(this.bounding.width-this.borderBox.left-this.borderBox.right)) + this.borderBox.left;
-                    console.log(x);
+
+                    var x = (part * (this.bounding.width - this.borderBox.left - this.borderBox.right)) + this.borderBox.left;
+
                     this["$self"].css('left', x);
                     $('#'+this.name+'-time').html(tformat(hours)+":"+tformat(minutes));
                 }.bind(this);
@@ -180,10 +178,18 @@
                         this.timeSlider.changeTime(now.getHours(), now.getMinutes());
                     }.bind(this);
                     updateTimeTimer();
-                    setInterval(updateTimeTimer,60000);
+                    setInterval(updateTimeTimer, 60000); //TODO: delete magic numbers 60'000 - ms in minute 
                 }
-                addEventOnClickHandler(handler){
-                    $(this.className+'__room-event').click(handler);
+                addEventOnClickHandler(handler) {
+                    try {
+                        this.eventOnClickHandler = handler;
+                        if (handler) {
+                            $(this.className + '__room-event').click(handler);
+                        }
+                    } catch (ex) {
+                        console.warn("On event click handler: ");
+                        console.log(ex);
+                    }
                 }
                 changeHeight(calendarHeight){
                     $(this.className+'__visible-wrapper').css('height', 40+60+calendarHeight+"px"); //TODO: delete magic numbers (40 - padding top, 60 - ?)
@@ -241,6 +247,7 @@
                         }
                         currentHeight +=this.roomHeight;
                     }
+                    this.addEventOnClickHandler(this.eventOnClickHandler);
                 }
 
                 addEvent($room, event){
@@ -277,7 +284,10 @@
                     $calendar.append($roomList);
 
                     var $visibleWrapper = $('<div class="calendar-events__visible-wrapper"></div>');
+
                     var $visibleEvents = $('<div class="calendar-events__visible-events"></div>');
+                    var $loading = $('  <div class="calendar-events__loading-glass loading-glass"><div class="loading-glass__loader"><i class="fa fa-spinner rotating" aria-hidden="true"></div></i></div>');
+                    $visibleEvents.append($loading);
                    
                     var $background = $('<div class="calendar-events__background-layer"></div>');
                     var $hourLayer = $('<div class="calendar-events__event-hour-layer"></div>');

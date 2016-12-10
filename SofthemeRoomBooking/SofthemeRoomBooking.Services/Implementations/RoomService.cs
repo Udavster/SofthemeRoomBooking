@@ -19,6 +19,7 @@ namespace SofthemeRoomBooking.Services.Implementations
         {
             _context = context;
         }
+
         public string GetEventsByWeek(string date, int id)
         {
             return null;
@@ -38,5 +39,6 @@ namespace SofthemeRoomBooking.Services.Implementations
 
             return rooms.ToArray();
         }
+
     }
 }

@@ -10,6 +10,6 @@ namespace SofthemeRoomBooking.Services.Contracts
     public interface IEventService
     {
         void AddEvent(EventModel model, string userId);
-        altEventModel[] GetEventsByDate(string date);
+        altEventModel[] GetEventsByDate(DateTime day);
     }
 }

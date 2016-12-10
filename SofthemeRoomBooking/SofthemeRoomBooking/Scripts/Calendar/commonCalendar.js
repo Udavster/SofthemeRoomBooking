@@ -16,16 +16,33 @@ calendarMemo2 = {
     }
 }
 
+function Loading(show) {
+    if (show) {
+        $('.calendar-events__loading-glass').show();
+    } else {
+        $('.calendar-events__loading-glass').hide();
+    }
+}
+
 function getDate(Date) {
+    Loading(true);
     $.ajax({
-        url: 'http://localhost:36252/Calendar',             // ?date=20140511
-      //  data: { date: Date },
+        url: '/Calendar',
+        data: { date: Date },
         method: 'get',
-        dataType: "json",                     // тип загружаемых данных
-        success: function (data, textStatus) { // вешаем свой обработчик на функцию success
+        dataType: "json",
+
+        success: function (data, textStatus) {
+            Loading(false);
+
+            if (data.error) {
+                console.log("Date format is envalid or internal exception occured");
+                return;
+            }
+
             var rez = {};
             var data2 = {};
-            
+
             for (var i = 0; i < data.Events.length; i++) {
                 data2[data.Rooms[i].Name] = data.Events[i];
             }
@@ -33,16 +50,19 @@ function getDate(Date) {
             for (var i = 0; i < data.Rooms.length; i++) {
                 roomArr.push(data.Rooms[i].Name);
             }
+
             rez["roomArr"] = roomArr;
             rez["events"] = data2;
             console.log(rez);
             calendarMemo = rez;
             a.constructFromMemo(calendarMemo);
         },
-        complete: function(xhr, status) {
-            console.log(xhr);
-            console.log(status);
+
+        error: function () {
+            //console.warn("error");
+            //retries
         }
+
     });
 }
 
@@ -50,17 +70,12 @@ $(document).ready(function () {
 
     a = new Calendar("calendar-events", calendarMemo);
     a.addEventOnClickHandler(function () { alert('Clicked'); });
-    a.setToday("07, Пт");
+
+    // a.setToday("07, Пт");
     cal.init(null, function (date, dayOfWeek, month, year) {
         getDate(year + "" + tformat(month + 1) + tformat(date));
         var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
         a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
-        
-        //if (dayOfWeek % 2 === 1) {
-        //    a.constructFromMemo(calendarMemo2);
-        //} else {
-        //    a.constructFromMemo(calendarMemo);
-        //}
     });
     $("#" + a.name + "-fw-control").click(function () {
 
@@ -77,4 +92,13 @@ $(document).ready(function () {
         $("#" + a.name + "-fw-control").attr('active', 'true');
         a.changeWidth(1024);
     });
+
+    var today = new Date();
+    if (today.getDay() == 6 || today.getDay() == 7) {
+        today.setDate(today.getDate() + (8 - today.getDay()));
+    }
+    a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
+    //console.log(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
+    getDate(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
+
 });
