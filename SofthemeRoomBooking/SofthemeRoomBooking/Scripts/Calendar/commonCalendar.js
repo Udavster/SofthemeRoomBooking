@@ -94,11 +94,14 @@ $(document).ready(function () {
     });
 
     var today = new Date();
-    if (today.getDay() == 6 || today.getDay() == 7) {
-        today.setDate(today.getDate() + (8 - today.getDay()));
+
+    if (today.getDay() == 6) {
+        today.setDate(today.getDate() + 2);
+    } else if (today.getDay() == 0) {
+        today.setDate(today.getDate() + 1);
     }
+
     a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
-    //console.log(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
     getDate(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
 
 });
