@@ -1,0 +1,33 @@
+.datepicker-chosen-wrapper {
+    display: table;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    text-align: center;
+}
+
+.datepicker-chosen {
+    margin: auto;
+    padding: 0;
+    text-align: center;
+    border-collapse: collapse; 
+}
+
+.datepicker-chosen .datepicker-chosen-arrow {
+    line-height: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.datepicker-chosen .datepicker-chosen-date td {
+    font-family: Arial;
+    cursor: default;
+}
+
+.datepicker-chosen .datepicker-chosen-day {
+    width: 25px;
+}
+
+.datepicker-chosen .datepicker-chosen-month {
+    width: 65px;
+}

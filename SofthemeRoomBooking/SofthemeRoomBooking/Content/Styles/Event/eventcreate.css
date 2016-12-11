@@ -1,0 +1,59 @@
+﻿.eventcontainer-header .createevent-header__icon {
+    margin: auto 0;
+    margin-left: 20px;
+    font-size: 30px;
+}
+
+.eventcontainer-header .createevent-header__close {
+    margin: auto 0;
+    margin-right: 20px;
+    font-size: 30px;
+    color: #C8CEDA;
+    cursor: pointer;
+}
+
+.createevent-header__title {
+    margin: auto;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+.createevent-body__date {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.createevent-body__date #event-date {
+    margin: auto 0;
+    margin-left: 25px;
+}
+
+.createevent-body__date #event-timestart {
+    margin: auto 5px auto 20px;
+}
+
+.createevent-body__date #event-timefinish {
+    margin: auto 0 auto 5px;
+}
+
+.createevent-body__dropdown-rooms {
+    display: flex;
+    margin: 10px 0;
+    margin-top: 25px;
+}
+
+.createevent-body__dropdown-rooms span {
+    margin: auto 5px;
+    margin-right: 20px;
+}
+
+.createevent-body__dropdown-list {
+    margin-left: 10px;
+    width: 200px;
+    -ms-border-radius: 20px;
+    border-radius: 20px;
+    height: 30px;
+    border: 1px solid #EBEEF7;
+    outline: none;
+}

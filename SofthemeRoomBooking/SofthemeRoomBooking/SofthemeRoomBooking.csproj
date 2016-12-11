@@ -233,7 +233,7 @@
     <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\NewEventViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
@@ -311,17 +311,21 @@
     <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
     <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\DateTimePickers\datepicker.css" />
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\eventdetail.css" />
     <Content Include="Content\Styles\eventdetailedit.css" />
+    <Content Include="Content\Styles\Event\eventedit.css" />
+    <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
-    <Content Include="Content\Styles\roombooking.css" />
+    <Content Include="Content\Styles\Event\eventcreate.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
+    <Content Include="Content\Styles\DateTimePickers\timepicker.css" />
     <Content Include="Content\Styles\users.css" />
     <Content Include="Content\Styles\validation.css" />
     <Content Include="Content\Styles\feedback.css" />
@@ -352,6 +356,8 @@
     <Content Include="Scripts\Calendar\calendarEvents.js" />
     <Content Include="Scripts\Calendar\commonCalendar.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\DateTimePickers\datepicker.js" />
+    <Content Include="Scripts\Event\eventcommon.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -362,6 +368,7 @@
     <None Include="Scripts\Validation\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\DateTimePickers\timepicker.js" />
     <Content Include="Scripts\Validation\jquery.validate.js" />
     <Content Include="Scripts\Validation\jquery.validate.min.js" />
     <Content Include="Scripts\Validation\jquery.validate.unobtrusive.js" />
@@ -417,7 +424,6 @@
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentAdminPartial.cshtml" />
-    <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Shared\_CalendarPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
@@ -427,9 +433,10 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
-    <Content Include="Views\Shared\NewEvent.cshtml" />
+    <Content Include="Views\Shared\_CreateEventPartial.cshtml" />
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
+    <Content Include="Views\Shared\_EditEventPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
