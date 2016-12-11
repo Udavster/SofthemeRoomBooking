@@ -1,0 +1,134 @@
+﻿.eventcontainer {
+    display: block;
+    width: 500px;
+    margin: auto;
+    background: #ffffff;
+    border: 1px solid #9FA6B6;
+    font-family: Arial;
+    font-size: 14px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    -ms-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
+.eventcontainer-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    background: #9FA6B6;
+    color: #FFFFFF;
+}
+
+.eventcontainer-body {
+    padding: 0 20px;
+}
+
+.event-input {
+    width: 100%;
+    margin: 10px 0;
+    padding-left: 12px;
+    border: 1px solid #EBEEF7;
+    background-color: #FFFFFF;
+    -ms-border-radius: 12px;
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+.eventcontainer-body__event-title {
+    height: 30px;
+}
+
+.eventcontainer-body__event-description {
+    height: 100px;
+    margin-top: 5px;
+}
+
+.eventcontainer-body__group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    font-size: 13px;
+}
+
+.container-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.container-switchbox {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-right: 0;
+}
+
+.switchbox-publicity {
+    display: block;
+}
+
+.label-publicity {
+    padding-right: 15px;
+    font-size: 14px;
+    color: #F95752;
+}
+
+.label-private {
+    padding-left: 15px;
+    font-size: 14px;
+    color: #9FA6B6;
+}
+
+.label-or {
+    margin: auto;
+}
+
+.eventcontainer-body__organizator-name {
+    width: 50%;
+    height: 30px;
+    margin: auto;
+    margin-right: 0;
+}
+
+.eventcontainer-body__organizator-name:disabled {
+    background-color: #F5F6FB;
+    border-color: #F5F6FB;
+}
+
+.eventcontainer-body__organizator-name:disabled::-webkit-input-placeholder {color: #EBEEF7;}
+.eventcontainer-body__organizator-name:disabled::-moz-placeholder          {color: #C7C8CB;}
+.eventcontainer-body__organizator-name:disabled:-moz-placeholder           {color: #C7C8CB;}
+.eventcontainer-body__organizator-name:disabled:-ms-input-placeholder      {color: #C7C8CB;}
+
+.eventcontainer-footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    padding: 0 20px;
+}
+
+.eventcontainer-footer__error {
+    display: flex;
+    align-items: center;
+    width: 62%;
+}
+
+.eventcontainer-footer__error .error-sign{
+    display: block;
+    font-size: 35px;
+}
+
+.eventcontainer-footer__error .error-text{
+    margin: auto;
+    margin-left: 8px;
+    font-size: 13px;
+}
+
+.event-button {
+    width: 35%;
+    margin: auto;
+    margin-right: 0;
+}

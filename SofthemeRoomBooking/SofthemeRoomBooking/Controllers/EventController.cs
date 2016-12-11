@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -23,33 +24,64 @@ namespace SofthemeRoomBooking.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult CreateEvent()
+        {
+            var rooms = _roomService.GetAllRooms();
+            var model = new EventViewModel(rooms);
+
+            return PartialView("_CreateEventPartial", model);
+        }
+
         [HttpPost]
         [Authorize]
-        public ActionResult AddEvent(NewEventViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEvent(EventViewModel viewModel)
         {
             var model = viewModel.ToNewEventModel();
             var userId = User.Identity.GetUserId();
+
             _eventService.AddEvent(model, userId);
-            return Redirect("Home/Index");
+
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult NewEvent()
+        [HttpGet]
+        [Authorize]
+        public ActionResult EditEvent(string eventId)
         {
             var rooms = _roomService.GetAllRooms();
 
-            var dropDownList = rooms.Select(r => new SelectListItem
-            {
-                Text = r.Name,
-                Value = r.IdRoom.ToString(),
-                Selected = "select" == r.IdRoom.ToString()
-            }).ToList();
+            var model = new EventViewModel(rooms);
 
-            NewEventViewModel eventModel = new NewEventViewModel()
-            {
-                Rooms = dropDownList
-            };
+            return PartialView("_EditEventPartial", model);
+            //logic
+            //var model = _eventService.GetEventViewModelById(eventId);
 
-            return PartialView(eventModel);
+            //if (model != null)
+            //{
+            //    return PartialView("_EditEventPartial", model);
+            //}
+
+            //return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEvent(EventViewModel model)
+        {
+            return PartialView("_EditEventPartial");
+            //var result = await _eventService.Edit(model);
+
+            //if (!result)
+            //{
+            //    ModelState.AddModelError("", "Что-то пошло не так");
+            //    return PartialView("_EditEventPartial", model);
+            //}
+
+            //return RedirectToAction("Index", "Home");
         }
     }
 }
