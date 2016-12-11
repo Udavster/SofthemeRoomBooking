@@ -222,6 +222,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Pagination.cs" />
+    <Compile Include="Migrations\201612032120020_Name.cs" />
+    <Compile Include="Migrations\201612032120020_Name.Designer.cs">
+      <DependentUpon>201612032120020_Name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalendarEventModel.cs" />
@@ -230,6 +235,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
+    <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
     <Compile Include="Models\UserViewModels\ProfileUserViewModel.cs" />
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Package\MvcPackage.cs" />
@@ -238,7 +244,7 @@
     <Compile Include="Services\Implementation\ProfileService.cs" />
     <Compile Include="SimpleInjectorConfiguration.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Validator.cs" />
+    <Compile Include="Helpers\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -277,6 +283,8 @@
     <Content Include="Content\Images\Line Details\line-details-web-2.png" />
     <Content Include="Content\Images\Line Details\line-details-web-3.png" />
     <Content Include="Content\Images\login.png" />
+    <Content Include="Content\Images\Login\Login.png" />
+    <Content Include="Content\Images\Login\logo.png" />
     <Content Include="Content\Images\logo-gray.png" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\Map\icon-envelope.png" />
@@ -305,6 +313,9 @@
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\eventdetail.css" />
     <Content Include="Content\Styles\eventdetailedit.css" />
+    <Content Include="Content\Styles\pagination.css" />
+    <Content Include="Content\Styles\popup-confirmation.css" />
+    <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
     <Content Include="Content\Styles\roombooking.css" />
@@ -317,6 +328,9 @@
     <Content Include="Content\Styles\layout.css" />
     <Content Include="Content\Styles\weekScheduler.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\font-awesome.css" />
+    <Content Include="fonts\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -327,12 +341,20 @@
     </Content>
     <Content Include="Content\Styles\login.css" />
     <Content Include="Content\events.json" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Calendar\calendarDatepicker.js" />
     <Content Include="Scripts\Calendar\calendarEvents.js" />
     <Content Include="Scripts\Calendar\commonCalendar.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
@@ -397,11 +419,7 @@
     <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Shared\_CalendarPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Login.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Home.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Users.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Layout.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Login\_Layout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -420,6 +438,7 @@
     <Content Include="Views\Login\ChangePasswordConfirmation.cshtml" />
     <Content Include="Views\Login\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Profile\Users.cshtml" />
+    <Content Include="Views\Profile\UsersTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

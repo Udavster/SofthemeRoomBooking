@@ -90,7 +90,7 @@ $(document).ready(function () {
         $(".calendars__month").css('display', 'block');
         $(this).attr('active', 'false');
         $("#" + a.name + "-fw-control").attr('active', 'true');
-        a.changeWidth(1024);
+        a.changeWidth(990);
     });
 
     var today = new Date();
@@ -105,3 +105,4 @@ $(document).ready(function () {
     getDate(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
 
 });
+

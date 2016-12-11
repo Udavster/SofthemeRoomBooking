@@ -1,55 +1,57 @@
-﻿@model List<SofthemeRoomBooking.Models.UserViewModels.ProfileUserViewModel>
+﻿<div id="popup-confirmation" class="overlay"></div>
 
-@section Styles{
-    @Styles.Render("~/Content/Styles/users")
-}
+<div class="container users-container">
+    <p class="users-container__title">Список пользователей</p>
 
-<div class="content user-list">
-    <p class="content__title">Список пользователей</p>
-
-    <div class="content__line user-list__line-header">
-        <p class="user-list__total-users-num">Всего: <span>@Model.Count</span></p>
-        <div class="user-list__search content__search search">
-            <input class="search__input" type="text" value=""/>
-            <i class="fa fa-search search__image" aria-hidden="true"></i>
+    <div class="users-container__subtitle subtitle-search">
+        <div class="user-container__search-container search-container">
+            <input id="searchInput" class="search__input" type="text" value="" placeholder="Поиск"/>
+            <i id="searchSign" class="fa fa-search search__image" aria-hidden="true"></i>
         </div>
     </div>
 
-    <table class="content__table user-list__table table">
-        @foreach (var user in Model)
-        {
-                <tr class="table__row user-list__row" data-href='@Url.Action("Index", "Profile", new { userId = user.Id } )'>
+    <div id="loading">
+        <div class="loading">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw loading-sign"></i>
+        </div>
+    </div>
 
-                    <td class="table__cell user-list__name">
-                        @user.UserName
-                        @if (user.AdminRole)
-                        {
-                            <label class="admin-label">admin</label>
-                        }
-                    </td>
-                    <td class="table__cell user-list__email">@user.Email</td>
-                    <td class="table__cell user-list__events-num">
-                        <i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;@user.ActiveEvents
-                        <i class="fa fa-times user-list__delete-row" aria-hidden="true"></i>
-                    </td>
-                </tr>
-        }
-    </table>
-
-    <div class="user-list__pagination pagination">
-        <span class="pagination__element"><a class="link user-list__link" href="">1</a></span>
-        <span class="pagination__element">...</span>
-        <span class="pagination__element"><a class="link  user-list__link" href="">5</a></span>
-        <span class="pagination__element">...</span>
-        <span class="pagination__element"><a class="link  user-list__link" href="">9</a></span>
+    <div class="users-container-table">
+        @Html.Action("UsersTable")
     </div>
 </div>
 
 <script>
-    $(function() {
-        $('.user-list__row').bind('click', function() {
-            window.document.location = $(this).data("href");
-        });
+    $('#searchSign').bind('click', function(e) {
+        e.preventDefault();
+        var searchString = $('#searchInput').val();
+
+        $.ajax({
+            url: '@Url.Action("UsersTable")',
+            method: 'GET',
+            data: { searchString: searchString },
+            dataType: 'html',
+            beforeSend: function () {
+                setTimeout(Loading(true, '.users-container-table'), 10000);
+            },
+            complete: function () {
+                Loading(false);
+            },
+            success: function (result) {
+                $(".users-container-table").html(result);
+            }
     });
+    });
+
+    function Loading(loading, updateSelector) {
+        var selector = $(updateSelector || '.content');
+
+        if (loading) {
+            $(selector).html('');
+            $('#loading').show();
+        } else {
+            $('#loading').hide();
+        }
+    };
 </script>
 

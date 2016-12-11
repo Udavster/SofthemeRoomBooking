@@ -17,6 +17,12 @@ namespace SofthemeRoomBooking
             bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
                         "~/Scripts/jquery.unobtrusive-ajax.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Login").Include(
+                         "~/Scripts/jquery-{version}.js",
+                       "~/Scripts/Validation/jquery.validate*",
+                        "~/Scripts/Validation/validation.js"));
+
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -36,9 +42,10 @@ namespace SofthemeRoomBooking
                         "~/Scripts/Calendar/commonCalendar.js"
                         ));
 
-            //./scripts/calendar.js
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/font-awesome.css",
+            //
+            bundles.Add(new StyleBundle("~/bundles/Layout/css").Include(
+                      //"~/Content/font-awesome.css",
+                      //"~/fonts/font-awesome.css",
                       "~/Content/Styles/validation.css",
                       "~/Content/Styles/common.css",
                       "~/Content/Styles/input_styles.css",
@@ -46,27 +53,27 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/popup-confirmation.css",
                       "~/Content/Styles/map.css",
                       "~/Content/Styles/room.css",
-                      "~/Content/Styles/equipment.css",
-                      "~/Content/Styles/roombooking.css",
-                      "~/Content/Styles/eventdetail.css",
-                      "~/Content/Styles/eventdetailedit.css",
-                      "~/Content/Styles/weekScheduler.css"));
-            bundles.Add(new StyleBundle("~/Login/cssn").Include(
+                      "~/Content/Styles/users.css",
+                      "~/Content/Styles/pagination.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/Login/css").Include(
                       "~/Content/Styles/login.css",
                       "~/Content/Styles/input_styles.css",
-                      "~/Content/Styles/validation.css",
-                      "~/Content/font-awesome.css"));
+                      "~/Content/Styles/validation.css"
+                      //"~/Content/font-awesome.css"
+                      ));
 
-            bundles.Add(new StyleBundle("~/Content/Styles/feedback").Include(
+            bundles.Add(new StyleBundle("~/bundles/Styles/feedback").Include(
                 "~/Content/Styles/feedback.css"));
 
-            bundles.Add(new StyleBundle("~/Content/Styles/users").Include(
-                "~/Content/Styles/users.css"));
+            bundles.Add(new StyleBundle("~/bundles/Styles/users").Include(
+                "~/Content/Styles/users.css",
+                "~/Content/Styles/pagination.css"));
 
-            bundles.Add(new StyleBundle("~/Content/Styles/profile").Include(
+            bundles.Add(new StyleBundle("~/bundles/Styles/profile").Include(
                 "~/Content/Styles/profile.css"));
 
-            bundles.Add(new StyleBundle("~/Content/Styles/calendar").Include(
+            bundles.Add(new StyleBundle("~/bundles/Styles/calendar").Include(
                 "~/Content/Styles/Calendar/calendarDatepicker.css",
                 "~/Content/Styles/Calendar/calendarEvents.css",
                 "~/Content/Styles/Calendar/calendarCommon.css"

@@ -5,7 +5,8 @@
 <html>
 <head>
     <title>@ViewBag.Title - Softheme Room Booking</title>
-    @Styles.Render("~/Login/cssn")
+    <link href="~/fonts/font-awesome.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/Login/css")
     @RenderSection("styles", required: false)
 </head>
 <body>
@@ -40,7 +41,7 @@
     @RenderBody()
 </div>
 
-@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/Login")
 @RenderSection("scripts", required: false)
 </body>
 </html>
