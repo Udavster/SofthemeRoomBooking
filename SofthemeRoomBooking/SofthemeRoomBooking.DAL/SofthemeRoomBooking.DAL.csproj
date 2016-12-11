@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetUser.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentRooms.cs" />
     <Compile Include="Events.cs" />

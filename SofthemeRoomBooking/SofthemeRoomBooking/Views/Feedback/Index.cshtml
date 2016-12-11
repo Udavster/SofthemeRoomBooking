@@ -14,7 +14,7 @@
     <img src="~/Content/Images/contact-bg.png">
 </div>
 
-@using (Html.BeginForm("Send", "Feedback", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Save", "Feedback", FormMethod.Post, new { @class = "feedback-form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken();
 

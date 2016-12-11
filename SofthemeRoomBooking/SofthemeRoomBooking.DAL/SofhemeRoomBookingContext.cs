@@ -12,6 +12,7 @@ namespace SofthemeRoomBooking.DAL
         {
         }
 
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Equipment> Equipment { get; set; }
         public virtual DbSet<EquipmentRooms> EquipmentRooms { get; set; }
         public virtual DbSet<Events> Events { get; set; }

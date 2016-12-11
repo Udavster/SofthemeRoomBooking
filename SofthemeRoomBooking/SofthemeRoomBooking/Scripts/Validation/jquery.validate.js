@@ -288,8 +288,19 @@ $.extend($.validator, {
 	},
 
 	// http://docs.jquery.com/Plugins/Validation/Validator/setDefaults
-	setDefaults: function( settings ) {
-		$.extend( $.validator.defaults, settings );
+	setDefaults: function (settings) {
+	    var validator = $.data($("form")[0], "validator");
+	    var originalSettings = jQuery.validator.getDefaults();
+	    for (var key in settings) {
+	        if (settings[key]) {
+	            originalSettings[key] = settings[key];
+	        }
+	    }
+	    validator.settings = $.extend(true, {}, $.validator.defaults, originalSettings);
+	},
+	getDefaults: function () {
+	    var validator = $.data($("form")[0], "validator");
+	    return validator.settings;
 	},
 
 	messages: {
