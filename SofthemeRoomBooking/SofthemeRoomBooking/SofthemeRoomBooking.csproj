@@ -416,7 +416,6 @@
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentAdminPartial.cshtml" />
-    <Content Include="Views\Home\Feedback.cshtml" />
     <Content Include="Views\Shared\_CalendarPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
