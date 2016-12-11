@@ -1,13 +1,13 @@
-﻿CREATE TABLE [dbo].[EquipmentRooms]
+CREATE TABLE [dbo].[EquipmentRooms]
 (
-	id INT IDENTITY PRIMARY KEY,
-	id_room INT NOT NULL,
-	id_equipment INT NOT NULL,
-	quantity INT NOT NULL
-	CONSTRAINT fk_ERtoRoom FOREIGN KEY (id_room)
-		REFERENCES Rooms(id),
-	CONSTRAINT fk_ERtoEquipment FOREIGN KEY (id_equipment)
-		REFERENCES Equipment(id)
-);
+	[Id] INT IDENTITY PRIMARY KEY,
+	[Id_room] INT NOT NULL,
+	[Id_equipment] INT NOT NULL,
+	[Quantity] INT NOT NULL
+	CONSTRAINT fk_ERtoRoom FOREIGN KEY ([Id_room])
+		REFERENCES Rooms([Id]),
+	CONSTRAINT fk_ERtoEquipment FOREIGN KEY ([Id_equipment])
+		REFERENCES Equipment([Id])
+)
 
 GO

@@ -3,7 +3,8 @@
     var point = {lat: 50.42894726, lng: 30.51822513};
     var map = new google.maps.Map(document.getElementById('map'), {
         center: point,
-        zoom: 17
+        zoom: 17,
+        scrollwheel: false
     });
 
     var contentString = '<div id="content">'+

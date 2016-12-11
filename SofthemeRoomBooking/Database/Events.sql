@@ -1,18 +1,18 @@
-﻿CREATE TABLE [dbo].[Events]
-(
-	id INT IDENTITY PRIMARY KEY,
-	title NVARCHAR(100),
-	description NVARCHAR(500),
-	id_user NVARCHAR(128) NOT NULL,
- 	nickname NVARCHAR(150), --what we forgot WWF
- 	id_room INT NOT NULL,
- 	start SMALLDATETIME NOT NULL,
- 	finish SMALLDATETIME NOT NULL, --turns out that 'end' is a keyword
- 	publicity BIT NOT NULL,
- 	CONSTRAINT fk_EventRoom FOREIGN KEY (id_room)
- 		REFERENCES Rooms(id),
- 	CONSTRAINT fk_EventCreator FOREIGN KEY (id_user)
- 		REFERENCES AspNetUsers(id)
-);
+CREATE TABLE [dbo].[Events](
+	[Id] INT IDENTITY PRIMARY KEY,
+	[Title] NVARCHAR(100),
+	[Description] NVARCHAR(500),
+	[Id_user] NVARCHAR(128) NOT NULL,
+	[Nickname] NVARCHAR(150), --what we forgot WWF
+	[Id_room] INT NOT NULL,
+	[Start] SMALLDATETIME NOT NULL,
+	[Finish] SMALLDATETIME NOT NULL, --turns out that 'end' is a keyword
+	[Publicity] BIT NOT NULL,
+	[Cancelled] BIT DEFAULT(0),
+	CONSTRAINT fk_EventRoom FOREIGN KEY ([Id_room])
+		REFERENCES Rooms([Id]),
+	CONSTRAINT fk_EventCreator FOREIGN KEY ([Id_user])
+		REFERENCES AspNetUsers(Id)
+)
 
 GO

@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace SofthemeRoomBooking.DAL
 {
     using System;
@@ -6,12 +8,12 @@ namespace SofthemeRoomBooking.DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Room")]
-    public partial class Room
+    [Table("OpenedRooms")]
+    public partial class OpenedRoom
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(35)]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

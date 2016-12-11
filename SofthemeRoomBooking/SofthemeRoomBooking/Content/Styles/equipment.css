@@ -1,0 +1,109 @@
+﻿.equipmentuser {
+    display: inline-block;
+    background: #f5f7fb;
+    border-radius: 25px;
+    border: 1px solid;
+    border-color: black;
+    padding: 5px 40px;
+}
+.equipmentuser a {
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    margin: 0 7px;
+}
+.equipmentuser__table{
+    background-image: url(../../Content/Images/Equipment/icon-table.png);
+    background-repeat: no-repeat;
+    height:45px;
+    width:30px;
+}
+
+.equipmentuser__board {
+    background-image: url(../../Content/Images/Equipment/icon-board.png);
+    background-repeat: no-repeat;
+    height:45px;
+    width:30px;
+}
+.equipmentuser__laptop {
+    background-image: url(../../Content/Images/Equipment/icon-laptop.png);
+    background-repeat: no-repeat;
+    height:45px;
+    width:40px;
+}
+.equipmentuser__print {
+    background-image: url(../../Content/Images/Equipment/icon-print.png);
+    background-repeat: no-repeat;
+    height:45px;
+    width:30px;
+}
+.equipmentuser__proect {
+    background-image: url(../../Content/Images/Equipment/icon-proect.png);
+    background-repeat: no-repeat;
+    height:45px;
+    width:40px;
+}
+
+.equipmentadmin {
+    background: #f5f7fb;
+    border-radius: 25px;
+    border: 1px solid;
+    border-color: black;
+    padding: 5px 40px;
+}
+
+.equipmentadmin_top {
+     display: inline-block;
+     vertical-align: middle;
+}
+.equipmentadmin-inputname {
+    border: none; 
+    border-bottom: 1px solid black;
+    background: none;
+    width: 100px;
+}
+
+.equipmentadmin-cancel {
+    display: inline-block;
+    background-color: #C8CEDA;
+    color: Black;
+    padding: 2px 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius:10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none; 
+}
+
+.equipmentadmin-submit {
+    display: inline-block;
+    background-color: #f95752;
+    color: White;
+    padding: 2px 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none; 
+}
+
+.equipmentadmin_down {
+    vertical-align: middle;
+}
+
+.equipmentadmin_down a {
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    margin: 0 7px;
+}
+
+.equipmentadmin-input {
+    border: none; 
+    border-bottom: 1px solid black;
+    background: none;
+    width: 20px;
+}
+

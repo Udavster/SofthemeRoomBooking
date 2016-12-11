@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Rooms]
 (
-	id INT IDENTITY PRIMARY KEY,
-	name NVARCHAR(35)
-);
+	[Id] INT IDENTITY PRIMARY KEY,
+	[Name] NVARCHAR(35)
+)
 
 GO

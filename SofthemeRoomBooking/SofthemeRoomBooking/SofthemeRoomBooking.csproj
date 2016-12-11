@@ -77,6 +77,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SimpleInjector, Version=3.2.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.3.2.7\lib\net45\SimpleInjector.dll</HintPath>
       <Private>True</Private>
@@ -154,9 +158,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -210,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -227,6 +229,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -249,6 +252,21 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\contact-bg.png" />
+    <Content Include="Content\Images\Equipment\icon-board.png" />
+    <Content Include="Content\Images\Equipment\icon-laptop.png" />
+    <Content Include="Content\Images\Equipment\icon-print.png" />
+    <Content Include="Content\Images\Equipment\icon-proect.png" />
+    <Content Include="Content\Images\Equipment\icon-table.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-einstein.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-empty.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-english.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-hr.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-info.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-newton.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-tesla.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-web-1.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-web-2.png" />
+    <Content Include="Content\Images\Equipment\LineDetails\line-details-web-3.png" />
     <Content Include="Content\Images\Icons\icon-board.png" />
     <Content Include="Content\Images\Icons\icon-laptop.png" />
     <Content Include="Content\Images\Icons\icon-print.png" />
@@ -292,16 +310,23 @@
     <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
     <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\equipment.css" />
+    <Content Include="Content\Styles\eventdetail.css" />
+    <Content Include="Content\Styles\eventdetailedit.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\map.css" />
     <Content Include="Content\Styles\room.css" />
+    <Content Include="Content\Styles\roombooking.css" />
+    <Content Include="Content\Styles\popup-confirmation.css" />
+    <Content Include="Content\Styles\profile.css" />
     <Content Include="Content\Styles\users.css" />
     <Content Include="Content\Styles\validation.css" />
     <Content Include="Content\Styles\feedback.css" />
     <Content Include="Content\Styles\input_styles.css" />
     <Content Include="Content\Styles\layout.css" />
+    <Content Include="Content\Styles\weekScheduler.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome.css" />
     <Content Include="fonts\font-awesome.min.css" />
@@ -315,6 +340,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Styles\login.css" />
+    <Content Include="Content\events.json" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -343,6 +369,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Room\room.js" />
+    <Content Include="Scripts\Room\weekScheduler.js" />
     <Content Include="Scripts\Validation\validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -383,12 +411,13 @@
     <Content Include="Views\Shared\_PopupConfirmationPartial.cshtml" />
     <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Shared\_MapPartial.cshtml" />
-    <Content Include="Views\Shared\_CalendarPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_EventDetailsPartial.cshtml" />
+    <Content Include="Views\Shared\_EventDetailsPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_EventEditPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentUserPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoPartial\_PopupEquipmentAdminPartial.cshtml" />
+    <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
+    <Content Include="Views\Shared\_PopupEquipmentAdminPartial.cshtml" />
+    <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Shared\_CalendarPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
@@ -397,6 +426,11 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\Shared\_RoomBooking.cshtml" />
+    <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
+    <Content Include="Views\Shared\_WeekScheduler.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Home\Menu.cshtml" />
     <Content Include="Views\Profile\ChangePassword.cshtml" />
@@ -408,6 +442,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\NewFolder1\" />
+    <Folder Include="Views\Calendar\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
@@ -423,11 +459,6 @@
       <Project>{58e2c1f5-c60b-46d5-96f7-c0c5ab04f2b5}</Project>
       <Name>SofthemeRoomBooking.Services</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612032120020_Name.resx">
-      <DependentUpon>201612032120020_Name.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,10 @@
-﻿using System.Web.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Web.Helpers;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using SofthemeRoomBooking.Services.Models;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Services.Contracts;
 
@@ -15,6 +21,8 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Index()
         {
+           // var a = new SofthemeRoomBooking.Services.Implementations.EventService();
+           // SofthemeRoomBooking.Services.Implementations.RoomService
             return View();
         }
 

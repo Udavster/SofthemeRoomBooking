@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SofthemeRoomBooking.Services.Contracts
+namespace SofthemeRoomBooking.Services.Models
 {
-    public interface ICalendarService
+    public class RoomModel
     {
+        public int Id;
+
+        public string Name;
     }
 }
