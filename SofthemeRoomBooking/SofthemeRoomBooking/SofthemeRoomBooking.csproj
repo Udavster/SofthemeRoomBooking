@@ -312,6 +312,7 @@
     <Content Include="Content\Images\Slider\today-active-top.png" />
     <Content Include="Content\Images\Slider\today-bottom.png" />
     <Content Include="Content\Images\Slider\today-top.png" />
+    <Content Include="Content\Images\walls-1.png" />
     <Content Include="Content\Images\walls.png" />
     <Content Include="Content\Styles\Calendar\calendarCommon.css" />
     <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
@@ -445,6 +446,7 @@
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
     <Content Include="Views\Shared\_EditEventPartial.cshtml" />
+    <Content Include="Views\Shared\_EventCancelationPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
