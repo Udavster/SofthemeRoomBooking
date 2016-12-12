@@ -1,15 +1,21 @@
-﻿    <div class="room">
+﻿@using SofthemeRoomBooking.Services.Models
+@model IEnumerable<SofthemeRoomBooking.Services.Models.RoomEquipmentModel>
+@{
+    List<RoomEquipmentModel> rooms = Model.ToList();
+}
+
+<div class="room">
     <div class="room__image">
         <img src="~/Content/Images/walls.png" />
-        <img class="room__path room__teslapath" id="teslapath" src="~/Content/Images/Path/path-tesla.png"/>
-        <img class="room__path room__newtonpath" id="newtonpath" src="~/Content/Images/Path/path-newton.png"/>
-        <img class="room__path room__hrpath" id="hrpath" src="~/Content/Images/Path/path-hr.png" />
-        <img class="room__path room__einsteinpath" id="einsteinpath" src="~/Content/Images/Path/path-einstein.png" />
-        <img class="room__path room__infopath" id="infopath" src="~/Content/Images/Path/path-info.png" />
-        <img class="room__path room__web1path" id="web1path" src="~/Content/Images/Path/path-web-1.png" />
-        <img class="room__path room__web2path" id="web2path" style="z-index: 3" src="~/Content/Images/Path/path-web-2.png" />
-        <img class="room__path room__web3path" id="web3path" src="~/Content/Images/Path/path-web-3.png" />
-        <img class="room__path room__englishpath" id="englishpath" src="~/Content/Images/Path/path-ienglish.png" />
+        <img class="room__path room__path-1" id="path-1" src="~/Content/Images/Path/path-einstein.png" />
+        <img class="room__path room__path-2" id="path-2" src="~/Content/Images/Path/path-tesla.png" />
+        <img class="room__path room__path-3" id="path-3" src="~/Content/Images/Path/path-newton.png" />
+        <img class="room__path room__path-4" id="path-4" src="~/Content/Images/Path/path-hr.png" />
+        <img class="room__path room__path-5" id="path-5" src="~/Content/Images/Path/path-info.png" />
+        <img class="room__path room__path-6" id="path-6" src="~/Content/Images/Path/path-web-1.png" />
+        <img class="room__path room__path-7" id="path-7" style="z-index: 3" src="~/Content/Images/Path/path-web-2.png" />
+        <img class="room__path room__path-8" id="path-8" src="~/Content/Images/Path/path-web-3.png" />
+        <img class="room__path room__path-9" id="path-9" src="~/Content/Images/Path/path-ienglish.png" />
         
         <div class="room__number">Этаж 10</div>
         @if (User.IsInRole("Admin"))
@@ -40,63 +46,58 @@
             </div>
         </div>
 
-        <div data-pathid="einsteinpath" class="room__general  room__einstein">
-            <div class="room__einsteintext">
-                Einstein Classroom
+        @for (var i = 0; i < rooms.Count; i++)
+        {
+            <div data-roomid="@rooms[i].Id" data-num="@rooms[i].Equipments" data-pathid="path-@rooms[i].Id" class="room__general room-@rooms[i].Id">
+                <div class="text room__text-@rooms[i].Id">
+                    @rooms[i].Name
+                </div>
+                <div class="room__arrow room__arrow-@rooms[i].Id">
+                </div>
             </div>
-            <div class="room__einsteinarrow">
-            </div>
-        </div>
 
-        <div data-pathid="infopath" class="room__general  room__info">
-            <div class="room__infotext">
-                Info Центр
-            </div>
-            <div class="room__infoarrow">
-            </div>
-        </div>
+            if (!@rooms[i].IsAvalaible)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    <script>
+                        $('.room-' + @rooms[i].Id).css('background', '#d7d9de');
+                        $('.room-' + @rooms[i].Id).children('.text').css('background-color', '#acb0b6');
+                        $('.room-' + @rooms[i].Id).addClass('room__general-blocked');
+                    </script>
+                }
+                else
+                {
+                    <script>
+                    $('.room-' + @rooms[i].Id).css('background', '#d7d9de');
+                    $('.room-' + @rooms[i].Id).children('.text').css('background-color', '#acb0b6');
+                    $('.room-' + @rooms[i].Id).css('pointer-events', 'none');
+                    $('.room-' + @rooms[i].Id).removeClass('room__general').addClass('room__general-blocked');
+                    </script>
+                }
 
-        <div data-pathid="web1path"  class="room__general  room__web1">
-            <div class="room__webtext">
-                Web & Marketing
+            }
+        }
+        <div class="room__number">Этаж 10</div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="button room__open" style="display: none">
+                Открыть
             </div>
-            <div class="room__webarrow"></div>
-        </div>
-
-        <div data-pathid="web2path"  class="room__general room__web2">
-            <div class="room__webtext">
-                Web & Marketing
+            <div class="button room__close" style="display: none">
+                Закрыть
             </div>
-            <div class="room__web2arrow"></div>
-        </div>
-
-        <div data-pathid="web3path" class="room__general room__web3">
-            <div class="room__webtext">
-                Web & Marketing
+            <div class="button room__change" style="display: none">
+                Изменить
             </div>
-            <div class="room__web3arrow"></div>
-        </div>
-
-        <div data-pathid="englishpath" class="room__general room__english">
-            <div class="room__englisharrow"></div>
-        </div>
-        <div data-pathid="englishpath" class="room__englishtext">
-            English
-        </div>
-
-        <div  class="room__general room__newton" data-pathid="newtonpath">
-            <div class="room__newtontext">
-                Newton Classroom
-            </div>
-            <div class="room__newtonarrow"></div>
-        </div>
+        }
 
         <div class="room__equipment equipmentuser" style="display: none">
             @Html.Partial("_PopupEquipmentUserPartial")
         </div>
-        @*<div class="room__equipmentadmin equipmentadmin" style="display: block">
-            @Html.Partial("_PopupEquipmentAdminPartial")
-        </div>*@
+        <div class="room__equipmentadmin equipmentadmin">
+            @*@Html.Action("RoomEquipment", "Room",new {id = 1})*@
         </div>
     </div>
+</div>
 

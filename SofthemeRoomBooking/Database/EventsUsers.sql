@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[EventsUsers]( 
+	[Id] INT IDENTITY PRIMARY KEY,
+	[Email] NVARCHAR(256) NOT NULL,
+	[IdEvent] INT NOT NULL,
+	CONSTRAINT fk_UsersEvents FOREIGN KEY (IdEvent)
+		REFERENCES Events(Id),
+)

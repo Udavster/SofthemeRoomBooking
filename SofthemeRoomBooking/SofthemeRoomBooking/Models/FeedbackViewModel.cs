@@ -5,8 +5,6 @@ namespace SofthemeRoomBooking.Models
 {
     public class FeedbackViewModel
     {
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [StringLength(50, ErrorMessage = "Имя не может быть длиннее 50 символов")]
         public String Name { get; set; }

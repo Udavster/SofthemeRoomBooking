@@ -211,6 +211,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -219,6 +220,8 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Converters\ApplicationUserConverter.cs" />
     <Compile Include="Converters\EventConverter.cs" />
+    <Compile Include="Converters\RoomEquipmentViewModelConverter.cs" />
+    <Compile Include="Converters\CalendarEventConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -229,11 +232,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\RoomEquipmentViewModel.cs" />
     <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\NewEventViewModel.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
@@ -453,6 +459,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\NewFolder1\" />
+    <Folder Include="Views\Calendar\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>

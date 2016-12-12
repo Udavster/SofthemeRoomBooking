@@ -1,18 +1,67 @@
-﻿<div class="equipmentadmin_top">
-    <p style="float: left">Название: <input type="text" class="equipmentadmin-inputname"></p>
-     <input class="equipmentadmin-cancel" type="submit" value="Отменить" />
-     <input class="equipmentadmin-submit" type="submit" value="Сохранить" /> 
-   
-</div>
-<div class="equipmentadmin_down">
-    <a class="equipmentuser__table" style="margin-right: 0"></a>
-    <input type="text" class="equipmentadmin-input">
-    <a class="equipmentuser__board"></a>
-    <input type="text" class="equipmentadmin-input">
-    <a class="equipmentuser__laptop"></a>
-    <input type="text" class="equipmentadmin-input">
-    <a class="equipmentuser__print"></a>
-    <input type="text" class="equipmentadmin-input">
-    <a class="equipmentuser__proect"></a>
-    <input type="text" class="equipmentadmin-input">
-</div>   
+﻿@model SofthemeRoomBooking.Models.RoomEquipmentViewModel
+
+@using (Html.BeginForm("ChangeRoomEquipment", "Room", FormMethod.Post, new { @class = "compl-background__form form", enctype = "multipart/form-data" }))
+{
+    <div class="equipmentadmin_top">
+        <p class="equipment-elem">Название:</p>
+        @Html.EditorFor(model => model.Name, new
+        {
+            htmlAttributes = new
+            {
+                @class = "equipment-elem equipmentadmin-inputname"
+            }
+        })
+        <div class="equipment-elem equipmentadmin-cancel">Отменить</div>
+        <input class="equipment-elem equipmentadmin-submit" type="submit" value="Сохранить" />
+
+    </div>
+    <div class="equipmentadmin_down">
+        <a class="equipmentuser__table" style="margin-right: 0"></a>
+        @Html.EditorFor(model => model.Equipment[0].Quantity, new
+        {
+            htmlAttributes = new
+            {
+                type = "text",
+                @class = "equipmentadmin-input"
+            }
+        })
+        <a class="equipmentuser__board"></a>
+        @Html.EditorFor(model => model.Equipment[1].Quantity, new
+        {
+            htmlAttributes = new
+            {
+                type = "text",
+                @class = "equipmentadmin-input"
+            }
+        })
+       
+        <a class="equipmentuser__laptop"></a>
+        @Html.EditorFor(model => model.Equipment[2].Quantity, new
+        {
+            htmlAttributes = new
+            {
+                type = "text",
+                @class = "equipmentadmin-input"
+            }
+        })
+        <a class="equipmentuser__print"></a>
+        @Html.EditorFor(model => model.Equipment[3].Quantity, new
+        {
+            htmlAttributes = new
+            {
+                type= "text",
+                @class = "equipmentadmin-input"
+            }
+        })
+        <a class="equipmentuser__proect"></a>
+        @Html.EditorFor(model => model.Equipment[4].Quantity, new
+        {
+            htmlAttributes = new
+            {
+                type = "text",
+                @class = "equipmentadmin-input"
+            }
+        })
+    </div>
+    @Html.HiddenFor(model => model.Id)
+}

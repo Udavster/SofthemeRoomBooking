@@ -4,7 +4,11 @@
     border-radius: 25px;
     border: 1px solid;
     border-color: black;
-    padding: 5px 40px;
+    padding: 5px 20px;
+    text-align: center;
+}
+.equipmentadmin {
+    display: none;
 }
 .equipmentuser a {
     display: inline-block;
@@ -60,7 +64,9 @@
     border: none; 
     border-bottom: 1px solid black;
     background: none;
-    width: 100px;
+    width: 170px;
+    font-size: 14px;
+    outline: none;
 }
 
 .equipmentadmin-cancel {
@@ -105,5 +111,19 @@
     border-bottom: 1px solid black;
     background: none;
     width: 20px;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
 }
 
+.equipmentuser__table-main {
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+    margin: 0 7px;
+}
+
+.equipmentadmin_top .equipment-elem {
+    display: inline-block;
+    vertical-align: middle;
+}

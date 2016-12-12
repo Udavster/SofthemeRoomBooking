@@ -15,6 +15,7 @@ namespace SofthemeRoomBooking.DAL
         public virtual DbSet<Equipment> Equipments { get; set; }
         public virtual DbSet<EquipmentRoom> EquipmentRooms { get; set; }
         public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventUser> EventsUsers { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
 

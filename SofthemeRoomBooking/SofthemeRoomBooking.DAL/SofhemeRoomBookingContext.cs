@@ -12,11 +12,14 @@ namespace SofthemeRoomBooking.DAL
         {
         }
 
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Equipment> Equipment { get; set; }
         public virtual DbSet<EquipmentRooms> EquipmentRooms { get; set; }
         public virtual DbSet<Events> Events { get; set; }
         public virtual DbSet<Feedback> Feedback { get; set; }
         public virtual DbSet<Rooms> Rooms { get; set; }
+        public virtual DbSet<EventsUser> EventsUsers { get; set; }
+        public virtual DbSet<RoomsLocks> RoomsLocks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

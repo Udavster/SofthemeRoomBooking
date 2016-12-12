@@ -1,8 +1,13 @@
 ﻿.eventdetailedit {
     width: 400px;
-    height: 300px;
+    height: auto;
     background: #ffffff;
-    border: 1px solid #f95752
+    border: 1px solid #f95752;
+    color: black;
+    position: absolute;
+    top: 135px;
+    left: 630px;
+    z-index: 5;
 }
 
 .eventdetailedit__title {
@@ -52,4 +57,10 @@
     cursor: pointer;
     font-size: 10px;
     outline: none; 
+}
+
+.eventdetailedit-close {
+   color: #eeeeee; 
+   margin-right: 10px;
+    float: right;
 }

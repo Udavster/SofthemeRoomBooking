@@ -64,24 +64,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\ICalendarService.cs" />
     <Compile Include="Contracts\IEventService.cs" />
     <Compile Include="Contracts\IFeedbackService.cs" />
     <Compile Include="Contracts\IRoomService.cs" />
     <Compile Include="Converters\ToEventEntity.cs" />
     <Compile Include="Converters\ToEventModel.cs" />
+    <Compile Include="Converters\ToEventUserModel.cs" />
     <Compile Include="Converters\ToRoomModel.cs" />
     <Compile Include="Implementations\EventService.cs" />
+    <Compile Include="Implementations\FeedbackService.cs" />
     <Compile Include="Implementations\RoomService.cs" />
+    <Compile Include="Models\altEventModel.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventRoomModel.cs" />
+    <Compile Include="Models\EventUserModel.cs" />
     <Compile Include="Models\NewEventModel.cs" />
+    <Compile Include="Models\RoomEquipmentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
+    <Compile Include="Models\EventsForUserCount.cs" />
+    <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\RoomStatus.cs" />
     <Compile Include="Package\ServicesPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

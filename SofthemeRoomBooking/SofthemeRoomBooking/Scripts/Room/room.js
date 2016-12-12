@@ -1,14 +1,106 @@
 ﻿$(document).ready(function () {
+    $('.room__general .room__general-blocked').click(function () {
+        $('.room__open').show();
+    });
     $('.room__general')
         .mouseover(function () {
-            $('.equipmentuser__tablenumber').html($(this).data('num'));
+            var equip = $(this).data('num').split(',');
+
+            $('.equipmentuser').children().each(function (i, elem) {
+                
+                $(elem).data('info', equip[i]);
+                if (equip[i] == '0') {
+                    $(elem).hide();
+                } else {
+                    $(elem).show();
+                }
+            });
+
+
+            $('.equipmentuser__tablenumber').html($('.equipmentuser__table-main').data('info'));
             $('.room__equipment').show();
         })
         .mouseout(function() {
             $('.room__equipment').hide();
         }).click(function () {
+            $('.room__open').hide();
+            $('.room__close').hide();
+            $('.room__change').data('roomid', $(this).data('roomid'));
+
+
+            if ($(this).hasClass('room__general-blocked')) {            
+                $('.room__open').show();         
+            } else {
+                $('.room__close').show();      
+            }
+            $('.room__change').show();
+         
             $('.room__path').hide();
             $('.room__image').find($('#' + $(this).data('pathid'))).show();
+            $('.room__general').css('background', '#9fa6b6');
+            $('.room__general').children('.text').css('background-color', '#858c9a');
+            $('.room__general-blocked').css('background', '#d7d9de');
+            $('.room__general-blocked').children('.text').css('background-color', '#acb0b6');
+            $(this).css('background', '#f95752');
+            $(this).children('.text').css('background-color', 'red');
         });
+
+    $('.room__change').click(function () {
+
+        var _this = $(this);
+        $('.active-room').removeClass('active-room');
+        $.ajax({
+            url: window.location.origin+"/Room/RoomEquipment",
+            type: "GET",
+            data: 'id=' + _this.data('roomid'),
+            success: function (res) {
+                $('.room__general').each(function(i, elem) {
+                    if ($(elem).data('roomid') == _this.data("roomid")) {
+                        $(elem).addClass('active-room').parents('.room__image').addClass('room-change');
+                    }
+                });
+              
+                $('.equipmentadmin').html(res).show();
+            }
+        });
+
+    });
+
+    //hide equipment admin
+    $(document).on('click','.equipmentadmin-cancel', function() {
+        $('.equipmentadmin').hide();
+        $('.active-room').removeClass('active-room');
+        $('.room__general').each(function (i, elem) {
+                $(elem).parents('.room__image').removeClass('room-change');
+        });
+    });
+
+    //show info about event
+    $(document).on('click', '.event-info', function () {
+        var _this = $(this);
+        $('.eventdetailedit').remove();
+        var id = _this.data("id");
+
+        $.ajax({
+            url: window.location.origin + "/Event/EventDetails",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function(res) {
+                $('.week__scheduler').append(res);
+            }
+        });
+    });
+    //close event info popup
+    $(document).on('click', '.eventdetailedit-close', function () {
+        console.log('ololol');
+        $('.eventdetailedit').remove();
+     });
+    //click on emply item
+    $(document).on('click','.calendar-item',function() {
+        var _this = $(this);
+    });
+
+
+
 });
 

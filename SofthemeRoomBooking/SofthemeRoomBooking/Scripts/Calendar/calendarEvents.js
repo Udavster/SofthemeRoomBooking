@@ -12,7 +12,6 @@
 
                 this.getBoundingLeftRight = function(elementName){
                     $box = $(elementName);
-                    console.log(elementName+" "+"left: "+$box.offset().left);
 
                     return {
                         "left":$box.offset().left + 2, //border
@@ -73,11 +72,10 @@
                 }.bind(this);
 
                 this.setBoundingWidth = function(width, update){
-                    console.log("done");
-                    if(!this.bounding||update){
+
+                    if (!this.bounding || update) {
                         this.bounding = this.getBoundingLeftRight(this.boundingElName);
                     }
-                    console.log(this.bounding);
                     
                     if(width){
                         this.forcedBoundingWidth = width;
@@ -91,9 +89,9 @@
 
                 this.changeTime = function(hours, minutes){
                     var part = (minutes/60.0 +hours)/24.0;
-                    console.log(this.bounding.width);
-                    var x = (part*(this.bounding.width-this.borderBox.left-this.borderBox.right)) + this.borderBox.left;
-                    console.log(x);
+
+                    var x = (part * (this.bounding.width - this.borderBox.left - this.borderBox.right)) + this.borderBox.left;
+
                     this["$self"].css('left', x);
                     $('#'+this.name+'-time').html(tformat(hours)+":"+tformat(minutes));
                 }.bind(this);
@@ -180,10 +178,18 @@
                         this.timeSlider.changeTime(now.getHours(), now.getMinutes());
                     }.bind(this);
                     updateTimeTimer();
-                    setInterval(updateTimeTimer,60000);
+                    setInterval(updateTimeTimer, 60000); //TODO: delete magic numbers 60'000 - ms in minute 
                 }
-                addEventOnClickHandler(handler){
-                    $(this.className+'__room-event').click(handler);
+                addEventOnClickHandler(handler) {
+                    try {
+                        this.eventOnClickHandler = handler;
+                        if (handler) {
+                            $(this.className + '__room-event').click(handler);
+                        }
+                    } catch (ex) {
+                        console.warn("On event click handler: ");
+                        console.log(ex);
+                    }
                 }
                 changeHeight(calendarHeight){
                     $(this.className+'__visible-wrapper').css('height', 40+60+calendarHeight+"px"); //TODO: delete magic numbers (40 - padding top, 60 - ?)
@@ -235,30 +241,31 @@
                        // console.log('#room-'+i);
                         $room.css('top', (currentHeight)+'px');
                         for(var j=0;j<events.length;j++){
-                            //console.log(events[j]['name']+' '+events[j]['startTime']);
+                            //console.log(events[j]['Title']+' '+events[j]['Start']);
                            // $room.append('<div class="calendar__room-event" style="width: 40px; left: 20px"></div>');
                            this.addEvent($room, events[j]);
                         }
                         currentHeight +=this.roomHeight;
                     }
+                    this.addEventOnClickHandler(this.eventOnClickHandler);
                 }
 
                 addEvent($room, event){
-                    var startTime = event["startTime"];
-                    var endTime = event["endTime"];
+                    var startTime = event['Start'];
+                    var endTime = event['Finish'];
                     var duration = (60*(endTime["h"] - startTime["h"])+(endTime["m"] - startTime["m"]))/60.0;
                     var width = duration * this.hourWidth - 2;
                     var left = (startTime["h"]+startTime["m"]/60.0)*this.hourWidth;
                     var time = tformat(startTime["h"])+":"+tformat(startTime["m"])+"-"+tformat(endTime["h"])+":"+tformat(endTime["m"]);
-                    //{'name':'event-room1', 'startTime': {'h':0,'m':0}, 'endTime': {'h':3,'m':50}}
+                    //{'Title':'event-room1', 'Start': {'h':0,'m':0}, 'Finish': {'h':3,'m':50}}
                     var eventTag = '<div class="'+this.name+'__room-event event" style="width: '+width+'px; left: '+left+'px">';
                         if(duration>0.5) eventTag+= '<div class="event__time">'+time+'</div>';
                         else eventTag+= '<div class="event__time event__time-center">'+tformat(startTime["h"])+":"+tformat(startTime["m"])+'</div>'+'<div class="event__time event__time-center">-</div>'+'<div class="event__time event__time-center">'+tformat(endTime["h"])+":"+tformat(endTime["m"])+'</div>';
-                        if(duration>0.5) eventTag+='<div>'+event['name']+'</div>';
+                        if(duration>0.5) eventTag+='<div>'+event['Title']+'</div>';
                     eventTag+='</div>';
                     $room.append(eventTag);
                     //$room.append('<div class="calendar__room-event event" style="width: '+width+'px; left: '+left+'px">'+
-                      //  '<div class="event__time">'+time+'</div><div>'+event['name']+'</div></div>');
+                      //  '<div class="event__time">'+time+'</div><div>'+event['Title']+'</div></div>');
                 }
 
                 constructBase($calendar){
@@ -277,7 +284,10 @@
                     $calendar.append($roomList);
 
                     var $visibleWrapper = $('<div class="calendar-events__visible-wrapper"></div>');
+
                     var $visibleEvents = $('<div class="calendar-events__visible-events"></div>');
+                    var $loading = $('  <div class="calendar-events__loading-glass loading-glass"><div class="loading-glass__loader"><i class="fa fa-spinner rotating" aria-hidden="true"></div></i></div>');
+                    $visibleEvents.append($loading);
                    
                     var $background = $('<div class="calendar-events__background-layer"></div>');
                     var $hourLayer = $('<div class="calendar-events__event-hour-layer"></div>');

@@ -33,6 +33,8 @@ namespace SofthemeRoomBooking.DAL
 
         public bool Publicity { get; set; }
 
+        public bool Cancelled { get; set; }
+
         public virtual Rooms Rooms { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace SofthemeRoomBooking.Services.Package
         {
             container.Register<IRoomService,RoomService>();
             container.Register<IEventService,EventService>();
+            container.Register<IFeedbackService, FeedbackService>();
             container.RegisterSingleton<SofhemeRoomBookingContext>();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -13,13 +12,17 @@ namespace SofthemeRoomBooking.Controllers
     {
         private IEventService _eventService;
         private IRoomService _roomService;
-        public EventController(IEventService eventService,IRoomService roomService)
+        private ApplicationUserManager _userManager;
+
+        public EventController(IEventService eventService,IRoomService roomService, ApplicationUserManager userManager)
         {
             _eventService = eventService;
             _roomService = roomService;
+            _userManager = userManager;
         }
+
         // GET: Event
-        public ActionResult Index()
+        public ActionResult Index(string date)
         {
             return View();
         }
