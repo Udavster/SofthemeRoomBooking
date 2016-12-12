@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
@@ -18,6 +20,42 @@ namespace SofthemeRoomBooking.Services.Implementations
             _context = context;
         }
 
+        public int GetEventCountByUser(string userId)
+        {
+            DateTime now = DateTime.Now;
+
+            int count = 0;
+
+            try
+            {
+                count =
+                    _context.Events.Where(ev => (ev.Id_user == userId) && (ev.Finish < now))
+                        .GroupBy(ev => ev.Id_user)
+                        .Select(group => group.Count()).First();
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+
+            return count;
+        }
+
+        public IEnumerable<EventsForUserCount> GetEventCountEnumerable()
+        {
+            DateTime now = DateTime.Now;
+
+            try
+            {
+                return _context.Events.Where(ev => (ev.Finish < now))
+                        .GroupBy(ev => ev.Id_user)
+                        .Select(group => new EventsForUserCount() {UserId = group.Key, EventCount = group.Count()});
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
         public void AddEvent(EventModel model, string userId)
         {

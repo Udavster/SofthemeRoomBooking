@@ -70,8 +70,10 @@
     <Compile Include="Implementations\RoomService.cs" />
     <Compile Include="Models\altEventModel.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\EventsForUserCount.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\FeedbackModel.cs" />
+    <Compile Include="Models\RoomStatus.cs" />
     <Compile Include="Package\ServicesPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

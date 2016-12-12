@@ -40,5 +40,34 @@ namespace SofthemeRoomBooking.Services.Implementations
             return rooms.ToArray();
         }
 
+        public IEnumerable<RoomStatus> GetRoomsStatuses(DateTime now)
+        {
+            var query = from room in _context.Rooms
+                     join roomLock in _context.RoomsLocks
+                     on room.Id equals roomLock.IdRoom into wh
+                     from roomLock in wh.DefaultIfEmpty()
+                     select
+                     new
+                     {
+                         Id = room.Id,
+                         Name = room.Name,
+                         IsAvailable =
+                         (roomLock == null) ||
+                         ((roomLock.Finish == null) && (roomLock.Start >= now)) || ((roomLock.Finish != null) && (now > roomLock.Finish))
+                     };
+
+            var result = query.GroupBy(q => new { Id = q.Id, Name = q.Name})
+                               .Select(group => 
+                                        new RoomStatus
+                                        {
+                                            IdRoom = group.Key.Id,
+                                            Name = group.Key.Name,
+                                            IsAvailable = group.All(q => q.IsAvailable)
+                                        }
+                                       );
+
+            return result;
+        }
+
     }
 }
