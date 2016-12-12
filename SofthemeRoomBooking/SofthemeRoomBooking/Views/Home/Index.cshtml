@@ -1,9 +1,10 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@Html.Partial("_RoomsPartial")
+@Html.Action("RoomPartial","Room")
 @Html.Partial("_WeekScheduler")
 @Html.Partial("_CalendarPartial")
 <div class="clearfix"></div>
 @Html.Partial("_MapPartial")
+
 

@@ -53,6 +53,11 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/popup-confirmation.css",
                       "~/Content/Styles/map.css",
                       "~/Content/Styles/room.css",
+                      "~/Content/Styles/equipment.css",
+                      "~/Content/Styles/roombooking.css",
+                      "~/Content/Styles/eventdetail.css",
+                      "~/Content/Styles/eventdetailedit.css",
+                      "~/Content/Styles/weekScheduler.css",
                       "~/Content/Styles/users.css",
                       "~/Content/Styles/pagination.css"));
 

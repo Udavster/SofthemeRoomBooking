@@ -219,6 +219,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Converters\ApplicationUserConverter.cs" />
+    <Compile Include="Converters\EventConverter.cs" />
+    <Compile Include="Converters\RoomEquipmentViewModelConverter.cs" />
     <Compile Include="Converters\CalendarEventConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,8 +234,11 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
+    <Compile Include="Models\RoomEquipmentViewModel.cs" />
+    <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NewEventViewModel.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
@@ -426,7 +431,7 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
-    <Content Include="Views\Shared\_RoomBooking.cshtml" />
+    <Content Include="Views\Shared\NewEvent.cshtml" />
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
   </ItemGroup>

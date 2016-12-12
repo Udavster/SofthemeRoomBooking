@@ -1,35 +1,54 @@
-﻿<div class="eventdetailedit">
+﻿@using Microsoft.AspNet.Identity
+@model SofthemeRoomBooking.Services.Models.EventUserModel
+
+<div class="eventdetailedit">
     <div class="eventdetailedit__title">
         <div style="height:50%">
-            <span style="color : white; margin: 3px 10px; font-size: 9pt;"> Пт, 18 Мая</span>
-            <i class="fa fa-window-minimize" aria-hidden="true" style="color: #eeeeee; float: right"></i>
-            <input class="eventdetailedit-change" type="submit" value="Изменить" />
-            <input class="eventdetailedit-cancel" type="submit" value="Отменить" /> 
+            <span style="color : white; margin: 3px 10px; font-size: 9pt;"> @Model.DayOfWeek, @Model.Start.Day @Model.Month</span>
+            <div class="eventdetailedit-close">
+                <i class="fa fa-window-minimize" aria-hidden="true"></i>
+            </div>
+            @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
+            {
+                <input class="eventdetailedit-change" type="submit" value="Изменить" />
+                <input class="eventdetailedit-cancel" type="submit" value="Отменить" />
+            }
         </div>
         <div>
-            <span style="color : white; margin: 5px 10px; font-size: 9pt;">12:10 - 12:30</span>
+            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.Start.Hour:@Model.Start.Minute - @Model.Finish.Hour:@Model.Finish.Minute</span>
         </div>
     </div>
     <div class="eventdetailedit__main">
         <div>
-            <p style="font-size: 20px;">English class</p>
+            <p style="font-size: 20px;">@Model.Title</p>
         </div>
         <div>
-            <p>Modern English has little inflection compared with many other languages, and relies more on auxiliary verbs and word order for the expression of complex tenses </p>
+            <p>@Model.Description</p>
         </div>
         <div>
             <div style="float: left">
                 <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
-                <span>Nataly</span>
+                @if (Model.Nickname != null)
+                {
+                    <span>@Model.Nickname</span>
+                }
+                else
+                {
+                    <span>@ViewBag.UserName</span>
+                }
             </div>
             <div style="float: right">
                 <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
-                <span>11</span>
+                <span>@Model.ParticipantsQuantity</span>
             </div>
         </div>
-        <div >
-            <input type="text" class="input-text eventdetailedit__email-button" placeholder="Укажите e-mail что бы присоединится.">
-            <i class="fa fa-plus" aria-hidden="true" style="font-size: 25px; color: #A6ABB6;"></i>
+        <div style="display: inline-flex">
+            <div>
+                <input type="text" class="input-text eventdetailedit__email-button" placeholder="Укажите e-mail что бы присоединится.">
+            </div>
+            <div style="margin-top: 19px">
+                <i class="fa fa-plus" aria-hidden="true" style="font-size: 25px; color: #A6ABB6;"></i>
+            </div>
         </div>
         <div class="eventdetailedit__icons" style="margin: 0 90px;">
             <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>

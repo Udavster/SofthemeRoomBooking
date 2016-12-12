@@ -10,9 +10,9 @@ namespace SofthemeRoomBooking.Services.Converters
 {
     public static class ToEventModel
     {
-        public static EventModel ToEvent(this Events events)
+        public static EventRoomModel ToEvent(this Events events)
         {
-            return new EventModel()
+            return new EventRoomModel()
             {
                 Start = events.Start.ToString("yyyy-MM-dd HH:mm"),
                 Finish = events.Finish.ToString("yyyy-MM-dd HH:mm"),
@@ -21,6 +21,6 @@ namespace SofthemeRoomBooking.Services.Converters
                 Id = events.Id,
                 Publicity = events.Publicity
             };
-        }
+        } 
     }
 }

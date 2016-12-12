@@ -55,6 +55,7 @@
     <Compile Include="Equipment.cs" />
     <Compile Include="EquipmentRooms.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="EventsUser.cs" />
     <Compile Include="Feedback.cs" />
     <Compile Include="OpenedRoom.cs" />
     <Compile Include="OpenedRoomsView.cs" />

@@ -4,7 +4,45 @@
     height: 520px;
     width: auto;
 }
-
+.room__number {
+    position: absolute;
+    top: 63px;
+    left: 458px;
+    font-size: 36px;
+    color: #81868d;
+}
+.room__general {
+    cursor: pointer;
+    opacity: 0.8;
+}
+.room__open {
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #747b87;
+}
+.room__change {
+    position: absolute;
+    top: 85px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #c8ceda;
+    color: #555c63;
+}
+.room__close {
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    text-align: center;
+    padding: 8px 10px;
+    font-size: 14px;
+    background: #747b87;
+}
 .room__image {
     z-index: 5;
     width: 1021px;
@@ -19,7 +57,10 @@
     z-index: 2;
     position: absolute;
     bottom: 10px;
-    right: 350px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 350px;
 }
 .room__equipmentadmin {
     z-index: 2;
@@ -27,80 +68,112 @@
     bottom: 0;
     right: 325px;
 }
+.room-1 {
+    z-index: 2;
+    padding: 30px;
+    position: absolute;
+    bottom: 248px;
+    right: 423px;
+    background: #9fa6b6;
+    height: 100px;
+    width: 185px;
+}
+.room__text-1 {
+    font-family: Times New Roman;
+    font-size: 13pt;
+    color: white;
+    text-align: center;
+    border-radius: 21%;
+    background: #858c9a;
+    width: 50%;
+    margin: 0 auto;
+    width: 100px;
+    height: 43px;
+}
+.room__arrow-1 {
+    width: 54px;
+    height: 213px;
+    position: absolute;
+    display: none;
+    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-einstein.png);
+}
 
 
-.room__tesla {
+.room__path-1 {
+    position: absolute;
+    bottom: 30px;
+    left: 23px;
+    display: none;
+}
+.room-2 {
     z-index: 2;
     padding: 22px;
     position: absolute;
     bottom: 107px;
     right: 519px;
-    background: #f95752;
+    background: #9fa6b6;
     opacity: 0.8;
     height: 87px;
     width: 190px;
 }
 
-.room__teslaarrow {
+.room__arrow-2 {
     width: 36px;
     height: 71px;
     position: absolute;
     display: none;
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-tesla.png);
 }
-.room__teslapath {
+.room__path-2 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
-.room__tesla:hover > .room__teslaarrow {
-    display: block;
-}
-.room__teslatext {
+
+.room__text-2 {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #e74845;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 100px;
     height: 43px;
 }
 
-.room__newton {
+.room-3 {
     z-index: 2;
     padding: 22px;
     position: absolute;
     bottom: 107px;
     right: 327px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 87px;
     width: 190px;
 }
 
-.room__newtontext {
+.room__text-3 {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #acb0b6;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 100px;
     height: 43px;
 }
-.room__newtonpath {
+.room__path-3 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
-.room__newtonarrow {
+.room__arrow-3 {
     width: 125px;
     height: 112px;
     position: absolute;
@@ -108,36 +181,32 @@
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-newton.png);
 }
 
-.room__newton:hover > .room__newtonarrow {
-    display: block;
-}
 
-.room__hr {
+.room-4 {
     z-index: 2;
     padding: 28px;
     position: absolute;
     bottom: 248px;
     right: 610px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 100px;
     width: 223px;
 }
 
-.room__hrtext {
+.room__text-4 {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #acb0b6;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 60px;
     height: 40px;
 }
 
-.room__hrarrow {
+.room__arrow-4 {
     width: 148px;
     height: 218px;
     position: absolute;
@@ -145,82 +214,37 @@
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-hr.png);
 }
 
-.room__hr:hover > .room__hrarrow {
-    display: block;
-}
-.room__hrpath {
+.room__path-4 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
 
-.room__einstein {
-    z-index: 2;
-    padding: 30px;
-    position: absolute;
-    bottom: 248px;
-    right: 423px;
-    background: #d7d9de;
-    opacity: 0.6;
-    height: 100px;
-    width: 185px;
-}
-.room__einsteintext {
-    font-family: Times New Roman;
-    font-size: 13pt;
-    color: white;
-    text-align: center;
-    border-radius: 21%;
-    background: #acb0b6;
-    width: 50%;
-    margin: 0 auto;
-    width: 100px;
-    height: 43px;
-}
-.room__einsteinarrow {
-    width: 54px;
-    height: 213px;
-    position: absolute;
-    display: none;
-    background-image: url(../../Content/Images/Equipment/LineDetails/line-details-einstein.png);
-}
-.room__einstein:hover > .room__einsteinarrow {
-    display: block;
-}
-
-.room__einsteinpath {
-    position: absolute;
-    bottom: 30px;
-    left: 23px;
-    display: none;
-}
-
-.room__info {
+.room-5 {
     z-index: 2;
     padding: 27px 15px;
     position: absolute;
     bottom: 248px;
     right: 337px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 100px;
     width: 84px;
 }
 
-.room__infotext {
+.room__text-5 {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #acb0b6;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 55px;
     height: 43px;
 }
-.room__infoarrow {
+.room__arrow-5 {
     width: 239px;
     height: 204px;
     position: absolute;
@@ -230,43 +254,39 @@
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-info.png);
 }
 
-.room__info:hover > .room__infoarrow {
-    display: block;
-}
 
-.room__infopath {
+.room__path-5 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
 
-.room__web1 {
+.room-6 {
     z-index: 2;
     padding: 17px 6px;
     position: absolute;
     bottom: 249px;
     right: 238px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 90px;
     width: 95px;
 }
 
-.room__webtext {
+.room__text-6 {
     font-family: Times New Roman;
     font-size: 13pt;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #acb0b6;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 80px;
     height: 43px;
 }
 
-.room__webarrow {
+.room__arrow-6 {
     width: 325px;
     height: 211px;
     position: absolute;
@@ -275,30 +295,38 @@
     display: none;
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-1.png);
 }
-.room__web1path {
+.room__path-6 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
 
-.room__web1:hover > .room__webarrow {
-    display: block;
-}
 
-.room__web2 {
+.room-7 {
     z-index: 2;
     padding: 25px 6px;
     position: absolute;
     bottom: 248px;
     right: 144px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 100px;
     width: 91px;
 }
+.room__text-7 {
+    font-family: Times New Roman;
+    font-size: 13pt;
+    color: white;
+    text-align: center;
+    border-radius: 21%;
+    background: #858c9a;
+    width: 50%;
+    margin: 0 auto;
+    width: 80px;
+    height: 43px;
+}
 
-.room__web2arrow {
+.room__arrow-7 {
     width: 440px;
     height: 209px;
     position: absolute;
@@ -307,28 +335,37 @@
     display: none;
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-2.png);
 }
-.room__web2:hover > .room__web2arrow {
-    display: block;
-}
-.room__web2path {
+
+.room__path-7 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
 
-.room__web3 {
+.room-8 {
     z-index: 2;
     padding: 25px 6px;
     position: absolute;
     bottom: 248px;
     right: 48px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 100px;
     width: 93px;
 }
-.room__web3arrow {
+.room__text-8 {
+    font-family: Times New Roman;
+    font-size: 13pt;
+    color: white;
+    text-align: center;
+    border-radius: 21%;
+    background: #858c9a;
+    width: 50%;
+    margin: 0 auto;
+    width: 80px;
+    height: 43px;
+}
+.room__arrow-8 {
     width: 530px;
     height: 212px;
     position: absolute;
@@ -337,48 +374,44 @@
     display: none;
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-web-3.png);
 }
-.room__web3:hover > .room__web3arrow {
-    display: block;
-}
-.room__web3path {
+
+.room__path-8 {
     position: absolute;
     bottom: 30px;
     left: 23px;
     display: none;
 }
 
-.room__english {
+.room-9 {
     z-index: 2;
     position: absolute;
     bottom: 203px;
     right: 10px;
-    background: #d7d9de;
-    opacity: 0.6;
+    background: #9fa6b6;
     height: 140px;
     width: 40px;
 }
 
-.room__englishtext {
+.room__text-9 {
     z-index: 2;
     margin-left: 10px;
     position: absolute;
-    bottom: 267px;
-    right: -25px;
+    bottom: 60px;
+    right: -35px;
     transform: rotate(90deg);
     font-family: Times New Roman;
     font-size: 13pt;
-    opacity: 0.6;
     color: white;
     text-align: center;
     border-radius: 21%;
-    background: #acb0b6;
+    background: #858c9a;
     width: 50%;
     margin: 0 auto;
     width: 100px;
     height: 20px;
 }
 
-.room__englisharrow {
+.room__arrow-9 {
     width: 599px;
     height: 167px;
     position: absolute;
@@ -388,11 +421,8 @@
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-english.png);
 }
 
-.room__english:hover > .room__englisharrow {
-    display: block;
-}
 
-.room__englishpath {
+.room__path-9 {
     position: absolute;
     bottom: 30px;
     left: 23px;
@@ -401,3 +431,16 @@
 
 
 
+.room__general:hover > .room__arrow{
+    display: block;
+}
+.room-change .room__general:hover > .room__arrow{
+    display: none;
+}
+
+.active-room > .room__arrow {
+    display: block;
+}
+.room-change .room__general.active-room:hover > .room__arrow{
+    display: block;
+}
