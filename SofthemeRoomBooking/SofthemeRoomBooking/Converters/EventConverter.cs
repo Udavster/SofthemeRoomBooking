@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
 using SofthemeRoomBooking.Models;
-using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Converters
@@ -15,33 +13,30 @@ namespace SofthemeRoomBooking.Converters
             {
                 Title = model.Title,
                 Description = model.Description,
-                Publicity = model.Publicity,
+                Private = !model.Publicity,
                 IdRoom = model.IdRoom,
                 Nickname = model.Nickname,
-                Day = model.Day,
-                Month = model.Month,
-                StartHour = model.StartHour,
-                StartMinutes = model.StartMinute,
-                EndHour = model.EndHour,
-                EndMinutes = model.EndMinute,
+                Day = model.StartDateTime.Day,
+                Month = model.StartDateTime.Month,
+                Year = model.StartDateTime.Year,
+                StartHour = model.StartDateTime.Hour,
+                StartMinutes = model.StartDateTime.Minute,
+                EndHour = model.EndDateTime.Hour,
+                EndMinutes = model.EndDateTime.Minute
             };
         }
 
-        public static NewEventModel ToNewEventModel(this EventViewModel eventViewModel)
+        public static NewEventModel ToNewEventModel(this EventViewModel model)
         {
             return new NewEventModel
             {
-                Day = eventViewModel.Day,
-                Month = eventViewModel.Month,
-                StartHour = eventViewModel.StartHour,
-                StartMinute = eventViewModel.StartMinutes,
-                EndHour = eventViewModel.EndHour,
-                EndMinute = eventViewModel.EndMinutes,
-                Title = eventViewModel.Title,
-                Description = eventViewModel.Description,
-                IdRoom = eventViewModel.IdRoom,
-                Nickname = eventViewModel.Nickname,
-                Publicity = eventViewModel.Publicity
+                Title = model.Title,
+                Description = model.Description,
+                IdRoom = model.IdRoom,
+                Nickname = model.Nickname,
+                Publicity = !model.Private,
+                StartDateTime = DateTime.Parse($"{model.Year}-{model.Month}-{model.Day} {model.StartHour}:{model.StartMinutes}"),
+                EndDateTime = DateTime.Parse($"{model.Year}-{model.Month}-{model.Day} {model.EndHour}:{model.EndMinutes}")
             };
         }
     }

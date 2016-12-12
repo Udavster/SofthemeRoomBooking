@@ -9,13 +9,14 @@
         <i id="closeButton" class="fa fa-times createevent-header__close" aria-hidden="true"></i>
     </div>
 
-    @using (Html.BeginForm("AddEvent", "Event", FormMethod.Post, new { id = "event-form", @class = "eventcontainer-body", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("CreateEvent", "Event", FormMethod.Post, new { id = "event-form", @class = "eventcontainer-body", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
         <div class="createevent-body__date">
             @Html.HiddenFor(model => model.Day)
             @Html.HiddenFor(model => model.Month)
+            @Html.HiddenFor(model => model.Year)
             @Html.HiddenFor(model => model.StartHour)
             @Html.HiddenFor(model => model.StartMinutes)
             @Html.HiddenFor(model => model.EndHour)
@@ -29,7 +30,9 @@
 
         <div class="createevent-body__dropdown-rooms">
             <span>Где</span>
-            @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new {@class = "createevent-body__dropdown-list"})
+            <div class="dropdown-wrapper createevent-body__dropdown-list">
+                @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new { @class = "dropdown" })
+            </div>
         </div>
 
         @Html.EditorFor(model => model.Title, new
@@ -59,8 +62,8 @@
             <div class="container-switchbox">
                 <span class="label-publicity">Публично</span>
                 <div class="switchbox-publicity">
-                    @Html.CheckBoxFor(model => model.Publicity, new {@class = "switchbox"})
-                    @Html.LabelFor(model => model.Publicity, " ")
+                    @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
+                    @Html.LabelFor(model => model.Private, " ")
                 </div>
                 <span class="label-private">Приватно</span>
             </div>
@@ -85,8 +88,9 @@
         </div>
 
         <div class="eventcontainer-footer">
-            <div id="event-errors" class="eventcontainer-footer__error" style="display: none">
+            <div id="event-errors" class="eventcontainer-footer__error hidden">
                 <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
+                <span class="error-text"></span>
             </div>
             <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
         </div>
@@ -95,10 +99,4 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/datetimepickers")
-@Scripts.Render("~/bundles/event")
-
-<script>
-    $('#closeButton').bind('click', function () {
-        $('#popup-create-event').hide();
-    });
-</script>
+@Scripts.Render("~/bundles/events")

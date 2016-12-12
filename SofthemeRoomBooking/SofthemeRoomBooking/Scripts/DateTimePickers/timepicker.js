@@ -36,12 +36,12 @@ function TimePicker() {
 
         if (forward) {
             currHours = currHours === hourEnd ? hourStart : currHours + 1;
-
-            if (currHours === hourEnd) {
-                $(minutes).text('00');
-            }
         } else {
             currHours = currHours === hourStart ? hourEnd : currHours - 1;
+        }
+
+        if (currHours === hourEnd) {
+            $(minutes).text('00');
         }
 
         if (currHours < 10) {

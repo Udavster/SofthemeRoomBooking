@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Models
@@ -16,7 +13,7 @@ namespace SofthemeRoomBooking.Models
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        public bool Publicity { get; set; }
+        public bool Private { get; set; }
 
         public int IdRoom { get; set; }
 
@@ -28,6 +25,8 @@ namespace SofthemeRoomBooking.Models
 
         public int Month { get; set; }
 
+        public int Year { get; set; }
+
         public int StartHour { get; set; }
 
         public int StartMinutes { get; set; }
@@ -35,6 +34,9 @@ namespace SofthemeRoomBooking.Models
         public int EndHour { get; set; }
 
         public int EndMinutes { get; set; }
+
+
+        public EventViewModel() { }
 
         public EventViewModel(List<RoomModel> rooms)
         {

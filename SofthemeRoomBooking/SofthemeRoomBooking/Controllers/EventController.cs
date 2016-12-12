@@ -41,7 +41,7 @@ namespace SofthemeRoomBooking.Controllers
         {
             var model = viewModel.ToNewEventModel();
             var userId = User.Identity.GetUserId();
-
+            return RedirectToAction("Index", "Home");
             _eventService.AddEvent(model, userId);
 
             return RedirectToAction("Index", "Home");

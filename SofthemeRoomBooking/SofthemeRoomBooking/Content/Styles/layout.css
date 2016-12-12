@@ -38,7 +38,6 @@
 .menu {
     float: right;
     list-style-type: none;
-    margin-left: auto;
     margin-right: 6%;
     overflow: hidden;
 }
@@ -73,30 +72,22 @@
 }
 
 .menu__button {
-    position: relative;
+    width: 45px;
+    height: 45px;
     margin: auto;
-    margin-right: 25px;
+    margin-right: 40px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 45px;
-    background: transparent; 
+    background: #9FA6B6;
+    color: #EBEEF7;
+    font-size: 35px;
     outline: none; 
 }
 
-.plus {
-    position: absolute;
-    top: -25px;
-    left: -20px;
-    color: #858B94;
-}
-
-.background-plus {
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    width: 30px;
-    height: 30px;
-    background-color: #C8CEDA;
+.menu__button:hover {
+    background: #C8CEDA;
+    color: #747B87;
 }
 
 .user-icon {

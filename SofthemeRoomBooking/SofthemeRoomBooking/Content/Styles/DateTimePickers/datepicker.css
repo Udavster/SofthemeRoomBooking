@@ -31,3 +31,7 @@
 .datepicker-chosen .datepicker-chosen-month {
     width: 65px;
 }
+
+.datepicker-chosen .datepicker-chosen-year {
+    width: 40px;
+}

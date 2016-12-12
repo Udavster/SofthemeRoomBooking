@@ -11,7 +11,8 @@ namespace SofthemeRoomBooking
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/Validation/jquery.validate*",
+                        "~/Scripts/Validation/jquery.validate.*",
+                        "~/Scripts/Validation/jquery.validate.unobtrusive*",
                         "~/Scripts/Validation/validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
@@ -47,8 +48,10 @@ namespace SofthemeRoomBooking
                         "~/Scripts/DateTimePickers/timepicker.js"
                         ));
 
-            bundles.Add(new ScriptBundle("~/bundles/event").Include(
-                        "~/Scripts/Event/eventcommon.js"
+            bundles.Add(new ScriptBundle("~/bundles/events").Include(
+                        "~/Scripts/Event/eventcommon.js",
+                        "~/Scripts/Event/eventcreate.js",
+                        "~/Scripts/Event/eventedit.js"
                         ));
 
             //

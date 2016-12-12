@@ -40,3 +40,7 @@
     color: #C8CEDA;
     cursor: pointer;
 }
+
+.eventcontainer-header .editevent-header__minimize:hover {
+    color: #747B87;
+}

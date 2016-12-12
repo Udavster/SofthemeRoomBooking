@@ -358,6 +358,8 @@
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\DateTimePickers\datepicker.js" />
     <Content Include="Scripts\Event\eventcommon.js" />
+    <Content Include="Scripts\Event\eventcreate.js" />
+    <Content Include="Scripts\Event\eventedit.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

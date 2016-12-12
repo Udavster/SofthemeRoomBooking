@@ -1,86 +1,106 @@
-﻿$('#Publicity').bind('click', function () {
-    $('#public-checkbox').attr('checked', !$(this).is(':checked'));
-    $('#public-checkbox').attr('disabled', $(this).is(':checked'));
+﻿$("#Publicity").bind("click", function () {
+    $("#public-checkbox").attr("checked", !$(this).is(":checked"));
+    $("#public-checkbox").attr("disabled", $(this).is(":checked"));
 });
 
-$('#organizator-checkbox').bind('click', function () {
-    $('.eventcontainer-body__organizator-name').attr('disabled', $(this).is(':checked'));
+$("#organizator-checkbox").bind("click", function () {
+    $(".eventcontainer-body__organizator-name").attr("disabled", $(this).is(":checked"));
 });
 
-var eventDate = new DatePickerChosen(),
-    eventTimeStart = new TimePicker(),
-    eventTimeFinish = new TimePicker();
+var eventDate = new DatePickerChosen();
+eventDate.init("#event-date", new Date(), null, function (day, month, year) {
+    $("#Day").val(day);
+    $("#Month").val(month);
+    $("#Year").val(year);
 
-jQuery.validator.addMethod('eventDateValidate', function () {
+    dateTimeEventValidate();
+});
+
+var eventTimeStart = new TimePicker();
+eventTimeStart.init("#event-timestart", 9, 20, function (hours, minutes) {
+    $("#StartHour").val(hours);
+    $("#StartMinutes").val(minutes);
+
+    dateTimeEventValidate();
+});
+
+var eventTimeFinish = new TimePicker();
+eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
+    $("#EndHour").val(hours);
+    $("#EndMinutes").val(minutes);
+
+    dateTimeEventValidate();
+});
+
+
+function isValidTimeEvent() {
     var day = parseInt($('#Day').val(), 10),
-        month = parseInt($('#Month').val(), 10);
+        hour = parseInt($('#StartHour').val(), 10),
+        minutes = parseInt($('#StartMinutes').val(), 10),
+        currentDate = new Date().getDate(),
+        currentHour = new Date().getHours(),
+        currentMinutes = new Date().getMinutes();
 
-    if (month >= new Date().getMonth()) {
-        if (day >= new Date().getDate()) {
-            return true;
+    if (day === currentDate) {
+        if (hour < currentHour) {
+            return false;
+        } else if (hour === currentHour) {
+            if (minutes < currentMinutes) {
+                return false;
+            }
         }
     }
 
-    return false;
-}, 'Невозможно забронированть аудиторию на прошедшие даты.');
+    return true;
+}
 
-jQuery.validator.addMethod('durationEventValidate', function () {
-    var startHour = parseInt($('#StartHour').val(), 10),
-        startMinutes = parseInt($('#StartMinutes').val(), 10),
-        endHour = parseInt($('#EndHour').val(), 10),
-        endMinutes = parseInt($('#EndMinutes').val(), 10);
+function isValidDurationEvent() {
+    var startHour = parseInt($("#StartHour").val(), 10),
+        startMinutes = parseInt($("#StartMinutes").val(), 10),
+        endHour = parseInt($("#EndHour").val(), 10),
+        endMinutes = parseInt($("#EndMinutes").val(), 10);
 
     if (endHour > startHour || (endHour === startHour && endMinutes - startMinutes >= 20)) {
         return true;
     }
 
     return false;
-}, 'Минимальное время бронирования аудитории 20 минут.');
+}
 
-var validator = $('#event-form').validate({
-    ignore: [],
-    errorElement: 'span',
-    errorContainer: '#event-errors',
-    invalidHandler: function (event, validator) {
-        var errors = validator.numberOfInvalids();
+function dateTimeEventValidate() {
+    var errorMessageTime = "Нельзя назначить событие в прошлом.",
+        errorMessageDuration = "Минимальное время бронирования аудитории 20 минут.";
 
-        if (errors) {
-            $('#event-errors').removeClass('hidden');
-        } else {
-            $('#event-errors').addClass('hidden');
-        }
-    },
-    rules: {
-        Day: { eventDateValidate: true },
-        StartHour: { durationEventValidate: true }
-    },
-    errorPlacement: function (error) {
-        error.addClass('error-text');
-        error.appendTo('#event-errors');
+    if (!isValidDurationEvent() && !isValidTimeEvent()) {
+        showError(false, errorMessageTime + " " + errorMessageDuration);
+    } else if (!isValidDurationEvent()) {
+        showError(false, errorMessageDuration);
+    } else if (!isValidTimeEvent()) {
+        showError(false, errorMessageTime);
+    } else {
+        showError(true);
     }
-});
+}
 
-eventDate.init("#event-date", function (day, month) {
-    $('#Day').val(day);
-    $('#Month').val(month);
-    validator.element(':input[name="Day"]');
-});
+function showError(isValid, message) {
+    var messageContaiter = "<span>" + message + "</span>";
 
-eventTimeStart.init('#event-timestart', 9, 20, function (hours, minutes) {
-    $('#StartHour').val(hours);
-    $('#StartMinutes').val(minutes);
-    validator.element(':input[name="StartHour"]');
-});
+    if (isValid) {
+        if (!$("#event-errors").hasClass("hidden")) {
+            $("#event-errors").addClass("hidden");
+        }
+    } else {
+        $(".error-text").html(messageContaiter);
 
-eventTimeFinish.init('#event-timefinish', 9, 20, function (hours, minutes) {
-    $('#EndHour').val(hours);
-    $('#EndMinutes').val(minutes);
-    validator.element('input[name="StartHour"]');
-});
+        if ($("#event-errors").hasClass("hidden")) {
+            $("#event-errors").removeClass("hidden");
+        }
+    }
+}
 
-$('#Day').val($('#event-date #day').text());
-$('#Month').val($('#event-date #day').text());
-$('#StartHour').val($('#event-timestart #hours').text());
-$('#StartMinutes').val($('#event-timestart #minutes').text());
-$('#EndHour').val($('#event-timefinish #hours').text());
-$('#EndMinutes').val($('#event-timefinish #minutes').text());
+$("#Day").val($("#event-date #day").text());
+$("#Month").val($("#event-date #day").text());
+$("#StartHour").val($("#event-timestart #hours").text());
+$("#StartMinutes").val($("#event-timestart #minutes").text());
+$("#EndHour").val($("#event-timefinish #hours").text());
+$("#EndMinutes").val($("#event-timefinish #minutes").text());
