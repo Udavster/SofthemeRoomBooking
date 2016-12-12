@@ -15,6 +15,9 @@
     cursor: pointer;
     opacity: 0.8;
 }
+.room__path {
+    z-index: -2;
+}
 .room__open {
     position: absolute;
     top: 40px;
