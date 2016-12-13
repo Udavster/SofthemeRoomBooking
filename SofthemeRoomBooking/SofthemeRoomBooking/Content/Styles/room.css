@@ -3,6 +3,8 @@
     background: #ebeef7;
     height: 520px;
     width: auto;
+    font-family: Arial;
+    font-size: 12pt;
 }
 .room__number {
     position: absolute;
@@ -15,8 +17,16 @@
     cursor: pointer;
     opacity: 0.8;
 }
+.text {
+    border-radius: 10px;
+}
 .room__path {
-    z-index: -2;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.room__arrow {
+    pointer-events: none;
 }
 .room__open {
     position: absolute;
@@ -82,12 +92,10 @@
     width: 187px;
 }
 .room__text-1 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
+    padding: 4px;
     width: 50%;
     margin: 0 auto;
     width: 100px;
@@ -135,11 +143,9 @@
 }
 
 .room__text-2 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
+    padding: 4px;
     background: #858c9a;
     width: 50%;
     margin: 7px auto;
@@ -159,12 +165,10 @@
 }
 
 .room__text-3 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
+    padding: 4px;
     width: 50%;
     margin: 7px auto;
     width: 100px;
@@ -197,16 +201,14 @@
 }
 
 .room__text-4 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
+    padding: 3px;
     width: 50%;
     margin: 0 auto;
     width: 60px;
-    height: 40px;
+    height: 41px;
 }
 
 .room__arrow-4 {
@@ -236,12 +238,10 @@
 }
 
 .room__text-5 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
+    padding: 3px;
     width: 50%;
     margin: 0 auto;
     width: 55px;
@@ -277,12 +277,10 @@
 }
 
 .room__text-6 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
+    padding: 3px;
     width: 50%;
     margin: 7px auto;
     width: 80px;
@@ -317,11 +315,9 @@
     width: 91px;
 }
 .room__text-7 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
+    padding: 3px;
     background: #858c9a;
     width: 50%;
     margin: 0 auto;
@@ -357,11 +353,9 @@
     width: 91px;
 }
 .room__text-8 {
-    font-family: Times New Roman;
-    font-size: 13pt;
     color: white;
     text-align: center;
-    border-radius: 21%;
+    padding: 3px;
     background: #858c9a;
     width: 50%;
     margin: 0 auto;
@@ -402,11 +396,9 @@
     bottom: 60px;
     right: -35px;
     transform: rotate(90deg);
-    font-family: Times New Roman;
-    font-size: 13pt;
+    padding: 2px;
     color: white;
     text-align: center;
-    border-radius: 21%;
     background: #858c9a;
     width: 50%;
     margin: 0 3px;

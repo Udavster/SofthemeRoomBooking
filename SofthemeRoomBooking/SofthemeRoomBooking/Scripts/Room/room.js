@@ -90,13 +90,64 @@
             }
         });
     });
+
     //close event info popup
     $(document).on('click', '.eventdetailedit-close', function () {
         $('.eventdetailedit').remove();
-     });
+    });
+
     //click on emply item
     $(document).on('click','.calendar-item',function() {
         var _this = $(this);
+    });
+
+
+
+    //add data attribute to close button
+    $(document).on('click', '.room__general', function () {
+        var _this = $(this);
+        console.log("ololo open" + _this.data("roomid"));
+        $('.room__close').data('id', _this.data("roomid"));
+    });
+
+    //add data attribute to open button
+    $(document).on('click', '.room__general', function () {
+        var _this = $(this);
+        console.log("ololo close" + _this.data("roomid"));
+        $('.room__open').data('id', _this.data("roomid"));
+    });
+
+    //click open room
+    $(document).on('click', '.room__open', function (e) {
+        e.preventDefault();
+        var _this = $(this);
+
+        var id = _this.data('id');
+        $.ajax({
+            url: window.location.origin + "/Room/Open",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function (result) {
+                $('#popup-confirmation').html(result);
+                $('#popup-confirmation').show();
+            }
+        });
+    });
+    //click open room
+    $(document).on('click', '.room__close', function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var id = _this.data('id');
+
+        $.ajax({
+            url: window.location.origin + "/Room/Close",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function (result) {
+                $('#popup-confirmation').html(result);
+                $('#popup-confirmation').show();
+            }
+        });
     });
 });
 

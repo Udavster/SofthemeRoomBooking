@@ -179,7 +179,7 @@ function DatePicker() {
 
     function backToToday(month, year) {
         var currMonth = new Date().getMonth();
-        currYear = new Date().getFullYear();
+        var currYear = new Date().getFullYear();
 
         if (month < currMonth) {
             $("#label-today").addClass("hidden");

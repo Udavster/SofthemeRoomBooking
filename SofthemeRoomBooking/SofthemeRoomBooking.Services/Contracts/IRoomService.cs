@@ -9,7 +9,9 @@ namespace SofthemeRoomBooking.Services.Contracts
         List<RoomEquipmentModel> GetAllEquipmentRooms();
         List<RoomModel> GetAllRooms();
         RoomEquipmentModel GetEquipmentByRoom(int roomId);
-        void ChangeRoomEquipment(RoomEquipmentModel model);
+        bool UpdateRoomEquipment(RoomEquipmentModel model);
         RoomModel[] GetUnlockedRoomsByDate(DateTime date);
+        bool CloseRoom(int id, string userId);
+        bool OpenRoom(int id);
     }
 }
