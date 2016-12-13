@@ -1,10 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
-@model SofthemeRoomBooking.Services.Models.EventUserModel
+@model SofthemeRoomBooking.Services.Models.EventDetailsModel
 
 <div class="eventdetailedit">
     <div class="eventdetailedit__title">
         <div style="height:50%">
-            <span style="color : white; margin: 3px 10px; font-size: 9pt;"> @Model.DayOfWeek, @Model.Start.Day @Model.Month</span>
+            <span style="color : white; margin: 3px 10px; font-size: 9pt;"> @Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
             <div class="eventdetailedit-close">
                 <i class="fa fa-window-minimize" aria-hidden="true"></i>
             </div>
@@ -15,7 +15,7 @@
             }
         </div>
         <div>
-            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.Start.Hour:@Model.Start.Minute - @Model.Finish.Hour:@Model.Finish.Minute</span>
+            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute - @Model.FinishTime.Hour:@Model.FinishTime.Minute</span>
         </div>
     </div>
     <div class="eventdetailedit__main">

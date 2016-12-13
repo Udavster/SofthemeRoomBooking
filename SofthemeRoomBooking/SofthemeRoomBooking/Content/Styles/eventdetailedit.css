@@ -62,5 +62,6 @@
 .eventdetailedit-close {
    color: #eeeeee; 
    margin-right: 10px;
-    float: right;
+   float: right;
+   cursor: pointer;
 }
