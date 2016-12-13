@@ -9,9 +9,13 @@ namespace SofthemeRoomBooking.Services.Contracts
         List<List<EventRoomModel>> GetEventsByWeek(DateTime date,int id);
 
         List<RoomEquipmentModel> GetAllEquipmentRooms();
+
         List<RoomModel> GetAllRooms();
+
         RoomEquipmentModel GetEquipmentByRoom(int roomId);
+
         void ChangeRoomEquipment(RoomEquipmentModel model);
+
         RoomModel[] GetUnlockedRoomsByDate(DateTime date);
     }
 }

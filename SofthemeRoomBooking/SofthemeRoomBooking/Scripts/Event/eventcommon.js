@@ -1,4 +1,4 @@
-﻿$("#Publicity").bind("click", function () {
+﻿$("#Private").bind("click", function () {
     $("#public-checkbox").attr("checked", !$(this).is(":checked"));
     $("#public-checkbox").attr("disabled", $(this).is(":checked"));
 });
@@ -34,9 +34,9 @@ eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
 
 
 function isValidTimeEvent() {
-    var day = parseInt($('#Day').val(), 10),
-        hour = parseInt($('#StartHour').val(), 10),
-        minutes = parseInt($('#StartMinutes').val(), 10),
+    var day = parseInt($("#Day").val(), 10),
+        hour = parseInt($("#StartHour").val(), 10),
+        minutes = parseInt($("#StartMinutes").val(), 10),
         currentDate = new Date().getDate(),
         currentHour = new Date().getHours(),
         currentMinutes = new Date().getMinutes();
@@ -79,7 +79,12 @@ function dateTimeEventValidate() {
         showError(false, errorMessageTime);
     } else {
         showError(true);
+        $("#event-submit").attr("disabled", false);
+        return true;
     }
+
+    $("#event-submit").attr("disabled", true);
+    return false;
 }
 
 function showError(isValid, message) {
@@ -99,7 +104,8 @@ function showError(isValid, message) {
 }
 
 $("#Day").val($("#event-date #day").text());
-$("#Month").val($("#event-date #day").text());
+$("#Month").val($("#event-date #month").text());
+$("#Year").val($("#event-date #year").text());
 $("#StartHour").val($("#event-timestart #hours").text());
 $("#StartMinutes").val($("#event-timestart #minutes").text());
 $("#EndHour").val($("#event-timefinish #hours").text());

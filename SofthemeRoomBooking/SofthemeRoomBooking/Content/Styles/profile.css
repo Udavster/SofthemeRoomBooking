@@ -66,6 +66,10 @@
     margin: 15px;
 }
 
+.label-administration {
+    margin-left: 15px;
+}
+
 .container-edit-profile__container-submit {
     display: block;
     width: 100%;

@@ -19,7 +19,6 @@
 .input-text:focus:-moz-placeholder           {color: transparent}
 .input-text:focus:-ms-input-placeholder      {color: transparent}
 
-
 .input-textarea {
     padding: 12px 20px;
     display: inline-block;
@@ -66,7 +65,8 @@
 
 .input-submit:disabled {
     background-color: #F5F6FB;
-    color: #858B94;
+    color: #C7C8CB;
+    cursor: default;
 }
 
 .switchbox {

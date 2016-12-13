@@ -6,6 +6,7 @@
     @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "event-form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
 
         <div class="eventcontainer-header">
             <div class="editevent-header__date">
@@ -30,14 +31,17 @@
         </div>
 
         <div class="eventcontainer-body">
-            @Html.EditorFor(model => model.Title, new
-            {
-                htmlAttributes = new
+            <div class="group-input-error">
+                @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Title, new
                 {
-                    @class = "input-text event-input eventcontainer-body__event-title",
-                    placeholder = "Заголовок"
-                }
-            })
+                    htmlAttributes = new
+                    {
+                        @class = "input-text event-input eventcontainer-body__event-title",
+                        placeholder = "Заголовок"
+                    }
+                })
+            </div>
 
             @Html.EditorFor(model => model.Description, new
             {

@@ -16,12 +16,13 @@ namespace SofthemeRoomBooking.Services.Implementations
 {
     public class EventService : IEventService
     {
-        private SofhemeRoomBookingContext _context;
+        private readonly SofhemeRoomBookingContext _context;
 
         public EventService(SofhemeRoomBookingContext context)
         {
             _context = context;
         }
+
         public List<List<EventRoomModel>> GetEventsByWeek(DateTime date, int id)
         {
 
@@ -96,15 +97,27 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
         }
 
-        public void AddEvent(NewEventModel model, string userId)
+        public EventModel GetEventById(int eventId)
         {
-            DateTime startTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month+"-"+model.Day+" "+model.StartHour+":"+model.StartMinute);
-            DateTime endTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month +"-"+model.Day+" "+model.EndHour+":"+model.EndMinute);
+            return null;
+        }
 
-            Events newEvent = model.ToEventsEntity(startTime, endTime, userId);
+        public void CreateEvent(EventModel model, string userId)
+        {
+            var newEvent = model.ToEventsEntity(userId);
 
             _context.Events.Add(newEvent);
             _context.SaveChanges();
+        }
+
+        public void UpdateEvent(EventModel model)
+        {
+            
+        }
+
+        public void DeleteEvent(int eventId)
+        {
+            
         }
 
         public EventUserModel EventInfo(int id)

@@ -51,8 +51,9 @@
             hidden = "";
         }
         <div class="container-edit-profile__checkbox @hidden">
-            @Html.CheckBoxFor(model => model.AdminRole, new {@class = "checkbox"})
-            @Html.LabelFor(model => model.AdminRole, "Администратор")
+            @Html.CheckBoxFor(model => model.AdminRole, new {@class = "switchbox"})
+            @Html.LabelFor(model => model.AdminRole, " ")
+            <span class="label-administration">Администратор</span>
         </div>
 
 

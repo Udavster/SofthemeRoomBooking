@@ -78,7 +78,6 @@
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventRoomModel.cs" />
     <Compile Include="Models\EventUserModel.cs" />
-    <Compile Include="Models\NewEventModel.cs" />
     <Compile Include="Models\RoomEquipmentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\EventsForUserCount.cs" />

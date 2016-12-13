@@ -1,12 +1,11 @@
-﻿using System;
-using SofthemeRoomBooking.DAL;
+﻿using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Services.Converters
 {
     public static class ToEventEntity
     {
-        public static Events ToEventsEntity(this NewEventModel model, string userId)
+        public static Events ToEventsEntity(this EventModel model, string userId)
         {
             return new Events
             {

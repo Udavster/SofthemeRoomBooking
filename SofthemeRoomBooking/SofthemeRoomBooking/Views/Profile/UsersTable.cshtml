@@ -40,6 +40,10 @@
     $('.users-table__row').bind('click', function (e) {
         e.preventDefault();
 
+        if ($(e.target).hasClass("delete-sign")) {
+            return false;
+        }
+
         var url = $(this).attr('data-href');
         if (!url) {
             return;
@@ -76,6 +80,7 @@
 
     $('.delete-sign').bind('click', function(e) {
         e.preventDefault();
+
         var userId = $(this).attr('id');
 
         $.ajax({

@@ -100,7 +100,7 @@
     border-color: #F5F6FB;
 }
 
-.eventcontainer-body__organizator-name:disabled::-webkit-input-placeholder {color: #EBEEF7;}
+.eventcontainer-body__organizator-name:disabled::-webkit-input-placeholder {color: #C7C8CB;}
 .eventcontainer-body__organizator-name:disabled::-moz-placeholder          {color: #C7C8CB;}
 .eventcontainer-body__organizator-name:disabled:-moz-placeholder           {color: #C7C8CB;}
 .eventcontainer-body__organizator-name:disabled:-ms-input-placeholder      {color: #C7C8CB;}

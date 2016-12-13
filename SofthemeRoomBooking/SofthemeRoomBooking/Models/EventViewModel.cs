@@ -8,6 +8,10 @@ namespace SofthemeRoomBooking.Models
 {
     public class EventViewModel
     {
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [StringLength(50, ErrorMessage = "Название не может быть длиннее 50 символов")]
         public string Title { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -38,14 +42,14 @@ namespace SofthemeRoomBooking.Models
 
         public EventViewModel() { }
 
-        public EventViewModel(List<RoomModel> rooms)
+        public EventViewModel(RoomModel[] rooms)
         {
             Rooms = rooms.Select(room => new SelectListItem
             {
                 Text = room.Name,
-                Value = room.IdRoom.ToString(),
-                Selected = "select" == room.IdRoom.ToString()
-            }).ToList();
+                Value = room.Id.ToString(),
+                Selected = "select" == room.Id.ToString()
+            });
         }
     }
 }

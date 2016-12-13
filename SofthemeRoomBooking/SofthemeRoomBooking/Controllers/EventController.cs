@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -10,9 +11,9 @@ namespace SofthemeRoomBooking.Controllers
 {
     public class EventController : Controller
     {
-        private IEventService _eventService;
-        private IRoomService _roomService;
-        private ApplicationUserManager _userManager;
+        private readonly IEventService _eventService;
+        private readonly IRoomService _roomService;
+        private readonly ApplicationUserManager _userManager;
 
         public EventController(IEventService eventService,IRoomService roomService, ApplicationUserManager userManager)
         {
@@ -31,10 +32,10 @@ namespace SofthemeRoomBooking.Controllers
         [Authorize]
         public ActionResult CreateEvent()
         {
-            var rooms = _roomService.GetAllRooms();
-            var model = new EventViewModel(rooms);
+            var rooms = _roomService.GetUnlockedRoomsByDate(DateTime.Today);
+            var modelView = new EventViewModel(rooms);
 
-            return PartialView("_CreateEventPartial", model);
+            return PartialView("_CreateEventPartial", modelView);
         }
 
         [HttpPost]
@@ -42,49 +43,58 @@ namespace SofthemeRoomBooking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateEvent(EventViewModel viewModel)
         {
-            var model = viewModel.ToNewEventModel();
+            var model = viewModel.ToEventModel();
             var userId = User.Identity.GetUserId();
-            return RedirectToAction("Index", "Home");
-            _eventService.AddEvent(model, userId);
+
+            if (ModelState.IsValid)
+            {
+                //if the room is not occupied at this time
+                //save
+                //else
+                //return error
+                _eventService.CreateEvent(model, userId);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
 
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         [Authorize]
-        public ActionResult EditEvent(string eventId)
+        public ActionResult EditEvent(int eventId)
         {
-            var rooms = _roomService.GetAllRooms();
+            var model = _eventService.GetEventById(eventId);
 
-            var model = new EventViewModel(rooms);
+            if (model != null)
+            {
+                var rooms = _roomService.GetUnlockedRoomsByDate(model.StartDateTime);
+                var modelView = model.ToEventViewModel(rooms);
 
-            return PartialView("_EditEventPartial", model);
-            //logic
-            //var model = _eventService.GetEventViewModelById(eventId);
+                return PartialView("_EditEventPartial", modelView);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
 
-            //if (model != null)
-            //{
-            //    return PartialView("_EditEventPartial", model);
-            //}
-
-            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEvent(EventViewModel model)
+        public ActionResult EditEvent(EventViewModel modelView)
         {
-            return PartialView("_EditEventPartial");
-            //var result = await _eventService.Edit(model);
+            var model = modelView.ToEventModel();
 
-            //if (!result)
-            //{
-            //    ModelState.AddModelError("", "Что-то пошло не так");
-            //    return PartialView("_EditEventPartial", model);
-            //}
+            if (ModelState.IsValid)
+            {
+                //if the room is not occupied at this time
+                //save
+                //else
+                //return error
+                _eventService.UpdateEvent(model);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
 
-            //return RedirectToAction("Index", "Home");
+            return PartialView("_EditEventPartial", modelView);
         }
     }
 }

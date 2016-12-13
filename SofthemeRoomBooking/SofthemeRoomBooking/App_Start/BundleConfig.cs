@@ -48,9 +48,9 @@ namespace SofthemeRoomBooking
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/events").Include(
-                        "~/Scripts/Event/eventcommon.js",
                         "~/Scripts/Event/eventcreate.js",
-                        "~/Scripts/Event/eventedit.js"
+                        "~/Scripts/Event/eventedit.js",
+                        "~/Scripts/Event/eventcommon.js"
                         ));
 
             //

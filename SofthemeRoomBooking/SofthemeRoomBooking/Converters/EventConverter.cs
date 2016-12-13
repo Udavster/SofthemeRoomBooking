@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Services.Models;
 
@@ -7,10 +6,11 @@ namespace SofthemeRoomBooking.Converters
 {
     public static class EventConverter
     {
-        public static EventViewModel ToEventViewModel(this NewEventModel model, List<RoomModel> rooms)
+        public static EventViewModel ToEventViewModel(this EventModel model, RoomModel[] rooms)
         {
             return new EventViewModel(rooms)
             {
+                Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
                 Private = !model.Publicity,
@@ -26,17 +26,18 @@ namespace SofthemeRoomBooking.Converters
             };
         }
 
-        public static NewEventModel ToNewEventModel(this EventViewModel model)
+        public static EventModel ToEventModel(this EventViewModel model)
         {
-            return new NewEventModel
+            return new EventModel
             {
+                Id = model.Id,
                 Title = model.Title,
                 Description = model.Description,
                 IdRoom = model.IdRoom,
                 Nickname = model.Nickname,
                 Publicity = !model.Private,
-                StartDateTime = DateTime.Parse($"{model.Year}-{model.Month}-{model.Day} {model.StartHour}:{model.StartMinutes}"),
-                EndDateTime = DateTime.Parse($"{model.Year}-{model.Month}-{model.Day} {model.EndHour}:{model.EndMinutes}")
+                StartDateTime = new DateTime(model.Year, model.Month, model.Day, model.StartHour, model.StartMinutes, 0),
+                EndDateTime = new DateTime(model.Year, model.Month, model.Day, model.EndHour, model.EndMinutes, 0)
             };
         }
     }
