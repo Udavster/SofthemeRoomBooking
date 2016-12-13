@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -8,62 +9,102 @@ using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
-        private IEventService _eventService;
-        private IRoomService _roomService;
-        private ApplicationUserManager _userManager;
+        private readonly IEventService _eventService;
+        private readonly IRoomService _roomService;
+        private readonly ApplicationUserManager _userManager;
+
         public EventController(IEventService eventService,IRoomService roomService, ApplicationUserManager userManager)
         {
             _eventService = eventService;
             _roomService = roomService;
             _userManager = userManager;
         }
-        // GET: Event
+        
+        [AllowAnonymous]
         public ActionResult Index(string date)
         {
             return View();
         }
 
+        [HttpGet]
+        public ActionResult CreateEvent()
+        {
+            var rooms = _roomService.GetUnlockedRoomsByDate(DateTime.Today);
+            var modelView = new EventViewModel(rooms);
+
+            return PartialView("_CreateEventPartial", modelView);
+        }
+
         [HttpPost]
-        [Authorize]
-        public ActionResult AddEvent(NewEventViewModel viewModel)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEvent(EventViewModel viewModel)
         {
-            var model = viewModel.ToNewEventModel();
+            var model = viewModel.ToEventModel();
             var userId = User.Identity.GetUserId();
-            _eventService.AddEvent(model, userId);
-            return Redirect("Home/Index");
+
+            if (ModelState.IsValid)
+            {
+                //if the room is not occupied at this time
+                //save
+                //else
+                //return error
+                _eventService.CreateEvent(model, userId);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
+
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult NewEvent()
+        [HttpGet]
+        public ActionResult EditEvent(int eventId)
         {
-            var rooms = _roomService.GetAllRooms();
+            var model = _eventService.GetEventById(eventId);
 
-            var dropDownList = rooms.Select(r => new SelectListItem
+            if (model != null)
             {
-                Text = r.Name,
-                Value = r.Id.ToString(),
-                Selected = "select" == r.Id.ToString()
-            }).ToList();
+                var rooms = _roomService.GetUnlockedRoomsByDate(model.StartTime);
+                var modelView = model.ToEventViewModel(rooms);
 
-            NewEventViewModel eventModel = new NewEventViewModel()
-            {
-                Rooms = dropDownList
-            };
+                return PartialView("_EditEventPartial", modelView);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
 
-            return PartialView(eventModel);
+            return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEvent(EventViewModel modelView)
+        {
+            var model = modelView.ToEventModel();
+
+            if (ModelState.IsValid)
+            {
+                //if the room is not occupied at this time
+                //save
+                //else
+                //return error
+                _eventService.UpdateEvent(model);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
+
+            return PartialView("_EditEventPartial", modelView);
+        }
+
+        [AllowAnonymous]
         public ActionResult EventDetails(int id)
         {
             
-            var model = _eventService.EventInfo(id);
+            var model = _eventService.GetEventDetailsById(id);
             var user = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId).Name;
             ViewBag.UserName = user;
             return PartialView("_EventDetailEditPartial",model);
         }
+
         [HttpGet]
-        [Authorize]
         public ActionResult CancelEventView(int id)
         {
             CancelPopupViewModel model = new CancelPopupViewModel()
@@ -74,7 +115,6 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public ActionResult CancelEvent(int id)
         {
             _eventService.CancelEvent(id);

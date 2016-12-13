@@ -2,16 +2,17 @@
 
 @{ var authorized = Model != null; }
 
+<div id="popup-create-event" class="overlay"></div>
+
+@if (authorized)
+{
+    <button id="plusEventButton" class="menu__button">
+        <i class="fa fa-plus plus-icon" aria-hidden="true"></i>
+    </button>
+}
+
 <ul class="menu">
-    @if (authorized)
-    {
-        <li class="menu__item">
-            <button class="menu__button">
-                <div class="background-plus"></div>
-                <i class="fa fa-plus-square plus" aria-hidden="true"></i>
-            </button>
-        </li>
-    }
+
     <li class="menu__item">@Html.ActionLink("Расписание", "Index", "Home", null, new {@class = "menu__link"})</li>
 
     @if (authorized && ViewBag.AdminRole)
@@ -23,7 +24,7 @@
     @if (authorized)
     {
         <li class="menu__item">
-            <a href="@Url.Action("Index", "Profile", new { userId = Model.Id })" class="menu__link">
+            <a href="@Url.Action("Index", "Profile", new {userId = Model.Id})" class="menu__link">
                 <i class="fa fa-user user-icon" aria-hidden="true"></i>
                 <span>@Model.UserName</span>
             </a>
@@ -34,3 +35,21 @@
         <li class="menu__item">@Html.ActionLink("Вход", "LogIn", "Account", null, new {@class = "menu__link"})</li>
     }
 </ul>
+
+<script>
+    $('#plusEventButton').bind('click', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '@Url.Action("CreateEvent", "Event")',
+            method: 'GET',
+            cache: true,
+            dataType: 'html',
+            success: function (result) {
+                debugger;
+                $('#popup-create-event').html(result);
+                $('#popup-create-event').show();
+            }
+        });
+    });
+</script>

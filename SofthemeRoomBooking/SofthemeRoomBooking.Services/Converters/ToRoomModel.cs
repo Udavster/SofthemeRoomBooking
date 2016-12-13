@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SofthemeRoomBooking.DAL;
+﻿using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Services.Converters

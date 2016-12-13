@@ -1,0 +1,46 @@
+﻿.editevent-header__date {
+    display: flex;
+    align-items: center;
+}
+
+.editevent-header__date #event-date {
+    margin: auto 0;
+    margin-left: 10px;
+}
+
+.editevent-header__date #event-timestart {
+    margin: auto 5px auto 20px;
+}
+
+.editevent-header__date #event-timefinish {
+    margin: auto 0;
+}
+
+.editevent-header__dropdown-rooms {
+    margin: auto 0;
+    margin-left: 40px;
+}
+
+.editevent-header__dropdown-list {
+    width: 160px;
+    height: 30px;
+    padding-left: 5px;
+    background-color: transparent;
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.eventcontainer-header .editevent-header__minimize {
+    margin: auto;
+    margin-top: 5px;
+    margin-right: 10px;
+    font-size: 20px;
+    color: #C8CEDA;
+    cursor: pointer;
+}
+
+.eventcontainer-header .editevent-header__minimize:hover {
+    color: #747B87;
+}

@@ -1,0 +1,101 @@
+﻿@model SofthemeRoomBooking.Models.EventViewModel
+
+@Styles.Render("~/bundles/Styles/datetimepickers")
+
+<div class="eventcontainer">
+    @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "event-form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="eventcontainer-header">
+            <div class="editevent-header__date">
+                @Html.HiddenFor(model => model.Day)
+                @Html.HiddenFor(model => model.Month)
+                @Html.HiddenFor(model => model.Year)
+                @Html.HiddenFor(model => model.StartHour)
+                @Html.HiddenFor(model => model.StartMinutes)
+                @Html.HiddenFor(model => model.EndHour)
+                @Html.HiddenFor(model => model.EndMinutes)
+                <div id="event-date"></div>
+                <div id="event-timestart"></div>
+                <span>-</span>
+                <div id="event-timefinish"></div>
+            </div>
+
+            <div class="editevent-header__dropdown-rooms">
+                @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new {@class = "editevent-header__dropdown-list" })
+            </div>
+
+            <i id="minimizeButton" class="fa fa-minus editevent-header__minimize" aria-hidden="true"></i>
+        </div>
+
+        <div class="eventcontainer-body">
+            <div class="group-input-error">
+                @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Title, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "input-text event-input eventcontainer-body__event-title",
+                        placeholder = "Заголовок"
+                    }
+                })
+            </div>
+
+            @Html.EditorFor(model => model.Description, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-textarea event-input eventcontainer-body__event-description",
+                    placeholder = "Дополнительная информация"
+                }
+            })
+
+            <div class="eventcontainer-body__group">
+                <div class="container-checkbox">
+                    <input type="checkbox" class="checkbox" id="public-checkbox"/>
+                    <label for="public-checkbox">Регистрация желающих</label>
+                </div>
+
+                <div class="container-switchbox">
+                    <span class="label-publicity">Публично</span>
+                    <div class="switchbox-publicity">
+                        @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
+                        @Html.LabelFor(model => model.Private, " ")
+                    </div>
+                    <span class="label-private">Приватно</span>
+                </div>
+            </div>
+
+            <div class="eventcontainer-body__group">
+                <div class="container-checkbox">
+                    <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
+                    <label for="organizator-checkbox">Показать автора</label>
+                </div>
+
+                <span class="label-or">или</span>
+
+                @Html.EditorFor(model => model.Nickname, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "input-text event-input eventcontainer-body__organizator-name",
+                        placeholder = "Указать организатора"
+                    }
+                })
+            </div>
+
+            <div class="eventcontainer-footer">
+                <div id="event-errors" class="eventcontainer-footer__error" style="display: none">
+                    <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
+                </div>
+                <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/datetimepickers")
+@Scripts.Render("~/bundles/events")

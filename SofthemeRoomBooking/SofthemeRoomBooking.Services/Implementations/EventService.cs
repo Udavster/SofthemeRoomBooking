@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Converters;
@@ -16,15 +11,118 @@ namespace SofthemeRoomBooking.Services.Implementations
 {
     public class EventService : IEventService
     {
-        private SofhemeRoomBookingContext _context;
+        private readonly SofhemeRoomBookingContext _context;
+
         public EventService(SofhemeRoomBookingContext context)
         {
             _context = context;
         }
-        public List<List<EventRoomModel>> GetEventsByWeek(DateTime date, int id)
+
+        public void CreateEvent(EventModel model, string userId)
+        {
+            var @event = model.ToEventEntity(userId);
+
+            _context.Events.Add(@event);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateEvent(EventModel model)
+        {
+            var @event = _context.Events.FirstOrDefault(ev => ev.Id == model.Id);
+
+            if (@event != null)
+            {
+                @event.Title = model.Title;
+                @event.Description = model.Description;
+                @event.Nickname = model.Nickname;
+                @event.Publicity = model.Publicity;
+                @event.Id_room = model.IdRoom;
+                @event.Start = model.StartTime;
+                @event.Finish = model.FinishTime;
+
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CancelEvent(int eventId)
+        {
+            var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
+
+            if (@event != null)
+            {
+                @event.Cancelled = true;
+
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public EventModel GetEventById(int eventId)
+        {
+            var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
+
+            return @event.ToEventModel();
+        }
+
+        public EventDetailsModel GetEventDetailsById(int eventId)
+        {
+            var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
+
+            if (@event != null)
+            {
+                var participantsQuantity = _context.EventsUsers.Count(x => x.IdEvent == @event.Id);
+
+                return @event.ToEventDetailsModel(participantsQuantity);
+            }
+
+            return null;
+
+            //var model = new EventDetailsModel();
+
+            ////var eventInfo = _context.Events.Where(ev => ev.Id == id).Select(ev => new
+            ////{
+            ////    Event = ev,
+            ////    ParticipantsQuantity = _context.EventsUsers.Count(x => x.IdEvent == ev.Id)
+            ////}).FirstOrDefault();
+
+            //if (eventInfo != null)
+            //{
+            //    model = eventInfo.Event.ToEventUserModelConverter(eventInfo.ParticipantsQuantity, dayOfWeek, monthArray);
+            //}
+            //return model;
+        }
+
+        public EventModel[] GetEventsByDate(DateTime day)
+        {
+            var nextDay = day.AddDays(1);
+
+            var events = from Event in _context.Events
+                         where Event.Start >= day && Event.Finish < nextDay && !Event.Cancelled
+                         orderby Event.Id_room, Event.Start
+                         select new EventModel
+                         {
+                            Id = Event.Id,                         
+                            Title = Event.Title,
+                            Description = Event.Description,
+                            Publicity = Event.Publicity,
+                            Nickname = Event.Nickname,
+                            IdRoom = Event.Id_room,
+                            StartTime = Event.Start,
+                             FinishTime = Event.Finish
+                         };
+
+            return events.ToArray();
+        }
+
+        public List<List<EventWeekModel>> GetEventsByWeek(DateTime date, int id)
         {
 
-            List<List<EventRoomModel>> events = new List<List<EventRoomModel>>();
+            List<List<EventWeekModel>> events = new List<List<EventWeekModel>>();
             var endTime = date.Date.Add(TimeSpan.FromDays(10));
             var event1 =
                 _context.Events.Where(
@@ -34,7 +132,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             var currentDate = date;
             for (int i = 0; i < 8; i++)
             {
-                List<EventRoomModel> day = new List<EventRoomModel>();
+                List<EventWeekModel> day = new List<EventWeekModel>();
                 if (currentDate.DayOfWeek == DayOfWeek.Sunday)
                 {
                     events.Add(day);
@@ -93,73 +191,6 @@ namespace SofthemeRoomBooking.Services.Implementations
             {
                 return null;
             }
-        }
-        public void AddEvent(NewEventModel model, string userId)
-        {
-            DateTime startTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month+"-"+model.Day+" "+model.StartHour+":"+model.StartMinute);
-            DateTime endTime = DateTime.Parse(DateTime.Now.Year+"-"+model.Month +"-"+model.Day+" "+model.EndHour+":"+model.EndMinute);
-
-            Events newEvent = model.ToEventsEntity(startTime, endTime, userId);
-
-            _context.Events.Add(newEvent);
-            _context.SaveChanges();
-        }
-
-        public EventUserModel EventInfo(int id)
-        {
-            string[] monthArray =
-            {
-                "Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября",
-                "Октября", "Ноября", "Декабря"
-            };
-            string[] dayOfWeek =
-            {
-                "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Cб" 
-            };
-            var model = new EventUserModel();
-            var eventInfo = _context.Events.Where(ev => ev.Id == id).Select(ev => new
-            {
-                Event = ev,
-                ParticipantsQuantity = _context.EventsUsers.Count(x => x.IdEvent == ev.Id)
-            }).FirstOrDefault();
-
-            if (eventInfo != null)
-            {
-                 model= eventInfo.Event.ToEventUserModelConverter(eventInfo.ParticipantsQuantity,dayOfWeek,monthArray);
-            }
-            return model;
-        }
-
-        public altEventModel[] GetEventsByDate(DateTime day)
-        {
-            var nextDay = day.AddDays(1);
-
-            var query = from Event in _context.Events
-                where Event.Start >= day && Event.Finish < nextDay && !Event.Cancelled
-                orderby Event.Id_room, Event.Start
-                select new altEventModel()
-                {
-                    Id = Event.Id,
-                    IdRoom = Event.Id_room,
-                    Title = Event.Title,
-                    Description  = Event.Description,
-                    Start = Event.Start,
-                    Finish = Event.Finish,
-                    Publicity = Event.Publicity
-                };
-            
-            return query.ToArray();
-        }
-
-        public void CancelEvent(int id)
-        {
-            var eventToCancel = _context.Events.FirstOrDefault(ev => ev.Id == id);
-            if (eventToCancel != null)
-            {
-                eventToCancel.Cancelled = true;
-            }
-
-            _context.SaveChanges();
         }
     }
 }

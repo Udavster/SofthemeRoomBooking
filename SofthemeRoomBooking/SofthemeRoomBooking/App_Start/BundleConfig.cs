@@ -42,6 +42,17 @@ namespace SofthemeRoomBooking
                         "~/Scripts/Calendar/commonCalendar.js"
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/datetimepickers").Include(
+                        "~/Scripts/DateTimePickers/datepicker.js",
+                        "~/Scripts/DateTimePickers/timepicker.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/events").Include(
+                        "~/Scripts/Event/eventcreate.js",
+                        "~/Scripts/Event/eventedit.js",
+                        "~/Scripts/Event/eventcommon.js"
+                        ));
+
             //
             bundles.Add(new StyleBundle("~/bundles/Layout/css").Include(
                       //"~/Content/font-awesome.css",
@@ -59,7 +70,11 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/eventdetailedit.css",
                       "~/Content/Styles/weekScheduler.css",
                       "~/Content/Styles/users.css",
-                      "~/Content/Styles/pagination.css"));
+                      "~/Content/Styles/pagination.css",
+                      "~/Content/Styles/Event/eventcommon.css",
+                      "~/Content/Styles/Event/eventcreate.css",
+                      "~/Content/Styles/Event/eventedit.css"
+                      ));
 
             bundles.Add(new StyleBundle("~/bundles/Login/css").Include(
                       "~/Content/Styles/login.css",
@@ -83,6 +98,11 @@ namespace SofthemeRoomBooking
                 "~/Content/Styles/Calendar/calendarEvents.css",
                 "~/Content/Styles/Calendar/calendarCommon.css"
                 ));
+
+            bundles.Add(new StyleBundle("~/bundles/Styles/datetimepickers").Include(
+                        "~/Content/Styles/DateTimePickers/datepicker.css",
+                        "~/Content/Styles/DateTimePickers/timepicker.css"
+                        ));
         }
     }
 }
