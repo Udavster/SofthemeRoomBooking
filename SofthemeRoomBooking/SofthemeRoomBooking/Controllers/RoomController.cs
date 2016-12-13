@@ -87,7 +87,7 @@ namespace SofthemeRoomBooking.Controllers
             {
                 var model = new ConfirmationViewModel
                 {
-                    Question = "Вы уверены, что хотите открыть эту комнату?",
+                    Question = "Вы уверены, что хотите закрыть эту комнату?",
                     Message = "Все события,запланированные в данной аудитории, будут отменены.",
                     Action = "Close",
                     Controller = "Room",
