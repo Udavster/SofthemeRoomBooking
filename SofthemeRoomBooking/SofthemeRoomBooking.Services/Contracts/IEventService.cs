@@ -10,5 +10,7 @@ namespace SofthemeRoomBooking.Services.Contracts
         EventUserModel EventInfo(int id);
         List<List<EventRoomModel>> GetEventsByWeek(DateTime date, int id);
         altEventModel[] GetEventsByDate(DateTime day);
+
+        void CancelEvent(int id);
     }
 }

@@ -233,6 +233,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalendarEventModel.cs" />
+    <Compile Include="Models\CancelPopupViewModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
     <Compile Include="Models\RoomEquipmentViewModel.cs" />
     <Compile Include="Models\SchedulerEventsViewModel.cs" />
