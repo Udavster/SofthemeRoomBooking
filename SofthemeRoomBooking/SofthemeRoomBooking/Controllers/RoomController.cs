@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
@@ -47,15 +48,77 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeRoomEquipment(RoomEquipmentViewModel model)
+        public ActionResult UpdateRoomEquipment(RoomEquipmentViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var roomEquipmentModel = model.ToRoomEquipmentModel();
-                _roomService.ChangeRoomEquipment(roomEquipmentModel);
+                _roomService.UpdateRoomEquipment(roomEquipmentModel);
                 return Redirect("/Home/Index");
             }
             return Redirect("/Home/Index");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Open(string id)
+        {
+            if (id != null)
+            {
+                var model = new ConfirmationViewModel
+                {
+                    Question = "Вы уверены, что хотите открыть эту комнату?",
+                    Message = "",
+                    Action = "Open",
+                    Controller = "Room",
+                    DataId = id
+                };
+
+                return PartialView("_PopupConfirmationPartial", model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Close(string id)
+        {
+            if (id != null)
+            {
+                var model = new ConfirmationViewModel
+                {
+                    Question = "Вы уверены, что хотите открыть эту комнату?",
+                    Message = "Все события,запланированные в данной аудитории, будут отменены.",
+                    Action = "Close",
+                    Controller = "Room",
+                    DataId = id
+                };
+
+                return PartialView("_PopupConfirmationPartial", model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ActionName("Open")]
+        public ActionResult OpenRoomConfirmation(int id)
+        {
+            
+            _roomService.OpenRoom(id);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ActionName("Close")]
+        public ActionResult CloseRoomConfirmation(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            _roomService.CloseRoom(id, userId);
+
+            return RedirectToAction("Index", "Home");
         }
 
     }

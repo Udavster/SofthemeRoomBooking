@@ -109,7 +109,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             return equipmentModel;
         }
 
-        public void ChangeRoomEquipment(RoomEquipmentModel model)
+        public bool UpdateRoomEquipment(RoomEquipmentModel model)
         {
             var room = _context.Rooms.FirstOrDefault(r => r.Id == model.Id);
             var equipment = _context.EquipmentRooms.Where(x => x.Id_room == model.Id);
@@ -117,14 +117,16 @@ namespace SofthemeRoomBooking.Services.Implementations
             if (room != null)
             {
                 room.Name = model.Name;
+                var i = 0;
+                foreach (var item in equipment)
+                {
+                    item.Quantity = model.Equipment[i].Quantity;
+                    i++;
+                }
+                _context.SaveChanges();
+                return true;
             }
-            var i = 0;
-            foreach (var item in equipment)
-            {
-                item.Quantity = model.Equipment[i].Quantity;
-                i++;
-            }
-            _context.SaveChanges();
+            return false;
         }
 
         public RoomModel[] GetUnlockedRoomsByDate(DateTime date)
@@ -137,9 +139,11 @@ namespace SofthemeRoomBooking.Services.Implementations
                         on room.Id equals roomLock.IdRoom into wh
                         from roomLock in wh.DefaultIfEmpty()
                         where (roomLock == null) || roomLock.Finish < nextDay || (roomLock.Start > day) 
-                        select new RoomModel() {Id = room.Id, Name = room.Name};
+                        select room;
 
-            return rooms.ToArray();
+            var r = rooms.GroupBy(room => new { room.Id, room.Name}).Select(group=>new RoomModel() { Id = group.Key.Id, Name = group.Key.Name });
+
+            return r.ToArray();
         }
 
         public IEnumerable<RoomStatus> GetRoomsStatuses(DateTime now)
@@ -169,6 +173,43 @@ namespace SofthemeRoomBooking.Services.Implementations
                                        );
 
             return result;
+        }
+
+        public bool CloseRoom(int id, string userId)
+        {
+            if (userId != null)
+            {
+                var room = new RoomsLocks()
+                {
+                    IdRoom = id,
+                    IdUser = userId,
+                    Start = DateTime.Now.AddMinutes(-1),
+                    Finish = null
+                };
+
+                _context.RoomsLocks.Add(room);
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public bool OpenRoom(int id)
+        {
+            var room = _context.RoomsLocks.Where(r => r.IdRoom == id && (r.Finish == null || r.Finish > DateTime.Now));
+            if (room.Any())
+            {
+                foreach (var item in room)
+                {
+                    item.Finish = DateTime.Now.AddMinutes(-1); ;
+                }
+
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
 
     }
