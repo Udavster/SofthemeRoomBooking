@@ -1,9 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @model SofthemeRoomBooking.Models.UserViewModels.ProfileUserViewModel
 
-@section Styles {
-    @Styles.Render("~/bundles/Styles/profile")
-}
+@Styles.Render("~/bundles/Styles/profile")
 
 <div id="popup-confirmation" class="overlay"></div>
 
@@ -51,9 +49,8 @@
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval");
-}
+@Scripts.Render("~/bundles/jqueryval");
+
 
 <script>
     $('#editButton').click(function () {

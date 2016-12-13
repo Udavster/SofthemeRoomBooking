@@ -11,7 +11,7 @@ namespace SofthemeRoomBooking
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/Validation/jquery.validate.js",
+                        "~/Scripts/Validation/jquery.validate*",
                         "~/Scripts/Validation/validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
@@ -19,7 +19,7 @@ namespace SofthemeRoomBooking
 
             bundles.Add(new ScriptBundle("~/bundles/Login").Include(
                          "~/Scripts/jquery-{version}.js",
-                       "~/Scripts/Validation/jquery.validate.js",
+                       "~/Scripts/Validation/jquery.validate*",
                         "~/Scripts/Validation/validation.js"));
 
 
