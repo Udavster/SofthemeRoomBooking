@@ -1,0 +1,113 @@
+﻿.eventcontainer-header .createevent-header__icon {
+    margin: auto 0;
+    margin-left: 20px;
+    font-size: 30px;
+}
+
+.eventcontainer-header .createevent-header__close {
+    margin: auto 0;
+    margin-right: 20px;
+    font-size: 30px;
+    color: #C8CEDA;
+    cursor: pointer;
+}
+
+.eventcontainer-header .createevent-header__close:hover {
+    color: #747B87;
+}
+
+.createevent-header__title {
+    margin: auto;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+.createevent-body__date {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.createevent-body__date #event-date {
+    margin: auto 0;
+    margin-left: 25px;
+}
+
+.createevent-body__date #event-timestart {
+    margin: auto 5px auto 20px;
+}
+
+.createevent-body__date #event-timefinish {
+    margin: auto 0 auto 5px;
+}
+
+.createevent-body__dropdown-rooms {
+    display: flex;
+    margin: 10px 0;
+    margin-top: 25px;
+}
+
+.createevent-body__dropdown-rooms span {
+    margin: auto 5px;
+    margin-right: 20px;
+}
+
+.createevent-body__dropdown-list {
+    margin-left: 10px;
+    width: 200px;
+    /*-ms-border-radius: 20px;
+    border-radius: 20px;*/
+    height: 30px;
+    /*border: 1px solid #EBEEF7;*/
+}
+
+.dropdown {
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+    font-size: 14px;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+   -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.dropdown option:active, .dropdown option:hover {
+    outline: none;
+}
+.dropdown option {
+    height: inherit;
+}
+
+.dropdown-wrapper {
+    display: block;
+    position: relative;
+    height: 35px;
+    border:1px solid #EBEEF7;    
+    border-radius:5px;
+    overflow: hidden;
+}
+
+.dropdown-wrapper:after {
+    content:"\0025BC";
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 10%;
+    height: 100%;   
+    padding: 8px;
+    font-size: 14px;
+    z-index: -1;
+    text-align: center;
+    color: #C8CEDA;     
+    pointer-events: none;
+    box-sizing: border-box; 
+}
+
+.dropdown-wrapper:hover,
+.dropdown-wrapper:after:hover {
+    color: #747B87;
+}

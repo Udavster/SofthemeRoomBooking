@@ -1,16 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Services.Contracts
 {
     public interface IEventService
     {
-        void AddEvent(NewEventModel model, string userId);
-        EventUserModel EventInfo(int id);
-        List<List<EventRoomModel>> GetEventsByWeek(DateTime date, int id);
-        altEventModel[] GetEventsByDate(DateTime day);
+        void CreateEvent(EventModel model, string userId);
 
-        void CancelEvent(int id);
+        bool UpdateEvent(EventModel model);
+
+        bool CancelEvent(int eventId);
+
+        EventModel GetEventById(int eventId);
+
+        EventDetailsModel GetEventDetailsById(int eventId);
+
+        EventModel[] GetEventsByDate(DateTime day);
+
+        List<List<EventWeekModel>> GetEventsByWeek(DateTime date, int id);
     }
 }

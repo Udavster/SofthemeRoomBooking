@@ -235,11 +235,11 @@
     <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\CancelPopupViewModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\RoomEquipmentViewModel.cs" />
     <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\NewEventViewModel.cs" />
     <Compile Include="Models\UserViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\LayoutUserViewModel.cs" />
     <Compile Include="Models\UserViewModels\PageableUsersViewModel.cs" />
@@ -318,9 +318,14 @@
     <Content Include="Content\Styles\Calendar\calendarDatepicker.css" />
     <Content Include="Content\Styles\Calendar\calendarEvents.css" />
     <Content Include="Content\Styles\common.css" />
+    <Content Include="Content\Styles\DateTimePickers\datepicker.css" />
+    <Content Include="Content\Styles\DateTimePickers\timepicker.css" />
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\eventdetail.css" />
     <Content Include="Content\Styles\eventdetailedit.css" />
+    <Content Include="Content\Styles\Event\eventcommon.css" />
+    <Content Include="Content\Styles\Event\eventcreate.css" />
+    <Content Include="Content\Styles\Event\eventedit.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
@@ -358,6 +363,11 @@
     <Content Include="Scripts\Calendar\calendarEvents.js" />
     <Content Include="Scripts\Calendar\commonCalendar.js" />
     <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\DateTimePickers\datepicker.js" />
+    <Content Include="Scripts\DateTimePickers\timepicker.js" />
+    <Content Include="Scripts\Event\eventcommon.js" />
+    <Content Include="Scripts\Event\eventcreate.js" />
+    <Content Include="Scripts\Event\eventedit.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -436,6 +446,8 @@
     <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
     <Content Include="Views\Shared\_EventCancelationPopup.cshtml" />
+    <Content Include="Views\Shared\_CreateEventPartial.cshtml" />
+    <Content Include="Views\Shared\_EditEventPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
@@ -449,7 +461,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\NewFolder1\" />
     <Folder Include="Views\Calendar\" />
     <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />

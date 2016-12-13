@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Services.Models;
 
@@ -9,7 +6,7 @@ namespace SofthemeRoomBooking.Converters
 {
     public class CalendarEventConverter
     {
-        public static List<CalendarEventModel>[] GetCalendarEventModels(RoomModel[] rooms, altEventModel[] calendarEvent)
+        public static List<CalendarEventModel>[] GetCalendarEventModels(RoomModel[] rooms, EventModel[] calendarEvent)
         {
             var calendarEventModels = new List<CalendarEventModel>[rooms.Length];
 
@@ -42,14 +39,14 @@ namespace SofthemeRoomBooking.Converters
 
                 var eventStart = new TimeCalendar()
                 {
-                    h = calendarEvent[i].Start.Hour,
-                    m = calendarEvent[i].Start.Minute
+                    h = calendarEvent[i].StartTime.Hour,
+                    m = calendarEvent[i].StartTime.Minute
                 };
 
                 var eventFinish = new TimeCalendar()
                 {
-                    h = calendarEvent[i].Finish.Hour,
-                    m = calendarEvent[i].Finish.Minute
+                    h = calendarEvent[i].FinishTime.Hour,
+                    m = calendarEvent[i].FinishTime.Minute
                 };
 
                 calendarEventModels[roomNum].Add(new CalendarEventModel()
