@@ -62,5 +62,23 @@ namespace SofthemeRoomBooking.Controllers
             ViewBag.UserName = user;
             return PartialView("_EventDetailEditPartial",model);
         }
+        [HttpGet]
+        [Authorize]
+        public ActionResult CancelEventView(int id)
+        {
+            CancelPopupViewModel model = new CancelPopupViewModel()
+            {
+                Id = id
+            };
+            return PartialView("_EventCancelationPopup",model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult CancelEvent(int id)
+        {
+            _eventService.CancelEvent(id);
+            return Content(@"Home/Index");
+        }
     }
 }

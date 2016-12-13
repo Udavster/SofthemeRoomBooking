@@ -92,15 +92,11 @@
     });
     //close event info popup
     $(document).on('click', '.eventdetailedit-close', function () {
-        console.log('ololol');
         $('.eventdetailedit').remove();
      });
     //click on emply item
     $(document).on('click','.calendar-item',function() {
         var _this = $(this);
     });
-
-
-
 });
 

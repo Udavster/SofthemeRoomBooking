@@ -10,8 +10,8 @@
             </div>
             @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
             {
-                <input class="eventdetailedit-change" type="submit" value="Изменить" />
-                <input class="eventdetailedit-cancel" type="submit" value="Отменить" />
+                <div class="eventdetailedit-change">Изменить</div>
+                <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
             }
         </div>
         <div>
@@ -58,3 +58,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).on('click', '#cancelevent', function () {
+        var _this = $(this);
+        var id = _this.data('id');
+        console.log('ololo1');
+        $.ajax({
+            url: window.location.origin + "/Event/CancelEventView",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function (res) {
+                $('.week__scheduler').append(res);
+            }
+        });
+    });
+</script>

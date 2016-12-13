@@ -30,7 +30,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                 _context.Events.Where(
                     ev => DbFunctions.TruncateTime(ev.Start) >= DbFunctions.TruncateTime(date) &&
                     DbFunctions.TruncateTime(ev.Start) <= DbFunctions.TruncateTime(endTime)
-                    && ev.Id_room == id);
+                    && ev.Id_room == id && ev.Cancelled == false);
             var currentDate = date;
             for (int i = 0; i < 8; i++)
             {
@@ -151,5 +151,15 @@ namespace SofthemeRoomBooking.Services.Implementations
             return query.ToArray();
         }
 
+        public void CancelEvent(int id)
+        {
+            var eventToCancel = _context.Events.FirstOrDefault(ev => ev.Id == id);
+            if (eventToCancel != null)
+            {
+                eventToCancel.Cancelled = true;
+            }
+
+            _context.SaveChanges();
+        }
     }
 }
