@@ -134,6 +134,7 @@ body {
 }
 
 .left-menu__header {
+    position: relative;
     width: 165px;
     height: 35px;
     margin-bottom: 45px;
@@ -169,13 +170,6 @@ body {
         border-bottom: 1px solid;
     }
 
-.whole-el-link {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-}
 
 .logo {
     background: url(../../Content/Images/Login/logo.png) no-repeat;
