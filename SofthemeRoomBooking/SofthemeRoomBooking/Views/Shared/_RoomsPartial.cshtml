@@ -4,6 +4,8 @@
     List<RoomEquipmentModel> rooms = Model.ToList();
 }
 
+<div id="popup-confirmation" class="overlay"></div>
+
 <div class="room">
     <div class="room__image">
         <img style="pointer-events: none" src="~/Content/Images/walls-1.png" />
@@ -17,7 +19,6 @@
         <img class="room__path room__path-8" id="path-8" src="~/Content/Images/Path/path-web-3.png" />
         <img class="room__path room__path-9" id="path-9" src="~/Content/Images/Path/path-ienglish.png" />
 
-
         @for (var i = 0; i < rooms.Count; i++)
         {
             <div data-roomid="@rooms[i].Id" data-num="@rooms[i].Equipments" data-pathid="path-@rooms[i].Id" class="room__general room-@rooms[i].Id">
@@ -28,7 +29,7 @@
                 </div>
             </div>
 
-            if (!@rooms[i].IsAvalaible)
+            if (!rooms[i].IsAvalaible)
             {
                 if (User.IsInRole("Admin"))
                 {
@@ -68,7 +69,6 @@
             @Html.Partial("_PopupEquipmentUserPartial")
         </div>
         <div class="room__equipmentadmin equipmentadmin">
-            @*@Html.Action("RoomEquipment", "Room",new {id = 1})*@
         </div>
     </div>
 </div>
