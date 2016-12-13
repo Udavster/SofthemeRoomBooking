@@ -1,4 +1,3 @@
-var cal = new DatePicker();
 var calendarMemo = {
     "roomArr": ['Einstein classroom', 'Tesla classroom', 'Newton classroom'],
     "events": {
@@ -24,7 +23,7 @@ function Loading(show) {
     }
 }
 
-function getDate(Date) {
+function getDate(a, Date) {
     Loading(true);
     $.ajax({
         url: '/Calendar',
@@ -55,6 +54,7 @@ function getDate(Date) {
             rez["events"] = data2;
             console.log(rez);
             calendarMemo = rez;
+            calendarMemo = a.sortEventsInMemo(calendarMemo);
             a.constructFromMemo(calendarMemo);
         },
 
@@ -67,42 +67,69 @@ function getDate(Date) {
 }
 
 $(document).ready(function () {
-
-    a = new Calendar("calendar-events", calendarMemo);
-    a.addEventOnClickHandler(function () { alert('Clicked'); });
-
-    // a.setToday("07, Пт");
-    cal.init(null, function (date, dayOfWeek, month, year) {
-        getDate(year + "" + tformat(month + 1) + tformat(date));
-        var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
-        a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
-    });
-    $("#" + a.name + "-fw-control").click(function () {
-
-        $("#datepicker").hide();
-        $(".calendars__month").css('display', 'none');
-        $(this).attr('active', 'false');
-        $("#" + a.name + "-pw-control").attr('active', 'true');
-        a.changeWidth("calc(100% - 100px)");
-    });
-    $("#" + a.name + "-pw-control").click(function () {
-        $("#datepicker").show();
-        $(".calendars__month").css('display', 'block');
-        $(this).attr('active', 'false');
-        $("#" + a.name + "-fw-control").attr('active', 'true');
-        a.changeWidth(990);
-    });
-
-    var today = new Date();
-
-    if (today.getDay() == 6) {
-        today.setDate(today.getDate() + 2);
-    } else if (today.getDay() == 0) {
-        today.setDate(today.getDate() + 1);
-    }
-
-    a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
-    getDate(today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
-
+    var commonCalendar = new CommonCalendar();
 });
 
+function CommonCalendar(eventHandler, emptyHandler) {
+    this.buildCalendars = function() {
+        cal = new DatePicker();
+        a = new Calendar("calendar-events", calendarMemo);
+        a.addEventOnClickHandler(function() { alert('Clicked'); });
+
+        cal.init(null,
+            function(date, dayOfWeek, month, year) {
+                getDate(a, year + "" + tformat(month + 1) + tformat(date));
+                var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
+                a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
+            });
+
+        $("#" + a.name + "-fw-control")
+            .click(function() {
+
+                $("#datepicker").hide();
+                $(".calendars__month").css('display', 'none');
+                $(this).attr('active', 'false');
+                $("#" + a.name + "-pw-control").attr('active', 'true');
+                a.changeWidth("calc(100% - 100px)");
+            });
+        $("#" + a.name + "-pw-control")
+            .click(function() {
+                $("#datepicker").show();
+                $(".calendars__month").css('display', 'block');
+                $(this).attr('active', 'false');
+                $("#" + a.name + "-fw-control").attr('active', 'true');
+                a.changeWidth(990);
+            });
+    }
+
+    this.getSchedule = function() {
+        var today = new Date();
+
+        if (today.getDay() == 6) {
+            today.setDate(today.getDate() + 2);
+        } else if (today.getDay() == 0) {
+            today.setDate(today.getDate() + 1);
+        }
+
+        a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
+        getDate(a, today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
+    }
+
+    var clickHandler = function(event) {
+        var $target = $(event.target);
+        console.log($target.parent());
+        if (!$target.hasClass("event-empty") && (!$target.parent().hasClass("event-empty"))) {
+            if (this.eventHandler) this.eventHandler();
+            alert('Clicked');
+        } else {
+            if (this.emptyHandler) this.emptyHandler();
+            alert('Empty clicked');
+        }
+    }.bind(this);
+
+    this.eventHandler = eventHandler;
+    this.emptyHandler = emptyHandler;
+    this.buildCalendars();
+    this.getSchedule();
+    a.addEventOnClickHandler(clickHandler);
+}
