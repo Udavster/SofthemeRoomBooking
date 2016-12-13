@@ -127,14 +127,14 @@
     visibility: visible;
 }
 
-.delete-sign {
+.users-table__row .delete-sign {
     visibility: hidden;
     font-size: 25px;
     color: #4A5158;
     cursor: pointer;
 }
 
-.delete-sign:hover {
+.users-table__row:hover .delete-sign:hover {
     font-size: 30px;
 }
 

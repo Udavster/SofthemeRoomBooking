@@ -66,6 +66,10 @@
     margin: 15px;
 }
 
+.label-administrator {
+    margin-left: 20px;
+}
+
 .container-edit-profile__container-submit {
     display: block;
     width: 100%;
