@@ -21,7 +21,12 @@
     border-radius: 10px;
 }
 .room__path {
-    z-index: -2;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.room__arrow {
+    pointer-events: none;
 }
 .room__open {
     position: absolute;
