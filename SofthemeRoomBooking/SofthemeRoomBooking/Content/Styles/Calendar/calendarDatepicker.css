@@ -97,8 +97,11 @@
 
 #datepicker #datepicker-body tbody td span.today {
   color: #000000;
-  font-weight: bold;
-  font-size: 15px;
+}
+
+#datepicker #datepicker-body tbody td #today {
+   font-size: 15px;
+   font-weight: bold;
 }
 
 #datepicker #datepicker-footer{
