@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model SofthemeRoomBooking.Services.Models.EventDetailsModel
+@model SofthemeRoomBooking.Models.EventDetailsViewModel
 
 <div class="eventdetailedit">
     <div class="eventdetailedit__title">
@@ -15,7 +15,7 @@
             }
         </div>
         <div>
-            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute - @Model.FinishTime.Hour:@Model.FinishTime.Minute</span>
+            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
         </div>
     </div>
     <div class="eventdetailedit__main">
@@ -34,7 +34,7 @@
                 }
                 else
                 {
-                    <span>@ViewBag.UserName</span>
+                    <span>@Model.UserName</span>
                 }
             </div>
             <div style="float: right">
@@ -63,7 +63,6 @@
     $(document).on('click', '#cancelevent', function () {
         var _this = $(this);
         var id = _this.data('id');
-        console.log('ololo1');
         $.ajax({
             url: window.location.origin + "/Event/CancelEventView",
             data: 'id=' + id,

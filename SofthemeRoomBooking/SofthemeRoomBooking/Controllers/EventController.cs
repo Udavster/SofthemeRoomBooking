@@ -103,6 +103,9 @@ namespace SofthemeRoomBooking.Controllers
         public ActionResult EventDetails(int id)
         {
             var model = _eventService.GetEventDetailsById(id);
+            var eventCreatorName = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId).Name;
+
+            var viewModel = model.ToEventDetailsViewModel(eventCreatorName);
 
             if (!model.Publicity)
             {
@@ -113,9 +116,7 @@ namespace SofthemeRoomBooking.Controllers
                 }
             }
 
-            var eventCreator = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId);
-            ViewBag.UserName = eventCreator.Name; //Why?
-            return PartialView("_EventDetailEditPartial",model);
+            return PartialView("_EventDetailEditPartial",viewModel);
         }
 
         [HttpGet]
