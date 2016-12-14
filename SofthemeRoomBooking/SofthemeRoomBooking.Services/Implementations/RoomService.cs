@@ -212,5 +212,11 @@ namespace SofthemeRoomBooking.Services.Implementations
             return false;
         }
 
+        public bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime)
+        {
+            return _context.Events.Count(ev => ev.Id_room == idRoom && !ev.Cancelled && 
+                                              ((ev.Start >= startTime && ev.Start <= finishTime) || 
+                                               (ev.Finish >= startTime && ev.Finish <= finishTime))) > 0;
+        }
     }
 }

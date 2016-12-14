@@ -156,14 +156,17 @@ function DatePickerChosen() {
         var dateInfo = this.getDateInfo();
 
         if (startDate !== 0) {
-            if (dateInfo.currentYear === startDate.getFullYear()) {
+            if (dateInfo.currentYear <= startDate.getFullYear()) {
                 wrap.find('#arrow-down-year').css('visibility', 'hidden');
+                $(year).text(startDate.getFullYear());
 
-                if (dateInfo.currentMonth === startDate.getMonth()) {
+                if (dateInfo.currentMonth <= startDate.getMonth()) {
                     wrap.find('#arrow-down-month').css('visibility', 'hidden');
+                    $(month).text(months[startDate.getMonth()]);
 
-                    if (dateInfo.currentDay === startDate.getDate()) {
+                    if (dateInfo.currentDay <= startDate.getDate()) {
                         wrap.find('#arrow-down-day').css('visibility', 'hidden');
+                        $(day).text(startDate.getDate());
                     } else {
                         wrap.find('#arrow-down-day').css('visibility', 'visible');
                     }
