@@ -1,4 +1,4 @@
-function DatePicker() {
+﻿function DatePicker() {
     if (this === window) {
         console.error('Use keyword new before function name DatePicker()');
         return false;
@@ -10,8 +10,10 @@ function DatePicker() {
         todayYear = new Date().getFullYear(),
         dayClickHandler;
 
+
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     var dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
 
 
     this.init = function (newWrap) {
@@ -55,6 +57,7 @@ function DatePicker() {
             }
         }
     }.bind(this);
+
 
     this.switchMonth = function (forward) {
 

@@ -235,6 +235,7 @@
     <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\CancelPopupViewModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
+    <Compile Include="Models\EventDetailsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\RoomEquipmentViewModel.cs" />
     <Compile Include="Models\SchedulerEventsViewModel.cs" />

@@ -40,5 +40,25 @@ namespace SofthemeRoomBooking.Converters
                 FinishTime = new DateTime(model.Year, model.Month, model.Day, model.EndHour, model.EndMinutes, 0)
             };
         }
+
+        public static EventDetailsViewModel ToEventDetailsViewModel(this EventDetailsModel model, string name)
+        {
+            return new EventDetailsViewModel()
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                Nickname = model.Nickname,
+                StartTime = model.StartTime,
+                FinishTime = model.FinishTime,
+                ParticipantsQuantity = model.ParticipantsQuantity,
+                DayOfWeek = model.DayOfWeek,
+                Month = model.Month,
+                UserId = model.UserId,
+                Publicity = model.Publicity,
+                UserName = name
+
+            };
+        }
     }
 }
