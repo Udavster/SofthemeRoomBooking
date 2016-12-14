@@ -7,13 +7,14 @@ function DatePicker() {
     var wrap, label,
         currMonth, currYear,
         todayMonth = new Date().getMonth(),
-        todayYear = new Date().getFullYear();
+        todayYear = new Date().getFullYear(),
+        dayClickHandler;
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     var dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 
-    this.init = function (newWrap, dayClickHandler) {
+    this.init = function (newWrap) {
 
         wrap = $(newWrap || "#datepicker");
         createDatapickerStruct();
@@ -29,11 +30,13 @@ function DatePicker() {
         currYear = todayYear;
 
         this.switchMonth(null);
-
-        this.dayClickHandler = dayClickHandler;
     }.bind(this);
 
-    this.changeDateHandler = function (event) {
+    this.addDayClickHandler = function (handler) {
+        dayClickHandler = handler;
+    }
+
+    this.changeDate = function (event) {
         if ($(event.target).hasClass("disable")) return;
 
         var date = parseInt($(event.target).text());
@@ -43,11 +46,11 @@ function DatePicker() {
             dayOfWeek = parseInt($(event.target).parent().data('weekday'));
         }
 
-        if (this.dayClickHandler != undefined) {
+        if (dayClickHandler != undefined) {
             try {
-                this.dayClickHandler(date, dayOfWeek, currMonth, currYear);
+                dayClickHandler(date, dayOfWeek, currMonth, currYear);
             } catch (ex) {
-                console.warn('Exception at dayClickHandler');
+                console.warn("Exception at dayClickHandler");
                 console.log(ex);
             }
         }
@@ -82,7 +85,7 @@ function DatePicker() {
         setToday(calendar.days);
 
         $(".day", calendar.days).bind("click", selectDay);
-        $(".day", calendar.days).bind("click", this.changeDateHandler);
+        $(".day", calendar.days).bind("click", this.changeDate);
 
         wrap.find("#datepicker-body").find("tbody").replaceWith(calendar.days);
         label.text(calendar.label);
@@ -90,6 +93,15 @@ function DatePicker() {
 
     this.switchDay = function(forward) {
 
+        if (forward === null) return;
+
+        var days = wrap.find(".day"),
+            currDay = wrap.find(".selected")[0];
+
+        var currIndex = $.inArray(currDay, days);
+        var newIndex = (forward && currIndex > 0) ? currIndex + 1 : currIndex - 1;
+
+        days[newIndex].click();
     }.bind(this);
 
     this.getDayNames = function (dayNum) {
@@ -251,6 +263,7 @@ function DatePicker() {
     this.initDatepickerStruct.cache = {};
     return {
         init: this.init,
+        addDayClickHandler: this.addDayClickHandler,
         switchMonth: this.switchMonth,
         switchDay: this.switchDay,
         getDayNames: this.getDayNames
