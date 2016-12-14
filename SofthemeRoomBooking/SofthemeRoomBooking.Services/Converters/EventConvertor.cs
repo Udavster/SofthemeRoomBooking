@@ -56,7 +56,8 @@ namespace SofthemeRoomBooking.Services.Converters
                 StartTime = model.Start,
                 FinishTime = model.Finish,
                 ParticipantsQuantity = participantsQuantity,
-                UserId = model.Id_user
+                UserId = model.Id_user,
+                Publicity = model.Publicity
             };
         }
 
