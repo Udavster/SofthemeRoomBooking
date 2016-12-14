@@ -2,7 +2,7 @@ function DatePickerChosen() {
 
     if (this === window) {
         console.error('Use keyword new before function name DatePicker()');
-        return;
+        return false;
     }
 
     var wrap, day, month, year,
