@@ -15,12 +15,14 @@ namespace SofthemeRoomBooking.Controllers
         private readonly IEventService _eventService;
         private readonly IRoomService _roomService;
         private readonly ApplicationUserManager _userManager;
+        private readonly IProfileService _profileService;
 
-        public EventController(IEventService eventService,IRoomService roomService, ApplicationUserManager userManager)
+        public EventController(IEventService eventService,IRoomService roomService, ApplicationUserManager userManager, IProfileService profileService)
         {
             _eventService = eventService;
             _roomService = roomService;
             _userManager = userManager;
+            _profileService = profileService;
         }
         
         [AllowAnonymous]
@@ -100,10 +102,19 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult EventDetails(int id)
         {
-            
             var model = _eventService.GetEventDetailsById(id);
-            var user = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId).Name;
-            ViewBag.UserName = user;
+
+            if (!model.Publicity)
+            {
+                var currentUserId = User.Identity.GetUserId();
+                if ((model.UserId != currentUserId)&&(!_profileService.IsAdmin(currentUserId)))
+                {
+                    return new EmptyResult();
+                }
+            }
+
+            var eventCreator = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId);
+            ViewBag.UserName = eventCreator.Name; //Why?
             return PartialView("_EventDetailEditPartial",model);
         }
 

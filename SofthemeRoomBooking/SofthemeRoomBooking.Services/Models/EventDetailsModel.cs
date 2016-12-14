@@ -23,5 +23,6 @@ namespace SofthemeRoomBooking.Services.Models
         public string Month { get; set; }
 
         public string UserId { get; set; }
+        public bool Publicity { get; set; }
     }
 }
