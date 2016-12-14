@@ -34,7 +34,6 @@ function DatePicker() {
     }.bind(this);
 
     this.changeDateHandler = function (event) {
-        debugger;
         if ($(event.target).hasClass("disable")) return;
 
         var date = parseInt($(event.target).text());
