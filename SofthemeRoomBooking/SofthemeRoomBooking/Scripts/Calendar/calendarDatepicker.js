@@ -1,16 +1,17 @@
 function DatePicker() {
-    if (this == window) {
+    if (this === window) {
         console.error('Use keyword new before function name DatePicker()');
-        return;
+        return false;
     }
 
-    var wrap,
-        label,
-        months = [
-            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-            "November", "December"
-        ];
-    this.dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    var wrap, label,
+        todayMonth = new Date().getMonth(),
+        todayYear = new Date().getYear(),
+        currMonth = todayMonth,
+        currYear = todayYear;
+
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    var dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 
     function monthToNum(Month) {
@@ -21,18 +22,7 @@ function DatePicker() {
         return -1;
     }
 
-    this.renewMonthYear = function () {
-        if (label && label.text() != "") {
-            currDate = label.text().trim().split(", "),
-                this.currMonth = currDate[0],
-                this.currYear = parseInt(currDate[1], 10);
-        }
-    }.bind(this);
-
     this.init = function (newWrap, dayClickHandler) {
-        var currDate = new Date();
-        this.currMonth = currDate.getMonth(),
-		this.currYear = currDate.getFullYear();
 
         wrap = $(newWrap || "#datepicker");
         createDatapickerStruct();
@@ -40,58 +30,59 @@ function DatePicker() {
 
         wrap.find("#to-prev-month").bind("click", function () { this.switchMonth(false); }.bind(this));
         wrap.find("#to-next-month").bind("click", function () { this.switchMonth(true); }.bind(this));
-        wrap.find("#back-to-today-left").bind("click", function () { this.switchMonth(null, this.currMonth, this.currYear); }.bind(this));
-        wrap.find("#back-to-today-right").bind("click", function () { this.switchMonth(null, this.currMonth, this.currYear); }.bind(this));
+        wrap.find("#back-to-today-left").bind("click", function () { this.switchMonth(null, todayMonth, todayYear); }.bind(this));
+        wrap.find("#back-to-today-right").bind("click", function () { this.switchMonth(null, todayMonth, todayYear); }.bind(this));
 
-        this.switchMonth(null, this.currMonth, this.currYear);
+        this.switchMonth(null, todayMonth, todayYear);
 
         this.dayClickHandler = dayClickHandler;
     }.bind(this);
 
     this.switchMonth = function (next, month, year) {
-        var currDate, calendar;
+        debugger;
 
         if (!month) {
             if (next) {
-                if (this.currMonth === "December") {
+                if (months[currMonth] === "December") {
                     month = 0;
                 } else {
-                    month = months.indexOf(this.currMonth) + 1;
+                    month = currMonth + 1;
                 }
             } else {
-                if (this.currMonth === "January") {
+                if (months[currMonth] === "January") {
                     month = 11;
                 } else {
-                    month = months.indexOf(this.currMonth) - 1;
+                    month = currMonth - 1;
                 }
             }
         }
 
         if (!year) {
             if (next && month === 0) {
-                year = this.currYear + 1;
+                year = currYear + 1;
             } else if (!next && month === 11) {
-                year = this.currYear - 1;
+                year = currYear - 1;
             } else {
-                year = this.currYear;
+                year = currYear;
             }
         }
 
-        backToToday(month, year);
+        currMonth = months;
+        currYear = year;
 
-        calendar = this.initDatepickerStruct(month, year);
+        var calendar = this.initDatepickerStruct(month, year);
 
-        setDefault(calendar.days);
+        backToTodayLabel(month, year);
+        setToday(calendar.days);
 
         $(".day", calendar.days).bind("click", selectDay);
 
-        $("#datepicker-body", wrap).find("tbody").replaceWith(calendar.days);
-        $("#current-month").text(calendar.label);
-
-        this.renewMonthYear();
+        wrap.find("#datepicker-body").find("tbody").replaceWith(calendar.days);
+        label.text(calendar.label);
 
         var handler = function (event) {
-            if ($(event.target).hasClass('disable')) return;
+            if ($(event.target).hasClass("disable")) return;
+
             var date = parseInt($(event.target).text());
             var dayOfWeek = parseInt($(event.target).data('weekday'));
             if (isNaN(dayOfWeek)) {
@@ -113,12 +104,11 @@ function DatePicker() {
 
     this.initDatepickerStruct = function (month, year) {
         var lastDay = new Date(year, month + 1, 0).getDate(),
-			lastWeekDay = new Date(year, month, lastDay).getDay(),
 			firstWeekDay = new Date(year, month, 0).getDay(),
-			lastDayLastMonth = new Date(year, month, 0).getDate();
-        weekedsOrAnotherMonth = true,
-			dayNextMonth = 1;
-        day = 1,
+			lastDayLastMonth = new Date(year, month, 0).getDate(),
+            weekedsOrAnotherMonth = true,
+			dayNextMonth = 1,
+            day = 1,
 			days = [];
 
         if (this.initDatepickerStruct.cache[year]) {
@@ -129,7 +119,8 @@ function DatePicker() {
             this.initDatepickerStruct.cache[year] = {};
         }
 
-        for (var i = 0; i < 6; i++) {
+        var i;
+        for (i = 0; i < 6; i++) {
             days[i] = [];
             for (var j = 0; j < 7; j++) {
                 if (i === 0) {
@@ -166,8 +157,10 @@ function DatePicker() {
 
         days = $("<tbody>" + days.join("") + "</tbody>");
 
-        if (month === new Date().getMonth() && year == new Date().getFullYear()) {
-            $(".day", days).filter(function () { return $(this).text() === new Date().getDate().toString(); })
+        if (month === todayMonth && year === todayYear) {
+            $(".day", days).filter(function() {
+                     return $(this).text() === new Date().getDate().toString();
+                })
 				.attr("id", "today")
 				.addClass("selected");
         }
@@ -177,43 +170,23 @@ function DatePicker() {
         return this.initDatepickerStruct.cache[year][month];
     }
 
-    function backToToday(month, year) {
-        var currMonth = new Date().getMonth();
-        var currYear = new Date().getFullYear();
+    function backToTodayLabel(month, year) {
+        wrap.find("#label-today").addClass("hidden");
 
-        if (month < currMonth) {
-            $("#label-today").addClass("hidden");
-            if (year <= currYear) {
-                $("#back-to-today-right").removeClass("hidden");
-            }
-            else {
-                $("#back-to-today-left").removeClass("hidden");
-            }
-        } else if (month > currMonth) {
-            $("#label-today").addClass("hidden");
-            if (year < currYear) {
-                $("#back-to-today-right").removeClass("hidden");
-            }
-            else {
-                $("#back-to-today-left").removeClass("hidden");
-            }
-        } else if (month === currMonth && year !== currYear) {
-            $("#label-today").addClass("hidden");
-            if (year < currYear) {
-                $("#back-to-today-right").removeClass("hidden");
-            }
-            else {
-                $("#back-to-today-left").removeClass("hidden");
-            }
+        if (year < todayYear || (month < todayMonth && year === todayYear)) {
+            wrap.find("#back-to-today-right").removeClass("hidden");
+        } else if (year > todayYear || (month > todayMonth && year === todayYear)) {
+            wrap.find("#back-to-today-left").removeClass("hidden");
         } else {
-            $("#label-today").removeClass("hidden");
-            $("#back-to-today-left").addClass("hidden");
-            $("#back-to-today-right").addClass("hidden");
+            wrap.find("#label-today").removeClass("hidden");
+            wrap.find("#back-to-today-left").addClass("hidden");
+            wrap.find("#back-to-today-right").addClass("hidden");
         }
     }
 
     function selectDay() {
-        var selected = $(".selected", "tbody");
+        var selected = wrap.find(".selected");
+
         if ($(selected).attr("id") === "today") {
             $(selected).addClass("today");
         }
@@ -222,11 +195,10 @@ function DatePicker() {
         $(this).addClass("selected");
     }
 
-    function setDefault(days) {
+    function setToday(days) {
+        $(".selected", days).removeClass("selected");
+
         var today = $("#today", days);
-
-        $(".selected", days).removeClass("selected")
-
         if (today) {
             $(today).removeClass("today");
             $(today).addClass("selected");
@@ -278,14 +250,13 @@ function DatePicker() {
     this.getDayNames = function(dayNum) {
         if (isNaN(dayNum) || (dayNum < 1) || (dayNum > 7))
             return null;
-        return this.dayNames[dayNum-1];
+        return dayNames[dayNum-1];
     }.bind(this);
 
     this.initDatepickerStruct.cache = {};
     return {
         init: this.init,
         switchMonth: this.switchMonth,
-        initDatepickerStruct: this.initDatepickerStruct,
         getDayNames: this.getDayNames
     };
     
