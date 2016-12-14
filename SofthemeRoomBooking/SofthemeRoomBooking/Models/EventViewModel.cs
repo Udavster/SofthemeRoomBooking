@@ -44,6 +44,11 @@ namespace SofthemeRoomBooking.Models
 
         public EventViewModel(RoomModel[] rooms)
         {
+            SetUnlockedRooms(rooms);
+        }
+
+        public void SetUnlockedRooms(RoomModel[] rooms)
+        {
             Rooms = rooms.Select(room => new SelectListItem
             {
                 Text = room.Name,

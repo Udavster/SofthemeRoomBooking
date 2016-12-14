@@ -40,18 +40,21 @@ namespace SofthemeRoomBooking.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateEvent(EventViewModel viewModel)
+        public ActionResult CreateEvent(EventViewModel modelView)
         {
-            var model = viewModel.ToEventModel();
+            var model = modelView.ToEventModel();
             var userId = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {
-                //if the room is not occupied at this time
-                //save
-                //else
-                //return error
+                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
+                {
+                    return Json(new { errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                }
+
                 _eventService.CreateEvent(model, userId);
+
+                return Json(new { redirectTo = Url.Action("Index", "Home") });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 

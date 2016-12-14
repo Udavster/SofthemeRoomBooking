@@ -13,5 +13,7 @@ namespace SofthemeRoomBooking.Services.Contracts
         RoomModel[] GetUnlockedRoomsByDate(DateTime date);
         bool CloseRoom(int id, string userId);
         bool OpenRoom(int id);
+
+        bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime);
     }
 }

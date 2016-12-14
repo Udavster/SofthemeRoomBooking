@@ -2,17 +2,28 @@
     $("#popup-create-event").hide();
 });
 
-$("#even-submit").bind("click", function () {
+$("#event-submit").bind("click", function (e) {
+    e.preventDefault();
 
-    var validator = $("#event-form").validate();
+    var dateTimeValidator = dateTimeEventValidate();
 
-    if (!dateTimeEventValidate() || !$("#event-form").valid()) {
-        validator.invalidElements();
-        $(this).attr("disabled", true);
-        return false;
+    if (dateTimeValidator.validate() && $("#event-form").valid()) {
+
+        $.ajax({
+            url: window.location.origin + "/Event/CreateEvent",
+            method: "POST",
+            async: true,
+            data: $("#event-form").serialize(),
+            success: function (result) {
+                if (result.redirectTo) {
+                    window.location.href = result.redirectTo;
+                } else if (result.errorMessage) {
+                    dateTimeValidator.showErrors(false, result.errorMessage);
+                } 
+            }
+        });
+        return true;
     } else {
-        var month = $("#Month").val();
-        $("#Month").val(month + 1);
-        $("#event-form").submit();
+        return false;
     }
 });
