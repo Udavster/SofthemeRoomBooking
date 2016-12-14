@@ -103,7 +103,7 @@ namespace SofthemeRoomBooking.Controllers
         public ActionResult EventDetails(int id)
         {
             var model = _eventService.GetEventDetailsById(id);
-            var eventCreatorName = _userManager.Users.FirstOrDefault(u => u.Id == model.UserId).Name;
+            var eventCreatorName = _profileService.GetUserById(model.UserId).Name;
 
             var viewModel = model.ToEventDetailsViewModel(eventCreatorName);
 
