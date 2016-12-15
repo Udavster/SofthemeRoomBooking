@@ -299,8 +299,8 @@ class Calendar {
         $calendarSwitch.append('<i id = "' + this.name + '-pw-control" class="fa fa-th-list switch-calendars__option control" aria-hidden="true" active="false"></i>');
 
         $controls.append($calendarSwitch);
-        $controls.append('<div class="calendar-events__prev-day-control control"><i class="fa fa-caret-left" aria-hidden="true"></i> </div>');
-        $controls.append('<div class="calendar-events__next-day-control control"><i class="fa fa-caret-right" aria-hidden="true"></i></div>');
+        $controls.append('<div class="calendar-events__prev-day-control control"><i id="next-day" class="fa fa-caret-left day-control" aria-hidden="true"></i> </div>');
+        $controls.append('<div class="calendar-events__next-day-control control"><i id="prev-day" class="fa fa-caret-right day-control" aria-hidden="true"></i></div>');
         $controls.append('<div id="calendar-events-today" class="calendar-events__today">18, Пт</div>');
 
         var $roomList = $('<div class="calendar-events__room-list"></div>');
@@ -409,5 +409,16 @@ class Calendar {
 
     setToday(str) {
         $("#calendar-events-today").html(str);
+    }
+
+    addNextPrevDayHandler(handler) {
+        if (handler) {
+             this.nextPrevHandler = handler;
+        }
+        $(this.className + " .day-control")
+            .click(function (event) {
+                if (!handler) return;
+                handler(($(event.target).id === "next-day"));
+            });
     }
 }
