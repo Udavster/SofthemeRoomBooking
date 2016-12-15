@@ -47,7 +47,7 @@
 
 .input-submit {
     display: inline-block;
-    background-color: #C8CEDA;
+    background-color: #C8CDD9;
     color: #000000;
     padding: 10px 15px;
     margin: 10px 0;
@@ -196,6 +196,7 @@
     background-color: #C8CDD9;
     color: #E9EBF0;
     outline: none;
+    cursor: pointer;
 }
 
 .button:hover {
