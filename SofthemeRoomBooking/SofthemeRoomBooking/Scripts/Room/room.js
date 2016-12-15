@@ -18,6 +18,10 @@
 
 
             $('.equipmentuser__tablenumber').html($('.equipmentuser__table-main').data('info'));
+            $('.equipmentuser__boardnumber').html($('.equipmentuser__board-main').data('info'));
+            $('.equipmentuser__laptopnumber').html($('.equipmentuser__laptop-main').data('info'));
+            $('.equipmentuser__printnumber').html($('.equipmentuser__print-main').data('info'));
+            $('.equipmentuser__proectnumber').html($('.equipmentuser__proect-main').data('info'));
             $('.room__equipment').show();
         })
         .mouseout(function() {
@@ -65,58 +69,6 @@
         });
 
     });
-
-    //hide equipment admin
-    $(document).on('click','.equipmentadmin-cancel', function() {
-        $('.equipmentadmin').hide();
-        $('.active-room').removeClass('active-room');
-        $('.room__general').each(function (i, elem) {
-                $(elem).parents('.room__image').removeClass('room-change');
-        });
-    });
-
-    //show info about event
-    $(document).on('click', '.event-info', function () {
-        var _this = $(this);
-        $('.eventdetailedit').remove();
-        var id = _this.data("id");
-
-        $.ajax({
-            url: window.location.origin + "/Event/EventDetails",
-            data: 'id=' + id,
-            type: 'GET',
-            success: function(res) {
-                $('.week__scheduler').append(res);
-            }
-        });
-    });
-
-    //close event info popup
-    $(document).on('click', '.eventdetailedit-close', function () {
-        $('.eventdetailedit').remove();
-    });
-
-    //click on emply item
-    $(document).on('click','.calendar-item',function() {
-        var _this = $(this);
-    });
-
-
-
-    //add data attribute to close button
-    $(document).on('click', '.room__general', function () {
-        var _this = $(this);
-        console.log("ololo open" + _this.data("roomid"));
-        $('.room__close').data('id', _this.data("roomid"));
-    });
-
-    //add data attribute to open button
-    $(document).on('click', '.room__general', function () {
-        var _this = $(this);
-        console.log("ololo close" + _this.data("roomid"));
-        $('.room__open').data('id', _this.data("roomid"));
-    });
-
     //click open room
     $(document).on('click', '.room__open', function (e) {
         e.preventDefault();
@@ -149,5 +101,66 @@
             }
         });
     });
+
+    //hide equipment admin
+    $(document).on('click','.equipmentadmin-cancel', function() {
+        $('.equipmentadmin').hide();
+        $('.active-room').removeClass('active-room');
+        $('.room__general').each(function (i, elem) {
+                $(elem).parents('.room__image').removeClass('room-change');
+        });
+    });
+
+    //show info about event
+    $(document).on('click', '.event-info', function () {
+        var _this = $(this);
+        $('.eventdetailedit').remove();
+        var id = _this.data("id");
+
+        $.ajax({
+            url: window.location.origin + "/Event/EventDetails",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function(res) {
+                $('.week__scheduler').append(res);
+            }
+        });
+    });
+
+    //close event info popup
+    $(document).on('click', '.eventdetailedit-close', function () {
+        $('.eventdetailedit').remove();
+    });
+
+    //add data attribute to close button
+    $(document).on('click', '.room__general', function () {
+        var _this = $(this);
+        $('.room__close').data('id', _this.data("roomid"));
+    });
+
+    //add data attribute to open button
+    $(document).on('click', '.room__general', function () {
+        var _this = $(this);
+        $('.room__open').data('id', _this.data("roomid"));
+    });
+    //click empty field week scheduler
+    $(document).on('click', '.calendar-item:not(.not-empty)', function () {
+        var _this = $(this);
+
+       //var start = _this.data('start');
+       //var finish = _this.data('finish');
+       //alert('clicked start =' + start + ' finish =' + finish + '');
+       $.ajax({
+           url: window.location.origin + "/Event/CreateEvent",
+           type: 'GET',
+           success: function (res) {
+               $('.week__scheduler').append(res);
+           }
+       });
+    });
+    $(document).on("click","#closeButton", function () {
+        $(".eventcontainer").remove();
+    });
+
 });
 

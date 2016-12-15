@@ -171,6 +171,9 @@ function generateCalendarCol(date, events, iteration) {
     var calendar = $('#calendar');
     var ttt = iteration;
     var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+    var isAuth = $('.week__scheduler').data('auth');
+    var minInHour = 60;
+    var heightCol = 48;
     //Generate HTML strucrure
 
     //set column border active if date = current date
@@ -208,7 +211,23 @@ function generateCalendarCol(date, events, iteration) {
 
         for (var i = 0; i < 11; i++) {
 
-            structure += '<div class="calendar-item item-' + i + '">';
+            if (isAuth ==="True") {
+                structure += '<div class="calendar-item item-' +
+                    i +
+                    '" data-start=' +
+                    (i + 9) +
+                    ' data-finish=' +
+                    (i + 10) +
+                    ' >';
+            } else {
+                structure += '<div class="calendar-item not-empty item-' +
+                    i +
+                    '" data-start=' +
+                    (i + 9) +
+                    ' data-finish=' +
+                    (i + 10) +
+                    ' >';
+            }
 
             if (iteration++ % 2 == 0) {
                 structure += '<div class="time">' + startTime + ':00';
@@ -232,16 +251,16 @@ function generateCalendarCol(date, events, iteration) {
         var currentItem = $('.c-' + ttt).find('.item-' + (eventStartHours - 9));
 
         //calculate height and top for displaying event
-        var differense = (eventEndHours - eventStartHours) * 60 + (eventEndMinutes - eventStartMinutes);
-        var top = Math.round((eventStartMinutes) / 60 * 48);
-        var height = Math.round(differense / 60 * 48);
+        var difference = (eventEndHours - eventStartHours) * minInHour + (eventEndMinutes - eventStartMinutes);
+        var top = Math.round((eventStartMinutes) / minInHour * heightCol);
+        var height = Math.round(difference / minInHour * heightCol);
         if (!events[i].isPublic) {
-            var eventInfo = '<div class="event-private" data-id='+events[i].eventId+' style="top:' + top + 'px;height:' + height + 'px;">';
+            var eventInfo = '<div class="event-private" data-id=' + events[i].eventId + ' style="top:' + top + 'px;height:' + height + 'px;">';
         } else {
             var eventInfo = '<div class="event-info" data-id='+events[i].eventId + ' style="top:' + top + 'px;height:' + height + 'px;">';
         }
-        currentItem.addClass('not-empty');
-        if (differense > 40) {
+            currentItem.addClass('not-empty');
+        if (difference > 40) {
             eventInfo += '<div class="event-time">' +
                 tformat(eventStartHours) +
                 ':' +
@@ -268,11 +287,13 @@ function generateCalendarCol(date, events, iteration) {
 }
 
 function drawCursor(i) {
+    var minInHour = 60;
+    var heightCol = 48;
     var curDate = new Date();
     var curHour = curDate.getHours();
     var curMinute = curDate.getMinutes();
     var currentItem = $('.c-' + i).find('.item-' + (curHour - 9));
-    var top = Math.round((curMinute) / 60 * 48);
+    var top = Math.round((curMinute) / minInHour * heightCol);
     var ctimeDiv = '<div class="cursor" style="top:' +
         top +
         'px"><div class="cursor__arrows cursor__left-arrow"><i class="fa fa-caret-right" style="color:gray; font-size:25px" aria-hidden="true"></i></div><div class="cursor__arrows cursor__right-arrow"><i class="fa fa-caret-left" style="color:gray ;font-size:25px" aria-hidden="true"></i></div></div>';

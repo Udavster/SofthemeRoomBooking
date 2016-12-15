@@ -55,6 +55,7 @@
     height: 100%;
     color: white;
     background: #f95752;
+    cursor: pointer;
 }
 
 .event-private{
@@ -62,8 +63,22 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    color: white;
+    color: black;
     background: #c5cad6;
+}
+
+.event-private:before {
+    z-index: 6;
+    content: "\f023"; 
+    font-family: FontAwesome;
+    text-decoration: inherit;
+    text-align: center;
+    line-height: 50px;
+    font-size: 36px;
+    color: white;
+    left: 45px; 
+    position:absolute; 
+    top:0; 
 }
 .item-head{
     margin : 3px 10px;
@@ -83,9 +98,17 @@
 }
 .event-time {
     font-size: 12px;
+    position: absolute;
+    z-index: 7;
+    top: 2px;
+    right: 5px
 }
 .event-title {
     font-size: 12px;
+    position: absolute;
+    z-index: 7;
+    top: 16px;
+    left: 5px
 }
 
 .cursor{
@@ -117,13 +140,20 @@
     position: relative;
 }
 .calendar-item:not(.not-empty):hover:after{
-    content: '+';
+    content: "\f067"; 
+    font-family: FontAwesome;
+    text-align: center;
+    line-height: 50px;
+    vertical-align: middle;
+    font-size: 36px;
+    color: #feebea;
     width: 100%;
     height: 100%;
-    background-color: rgba(255,0,0,0.1);
+    background-color: #fdbcba;
     position: absolute;
-    top:0 ;
+    top: 0;
     left: 0;
+    cursor: pointer;
 }
 
 
