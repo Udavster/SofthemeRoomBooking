@@ -44,6 +44,11 @@ html {
     font-size: 34px;
 }
 
+.calendar-events__day-control {
+    position: relative;
+    z-index: 2;
+}
+
 .calendar-events__prev-day-control {
     float: left;
     margin-top: -5px;
@@ -299,18 +304,22 @@ div.calendar-events__description-row {
 .event__time-center {
     text-align: center;
 }
+
 .event-empty {
     opacity: 0;
 }
-.event-empty:hover {
-    opacity: 1;
-    background-color: #fdbcba;
-    padding-left: 0;
-    padding-right: 0;
-}
-.event-empty div{
-    display: none;
-}
+
+    .event-empty:hover {
+        opacity: 1;
+        background-color: #fdbcba;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .event-empty div {
+        display: none;
+    }
+
 .event-empty__plus {
     margin: 5px auto;
     padding-left: 1px;
