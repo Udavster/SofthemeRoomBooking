@@ -375,3 +375,20 @@ div.calendar-events__description-row {
 #drag-slider {
     left: 40px;
 }
+
+.calendar-events__now-line {
+    position: relative;
+    top: -80px;
+    width: 100%;
+}
+
+.calendar-events__now-link {
+    position: relative;
+    /*color: #9fa6b6;*/
+}
+.calendar-events__now-link-left {
+    left: 5px;
+}
+.calendar-events__now-link-right {
+    left: calc(100% - 105px);
+}

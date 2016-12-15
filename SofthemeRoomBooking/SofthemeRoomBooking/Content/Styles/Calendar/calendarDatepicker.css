@@ -68,6 +68,7 @@
     width: 32px;
     height: 32px;
     text-align: center;
+    padding-top: 1px;
 }
 
 #datepicker #datepicker-body tbody td span.day{
