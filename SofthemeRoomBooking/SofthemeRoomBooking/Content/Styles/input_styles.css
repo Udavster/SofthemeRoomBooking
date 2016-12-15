@@ -135,15 +135,15 @@
     height: 25px;
 }
 
-.checkbox:not(:checked) + label,
-.checkbox:checked + label {
+.checkbox:not(:checked) ~ label,
+.checkbox:checked ~ label {
   position: relative;
   padding-left: 40px;
   cursor: pointer;
 }
 
-.checkbox:not(:checked) + label:before,
-.checkbox:checked + label:before {
+.checkbox:not(:checked) ~ label:before,
+.checkbox:checked ~ label:before {
   content: '';
   position: absolute;
   top: -6px;
@@ -155,8 +155,8 @@
   border-radius: 5px;
 }
 
-.checkbox:not(:checked) + label:after,
-.checkbox:checked + label:after {
+.checkbox:not(:checked) ~ label:after,
+.checkbox:checked ~ label:after {
   content: '\002714';
   position: absolute;
   left: 4px;
@@ -166,24 +166,24 @@
   transition: all .2s;
 }
 
-.checkbox:not(:checked) + label:after {
+.checkbox:not(:checked) ~ label:after {
   opacity: 0;
   transform: scale(0);
 }
 
-.checkbox:checked + label:after {
+.checkbox:checked ~ label:after {
   opacity: 1;
   transform: scale(1);
 }
 
-.checkbox:disabled:not(:checked) + label:before,
-.checkbox:disabled:checked + label:before {
+.checkbox:disabled:not(:checked) ~ label:before,
+.checkbox:disabled:checked ~ label:before {
   border-color: #F5F6FB;
   background-color: #F5F6FB;
   cursor: default;
 }
 
-.checkbox:disabled + label {
+.checkbox:disabled ~ label {
   color: #EBEEF7;
   cursor: default;
 }

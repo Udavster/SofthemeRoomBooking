@@ -102,7 +102,27 @@
             currDay = wrap.find(".selected")[0];
 
         var currIndex = $.inArray(currDay, days);
-        var newIndex = (forward && currIndex > 0) ? currIndex + 1 : currIndex - 1;
+
+        var newIndex;
+        if (forward) {
+            if (currIndex === days.length - 1) {
+                this.switchMonth(true);
+
+                days = wrap.find(".day");
+                newIndex = 0;
+            } else {
+                newIndex = currIndex + 1;
+            }
+        } else {
+            if (currIndex === 0) {
+                this.switchMonth(false);
+
+                days = wrap.find(".day");
+                newIndex = days.length - 1;
+            } else {
+                newIndex = currIndex - 1;
+            }
+        }
 
         days[newIndex].click();
     }.bind(this);

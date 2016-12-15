@@ -26,6 +26,8 @@ namespace SofthemeRoomBooking.Models
 
         public bool Publicity { get; set; }
 
+        public bool AllowRegistration { get; set; }
+
         public string UserName { get; set; }
     }
 }

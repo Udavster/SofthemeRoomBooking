@@ -36,6 +36,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                 @event.Description = model.Description;
                 @event.Nickname = model.Nickname;
                 @event.Publicity = model.Publicity;
+                @event.AllowRegistration = model.AllowRegistration;
                 @event.Id_room = model.IdRoom;
                 @event.Start = model.StartTime;
                 @event.Finish = model.FinishTime;

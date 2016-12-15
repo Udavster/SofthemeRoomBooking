@@ -37,7 +37,7 @@
         </div>
 
         <div class="group-input-error">
-            @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
+            @Html.SignalValidationMessageFor(model => model.Title, new { @class = "error-box__text-danger" })
             @Html.EditorFor(model => model.Title, new
             {
                 htmlAttributes = new
@@ -48,19 +48,22 @@
             })
         </div>
 
-        @Html.EditorFor(model => model.Description, new
-        {
-            htmlAttributes = new
+        <div class="group-input-error">
+            @Html.SignalValidationMessageFor(model => model.Description, new { @class = "error-box__text-danger" })
+            @Html.EditorFor(model => model.Description, new
             {
-                @class = "input-textarea event-input eventcontainer-body__event-description",
-                placeholder = "Дополнительная информация"
-            }
-        })
-
+                htmlAttributes = new
+                {
+                    @class = "input-textarea event-input eventcontainer-body__event-description",
+                    placeholder = "Дополнительная информация"
+                }
+            })
+        </div>
+        
         <div class="eventcontainer-body__group">
             <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="public-checkbox"/>
-                <label for="public-checkbox">Регистрация желающих</label>
+                @Html.CheckBoxFor(model => model.AllowRegistration, new { @class = "checkbox" })
+                @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
             </div>
 
             <div class="container-switchbox">
