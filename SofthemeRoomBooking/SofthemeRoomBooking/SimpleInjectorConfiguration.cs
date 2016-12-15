@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
@@ -81,6 +82,8 @@ namespace SofthemeRoomBooking
                 RequireUppercase = true
             };
 
+            manager.EmailService = new EmailService();
+
             var dataProtectionProvider =
                  app.GetDataProtectionProvider();
 
@@ -88,7 +91,10 @@ namespace SofthemeRoomBooking
             {
                 manager.UserTokenProvider =
                  new DataProtectorTokenProvider<ApplicationUser>(
-                  dataProtectionProvider.Create("ASP.NET Identity"));
+                  dataProtectionProvider.Create("ASP.NET Identity"))
+                 {
+                     TokenLifespan = TimeSpan.FromHours(6)
+                 };
             }
         }
     }
