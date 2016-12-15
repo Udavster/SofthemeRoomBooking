@@ -52,7 +52,6 @@ function getDate(a, Date) {
 
             rez["roomArr"] = roomArr;
             rez["events"] = data2;
-            console.log(rez);
             calendarMemo = rez;
             calendarMemo = a.sortEventsInMemo(calendarMemo);
             a.constructFromMemo(calendarMemo);
@@ -134,4 +133,5 @@ function CommonCalendar(eventHandler, emptyHandler) {
     this.buildCalendars();
     this.getSchedule();
     a.addEventOnClickHandler(clickHandler);
+    a.addNextPrevDayHandler(function(next) { cal.switchDay(next); });
 }

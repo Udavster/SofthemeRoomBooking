@@ -76,6 +76,7 @@
     width: 26px;
     height: 26px;
     cursor: pointer;
+    padding-top: 1px;
     border: none;
     border-radius: 30px;
 }
