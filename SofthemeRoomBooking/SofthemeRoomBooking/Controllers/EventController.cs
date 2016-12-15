@@ -26,7 +26,7 @@ namespace SofthemeRoomBooking.Controllers
         [AllowAnonymous]
         public ActionResult Index(string eventId)
         {
-            var model = _eventService.GetEventsByDate(DateTime.Today)[0];
+            var model = _eventService.GetEventsByDate((DateTime.Today).AddDays(1))[0];
             var rooms = _roomService.GetUnlockedRoomsByDate(model.StartTime);
             var modelView = model.ToEventViewModel(rooms);
             return View(modelView);

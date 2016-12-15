@@ -154,8 +154,13 @@
 
 .eventindex-edit .eventindex-edit__choose-organizator {
     display: flex;
+    justify-content: space-between;
     width: 500px;
     margin: 15px 0;
+}
+
+.eventindex-edit .eventindex-edit__organizator {
+    height: 30px;
 }
 
 .eventindex-edit .eventindex-edit__description {
@@ -170,8 +175,14 @@
     margin: 15px 0;
 }
 
+.eventindex-edit .eventindex-edit__participants-count {
+    display: block;
+    padding: 15px 0;
+}
+
 .eventindex-participants {
     width: 100%;
+    margin-top: 50px;
     padding: 0 6%;
 }
 
