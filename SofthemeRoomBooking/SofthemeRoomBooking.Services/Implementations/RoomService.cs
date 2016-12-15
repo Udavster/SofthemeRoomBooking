@@ -138,7 +138,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                         join roomLock in _context.RoomsLocks
                         on room.Id equals roomLock.IdRoom into wh
                         from roomLock in wh.DefaultIfEmpty()
-                        where (roomLock == null) || roomLock.Finish < nextDay || (roomLock.Start > day) 
+                        where (roomLock == null) || ((roomLock.Finish!=null) && roomLock.Finish < nextDay) || (roomLock.Start > day) 
                         select room;
 
             var r = rooms.GroupBy(room => new { room.Id, room.Name}).Select(group=>new RoomModel() { Id = group.Key.Id, Name = group.Key.Name });
