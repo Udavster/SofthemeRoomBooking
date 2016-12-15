@@ -55,6 +55,8 @@ body {
     margin-bottom: 75px;
     font-size: 25px;
     color: white;
+    width: 100%;
+    text-align: center;
 }
 
 .form__big-error {

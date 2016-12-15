@@ -12,6 +12,10 @@
     {
         @Html.BigInvalidMessage("Неверные данные", new {@class= "error-box__text-centered" });
     }
+    else if (ViewBag.EmailConfirmed != null)
+    {
+        @Html.BigInvalidMessage("Email не подтвержден", new { @class = "error-box__text-centered" });
+    }
 
     @Html.AntiForgeryToken()
     <div class="group-input-error">

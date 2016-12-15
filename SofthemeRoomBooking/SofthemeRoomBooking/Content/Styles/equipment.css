@@ -116,11 +116,11 @@
     text-align: center;
 }
 
-.equipmentuser__table-main {
+.equipmentuser-main {
     display: inline-block;
     vertical-align: middle;
     background-position: center;
-    margin: 0 7px;
+    margin: 0 2px;
 }
 
 .equipmentadmin_top .equipment-elem {

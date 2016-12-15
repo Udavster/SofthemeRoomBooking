@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -134,11 +134,11 @@ namespace SofthemeRoomBooking.Services.Implementations
             var day = date.Date;
             var nextDay = day.AddDays(1);
 
+
             var rooms = from room in _context.Rooms
-                        join roomLock in _context.RoomsLocks
-                        on room.Id equals roomLock.IdRoom into wh
-                        from roomLock in wh.DefaultIfEmpty()
-                        where (roomLock == null) || roomLock.Finish < nextDay || (roomLock.Start > day) 
+                        where !(from RL in _context.RoomsLocks
+                            where (RL.Start < day) && ((RL.Finish == null) || (RL.Finish >= nextDay))
+                            select RL.IdRoom).Contains(room.Id)
                         select room;
 
             var r = rooms.GroupBy(room => new { room.Id, room.Name}).Select(group=>new RoomModel() { Id = group.Key.Id, Name = group.Key.Name });

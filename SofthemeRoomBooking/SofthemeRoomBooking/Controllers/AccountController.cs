@@ -48,26 +48,39 @@ namespace SofthemeRoomBooking.Controllers
                 return View("~/Views/Login/Index.cshtml", model);
             }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: trues
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user != null)
             {
-                case SignInStatus.Success:
+                if (user.EmailConfirmed)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var result =
+                        await
+                            _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                                shouldLockout: false);
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode",
+                                new {ReturnUrl = returnUrl, RememberMe = model.RememberMe});
+                        case SignInStatus.Failure:
+                            ViewBag.InvalidCredentials = true;
+                            return View("~/Views/Login/Index.cshtml", model);
+                        default:
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View("~/Views/Login/Index.cshtml", model);
+                    }
+
                 }
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                    ViewBag.InvalidCredentials = true;
-                    return View("~/Views/Login/Index.cshtml", model);
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ViewBag.EmailConfirmed = true;
                     return View("~/Views/Login/Index.cshtml", model);
             }
+            return View("~/Views/Login/Index.cshtml", model);
         }
 
         //
@@ -135,15 +148,21 @@ namespace SofthemeRoomBooking.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    //  await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
-                    return RedirectToAction("Index", "Home");
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action(
+                       "ConfirmEmail", "Account",
+                       new { userId = user.Id, code = code },
+                       protocol: Request.Url.Scheme);
+
+                    await _userManager.SendEmailAsync(user.Id,
+                       "Confirm your account",
+                       "Please confirm your account by clicking this <a href=\""
+                                                       + callbackUrl + "\">link</a>");
+                    // ViewBag.Link = callbackUrl;   // Used only for initial demo.
+
+                    return View("~/Views/Login/RegisterEmailConfirmation.cshtml");
                 }
                 AddErrors(result);
             }
@@ -162,7 +181,16 @@ namespace SofthemeRoomBooking.Controllers
                 return View("Error");
             }
             var result = await _userManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                var email = _userManager.GetEmailAsync(userId);
+                LoginViewModel model = new LoginViewModel()
+                {
+                    Email = email.Result
+                };
+                return View("~/Views/Login/Index.cshtml", model);
+            }
+            return View(result.Succeeded ? "~/Views/Login/Index.cshtml" : "Error");
         }
 
         //
@@ -183,19 +211,17 @@ namespace SofthemeRoomBooking.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null && !user.EmailConfirmed)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("~/Views/Login/ResetPassword.cshtml");
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-                return View("~/Views/Login/ResetPassword.cshtml");
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account",
+       new { UserId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await _userManager.SendEmailAsync(user.Id, "Reset Password",
+        "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+                return View("~/Views/Login/ChangePasswordConfirmation.cshtml");
             }
 
             // If we got this far, something failed, redisplay form
@@ -213,9 +239,9 @@ namespace SofthemeRoomBooking.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string code, string userid)
         {
-            return code == null ? View("Error") : View();
+            return code == null ? View("Error") : View("~/Views/Login/ResetPassword.cshtml");
         }
 
         //
@@ -227,10 +253,11 @@ namespace SofthemeRoomBooking.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("~/Views/Login/ResetPassword.cshtml",model);
             }
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if (user == null)
+         //   var user = await _userManager.FindByNameAsync(model.Email);
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null || !user.EmailConfirmed)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
@@ -238,7 +265,7 @@ namespace SofthemeRoomBooking.Controllers
             var result = await _userManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return View("~/Views/Login/ResetPasswordConfirmation.cshtml");
             }
             AddErrors(result);
             return View();
