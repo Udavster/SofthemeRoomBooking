@@ -76,13 +76,9 @@ function CommonCalendar(eventHandler, emptyHandler) {
         a = new Calendar("calendar-events", calendarMemo);
         a.addEventOnClickHandler(function() { alert('Clicked'); });
 
-        cal.init(null,
-            function(date, dayOfWeek, month, year) {
-                getDate(a, year + "" + tformat(month + 1) + tformat(date));
-                var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
-                a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
-            });
-
+        cal.init(null);
+        cal.addDayClickHandler(this.getClickedDate);
+      
         $("#" + a.name + "-fw-control")
             .click(function() {
 
@@ -101,6 +97,12 @@ function CommonCalendar(eventHandler, emptyHandler) {
                 a.changeWidth(990);
             });
     }
+
+    this.getClickedDate = function (date, dayOfWeek, month, year) {
+        getDate(a, year + "" + tformat(month + 1) + tformat(date));
+        var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
+        a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
+    };
 
     this.getSchedule = function() {
         var today = new Date();
