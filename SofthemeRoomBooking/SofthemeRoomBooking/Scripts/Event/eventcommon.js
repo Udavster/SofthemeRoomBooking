@@ -64,11 +64,12 @@ function dateTimeEventValidate() {
     }
 
     function validate() {
+        debugger;
         var isValidStartTime = isValidStartTimeEvent(),
             isValidDuration = isValidDurationEvent(),
             errorMessageTime = isValidStartTime.error,
             errorMessageDuration = isValidDuration.error;
-
+        
         if (!isValidDuration.isValid && !isValidStartTime.isValid) {
             showErrors(false, errorMessageTime + " " + errorMessageDuration);
         } else if (!isValidStartTime.isValid) {
