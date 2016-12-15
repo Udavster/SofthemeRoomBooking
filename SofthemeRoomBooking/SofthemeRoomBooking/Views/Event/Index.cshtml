@@ -1,0 +1,224 @@
+﻿@model SofthemeRoomBooking.Models.EventViewModel
+
+@Styles.Render("~/bundles/Styles/datetimepickers")
+
+<div class="eventindex">
+    @*<div class="eventindex-info">
+        <p class="eventindex-info__title">English Class for Juniors & Seniors</p>
+        <p class="eventindex-info__autor">
+            <i class="fa fa-user user-icon" aria-hidden="true"></i>
+            <span class="user-name">Daniel</span>
+        </p>
+        <p class="eventindex-info__description">@Model.Description
+            При нажатии на кнопку “Отменить” должен показываться попап с уточнением,
+            действительно ли пользователь хочет отменить выбранное событие.
+            При нажатии на кнопку “Изменить” данные о событии меняются на текстовые поля, на
+            карте скрывается путь к выбранной аудитории и пользователь имеет возможность
+            выбрать другую активную аудиторию, кликнув по ней
+        </p>
+        <div class="eventindex-info__join-to-event">
+            <span>Планируют принять участие 9 человек</span>
+            <span class="join-label">Присоединиться</span>
+            <div class="group-input-error join-email">
+                @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Title, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "input-text event-input eventcontainer-body__event-title",
+                        placeholder = "Укажите e-mail, чтобы присоединиться"
+                    }
+                })
+            </div>
+            <i class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
+        </div>
+    </div>*@
+    <div class="eventindex-edit">
+        <div class="group-input-error">
+            @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
+            @Html.EditorFor(model => model.Title, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text event-input eventindex-edit__title",
+                    placeholder = "Заголовок"
+                }
+            })
+        </div>
+
+        <div class="eventindex-edit__choose-organizator">
+            <div class="container-checkbox">
+                <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
+                <label for="organizator-checkbox">Показать автора</label>
+            </div>
+
+            <span class="label-or">или</span>
+
+            @Html.EditorFor(model => model.Nickname, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input-text event-input eventcontainer-body__organizator-name",
+                    placeholder = "Указать организатора"
+                }
+            })
+        </div>
+
+        @Html.EditorFor(model => model.Description, new
+        {
+            htmlAttributes = new
+            {
+                @class = "input-textarea event-input eventindex-edit__description",
+                placeholder = "Дополнительная информация"
+            }
+        })
+
+        <div class="eventindex-edit__publicity">
+            <div class="container-checkbox">
+                <input type="checkbox" class="checkbox" id="public-checkbox"/>
+                <label for="public-checkbox">Регистрация желающих</label>
+            </div>
+            <span>Планируют принять участие 9 человек</span>
+        </div>
+    </div>
+
+    <div class="eventindex-time">
+        <div class="eventindex-time__header">
+            <div class="event-date-container">
+                <i class="fa fa-calendar calendar-icon" aria-hidden="true"></i>
+                <div id="event-date" class="date"></div>
+            </div>
+            <div class="event-date-container">
+                <i class="fa fa-clock-o clock-icon" aria-hidden="true"></i>
+                <div id="event-timestart"></div> -
+                <div id="event-timefinish"></div>
+            </div>
+        </div>
+        <div class="eventindex-time__body">
+            <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <i class="fa fa-print" aria-hidden="true"></i>
+        </div>
+        <div class="eventindex-time__buttons">
+            <button id="editButton" class="button event-btn edit-btn">Изменить</button>
+            <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
+            <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
+            <button id="saveButton" class="button event-btn save-btn hidden">Сохранить</button>
+        </div>
+        <div id="event-errors" class="eventindex-time__errors">
+            <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
+            <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
+        </div>
+    </div>
+</div>
+
+<div class="eventindex-participants">
+    <p>Зарегистрированные участники:</p>
+    <table class="eventindex-participants__participants-table">
+        <tr>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+            <td>
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <div class="participants-table-item">
+                    <span>user@softheme.com</span>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/datetimepickers")
+
+<script>
+
+    $("#editButton").bind("click", function () {
+        $("#editButton").addClass("hidden");
+        $("#cancelEventButton").addClass("hidden");
+
+        $("#cancelEditButton").removeClass("hidden");
+        $("#saveButton").removeClass("hidden");
+    });
+
+    var eventDate = new DatePickerChosen();
+    eventDate.init("#event-date", new Date(), null, function (day, month, year) {
+
+    });
+
+    var eventTimeStart = new TimePicker();
+    eventTimeStart.init("#event-timestart", 9, 20, function (hours, minutes) {
+
+    });
+
+    var eventTimeFinish = new TimePicker();
+    eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
+
+    });
+</script>
+
+@Html.Action("RoomPartial", "Room")
+
+@Html.Partial("_MapPartial")
+

@@ -1,0 +1,213 @@
+﻿body {
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.eventindex {
+    display: flex;
+    justify-content: space-between;
+    padding: 4% 6% 0 6%;
+}
+
+.eventindex-info,
+.eventindex-edit {
+    width: 65%;
+}
+
+.eventindex-info__title {
+    font-size: 30px;
+}
+
+.eventindex-info__autor {
+    margin: 20px 0;
+}
+
+.eventindex-info__autor .user-icon {
+    font-size: 25px;
+}
+
+.eventindex-info__autor .user-name {
+    margin: 0 10px;
+}
+
+.eventindex-info__description {
+    margin: 40px 0;
+}
+
+.eventindex-info__join-to-event {
+    display: flex;
+    align-items: center;
+}
+
+.eventindex-info__join-to-event .join-label {
+    margin: auto 10px auto auto;
+}
+
+.eventindex-info__join-to-event .join-email {
+    display: block;
+    width: 300px;
+    margin: auto 20px auto 0;
+}
+
+.eventindex-info__join-to-event .join-button {
+    margin: auto 0;
+    font-size: 20px;
+    color: #C8CEDA;
+    cursor: pointer;
+}
+
+.eventindex-info__join-to-event .join-button:hover {
+    color: #747B87;
+}
+
+.eventindex-time {
+    display: block;
+    width: 30%;
+    min-height: 300px;
+    padding: 0 10px;
+}
+
+.eventindex-time__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    color: #FFFFFF;
+    background-color: #F95752;
+    border-radius: 15px;
+}
+
+.eventindex-time__header .event-date-container {
+    display: flex;
+    align-items: center;
+    margin: 0 10px 0 5px;
+}
+
+.eventindex-time__header .event-date-container .calendar-icon {
+    margin-right: 10px;
+    font-size: 35px;
+}
+
+.eventindex-time__header .event-date-container .clock-icon {
+    margin-right: 10px;
+    font-size: 40px;
+}
+
+.eventindex-time__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 30%;
+}
+
+.eventindex-time__body i {
+    margin: auto 15px;
+    font-size: 25px;
+    color: #C7C8CB;
+}
+
+.eventindex-time__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    height: 20%;
+    margin: auto;
+}
+
+.eventindex-time__buttons .event-btn {
+    width: 130px;
+    height: 30px;
+}
+
+.eventindex-time__buttons .edit-btn {
+    color: #000000;
+}
+
+.eventindex-time__buttons .cancel-btn {
+    background-color: #9FA6B6;
+}
+
+.eventindex-time__buttons .save-btn {
+    color: #FFFFFF;
+    background-color: #F95752;
+}
+
+.eventindex-time__errors {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin: auto;
+}
+
+.eventindex-time__errors .frown-icon {
+    margin-right: 10px;
+    font-size: 35px;
+}
+
+.eventindex-edit .eventindex-edit__title {
+    width: 500px;
+    height: 30px;
+}
+
+.eventindex-edit .eventindex-edit__choose-organizator {
+    display: flex;
+    width: 500px;
+    margin: 15px 0;
+}
+
+.eventindex-edit .eventindex-edit__description {
+    height: auto;
+    min-height: 80px;
+}
+
+.eventindex-edit .eventindex-edit__publicity {
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin: 15px 0;
+}
+
+.eventindex-participants {
+    width: 100%;
+    padding: 0 6%;
+}
+
+.eventindex-participants .eventindex-participants__participants-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.eventindex-participants .eventindex-participants__participants-table td{
+    height: 40px;
+    width: 35%;
+    vertical-align: middle;
+}
+
+.eventindex-participants .participants-table-item {
+    display: inline-flex;
+    margin: auto auto auto 10px;
+    cursor: pointer;
+}
+
+.eventindex-participants .participants-table-item span {
+    margin: auto;
+}
+
+.eventindex-participants .participants-table-item i {
+    margin: auto auto auto 10px;
+    font-size: 20px;
+    color: #C8CEDA;
+    visibility: hidden;
+}
+
+.eventindex-participants .participants-table-item:hover i {
+    visibility: visible;
+}
+
+.eventindex-participants .participants-table-item:hover i:hover {
+    color: #747B87;
+}

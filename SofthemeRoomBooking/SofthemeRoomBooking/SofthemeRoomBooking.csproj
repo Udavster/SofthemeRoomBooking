@@ -357,9 +357,11 @@
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\eventdetail.css" />
     <Content Include="Content\Styles\eventdetailedit.css" />
+    <Content Include="Content\Styles\Event\editevent.css" />
     <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\Event\eventcreate.css" />
     <Content Include="Content\Styles\Event\eventedit.css" />
+    <Content Include="Content\Styles\Event\index.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
@@ -468,7 +470,7 @@
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentAdminPartial.cshtml" />
     <Content Include="Views\Shared\_CalendarPartial.cshtml" />
-    <Content Include="Views\ViewsToDo\ToDoViews\Event.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoViews\Room.cshtml" />
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Login\_Layout.cshtml" />
@@ -482,6 +484,7 @@
     <Content Include="Views\Shared\_EventCancelationPopup.cshtml" />
     <Content Include="Views\Shared\_CreateEventPartial.cshtml" />
     <Content Include="Views\Shared\_EditEventPartial.cshtml" />
+    <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Login\RegisterEmailConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -497,7 +500,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Calendar\" />
-    <Folder Include="Views\Event\" />
     <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>

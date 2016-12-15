@@ -71,6 +71,8 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/weekScheduler.css",
                       "~/Content/Styles/users.css",
                       "~/Content/Styles/pagination.css",
+                      "~/Content/Styles/Event/index.css",
+                      "~/Content/Styles/Event/editevent.css",
                       "~/Content/Styles/Event/eventcommon.css",
                       "~/Content/Styles/Event/eventcreate.css",
                       "~/Content/Styles/Event/eventedit.css"
