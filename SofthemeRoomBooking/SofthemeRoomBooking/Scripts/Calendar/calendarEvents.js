@@ -33,7 +33,7 @@ function EmptyEvent(start, finish, title, description) {
     return rez;
 }
 
-function Slider(name, startHour, finishHour, boundingElName, dragHandler, borderBox, static , bottomText) {
+function Slider(name, startHour, finishHour, boundingElName, dragHandler, borderBox, static , bottomText, overflow) {
 
     this.getBoundingLeftRight = function (elementName) {
         $box = $(elementName);
@@ -48,11 +48,16 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     }
 
     this.hide = function () {
-        $("#"+this.name).hide();
+        this["$self"].hide();
     }.bind(this);
 
     this.show = function () {
-        $("#" + this.name).show();
+        this["$self"].show();
+    }.bind(this);
+
+    this.left = function () {
+        var leftStr = this["$self"].css('left');
+        return leftStr.slice(0, leftStr.length - 2);
     }.bind(this);
 
     this.getRelativeCoords = function (x, y) {
@@ -98,13 +103,13 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         x = (x < this.bounding.width - this.borderBox.right) ? x : this.bounding.width - this.borderBox.right;
         this["$self"].css('left', x);
         var part = (x - this.borderBox.left) / (this.bounding.width - this.borderBox.left - this.borderBox.right);
-        this.dragHandler(part);
+        this.dragHandler(part, this);
         //var part = x/(this.bounding.width+4); 
         var hourDuration = this.finishHour - this.startHour + 1;
         console.log(hourDuration);
         var hours = Math.floor(hourDuration * part);
         var minutes = Math.floor(60 * (hourDuration * part - hours)); //m = 60*(24*p-h); m/60 = 24*p - h; p = (m/60 + h)/24
-        $('#' + this.name + '-time').html(tformat(hours+this.startHour) + ":" + tformat(minutes));
+        $('#' + this.name + '-time').html(tformat(hours + this.startHour) + ":" + tformat(minutes));
     }.bind(this);
 
     this.setBoundingWidth = function (width, update) {
@@ -124,6 +129,15 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     }.bind(this);
 
     this.changeTime = function (hours, minutes) {
+        if (!overflow && hours > this.finishHour) {
+            hours = this.finishHour + 1;
+            minutes = 0;
+        }
+        if (!overflow && hours < this.startHour) {
+            hours = this.startHour + 1;
+            minutes = 0;
+        }
+
         var part = (minutes / 60.0 + hours - this.startHour) / (this.finishHour - this.startHour + 1);
 
         var x = (part * (this.bounding.width - this.borderBox.left - this.borderBox.right)) + this.borderBox.left;
@@ -132,6 +146,7 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         $('#' + this.name + '-time').html(tformat(hours) + ":" + tformat(minutes));
         return x;
     }.bind(this);
+
 
     this.setStartingPos = function (borderBox) {
         this.getRelativeCoords(0, 0);
@@ -154,6 +169,7 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     this.finishHour = finishHour;
     this.boundingElName = boundingElName;
     this.bottomText = bottomText;
+    this.overflow = overflow;
 
     var sliderHtml = '<div id="' + this.name + '" class="calendar-events__slider vertical-slider">' +
             '<div class="vertical-slider__top">' +
@@ -203,25 +219,29 @@ class Calendar {
         this.constructFromMemo(calendarMemo);
         //getBoundingLeftRight(".calendar__visible-events");
         var self = this;
+
+        this.timeSlider = new Slider("time-slider", this.startHour, this.finishHour, this.className + "__background-layer", function () { }, { 'left': 0, 'right': 0, 'top': 2, 'bottom': -4 }, true, "Сейчас", true);
+        this.timeSlider.setBoundingWidth($('.calendar-events__room-hour-tr').width());
+
         this.sliderBorderBox = { 'left': 105, 'right': 0, 'top': 2, 'bottom': 0 };
         var slideHandle = function (pos) {
             self.changeBackgroundPos.apply(self, [pos]);
+            self.changeNowVisibility(pos, self.timeSlider);
         }
         //console.log(this.className+"__background-layer");
         this.slider = new Slider("drag-slider", this.startHour, this.finishHour, this.className, slideHandle, this.sliderBorderBox);
 
         $("#drag-slider").css('z-index', 4);
 
-        this.timeSlider = new Slider("time-slider", this.startHour, this.finishHour, this.className + "__background-layer", function () { }, { 'left': 0, 'right': 0, 'top': 2, 'bottom': -4 }, true, "Сейчас");
-        this.timeSlider.setBoundingWidth($('.calendar-events__room-hour-tr').width());
 
-        
 
         this.updateTimeTimer(this.timeSlider, false);
         this.updateTimeTimer(this.slider, true);
         this.timeSlider.hide();
-        $("#drag-slider").mousedown(function() { this.timeSlider.show() }.bind(this));
+        $("#drag-slider").mousedown(function () { this.timeSlider.show() }.bind(this));
         setInterval(function () { this.updateTimeTimer(this.timeSlider) }.bind(this), 60000);
+
+        $(this.className + '__now-link').click(function () { this.nowClickHandler() }.bind(this));
     }
 
     updateTimeTimer(slider, changePos) {
@@ -233,9 +253,28 @@ class Calendar {
 
     }
 
-   nowClickHandler() {
-        this.updateTimeTimer(this.slider);
+    nowClickHandler() {
+        this.updateTimeTimer(this.slider, true);
         this.timeSlider.hide();
+    }
+
+    changeNowVisibility(position, slider) {
+        if ((position < 0) || (position > 1)) return;
+        var width = $(this.className + '__visible-events').width();
+        var left = -((this.finishHour - this.startHour + 1) * this.hourWidth - width) * position;
+
+        if (slider.left() < -left) {
+            $(this.className + '__now-link-left').show();
+            return;
+        }
+
+        if (slider.left() > -left + width) {
+            $(this.className + '__now-link-right').show();
+            return;
+        }
+
+        $(this.className + '__now-link-left').hide();
+        $(this.className + '__now-link-right').hide();
     }
 
     addEventOnClickHandler(handler) {
@@ -275,7 +314,7 @@ class Calendar {
     }
 
     addRoomHours($roomHours) {
-        for (var i = this.startHour; i < this.finishHour+1; i++) {
+        for (var i = this.startHour; i < this.finishHour + 1; i++) {
             $roomHours.append('<div class="' + this.name + '__room-hour clearable ' + this.name + '__room-hour-inner"><div class="' + this.name + '__room-hour-inner"></div></div>')
         }
         $(this.className + "__room-hours").css('width', ((this.finishHour - this.startHour + 1) * this.hourWidth) + 2 + "px");
@@ -314,7 +353,7 @@ class Calendar {
         var left = (startTime["h"] - this.startHour + startTime["m"] / 60.0) * this.hourWidth;
         var time = tformat(startTime["h"]) + ":" + tformat(startTime["m"]) + "-" + tformat(endTime["h"]) + ":" + tformat(endTime["m"]);
         var addedClasses = (event['Classes']) ? event['Classes'] : "";
-        var eventTag = '<div class="' + this.name + '__room-event event '+addedClasses+'" style="width: ' + width + 'px; left: ' + left + 'px">';
+        var eventTag = '<div class="' + this.name + '__room-event event ' + addedClasses + '" style="width: ' + width + 'px; left: ' + left + 'px">';
         if (duration > 0.5) eventTag += '<div class="event__time">' + time + '</div>';
         else eventTag += '<div class="event__time event__time-center">' + tformat(startTime["h"]) + ":" + tformat(startTime["m"]) + '</div>' + '<div class="event__time event__time-center">-</div>' + '<div class="event__time event__time-center">' + tformat(endTime["h"]) + ":" + tformat(endTime["m"]) + '</div>';
         if (event.addedElements && (duration > 0.33)) eventTag += event.addedElements;
@@ -353,9 +392,15 @@ class Calendar {
         $visibleEvents.append($background);
         $visibleWrapper.append($visibleEvents);
 
+        var $nowLinks = $('<div class = "calendar-events__now-line">' +
+	                        '<a class = "calendar-events__now-link calendar-events__now-link-left control">Сейчас&#160;<i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>' +
+	                        '<a class = "calendar-events__now-link calendar-events__now-link-right control">Сейчас&#160;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>' +
+                          '</div>');
 
         $calendar.append($controls);
         $calendar.append($visibleWrapper);
+        $calendar.append($nowLinks);
+
     }
     constructFromMemo(memo) {
         $('.clearable').remove();
@@ -386,11 +431,10 @@ class Calendar {
         console.log(memo);
         return memo;
     }
+
     sortEventsInRoom(room) {
         room.sort(function (a, b) { return 60 * (a['Start']['h'] - b['Start']['h']) + (a['Start']['m'] - b['Start']['m']) });
     }
-
-
 
     findEmptyPlaces(events, minTime, maxTime) {
         var evArr = [];
@@ -446,7 +490,7 @@ class Calendar {
 
     addNextPrevDayHandler(handler) {
         if (handler) {
-             this.nextPrevHandler = handler;
+            this.nextPrevHandler = handler;
         }
         $(this.className + " .day-control")
             .click(function (event) {
