@@ -23,7 +23,7 @@ eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
     dateTimeEventValidate().validate();
 });
 
-$("#event-form input").on("keyup blur", function () {
+$("#event-form .event-input").on("keyup blur", function () {
     if ($("#event-form").valid()) {
         $("#event-submit").prop("disabled", false);
     } else {
@@ -64,7 +64,6 @@ function dateTimeEventValidate() {
     }
 
     function validate() {
-        debugger;
         var isValidStartTime = isValidStartTimeEvent(),
             isValidDuration = isValidDurationEvent(),
             errorMessageTime = isValidStartTime.error,
@@ -115,8 +114,8 @@ $("#EndHour").val($("#event-timefinish #hours").text());
 $("#EndMinutes").val($("#event-timefinish #minutes").text());
 
 $("#Private").bind("click", function () {
-    $("#public-checkbox").attr("checked", !$(this).is(":checked"));
-    $("#public-checkbox").attr("disabled", $(this).is(":checked"));
+    $("#AllowRegistration").attr("checked", !$(this).is(":checked"));
+    $("#AllowRegistration").attr("disabled", $(this).is(":checked"));
 });
 
 $("#organizator-checkbox").bind("click", function () {

@@ -22,6 +22,7 @@ namespace SofthemeRoomBooking.Services.Converters
                 Id_room = model.IdRoom,
                 Nickname = model.Nickname,
                 Publicity = model.Publicity,
+                AllowRegistration = model.AllowRegistration,
                 Id_user = userId,
                 Start = model.StartTime,
                 Finish = model.FinishTime,
@@ -37,6 +38,7 @@ namespace SofthemeRoomBooking.Services.Converters
                 Description = model.Description,
                 Nickname = model.Nickname,
                 Publicity = model.Publicity,
+                AllowRegistration = model.AllowRegistration,
                 IdRoom = model.Id_room,
                 StartTime = model.Start,
                 FinishTime = model.Finish
@@ -45,7 +47,7 @@ namespace SofthemeRoomBooking.Services.Converters
 
         public static EventDetailsModel ToEventDetailsModel(this Events model, int participantsQuantity)
         {
-            return new EventDetailsModel()
+            return new EventDetailsModel
             {
                 Id = model.Id,
                 Title = model.Title,
@@ -57,13 +59,14 @@ namespace SofthemeRoomBooking.Services.Converters
                 FinishTime = model.Finish,
                 ParticipantsQuantity = participantsQuantity,
                 UserId = model.Id_user,
-                Publicity = model.Publicity
+                Publicity = model.Publicity,
+                AllowRegistration = model.AllowRegistration
             };
         }
 
         public static EventWeekModel ToEvent(this Events events)
         {
-            return new EventWeekModel()
+            return new EventWeekModel
             {
                 Id = events.Id,
                 Title = events.Title,

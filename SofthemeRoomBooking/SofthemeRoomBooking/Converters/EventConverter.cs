@@ -14,6 +14,7 @@ namespace SofthemeRoomBooking.Converters
                 Title = model.Title,
                 Description = model.Description,
                 Private = !model.Publicity,
+                AllowRegistration = model.AllowRegistration,
                 IdRoom = model.IdRoom,
                 Nickname = model.Nickname,
                 Day = model.StartTime.Day,
@@ -36,6 +37,7 @@ namespace SofthemeRoomBooking.Converters
                 IdRoom = model.IdRoom,
                 Nickname = model.Nickname,
                 Publicity = !model.Private,
+                AllowRegistration = model.AllowRegistration,
                 StartTime = new DateTime(model.Year, model.Month, model.Day, model.StartHour, model.StartMinutes, 0),
                 FinishTime = new DateTime(model.Year, model.Month, model.Day, model.EndHour, model.EndMinutes, 0)
             };
@@ -56,6 +58,7 @@ namespace SofthemeRoomBooking.Converters
                 Month = model.Month,
                 UserId = model.UserId,
                 Publicity = model.Publicity,
+                AllowRegistration = model.AllowRegistration,
                 UserName = name
 
             };

@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[Events](
 	[Start] SMALLDATETIME NOT NULL,
 	[Finish] SMALLDATETIME NOT NULL, --turns out that 'end' is a keyword
 	[Publicity] BIT NOT NULL,
+	[AllowRegistration] BIT DEFAULT(1) NOT NULL,
 	[Cancelled] BIT DEFAULT(0) NOT NULL,
 	CONSTRAINT fk_EventRoom FOREIGN KEY ([Id_room])
 		REFERENCES Rooms([Id]),

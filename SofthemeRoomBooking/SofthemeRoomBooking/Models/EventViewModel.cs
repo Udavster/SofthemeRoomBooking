@@ -24,6 +24,9 @@ namespace SofthemeRoomBooking.Models
         public bool Private { get; set; }
 
         [Required]
+        public bool AllowRegistration { get; set; }
+
+        [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Неверный идентификатор комнаты")]
         public int IdRoom { get; set; }
 

@@ -62,8 +62,8 @@
         
         <div class="eventcontainer-body__group">
             <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="public-checkbox"/>
-                <label for="public-checkbox">Регистрация желающих</label>
+                @Html.CheckBoxFor(model => model.AllowRegistration, new { @class = "checkbox" })
+                @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
             </div>
 
             <div class="container-switchbox">
