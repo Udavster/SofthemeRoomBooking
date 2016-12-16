@@ -23,9 +23,9 @@ namespace SofthemeRoomBooking.Controllers
         }
         
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int eventId = 5)
         {
-            var model = _eventService.GetEventIndexModelById(7);
+            var model = _eventService.GetEventIndexModelById(eventId);
 
             if (model != null)
             {
@@ -72,12 +72,11 @@ namespace SofthemeRoomBooking.Controllers
         [HttpGet]
         public ActionResult EditEvent(int eventId)
         {
-            var model = _eventService.GetEventById(eventId);
+            var model = _eventService.GetEventIndexModelById(eventId);
 
             if (model != null)
             {
-                var rooms = _roomService.GetUnlockedRoomsByDate(model.StartTime);
-                var modelView = model.ToEventViewModel(rooms);
+                var modelView = model.ToEventIndexViewModel();
 
                 return PartialView("EditEvent", modelView);
             }

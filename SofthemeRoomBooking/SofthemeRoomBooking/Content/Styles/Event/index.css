@@ -9,8 +9,7 @@
     padding: 4% 6% 0 6%;
 }
 
-.eventindex-info,
-.eventindex-edit {
+.eventindex-info {
     width: 65%;
 }
 
@@ -147,6 +146,10 @@
     font-size: 35px;
 }
 
+.eventindex-edit {
+    width: 65%;
+}
+
 .eventindex-editform {
     width: 100%;
 }
@@ -226,4 +229,17 @@
 
 .eventindex-participants .participants-table-item:hover i:hover {
     color: #747B87;
+}
+
+
+
+/*commom styles*/
+.event-addparticipant {
+    display: flex;
+}
+
+.event-addparticipants__button-add {
+    background: transparent;
+    border: none;
+    outline: none;
 }

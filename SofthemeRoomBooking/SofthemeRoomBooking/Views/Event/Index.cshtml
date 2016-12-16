@@ -3,6 +3,8 @@
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
+<div id="popup-confirmation" class="overlay"></div>
+
 <div class="eventindex">
     <div class="eventindex-info">
         <p class="eventindex-info__title">@Model.Title</p>
@@ -28,71 +30,7 @@
         }
     </div>
 
-    @if (Model.IdUser == User.Identity.GetUserId())
-    {
-        using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new { id = "eventindex-editform", @class = "eventindex-edit hidden", enctype = "multipart/form-data"}))
-        {
-                <div class="group-input-error">
-                    @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
-                    @Html.EditorFor(model => model.Title, new
-                    {
-                        htmlAttributes = new
-                        {
-                            @class = "input-text event-input eventindex-edit__title",
-                            placeholder = "Заголовок"
-                        }
-                    })
-                </div>
-
-                <div class="eventindex-edit__choose-organizator">
-                    <div class="container-checkbox">
-                        <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
-                        <label for="organizator-checkbox">Показать автора</label>
-                    </div>
-
-                    <span class="label-or">или</span>
-
-                    @Html.EditorFor(model => model.Nickname, new
-                    {
-                        htmlAttributes = new
-                        {
-                            @class = "input-text event-input eventcontainer-body__organizator-name",
-                            placeholder = "Указать организатора"
-                        }
-                    })
-                </div>
-
-                <div class="group-input-error">
-                    @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
-                    @Html.EditorFor(model => model.Description, new
-                    {
-                        htmlAttributes = new
-                        {
-                            @class = "input-textarea event-input eventindex-edit__description",
-                            placeholder = "Дополнительная информация"
-                        }
-                    })
-                </div>
-
-                <div class="eventindex-edit__publicity">
-                    <div class="container-checkbox">
-                        @Html.CheckBoxFor(model => model.AllowRegistration, new {@class = "checkbox"})
-                        @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
-                    </div>
-
-                    <div class="container-switchbox">
-                        <span class="label-publicity">Публично</span>
-                        <div class="switchbox-publicity">
-                            @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
-                            @Html.LabelFor(model => model.Private, " ")
-                        </div>
-                        <span class="label-private">Приватно</span>
-                    </div>
-                </div>
-
-                <span class="eventindex-edit__paticipants-count">Планируют принять участие @Model.ParticipantsQuantity человек</span>
-        }
-    }
+    <div class="eventindex-edit hidden"></div>
 
     <div class="eventindex-time">
         @Html.HiddenFor(model => model.Day)
@@ -226,7 +164,17 @@
 
         $("#cancelEditButton").removeClass("hidden");
         $("#saveButton").removeClass("hidden");
-        $("#eventindex-editform").removeClass("hidden");
+        $(".eventindex-edit").removeClass("hidden");
+
+        $.ajax({
+            url: window.location.origin + "/Event/EditEvent",
+            method: "GET",
+            data: { eventId: '@Model.Id' },
+            dataType: 'html',
+            success: function (result) {
+                $('.eventindex-edit').html(result);
+            }
+        });
     });
 
     $("#cancelEditButton").bind("click", function () {
@@ -237,7 +185,48 @@
 
         $("#cancelEditButton").addClass("hidden");
         $("#saveButton").addClass("hidden");
-        $("#eventindex-editform").addClass("hidden");
+        $("#eventindex-editform").remove();
+    });
+
+    $("#cancelEventButton").bind("click", function(e) {
+        e.preventDefault();
+        debugger;
+        $.ajax({
+            url: window.location.origin + "/Event/CancelEventView",
+            method: "GET",
+            data: { participantId: '@Model.Id' },
+            dataType: 'html',
+            success: function (result) {
+                $('#popup-confirmation').html(result);
+                $('#popup-confirmation').show();
+            }
+        });
+    });
+
+    $("#saveButton").bind("click", function (e) {
+        e.preventDefault();
+        debugger;
+        var dateTimeValidator = dateTimeEventValidate();
+
+        if (dateTimeValidator.validate() && $("#eventindex-editform").valid()) {
+            debugger;
+            $.ajax({
+                url: window.location.origin + "/Event/EditEvent",
+                method: "POST",
+                async: true,
+                data: $("#eventindex-editform").serialize(),
+                success: function (result) {
+                    if (result.redirectTo) {
+                        window.location.href = result.redirectTo;
+                    } else if (result.errorMessage) {
+                        dateTimeValidator.showErrors(false, result.errorMessage);
+                    }
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     });
 </script>
 
