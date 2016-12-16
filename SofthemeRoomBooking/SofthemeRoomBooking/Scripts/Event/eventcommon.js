@@ -104,11 +104,7 @@ function dateTimeEventValidate() {
     return { validate: validate, showErrors: showErrors };
 }
 
-function checkboxDependency() {
-    if (!$("#Private").is(":checked") === ) {
-        
-    }
-};
+
 
 $("#Day").val(new Date().getDate());
 $("#Month").val(new Date().getMonth());
