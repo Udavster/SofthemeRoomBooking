@@ -147,6 +147,10 @@
     font-size: 35px;
 }
 
+.eventindex-editform {
+    width: 100%;
+}
+
 .eventindex-edit .eventindex-edit__title {
     width: 500px;
     height: 30px;
@@ -164,6 +168,7 @@
 }
 
 .eventindex-edit .eventindex-edit__description {
+    width: 100%;
     height: auto;
     min-height: 80px;
 }

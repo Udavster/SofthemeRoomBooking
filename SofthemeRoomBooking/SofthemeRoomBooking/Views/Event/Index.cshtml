@@ -1,9 +1,10 @@
-﻿@model SofthemeRoomBooking.Models.EventViewModel
+﻿@using Microsoft.AspNet.Identity
+@model SofthemeRoomBooking.Models.EventViewModel.EventIndexViewModel
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
 <div class="eventindex">
-    <div class="eventindex-info hidden">
+    <div class="eventindex-info">
         <p class="eventindex-info__title">@Model.Title</p>
         <p class="eventindex-info__autor">
             <i class="fa fa-user user-icon" aria-hidden="true"></i>
@@ -13,90 +14,95 @@
             @Model.Description
         </p>
 
-        @if (!Model.Private)
+        @if (Model.AllowRegistration)
         {
             <div class="eventindex-info__join-to-event">
-                <span>Планируют принять участие 9 человек</span>
-                <span class="join-label">Присоединиться</span>
-                <div class="group-input-error join-email">
+                <span>Планируют принять участие @Model.ParticipantsQuantity человек</span>
+                
+                @if (Model.IdUser != User.Identity.GetUserId())
+                {
+                    <span class="join-label">Присоединиться</span>
+                    @Html.Action("AddParticipant", "Event", new { eventId =  Model.Id })
+                }
+            </div>
+        }
+    </div>
+
+    @if (Model.IdUser == User.Identity.GetUserId())
+    {
+        using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new { id = "eventindex-editform", @class = "eventindex-edit hidden", enctype = "multipart/form-data"}))
+        {
+                <div class="group-input-error">
                     @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
                     @Html.EditorFor(model => model.Title, new
                     {
                         htmlAttributes = new
                         {
-                            @class = "input-text event-input eventcontainer-body__event-title",
-                            placeholder = "Укажите e-mail, чтобы присоединиться"
+                            @class = "input-text event-input eventindex-edit__title",
+                            placeholder = "Заголовок"
                         }
                     })
                 </div>
-                <i class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
-            </div>
-        }
-    </div>
 
-    <div class="eventindex-edit">
-        <div class="group-input-error">
-            @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
-            @Html.EditorFor(model => model.Title, new
-            {
-                htmlAttributes = new
-                {
-                    @class = "input-text event-input eventindex-edit__title",
-                    placeholder = "Заголовок"
-                }
-            })
-        </div>
+                <div class="eventindex-edit__choose-organizator">
+                    <div class="container-checkbox">
+                        <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
+                        <label for="organizator-checkbox">Показать автора</label>
+                    </div>
 
-        <div class="eventindex-edit__choose-organizator">
-            <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
-                <label for="organizator-checkbox">Показать автора</label>
-            </div>
+                    <span class="label-or">или</span>
 
-            <span class="label-or">или</span>
-
-            @Html.EditorFor(model => model.Nickname, new
-            {
-                htmlAttributes = new
-                {
-                    @class = "input-text event-input eventcontainer-body__organizator-name",
-                    placeholder = "Указать организатора"
-                }
-            })
-        </div>
-
-        <div class="group-input-error">
-            @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
-            @Html.EditorFor(model => model.Description, new
-            {
-                htmlAttributes = new
-                {
-                    @class = "input-textarea event-input eventindex-edit__description",
-                    placeholder = "Дополнительная информация"
-                }
-            })
-        </div>
-
-        <div class="eventindex-edit__publicity">
-            <div class="container-checkbox">
-                @Html.CheckBoxFor(model => model.AllowRegistration, new {@class = "checkbox"})
-                @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
-            </div>
-
-            <div class="container-switchbox">
-                <span class="label-publicity">Публично</span>
-                <div class="switchbox-publicity">
-                    @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
-                    @Html.LabelFor(model => model.Private, " ")
+                    @Html.EditorFor(model => model.Nickname, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "input-text event-input eventcontainer-body__organizator-name",
+                            placeholder = "Указать организатора"
+                        }
+                    })
                 </div>
-                <span class="label-private">Приватно</span>
-            </div>
-        </div>
 
-        <span class="eventindex-edit__participants-count">Планируют принять участие 9 человек</span>
-    </div>
+                <div class="group-input-error">
+                    @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
+                    @Html.EditorFor(model => model.Description, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "input-textarea event-input eventindex-edit__description",
+                            placeholder = "Дополнительная информация"
+                        }
+                    })
+                </div>
+
+                <div class="eventindex-edit__publicity">
+                    <div class="container-checkbox">
+                        @Html.CheckBoxFor(model => model.AllowRegistration, new {@class = "checkbox"})
+                        @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
+                    </div>
+
+                    <div class="container-switchbox">
+                        <span class="label-publicity">Публично</span>
+                        <div class="switchbox-publicity">
+                            @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
+                            @Html.LabelFor(model => model.Private, " ")
+                        </div>
+                        <span class="label-private">Приватно</span>
+                    </div>
+                </div>
+
+                <span class="eventindex-edit__paticipants-count">Планируют принять участие @Model.ParticipantsQuantity человек</span>
+        }
+    }
 
     <div class="eventindex-time">
+        @Html.HiddenFor(model => model.Day)
+        @Html.HiddenFor(model => model.Month)
+        @Html.HiddenFor(model => model.Year)
+        @Html.HiddenFor(model => model.StartHour)
+        @Html.HiddenFor(model => model.StartMinutes)
+        @Html.HiddenFor(model => model.EndHour)
+        @Html.HiddenFor(model => model.EndMinutes)
+
         <div class="eventindex-time__header">
             <div class="event-date-container">
                 <i class="fa fa-calendar calendar-icon" aria-hidden="true"></i>
@@ -113,16 +119,20 @@
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <i class="fa fa-print" aria-hidden="true"></i>
         </div>
-        <div class="eventindex-time__buttons">
-            <button id="editButton" class="button event-btn edit-btn">Изменить</button>
-            <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
-            <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
-            <button id="saveButton" class="button event-btn save-btn hidden">Сохранить</button>
-        </div>
-        <div id="event-errors" class="eventindex-time__errors">
-            <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
-            <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
-        </div>
+
+        @if (Model.IdUser == User.Identity.GetUserId())
+        {
+            <div class="eventindex-time__buttons">
+                <button id="editButton" class="button event-btn edit-btn">Изменить</button>
+                <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
+                <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
+                <button id="saveButton" class="button event-btn save-btn hidden">Сохранить</button>
+            </div>
+            <div id="event-errors" class="eventindex-time__errors">
+                <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
+                <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
+            </div>
+        }
     </div>
 </div>
 
@@ -205,30 +215,29 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/datetimepickers")
+@Scripts.Render("~/bundles/events")
 
 <script>
-
     $("#editButton").bind("click", function () {
         $("#editButton").addClass("hidden");
         $("#cancelEventButton").addClass("hidden");
+        $(".eventindex-info").addClass("hidden");
+
 
         $("#cancelEditButton").removeClass("hidden");
         $("#saveButton").removeClass("hidden");
+        $("#eventindex-editform").removeClass("hidden");
     });
 
-    var eventDate = new DatePickerChosen();
-    eventDate.init("#event-date", new Date(), null, function (day, month, year) {
+    $("#cancelEditButton").bind("click", function () {
+        $("#editButton").removeClass("hidden");
+        $("#cancelEventButton").removeClass("hidden");
+        $(".eventindex-info").removeClass("hidden");
 
-    });
 
-    var eventTimeStart = new TimePicker();
-    eventTimeStart.init("#event-timestart", 9, 20, function (hours, minutes) {
-
-    });
-
-    var eventTimeFinish = new TimePicker();
-    eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
-
+        $("#cancelEditButton").addClass("hidden");
+        $("#saveButton").addClass("hidden");
+        $("#eventindex-editform").addClass("hidden");
     });
 </script>
 

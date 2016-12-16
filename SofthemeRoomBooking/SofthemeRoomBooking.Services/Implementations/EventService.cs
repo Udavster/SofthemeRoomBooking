@@ -5,7 +5,7 @@ using System.Linq;
 using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Converters;
-using SofthemeRoomBooking.Services.Models;
+using SofthemeRoomBooking.Services.Models.EventModel;
 
 namespace SofthemeRoomBooking.Services.Implementations
 {
@@ -97,6 +97,76 @@ namespace SofthemeRoomBooking.Services.Implementations
             //}
             //return model;
         }
+
+        public EventIndexModel GetEventIndexModelById(int eventId)
+        {
+            var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
+
+            if (@event != null)
+            {
+                var participantsQuantity = GetParticipantCountByEventId(eventId);
+
+                return @event.ToEventIndexModel(participantsQuantity);
+            }
+
+            return null;
+        }
+
+        public void CreateParticipant(EventParticipantModel model)
+        {
+            var participant = model.ToEventParticipantEntity();
+            //?
+            var a = _context.EventsUsers.Add(participant);
+            _context.SaveChanges();
+        }
+
+        public bool DeleteParticipant(int participantId)
+        {
+            //?
+            var participant = _context.EventsUsers.FirstOrDefault(eu => eu.Id == participantId);
+
+            if (participant != null)
+            {
+                _context.EventsUsers.Remove(participant);
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public EventParticipantModel GetParticipantById(int participantId)
+        {
+            var participant = _context.EventsUsers.FirstOrDefault(eu => eu.Id == participantId);
+
+            if (participant != null)
+            {
+                var model = participant.ToEventParticipantModel();
+
+                return model;
+            }
+
+            return null;
+        }
+
+        public IQueryable<EventParticipantModel> GetParticipantsByEventId(int eventId)
+        {
+            var participants = _context.EventsUsers.Where(eu => eu.IdEvent == eventId)
+                                                   .Select(eu => new EventParticipantModel
+                                                   {
+                                                       Id = eu.Id,
+                                                       Email = eu.Email
+                                                   });
+
+            return participants;
+        }
+
+        public int GetParticipantCountByEventId(int eventId)
+        {
+            return _context.EventsUsers.Count(eu => eu.IdEvent == eventId);
+        }
+
 
         public EventModel[] GetEventsByDate(DateTime day)
         {

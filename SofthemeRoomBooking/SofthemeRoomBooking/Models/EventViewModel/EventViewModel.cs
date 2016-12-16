@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
+using SofthemeRoomBooking.Services.Models;
 
-namespace SofthemeRoomBooking.Models
+namespace SofthemeRoomBooking.Models.EventViewModel
 {
-    public class EventIndexViewModel
+    public class EventViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -27,6 +32,8 @@ namespace SofthemeRoomBooking.Models
 
         [StringLength(50, ErrorMessage = "Имя организатора не может быть длиннее 50 символов")]
         public string Nickname { get; set; }
+
+        public IEnumerable<SelectListItem> Rooms { get; set; }
 
         [Required]
         [Range(1, 31, ErrorMessage = "День должен находиться в интервале [1, 31]")]
@@ -55,5 +62,23 @@ namespace SofthemeRoomBooking.Models
         [Required]
         [Range(0, 59, ErrorMessage = "Минуты не могут выходить за интервал [0, 59]")]
         public int EndMinutes { get; set; }
+
+
+        public EventViewModel() { }
+
+        public EventViewModel(RoomModel[] rooms)
+        {
+            SetUnlockedRooms(rooms);
+        }
+
+        public void SetUnlockedRooms(RoomModel[] rooms)
+        {
+            Rooms = rooms.Select(room => new SelectListItem
+            {
+                Text = room.Name,
+                Value = room.Id.ToString(),
+                Selected = "select" == room.Id.ToString()
+            });
+        }
     }
 }

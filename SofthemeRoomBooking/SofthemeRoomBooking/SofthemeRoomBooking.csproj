@@ -268,9 +268,10 @@
     <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\CancelPopupViewModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
-    <Compile Include="Models\EventDetailsViewModel.cs" />
-    <Compile Include="Models\EventIndexViewModel.cs" />
-    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\EventViewModel\EventDetailsViewModel.cs" />
+    <Compile Include="Models\EventViewModel\EventIndexViewModel.cs" />
+    <Compile Include="Models\EventViewModel\EventParticipantViewModel.cs" />
+    <Compile Include="Models\EventViewModel\EventViewModel.cs" />
     <Compile Include="Models\RoomEquipmentViewModel.cs" />
     <Compile Include="Models\SchedulerEventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -487,6 +488,8 @@
     <Content Include="Views\Shared\_EditEventPartial.cshtml" />
     <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Login\RegisterEmailConfirmation.cshtml" />
+    <Content Include="Views\Event\EventParticipants.cshtml" />
+    <Content Include="Views\Event\AddParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />

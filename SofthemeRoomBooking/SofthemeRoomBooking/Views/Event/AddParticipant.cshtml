@@ -1,0 +1,20 @@
+﻿@model SofthemeRoomBooking.Models.EventViewModel.EventParticipantViewModel
+
+@using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <div class="group-input-error join-email">
+        @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
+        @Html.EditorFor(model => model.Email, new
+        {
+            htmlAttributes = new
+            {
+                @class = "input-text event-input eventcontainer-body__event-title",
+                placeholder = "Укажите e-mail, чтобы присоединиться"
+            }
+        })
+    </div>
+    <button class="" type="submit">
+        <i class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
+    </button>
+}
+

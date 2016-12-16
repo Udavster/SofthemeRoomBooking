@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
 using SofthemeRoomBooking.Models;
+using SofthemeRoomBooking.Models.EventViewModel;
 using SofthemeRoomBooking.Services.Contracts;
-using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -24,12 +23,18 @@ namespace SofthemeRoomBooking.Controllers
         }
         
         [AllowAnonymous]
-        public ActionResult Index(string eventId)
+        public ActionResult Index()
         {
-            var model = _eventService.GetEventsByDate((DateTime.Today).AddDays(1))[0];
-            var rooms = _roomService.GetUnlockedRoomsByDate(model.StartTime);
-            var modelView = model.ToEventViewModel(rooms);
-            return View(modelView);
+            var model = _eventService.GetEventIndexModelById(7);
+
+            if (model != null)
+            {
+                var modelView = model.ToEventIndexViewModel();
+
+                return View(modelView);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -175,6 +180,71 @@ namespace SofthemeRoomBooking.Controllers
         {
             _eventService.CancelEvent(id);
             return Content(@"Home/Index");
+        }
+
+        public ActionResult EventParticipants(int eventId)
+        {
+            var model = _eventService.GetParticipantsByEventId(eventId);
+
+            return PartialView(model);
+        }
+
+        [HttpGet]
+        public ActionResult AddParticipant(int eventId)
+        {
+            var modelView = new EventParticipantViewModel { IdEvent = eventId };
+
+            return PartialView(modelView);
+        }
+
+        [HttpPost]
+        public ActionResult AddParticipant(EventParticipantViewModel modelView)
+        {
+            if (ModelState.IsValid)
+            {
+                var model = modelView.ToEventParticipantModel();
+                _eventService.CreateParticipant(model);
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
+
+            return RedirectToAction("Index", modelView.IdEvent);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteParticipant(int participantId)
+        {
+            var participant = _eventService.GetParticipantById(participantId);
+
+            if (participant != null)
+            {
+                var model = new ConfirmationViewModel
+                {
+                    Question = "Вы уверены, что хотите исключить этого участника из события?",
+                    Message = participant.Email,
+                    Action = "Delete",
+                    Controller = "Profile",
+                    DataId = participant.Id.ToString()
+                };
+
+                return PartialView("_PopupConfirmationPartial", model);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [ActionName("DeleteParticipant")]
+        public ActionResult DeleteParticipantConfirm(int id)
+        {
+            var result = _eventService.DeleteParticipant(id);
+
+            if (result)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            ModelState.AddModelError("", "Что-то пошло не так");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
