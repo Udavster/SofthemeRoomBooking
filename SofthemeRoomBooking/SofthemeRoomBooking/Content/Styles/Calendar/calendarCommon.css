@@ -20,3 +20,13 @@
 		width: 990px;
         margin-bottom: 83px;
 	}
+    #calendar__popup-create-event {
+        position: relative;
+        top: -520px;
+        left: 0;
+    }
+    #calendar__popup-edit-event {
+        position: relative;
+        top: -520px;
+        left: 0;
+    }

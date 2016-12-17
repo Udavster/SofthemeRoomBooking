@@ -53,6 +53,7 @@ function getDate(a, Date) {
             rez["roomArr"] = roomArr;
             rez["events"] = data2;
             calendarMemo = rez;
+            console.log(calendarMemo, rez['events']);
             calendarMemo = a.sortEventsInMemo(calendarMemo);
             a.constructFromMemo(calendarMemo);
         },
@@ -64,6 +65,84 @@ function getDate(a, Date) {
 
     });
 }
+
+var monthNames = [
+    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+];
+
+var createEvent = function (event) {
+    Loading(true);
+    $.ajax({
+        url: window.location.origin + "/Event/CreateEvent",
+        type: 'GET',
+        success: function (result) {
+            $('#calendar__popup-create-event').html(result);
+            $('#calendar__popup-create-event').show();
+
+            var $event;
+            if ($(event.target).hasClass('event-empty')) {
+                $event = $(event.target);
+            } else if ($(event.target).parent().hasClass('event-empty')) {
+                $event = $(event.target).parent();
+            }
+
+            var startHour = $event.data('sh');
+            var startMinutes = $event.data('sm');
+            var endHour = $event.data('eh');
+            var endMinutes = $event.data('em');
+
+            $('#event-timestart #hours').html(tformat(startHour));
+            $('#event-timestart #minutes').html(tformat(startMinutes));
+            $("#StartHour").val(startHour);
+            $("#StartMinutes").val(startMinutes);
+
+            $('#event-timefinish #hours').html(tformat(endHour));
+            $('#event-timefinish #minutes').html(tformat(endMinutes));
+            $("#EndHour").val(endHour);
+            $("#EndMinutes").val(endMinutes);
+
+            
+            var daySelected = cal.getCurrentDay();
+            $('.datepicker-chosen-date #day').html(daySelected.day);
+            $('.datepicker-chosen-date #month').html(monthNames[daySelected.month]);
+            $('.datepicker-chosen-date #year').html(daySelected.year);
+
+            $("#Day").val(daySelected.day);
+            $("#Month").val(daySelected.month + 1);
+            $("#Year").val(daySelected.year);
+            
+
+
+            var roomNum = $event.parent().data('roomnum');
+            $('#IdRoom option')[roomNum].selected = true;
+            Loading(false);
+        },
+        error: function () {
+            //console.warn("error");
+            //retries
+        }
+    });
+};
+var editEvent = function (event) {
+    $event = $(event.target);
+    
+
+    if (!$event.hasClass('event')) {
+        $event = $event.parent();
+        if (!$event.hasClass('event')) return;
+    }
+
+    $.ajax({
+        url: window.location.origin + "/Event/EditEvent",
+        data: 'eventId=' + $event.data('id'),
+        type: 'GET',
+        success: function (result) {
+            console.log(result);
+            $('#popup-edit-event').html(result);
+            $('#popup-edit-event').show();
+        }
+    });
+};
 
 $(document).ready(function () {
     var commonCalendar = new CommonCalendar();
@@ -120,18 +199,28 @@ function CommonCalendar(eventHandler, emptyHandler) {
         var $target = $(event.target);
         console.log($target.parent());
         if (!$target.hasClass("event-empty") && (!$target.parent().hasClass("event-empty"))) {
-            if (this.eventHandler) this.eventHandler();
-            alert('Clicked');
+            if (this.eventHandler) {
+                 this.eventHandler(event);
+            }
         } else {
-            if (this.emptyHandler) this.emptyHandler();
-            alert('Empty clicked');
+            if (this.emptyHandler) {
+                 this.emptyHandler(event);
+            }
+            
         }
     }.bind(this);
 
-    this.eventHandler = eventHandler;
-    this.emptyHandler = emptyHandler;
+    this.eventHandler = editEvent;
+    this.emptyHandler = createEvent;
     this.buildCalendars();
     this.getSchedule();
     a.addEventOnClickHandler(clickHandler);
     a.addNextPrevDayHandler(function(next) { cal.switchDay(next); });
 }
+
+
+$(document)
+    .ready(function() {
+
+    });
+
