@@ -167,6 +167,7 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         var heightAttr = heightDifference > 0 ?
             'height: calc(100% + ' + heightDifference + 'px)' :
             'height: calc(100% - ' + (-heightDifference) + 'px)';
+
         this["$self"].get()[0].setAttribute("style", heightAttr);
 
         this["$self"].css('top', borderBox + 'px');
@@ -240,8 +241,6 @@ class Calendar {
 
         $("#drag-slider").css('z-index', 4);
 
-
-
         this.updateTimeTimer(this.timeSlider, false);
         this.updateTimeTimer(this.slider, true);
         this.timeSlider.hide();
@@ -308,8 +307,11 @@ class Calendar {
         if (!isNaN(width)) {
             width += 'px';
         }
+        console.warn('Width changed', width);
         $(this.className).css('width', width);
         this.slider.setBoundingWidth(null, true);
+        this.updateTimeTimer(this.timeSlider, false);
+        this.updateTimeTimer(this.slider, true);
     }
 
     addRooms(calendarMemo) {

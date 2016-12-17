@@ -153,10 +153,11 @@ function CommonCalendar(eventHandler, emptyHandler) {
         cal = new DatePicker();
         a = new Calendar("calendar-events", calendarMemo);
         a.addEventOnClickHandler(function() { alert('Clicked'); });
-
+        a.changeWidth(930);
+        
         cal.init(null);
         cal.addDayClickHandler(this.getClickedDate);
-      
+        
         $("#" + a.name + "-fw-control")
             .click(function() {
 
@@ -164,7 +165,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
                 $(".calendars__month").css('display', 'none');
                 $(this).attr('active', 'false');
                 $("#" + a.name + "-pw-control").attr('active', 'true');
-                a.changeWidth("calc(100% - 100px)");
+                //a.changeWidth("calc(100% - 100px)");
+                a.changeWidth("100%");
             });
         $("#" + a.name + "-pw-control")
             .click(function() {
@@ -172,7 +174,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
                 $(".calendars__month").css('display', 'block');
                 $(this).attr('active', 'false');
                 $("#" + a.name + "-fw-control").attr('active', 'true');
-                a.changeWidth(990);
+                a.changeWidth(930);
             });
     }
 
