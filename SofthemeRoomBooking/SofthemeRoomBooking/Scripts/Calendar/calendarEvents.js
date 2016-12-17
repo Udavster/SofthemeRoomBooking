@@ -1,9 +1,3 @@
-$(document).ready(function () {
-    // var a = new Calendar("calendar-events");
-    // a.addEventOnClickHandler(function(){alert('Clicked');});
-    // a.setToday("02, Пт");
-});
-
 function tformat(num) {
     return ("0" + num).slice(-2);
 }
@@ -18,7 +12,8 @@ function isContained(event, time) {
     return true;
 }
 
-function Event(start, finish, title, description, classes) {
+function Event(id, start, finish, title, description, classes) {
+    this.Id = id;
     this.Start = start;
     this.Finish = finish;
     this.Title = title;
@@ -28,9 +23,25 @@ function Event(start, finish, title, description, classes) {
 }
 
 function EmptyEvent(start, finish, title, description) {
-    var rez = new Event(start, finish, title, description, 'event-empty');
+    var rez = new Event(-1, start, finish, title, description, 'event-empty');
+    rez.Empty = true;
     rez.addedElements = '<i class="fa fa-plus event-empty__plus" aria-hidden="true"></i>';
     return rez;
+}
+
+function PrivateEvent(id, start, finish, title, description) {
+    var rez = new Event(id, start, finish, title, description, 'event-private');
+    rez.addedElements = '<i class="fa fa-loc event-pivate__lock" aria-hidden="true"></i>';
+    rez.Private = true;
+    return rez;
+}
+
+function EventPrivacyCheck(event) {
+    if (event.Empty||event.Publicity) return event;
+    event.Classes += ' event-private';
+    event.addedElements = '<i class="fa fa-loc event-pivate__lock" aria-hidden="true"></i>';
+    event.Private = true;
+    return event;
 }
 
 function Slider(name, startHour, finishHour, boundingElName, dragHandler, borderBox, static , bottomText, overflow) {
@@ -288,6 +299,7 @@ class Calendar {
             console.log(ex);
         }
     }
+
     changeHeight(calendarHeight) {
         $(this.className + '__visible-wrapper').css('height', 40 + 60 + calendarHeight + "px"); //TODO: delete magic numbers (40 - padding top, 60 - ?)
         calendarHeight += 'px';
@@ -333,12 +345,12 @@ class Calendar {
             var roomName = calendarMemo["roomArr"][i];
             var events = calendarMemo["events"][roomName];
             if (events == undefined) return;
-            visibleEventsLayer.append('<div data-eventnum="' + i + '" id="room-' + i + '" class="' + this.name + '__room-events clearable"></div>');
+            visibleEventsLayer.append('<div data-roomnum='+i+' id="room-' + i + '" class="' + this.name + '__room-events clearable"></div>');
             var $room = $('#room-' + i);
             $room.css('top', (currentHeight) + 'px');
 
             for (var j = 0; j < events.length; j++) {
-                this.addEvent($room, events[j]);
+                this.addEvent($room, EventPrivacyCheck(events[j]));
             }
             currentHeight += this.roomHeight;
         }
@@ -359,7 +371,18 @@ class Calendar {
         if (event.addedElements && (duration > 0.33)) eventTag += event.addedElements;
         if (duration > 0.5) eventTag += '<div>' + event['Title'] + '</div>';
         eventTag += '</div>';
-        $room.append(eventTag);
+        var eventHtml = $(eventTag);
+
+        eventHtml.attr('data-id', event.Id);
+        eventHtml.attr('data-sh', startTime.h);
+        eventHtml.attr('data-sm', startTime.m);
+        eventHtml.attr('data-eh', endTime.h);
+        eventHtml.attr('data-em', endTime.m);
+        eventHtml.attr('data-desc', event.Description);
+        eventHtml.attr('data-title', event.Title);
+
+        $room.append(eventHtml);
+        
     }
 
     constructBase($calendar) {
@@ -464,7 +487,7 @@ class Calendar {
             console.log('363l ' + isContained(evArr[j], hourStart));
 
             if (isContained(evArr[j], hourStart)) {
-                rez.push(new EmptyEvent(evArr[j]['Start'], hourStart, 'Blank'));
+                rez.push(new EmptyEvent(evArr[j]['Start'], hourStart, 'Blank'));   
                 for (var hs = hourStart['h']; hs < evArr[j]['Finish']['h']; hs++) {
                     rez.push(new EmptyEvent({ 'h': hs, 'm': 0 }, { 'h': hs + 1, 'm': 0 }, 'Blank'));
                 }

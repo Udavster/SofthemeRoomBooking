@@ -1,4 +1,4 @@
-﻿.room {
+﻿ .room {
     margin-top: 7px;
     background: #ebeef7;
     height: 520px;
@@ -15,7 +15,6 @@
 }
 .room__general {
     cursor: pointer;
-    opacity: 0.8;
 }
 .text {
     border-radius: 10px;
@@ -79,7 +78,7 @@
     z-index: 2;
     position: absolute;
     bottom: 0;
-    right: 325px;
+    right: 275px;
 }
 .room-1 {
     z-index: -1;
@@ -123,7 +122,6 @@
     bottom: 107px;
     right: 519px;
     background: #9fa6b6;
-    opacity: 0.8;
     height: 96px;
     width: 190px;
 }

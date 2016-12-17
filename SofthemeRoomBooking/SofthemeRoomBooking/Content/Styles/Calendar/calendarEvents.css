@@ -290,9 +290,9 @@ div.calendar-events__description-row {
     margin: 4px;
 }
 
-    .vertical-slider__text:first-of-type {
-        margin-top: 10px;
-    }
+.vertical-slider__text:first-of-type {
+    margin-top: 10px;
+}
 
 .event__time {
     flex-grow: 1;
@@ -309,18 +309,35 @@ div.calendar-events__description-row {
     opacity: 0;
 }
 
-    .event-empty:hover {
-        opacity: 1;
-        background-color: #fdbcba;
-        padding-left: 0;
-        padding-right: 0;
-    }
+.event-empty:hover {
+    opacity: 1;
+    background-color: #fdbcba;
+    padding-left: 0;
+    padding-right: 0;
+}
 
-    .event-empty div {
-        display: none;
-    }
+.event-empty div {
+    display: none;
+}
 
 .event-empty__plus {
+    margin: 5px auto;
+    padding-left: 1px;
+    font-size: 36px;
+    color: #feebea;
+    overflow: hidden;
+}
+
+.event-private {
+    background-color: #ebeef7;
+}
+.event-private:hover {
+    background-color: #ebeef7;
+}
+.event-private div {
+    display: none;
+}
+.event-private__lock {
     margin: 5px auto;
     padding-left: 1px;
     font-size: 36px;

@@ -66,8 +66,6 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/room.css",
                       "~/Content/Styles/equipment.css",
                       "~/Content/Styles/roombooking.css",
-                      "~/Content/Styles/eventdetail.css",
-                      "~/Content/Styles/eventdetailedit.css",
                       "~/Content/Styles/weekScheduler.css",
                       "~/Content/Styles/users.css",
                       "~/Content/Styles/pagination.css",
@@ -75,7 +73,9 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/Event/editevent.css",
                       "~/Content/Styles/Event/eventcommon.css",
                       "~/Content/Styles/Event/eventcreate.css",
-                      "~/Content/Styles/Event/eventedit.css"
+                      "~/Content/Styles/Event/eventedit.css",
+                      "~/Content/Styles/Event/eventinfo-private.css",
+                      "~/Content/Styles/Event/eventinfo-public.css"
                       ));
 
             bundles.Add(new StyleBundle("~/bundles/Login/css").Include(
@@ -83,6 +83,9 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/input_styles.css",
                       "~/Content/Styles/validation.css"
                       //"~/Content/font-awesome.css"
+                      ));
+            bundles.Add(new StyleBundle("~/bundles/Room/css").Include(
+                      "~/Content/Styles/Room/roomView.css"
                       ));
 
             bundles.Add(new StyleBundle("~/bundles/Styles/feedback").Include(

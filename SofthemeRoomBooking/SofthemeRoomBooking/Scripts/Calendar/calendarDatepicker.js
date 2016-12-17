@@ -10,11 +10,17 @@
         todayYear = new Date().getFullYear(),
         dayClickHandler;
 
+    this.date = new Date().getDate();
+    this.month = todayMonth;
+    this.year = todayYear;
+
+    this.getCurrentDay = function() {
+        console.log($("#datepicker-body .day.selected").html());
+        return { 'day': this.date, 'month': this.month, 'year': this.year };
+    }.bind(this);
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     var dayNames = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
-
-
 
     this.init = function (newWrap) {
 
@@ -50,6 +56,10 @@
 
         if (dayClickHandler != undefined) {
             try {
+                this.date = date;
+                this.month = currMonth;
+                this.year = currYear;
+                
                 dayClickHandler(date, dayOfWeek, currMonth, currYear);
             } catch (ex) {
                 console.warn("Exception at dayClickHandler");
@@ -289,7 +299,8 @@
         addDayClickHandler: this.addDayClickHandler,
         switchMonth: this.switchMonth,
         switchDay: this.switchDay,
-        getDayNames: this.getDayNames
+        getDayNames: this.getDayNames,
+        getCurrentDay: this.getCurrentDay
     };
     
 };

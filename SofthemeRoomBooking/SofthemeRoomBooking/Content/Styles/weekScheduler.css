@@ -64,7 +64,8 @@
     width: 100%;
     height: 100%;
     color: black;
-    background: #c5cad6;
+    background: #ebeef7;
+    cursor: pointer;
 }
 
 .event-private:before {
@@ -153,6 +154,27 @@
     position: absolute;
     top: 0;
     left: 0;
+    cursor: pointer;
+}
+
+.calendar-events__today {
+    display: table;
+    height: 100%;
+    line-height: 25px;
+    margin: 0 auto;
+    color: #697184;
+    font-size: 14px;
+}
+
+.calendar-events__prev-day-control {
+    float: left;
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+.calendar-events__next-day-control {
+    float: right;
+    margin-top: -5px;
     cursor: pointer;
 }
 

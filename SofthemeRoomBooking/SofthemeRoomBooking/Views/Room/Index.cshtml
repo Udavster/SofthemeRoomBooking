@@ -1,0 +1,7 @@
+﻿@{
+    ViewBag.Title = "Room Page";
+}
+@Styles.Render("~/bundles/Room/css")
+@Html.Action("RoomPartial", "Room")
+@Html.Partial("_WeekScheduler")
+@Html.Partial("_MapPartial")
