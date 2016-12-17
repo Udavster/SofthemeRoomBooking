@@ -8,7 +8,7 @@ using SofthemeRoomBooking.Services.Contracts;
 namespace SofthemeRoomBooking.Controllers
 {
     [Authorize]
-    public class ProfileController : Controller
+    public class ProfileController : ErrorCatchingControllerBase
     {
         private readonly IProfileService _profileService;
 

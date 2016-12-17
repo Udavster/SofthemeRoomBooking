@@ -245,6 +245,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\ErrorCatchingControllerBase.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -489,6 +491,9 @@
     <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Login\RegisterEmailConfirmation.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Errors\Http400.cshtml" />
+    <Content Include="Views\Errors\Http404.cshtml" />
+    <Content Include="Views\Errors\Http500.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />

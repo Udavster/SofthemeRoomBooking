@@ -16,7 +16,7 @@ using SofthemeRoomBooking.Models.UserViewModels;
 namespace SofthemeRoomBooking.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ErrorCatchingControllerBase
     {
         private SignInManager<ApplicationUser, string> _signInManager;
         private ApplicationUserManager _userManager;

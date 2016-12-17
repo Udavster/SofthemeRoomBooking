@@ -13,7 +13,7 @@ using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
-    public class CalendarController : Controller
+    public class CalendarController : ErrorCatchingControllerBase
     {
         private IRoomService _roomService;
         private IEventService _eventService;
