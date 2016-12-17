@@ -358,6 +358,7 @@
     <Content Include="Content\Styles\DateTimePickers\datepicker.css" />
     <Content Include="Content\Styles\DateTimePickers\timepicker.css" />
     <Content Include="Content\Styles\equipment.css" />
+    <Content Include="Content\Styles\errors.css" />
     <Content Include="Content\Styles\Event\editevent.css" />
     <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\Event\eventcreate.css" />

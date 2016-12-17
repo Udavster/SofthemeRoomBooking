@@ -117,7 +117,6 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         this.dragHandler(part, this);
         //var part = x/(this.bounding.width+4); 
         var hourDuration = this.finishHour - this.startHour + 1;
-        console.log(hourDuration);
         var hours = Math.floor(hourDuration * part);
         var minutes = Math.floor(60 * (hourDuration * part - hours)); //m = 60*(24*p-h); m/60 = 24*p - h; p = (m/60 + h)/24
         $('#' + this.name + '-time').html(tformat(hours + this.startHour) + ":" + tformat(minutes));
@@ -161,10 +160,8 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
 
     this.setStartingPos = function (borderBox) {
         this.getRelativeCoords(0, 0);
-        console.log(this["$self"]);
         this.changePos(this.$self.position().left, this);
         if (!borderBox || !borderBox.top || !borderBox.bottom) return;
-        console.log(borderBox.top + borderBox.bottom);
         //this["$self"].css('height', 'calc("100% - 100px )');
         var heightDifference = borderBox.top + borderBox.bottom;
         var heightAttr = heightDifference > 0 ?
@@ -239,7 +236,6 @@ class Calendar {
             self.changeBackgroundPos.apply(self, [pos]);
             self.changeNowVisibility(pos, self.timeSlider);
         }
-        //console.log(this.className+"__background-layer");
         this.slider = new Slider("drag-slider", this.startHour, this.finishHour, this.className, slideHandle, this.sliderBorderBox);
 
         $("#drag-slider").css('z-index', 4);
@@ -451,7 +447,6 @@ class Calendar {
                 memo["events"][key] = memo["events"][key].concat(this.findEmptyPlaces(memo["events"][key], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
             }
         }
-        console.log(memo);
         return memo;
     }
 
@@ -484,7 +479,6 @@ class Calendar {
         for (var j = 0; j < evArr.length; j++) {
             var start = {};
             var hourStart = { 'h': evArr[j]['Start']['h'] + 1, 'm': 0 };
-            console.log('363l ' + isContained(evArr[j], hourStart));
 
             if (isContained(evArr[j], hourStart)) {
                 rez.push(new EmptyEvent(evArr[j]['Start'], hourStart, 'Blank'));   
@@ -495,6 +489,7 @@ class Calendar {
             } else {
                 rez.push(evArr[j]);
             }
+
         }
 
         return rez;

@@ -4,16 +4,16 @@ var calendarMemo = {
 
     }
 }
-calendarMemo2 = {
-    "roomArr": ['Einstein classroom2', 'Tesla classroom2', 'Newton classroom2'],
-    "events": {
+//calendarMemo2 = {
+//    "roomArr": ['Einstein classroom2', 'Tesla classroom2', 'Newton classroom2'],
+//    "events": {
         //'Einstein classroom2': [{ 'Title': 'event in the first room', 'Start': { 'h': 4, 'm': 0 }, 'Finish': { 'h': 5, 'm': 50 } }],
         //'Tesla classroom2': [{ 'Title': 'event in the room', 'Start': { 'h': 5, 'm': 0 }, 'Finish': { 'h': 6, 'm': 0 } }],
         //'Newton classroom2': [{ 'Title': 'event in the room', 'Start': { 'h': 4, 'm': 30 }, 'Finish': { 'h': 5, 'm': 0 } }],
         //'room42': [{ 'Title': 'event in the room', 'Start': { 'h': 2, 'm': 0 }, 'Finish': { 'h': 3, 'm': 0 } }],
         //'room5':[{'Title':'event in the room', 'Start':{'h':6,'m':0}, 'Finish': {'h':9,'m':0}}]             
-    }
-}
+//    }
+//}
 
 function Loading(show) {
     if (show) {
@@ -197,7 +197,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
 
     var clickHandler = function(event) {
         var $target = $(event.target);
-        console.log($target.parent());
+
         if (!$target.hasClass("event-empty") && (!$target.parent().hasClass("event-empty"))) {
             if (this.eventHandler) {
                  this.eventHandler(event);
@@ -206,8 +206,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
             if (this.emptyHandler) {
                  this.emptyHandler(event);
             }
-            
         }
+
     }.bind(this);
 
     this.eventHandler = editEvent;
@@ -218,9 +218,4 @@ function CommonCalendar(eventHandler, emptyHandler) {
     a.addNextPrevDayHandler(function(next) { cal.switchDay(next); });
 }
 
-
-$(document)
-    .ready(function() {
-
-    });
 
