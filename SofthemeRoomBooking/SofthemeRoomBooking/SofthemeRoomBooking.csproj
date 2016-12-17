@@ -357,12 +357,12 @@
     <Content Include="Content\Styles\DateTimePickers\datepicker.css" />
     <Content Include="Content\Styles\DateTimePickers\timepicker.css" />
     <Content Include="Content\Styles\equipment.css" />
-    <Content Include="Content\Styles\eventdetail.css" />
-    <Content Include="Content\Styles\eventdetailedit.css" />
     <Content Include="Content\Styles\Event\editevent.css" />
     <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\Event\eventcreate.css" />
     <Content Include="Content\Styles\Event\eventedit.css" />
+    <Content Include="Content\Styles\Event\eventinfo-private.css" />
+    <Content Include="Content\Styles\Event\eventinfo-public.css" />
     <Content Include="Content\Styles\Event\index.css" />
     <Content Include="Content\Styles\pagination.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
@@ -372,6 +372,7 @@
     <Content Include="Content\Styles\roombooking.css" />
     <Content Include="Content\Styles\popup-confirmation.css" />
     <Content Include="Content\Styles\profile.css" />
+    <Content Include="Content\Styles\Room\roomView.css" />
     <Content Include="Content\Styles\users.css" />
     <Content Include="Content\Styles\validation.css" />
     <Content Include="Content\Styles\feedback.css" />
@@ -466,7 +467,7 @@
     <Content Include="Views\Shared\_PopupConfirmationPartial.cshtml" />
     <Content Include="Views\Shared\_RoomsPartial.cshtml" />
     <Content Include="Views\Shared\_MapPartial.cshtml" />
-    <Content Include="Views\Shared\_EventDetailsPartial.cshtml" />
+    <Content Include="Views\Shared\_EventDetailsPrivatePartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_EventEditPartial.cshtml" />
     <Content Include="Views\ViewsToDo\ToDoPartial\_PrivateEditPartial.cshtml" />
     <Content Include="Views\Shared\_PopupEquipmentUserPartial.cshtml" />
@@ -490,6 +491,7 @@
     <Content Include="Views\Login\RegisterEmailConfirmation.cshtml" />
     <Content Include="Views\Event\EventParticipants.cshtml" />
     <Content Include="Views\Event\AddParticipant.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
@@ -504,7 +506,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Calendar\" />
-    <Folder Include="Views\Room\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

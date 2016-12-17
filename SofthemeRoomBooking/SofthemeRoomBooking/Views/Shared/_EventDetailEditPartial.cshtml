@@ -3,16 +3,22 @@
 
 <div class="eventdetailedit">
     <div class="eventdetailedit__title">
-        <div style="height:50%">
-            <span style="color : white; margin: 3px 10px; font-size: 9pt;"> @Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
-            <div class="eventdetailedit-close">
-                <i class="fa fa-window-minimize" aria-hidden="true"></i>
+        <div>
+            <div style="display: inline-flex">
+                <div>
+                    <span style="color: white; margin: 1px 6px; font-size: 9pt;"> @Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
+                </div>
+                @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
+                {
+                    <div style="margin-left: 30px">
+                        <div class="eventdetailedit-change">Изменить</div>
+                        <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
+                    </div>
+                }
+                <div class="eventdetailedit-close">
+                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                </div>
             </div>
-            @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
-            {
-                <div class="eventdetailedit-change">Изменить</div>
-                <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
-            }
         </div>
         <div>
             <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
@@ -22,34 +28,38 @@
         <div>
             <p style="font-size: 20px;">@Model.Title</p>
         </div>
-        <div>
-            <p>@Model.Description</p>
-        </div>
-        <div>
-            <div style="float: left">
-                <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
-                @if (Model.Nickname != null)
-                {
-                    <span>@Model.Nickname</span>
-                }
-                else
-                {
-                    <span>@Model.UserName</span>
-                }
-            </div>
-            <div style="float: right">
-                <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
-                <span>@Model.ParticipantsQuantity</span>
-            </div>
-        </div>
-        <div style="display: inline-flex">
+        @if (Model.AllowRegistration)
+            {
             <div>
-                <input type="text" class="input-text eventdetailedit__email-button" placeholder="Укажите e-mail что бы присоединится.">
+                <p>@Model.Description</p>
             </div>
-            <div style="margin-top: 19px">
-                <i class="fa fa-plus" aria-hidden="true" style="font-size: 25px; color: #A6ABB6;"></i>
+            <div>
+                <div style="float: left">
+                    <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
+                    @if (Model.Nickname != null)
+                {
+                        <span>@Model.Nickname</span>
+                    }
+                    else
+                    {
+                        <span>@Model.UserName</span>
+                    }
+                </div>
+                <div style="float: right">
+                    <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
+                    <span>@Model.ParticipantsQuantity</span>
+                </div>
             </div>
-        </div>
+
+            <div style="display: inline-flex">
+                <div>
+                    <input type="text" class="input-text eventdetailedit__email-button" placeholder="Укажите e-mail что бы присоединится.">
+                </div>
+                <div style="margin-top: 19px">
+                    <i class="fa fa-plus" aria-hidden="true" style="font-size: 25px; color: #A6ABB6;"></i>
+                </div>
+            </div>
+        }
         <div class="eventdetailedit__icons" style="margin: 0 90px;">
             <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
             <i class="fa fa-envelope-o" aria-hidden="true"></i>

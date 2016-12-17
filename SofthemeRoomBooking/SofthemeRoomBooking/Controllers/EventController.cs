@@ -6,6 +6,8 @@ using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Models.EventViewModel;
 using SofthemeRoomBooking.Services.Contracts;
 
+
+
 namespace SofthemeRoomBooking.Controllers
 {
     [Authorize]
@@ -158,6 +160,7 @@ namespace SofthemeRoomBooking.Controllers
                 {
                     return new EmptyResult();
                 }
+                return PartialView("_EventDetailsPrivatePartial", viewModel);
             }
 
             return PartialView("_EventDetailEditPartial",viewModel);

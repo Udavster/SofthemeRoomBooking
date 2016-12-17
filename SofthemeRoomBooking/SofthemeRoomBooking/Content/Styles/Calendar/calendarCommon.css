@@ -1,0 +1,32 @@
+	.calendars{
+	    display: flex;
+	    justify-content: space-around;
+		width: 100%;
+    	min-width: 1024px;
+        padding: 50px 10px 0 10px;
+	}
+	.calendars__day{
+        display:inline-block;
+		position: relative;
+		top: 9px;
+		/*float: left;*/
+	}
+	.calendars__month{
+		/*float: right;*/
+		display: inline-block;
+	}
+
+	.calendar-events{
+		width: 990px;
+        margin-bottom: 83px;
+	}
+    #calendar__popup-create-event {
+        position: relative;
+        top: -520px;
+        left: 0;
+    }
+    #calendar__popup-edit-event {
+        position: relative;
+        top: -520px;
+        left: 0;
+    }
