@@ -440,15 +440,20 @@ class Calendar {
 
         this.addRoomHours($roomHours);
         this.setEvents(memo);
+        this.Auth = memo.Auth;
     }
 
     sortEventsInMemo(memo) {
+        
+        if (!memo.Auth) return memo;
+
         for (var key in memo["events"]) {
             if (memo["roomArr"].indexOf(key) > -1) {
                 this.sortEventsInRoom(memo["events"][key]);
                 memo["events"][key] = memo["events"][key].concat(this.findEmptyPlaces(memo["events"][key], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
             }
         }
+
         return memo;
     }
 

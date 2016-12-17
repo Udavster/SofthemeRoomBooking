@@ -52,6 +52,8 @@ function getDate(a, Date) {
 
             rez["roomArr"] = roomArr;
             rez["events"] = data2;
+            rez["Auth"] = data["Authenticated"];
+
             calendarMemo = rez;
             console.log(calendarMemo, rez['events']);
             calendarMemo = a.sortEventsInMemo(calendarMemo);
@@ -71,6 +73,7 @@ var monthNames = [
 ];
 
 var createEvent = function (event) {
+    if (!a.Auth) return;
     Loading(true);
     $.ajax({
         url: window.location.origin + "/Event/CreateEvent",
