@@ -1,4 +1,54 @@
-﻿$(document).ready(function () {
+﻿function NextWeekDate() {
+    var nextWeek = new Date();
+
+    return {
+        get: function () {
+            return nextWeek.getDate();
+        },
+        set: function (newDate) {
+
+            nextWeek.setDate(newDate);
+
+        },
+        getFull: function () {
+            return nextWeek;
+        }
+    }
+}
+
+var roomClickHandler = function (event, prevDate) {
+    var $this = $(event.target);
+    if (!$this.hasClass('room__general')) {
+        $this = $this.parent();
+    }
+    if (!$this.hasClass('room__general')) return;
+    getRoomScheduler($this, prevDate);
+}
+
+var getRoomSchedulerById = function(RoomId, prevDate) {
+    var $this = $('.room-' + RoomId);
+    getRoomScheduler($this, prevDate);
+}
+
+var getRoomScheduler = function($this, prevDate) {
+    $('#calendar').html('');
+    console.log($this);
+    $('#calendar').data('current-room', $this.data('roomid'));
+
+    var date1 = new Date();
+    date1.setDate(prevDate.getDate());
+    prevDate.setDate(date1.getDate());
+
+    var data = {
+        date: convertDate(date1),
+        id: $this.data('roomid')
+    }
+
+    initCalendar(date1, data);
+    nWeek = new NextWeekDate();
+}
+
+$(document).ready(function () {
     localStorage.removeItem('cachedEvents');
     var currentDate = new Date();
     var prevDate = new Date();
@@ -10,25 +60,7 @@
         prevDate.setDate(currentDate.getDate() - 1);
     }
 
-    function NextWeekDate() {
-        var nextWeek = new Date();
-
-        return {
-            get: function () {
-                return nextWeek.getDate();
-            },
-            set: function (newDate) {
-              
-                nextWeek.setDate(newDate);
-              
-            },
-            getFull: function() {
-                return nextWeek;
-            }
-        }
-    }
-
-    var nWeek = new NextWeekDate();
+    nWeek = new NextWeekDate();
    
     nWeek.set(prevDate.getDate());
     
@@ -62,31 +94,16 @@
 
     $('#calendar').show();
 
-    $('.room__general').click(function () {
-        var _this = $(this);
-
-        $('#calendar').html('');
-        
-        $('#calendar').data('current-room', _this.data('roomid'));
-        
-        var date1 = new Date();
-        date1.setDate(prevDate.getDate());
-        prevDate.setDate(date1.getDate());
-
-        var data = {
-            date: convertDate(date1),
-            id: _this.data('roomid')
-        }
-        $('.calendars').hide();
-        initCalendar(date1, data);
-        nWeek = new NextWeekDate();
-    });
+    $('.room__general').click(function (event) { roomClickHandler(event, prevDate) });
 
 });
 
 function initCalendar(oldPrevDate, data) {
 
     generateMenu();
+    if (oldPrevDate.getDay() === 5 || oldPrevDate.getDay() === 0) {
+        $('.scheduler__header').css('width', '860px');
+    }
     var currentEvents = JSON.parse(localStorage.getItem('cachedEvents')) || [];
     var currentEvent = {
         room: data.id,
@@ -113,7 +130,7 @@ function initCalendar(oldPrevDate, data) {
         var prevDate = new Date(oldPrevDate);
         for (var i = 0; i < 8; i++) {
 
-            generateCalendarCol(prevDate, oldEvents[i], i);
+            generateCalendarCol(prevDate, oldEvents[i], i, data.id);
            
             if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
                 drawCursor(i);
@@ -136,7 +153,7 @@ function initCalendar(oldPrevDate, data) {
             currentEvents.push(currentEvent);
             for (var i = 0; i < 8; i++) {
 
-                generateCalendarCol(prevDate, jsonObject[i], i);
+                generateCalendarCol(prevDate, jsonObject[i], i, data.id);
             
                 if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
                     drawCursor(i);
@@ -167,7 +184,7 @@ function generateMenu() {
     calendar.append($controls);
 }
 
-function generateCalendarCol(date, events, iteration) {
+function generateCalendarCol(date, events, iteration, roomId) {
     var calendar = $('#calendar');
     var ttt = iteration;
     var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
@@ -214,18 +231,21 @@ function generateCalendarCol(date, events, iteration) {
             if (isAuth ==="True") {
                 structure += '<div class="calendar-item item-' +
                     i +
-                    '" data-start=' +
-                    (i + 9) +
-                    ' data-finish=' +
-                    (i + 10) +
+                    '" data-start=' +(i + 9) +
+                    ' data-finish=' + (i + 10) +
+                    ' data-day=' + date.getDate() +
+                    ' data-month=' + (date.getMonth() + 1) +
+                    ' data-year=' + date.getFullYear() +
+                    ' data-roomid=' + roomId +
                     ' >';
             } else {
                 structure += '<div class="calendar-item not-empty item-' +
                     i +
-                    '" data-start=' +
-                    (i + 9) +
-                    ' data-finish=' +
-                    (i + 10) +
+                    '" data-start=' + (i + 9) +
+                    ' data-finish=' + (i + 10) +
+                    ' data-day=' + date.getDate() +
+                    ' data-month=' + (date.getMonth() + 1) +
+                    ' data-year=' + date.getFullYear() +
                     ' >';
             }
 

@@ -1,0 +1,40 @@
+﻿@model SofthemeRoomBooking.Models.EventDetailsViewModel
+<div class="eventdetail">
+    <div class="eventdetail__title">
+        <div style="display: inline-flex">
+            <div>
+                <span style="color: white; margin: 1px 6px; font-size: 9pt;"> @Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
+            </div>
+                <div style="margin-left: 30px">
+                    <div class="eventdetail-change">Изменить</div>
+                    <div id="cancelevent" data-id="@Model.Id" class="eventdetail-cancel">Отменить</div>
+                </div>
+                <div class="eventdetailedit-close">
+                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                </div>
+        </div>
+        <div>
+            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
+        </div>
+    </div>
+    <div class="eventdetail__main">
+        <div>
+            <p class="eventdetail-title">@Model.Title</p>
+        </div>   
+    </div>
+</div>
+
+<script>
+    $(document).on('click', '#cancelevent', function () {
+        var _this = $(this);
+        var id = _this.data('id');
+        $.ajax({
+            url: window.location.origin + "/Event/CancelEventView",
+            data: 'id=' + id,
+            type: 'GET',
+            success: function (res) {
+                $('.week__scheduler').append(res);
+            }
+        });
+    });
+</script>

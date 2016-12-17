@@ -24,6 +24,11 @@ namespace SofthemeRoomBooking.Controllers
             _eventService = eventService;
         }
 
+        public ActionResult Index(int? id)
+        {
+//            ViewBag.RoomId = id;
+            return View();
+        }
         [HttpGet]
         public ActionResult Events(DateTime date, int id)
         {
@@ -32,10 +37,10 @@ namespace SofthemeRoomBooking.Controllers
             return Content(result, "application/json");
         }
 
-        public ActionResult RoomPartial()
+        public ActionResult RoomPartial(int? id)
         {
             var rooms = _roomService.GetAllEquipmentRooms();
-
+            ViewBag.RoomId = id;
             return PartialView("_RoomsPartial", rooms);
         }
         [HttpGet]

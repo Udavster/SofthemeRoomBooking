@@ -22,6 +22,7 @@
         @for (var i = 0; i < rooms.Count; i++)
         {
             <div data-roomid="@rooms[i].Id" data-num="@rooms[i].Equipments" data-pathid="path-@rooms[i].Id" class="room__general room-@rooms[i].Id">
+                <a class="whole-el-link room__link" href="@Url.Action("Index","Room",new {id = @rooms[i].Id })"></a>
                 <div class="text room__text-@rooms[i].Id">
                     @rooms[i].Name
                 </div>
@@ -42,10 +43,10 @@
                 else
                 {
                     <script>
-                    $('.room-' + @rooms[i].Id).css('background', '#d7d9de');
-                    $('.room-' + @rooms[i].Id).children('.text').css('background-color', '#acb0b6');
-                    $('.room-' + @rooms[i].Id).css('pointer-events', 'none');
-                    $('.room-' + @rooms[i].Id).removeClass('room__general').addClass('room__general-blocked');
+                        $('.room-' + @rooms[i].Id).css('background', '#d7d9de');
+                        $('.room-' + @rooms[i].Id).children('.text').css('background-color', '#acb0b6');
+                        $('.room-' + @rooms[i].Id).css('pointer-events', 'none');
+                        $('.room-' + @rooms[i].Id).removeClass('room__general').addClass('room__general-blocked');
                     </script>
                 }
 
@@ -73,3 +74,15 @@
     </div>
 </div>
 
+@if (ViewBag.RoomId != null)
+{
+    <script>
+        $(document)
+            .ready(function() {
+                var date = new Date();
+                date.setDate(date.getDate() - 1);
+                openRoomById(@ViewBag.RoomId);
+                getRoomSchedulerById(@ViewBag.RoomId, date);
+            })
+    </script>
+}

@@ -1,0 +1,61 @@
+﻿.eventdetail{
+    width: 400px;
+    height: auto;
+    background: #ffffff;
+    border: 1px solid #9fa6b6;
+    position: absolute;
+    top: 135px;
+    left: 630px;
+}
+.eventdetail__title {
+    width: auto;
+    height: 35px;
+    background: #9fa6b6;
+}
+
+.eventdetail__main {
+    height: auto;
+    width: auto;
+}
+.eventdetail__icons {
+    margin: 10px 40px
+}
+
+.eventdetail__icons i {
+    font-size: 25px;
+    color: #a4aab9;
+    margin: 10px 10px;
+    display: inline-block;
+    vertical-align: middle;
+    background-position: center;
+}
+
+.eventdetail-change {
+    display: inline-block;
+    background-color: #888f9d;
+    color: White;
+    padding: 2px 10px;
+    border: none;
+    border-radius:10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none;
+}
+
+.eventdetail-cancel {
+    display: inline-block;
+    background-color: #747b87;
+    color: White;
+    padding: 2px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 10px;
+    outline: none; 
+}
+
+.eventdetail-title {
+   font-size: 20px;
+    margin: 10px 5px;
+}
