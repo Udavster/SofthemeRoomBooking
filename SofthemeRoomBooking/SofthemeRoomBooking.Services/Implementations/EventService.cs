@@ -155,7 +155,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                 var currDay = event1.Where(ev => ev.Start.Day == currentDate.Day);
                 foreach (var eventItem in currDay)
                 {
-                    day.Add(eventItem.ToEvent());
+                    day.Add(!eventItem.Publicity ? eventItem.ToPrivateEvent() : eventItem.ToEvent());
                 }
                 events.Add(day);
                 currentDate = currentDate.AddDays(1);

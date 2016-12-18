@@ -26,7 +26,10 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Index(int? id)
         {
-//            ViewBag.RoomId = id;
+            if (id == null)
+            {
+                return Redirect("/Home/Index");
+            }
             return View();
         }
         [HttpGet]
@@ -41,6 +44,18 @@ namespace SofthemeRoomBooking.Controllers
         {
             var rooms = _roomService.GetAllEquipmentRooms();
             ViewBag.RoomId = id;
+            if (id != null)
+            {
+                var isRoomExist = rooms.Any(x=>x.Id ==id);
+                if (!isRoomExist)
+                {
+                    throw new HttpException(404, "Not found");
+                }
+                if (!User.IsInRole("Admin") && !rooms.FirstOrDefault(x => x.Id == id).IsAvalaible)
+                {
+                    throw new HttpException(401, "Unauthorized");
+                }
+            }
             return PartialView("_RoomsPartial", rooms);
         }
         [HttpGet]

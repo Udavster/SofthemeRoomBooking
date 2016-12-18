@@ -69,9 +69,22 @@ namespace SofthemeRoomBooking.Services.Converters
             return new EventWeekModel
             {
                 Id = events.Id,
-                Title = events.Title,
+                Title = events.Title.Length > 20 ? events.Title.Substring(0,20) + "..." : events.Title,
                 Description = events.Description,
                 Publicity = events.Publicity,
+                Start = events.Start.ToString("yyyy-MM-dd HH:mm"),
+                Finish = events.Finish.ToString("yyyy-MM-dd HH:mm")
+            };
+        }
+
+        public static EventWeekModel ToPrivateEvent(this Events events)
+        {
+            return new EventWeekModel
+            {
+                Id = events.Id,
+                Publicity = events.Publicity,
+                Description = "",
+                Title = "",
                 Start = events.Start.ToString("yyyy-MM-dd HH:mm"),
                 Finish = events.Finish.ToString("yyyy-MM-dd HH:mm")
             };
