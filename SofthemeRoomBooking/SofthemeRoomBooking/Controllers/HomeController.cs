@@ -21,7 +21,6 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Index()
         {
-            throw new ArithmeticException();
             return View();
         }
 
