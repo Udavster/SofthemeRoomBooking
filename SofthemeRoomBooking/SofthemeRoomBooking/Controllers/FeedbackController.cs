@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -11,14 +12,17 @@ namespace SofthemeRoomBooking.Controllers
     public class FeedbackController : ErrorCatchingControllerBase
     {
         private IFeedbackService _feedbackService;
+        private INotificationService _notificationService;
+        private IProfileService _profileService;
 
-        public FeedbackController(IFeedbackService feedbackService)
+        public FeedbackController(IFeedbackService feedbackService, INotificationService notificationService, IProfileService profileService)
         {
             _feedbackService = feedbackService;
+            _notificationService = notificationService;
+            _profileService = profileService;
         }
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -41,6 +45,10 @@ namespace SofthemeRoomBooking.Controllers
                 };
                 //Save
                 _feedbackService.Save(feedback);
+
+                var admins = _profileService.GetAllAdminsEmails().ToList();
+
+                _notificationService.FeedbackNotification(admins,feedback);
                 return RedirectToAction("Index");
             }
 

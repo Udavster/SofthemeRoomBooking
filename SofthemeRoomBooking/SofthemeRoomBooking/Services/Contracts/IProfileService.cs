@@ -30,5 +30,7 @@ namespace SofthemeRoomBooking.Services.Contracts
         Task<bool> Edit(EditUserViewModel model);
         
         Task<bool> Delete(string userId);
+
+        IQueryable<string> GetAllAdminsEmails();
     }
 }

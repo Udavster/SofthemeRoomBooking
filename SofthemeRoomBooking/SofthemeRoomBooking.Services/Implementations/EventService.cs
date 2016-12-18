@@ -12,10 +12,12 @@ namespace SofthemeRoomBooking.Services.Implementations
     public class EventService : IEventService
     {
         private readonly SofhemeRoomBookingContext _context;
+        private readonly INotificationService _notificationService;
 
-        public EventService(SofhemeRoomBookingContext context)
+        public EventService(SofhemeRoomBookingContext context, INotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         public void CreateEvent(EventModel model, string userId)
@@ -57,6 +59,10 @@ namespace SofthemeRoomBooking.Services.Implementations
                 @event.Cancelled = true;
 
                 _context.SaveChanges();
+
+                var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == eventId).Select(x => x.Email).ToList();
+                var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
+                _notificationService.CancelEventNotification(usersEmails, eventInfo);
                 return true;
             }
 

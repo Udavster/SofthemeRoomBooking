@@ -14,6 +14,8 @@ var roomClickHighlightHandler = function (event) {
 }
 var openRoom = function ($this) {
     //button for open/close/change room
+    $('.room__close').data('id', $this.data("roomid"));
+    $('.room__open').data('id', $this.data("roomid"));
     $('.room__open').hide();
     $('.room__close').hide();
     $('.room__change').data('roomid', $this.data('roomid'));
@@ -173,16 +175,16 @@ $(document).ready(function () {
     });
 
     //add data attribute to close button
-    $(document).on('click', '.room__general', function () {
-        var _this = $(this);
-        $('.room__close').data('id', _this.data("roomid"));
-    });
+    //$(document).on('click', '.room__general', function () {
+    //    var _this = $(this);
+    //    $('.room__close').data('id', _this.data("roomid"));
+    //});
 
-    //add data attribute to open button
-    $(document).on('click', '.room__general', function () {
-        var _this = $(this);
-        $('.room__open').data('id', _this.data("roomid"));
-    });
+    ////add data attribute to open button
+    //$(document).on('click', '.room__general', function () {
+    //    var _this = $(this);
+    //    $('.room__open').data('id', _this.data("roomid"));
+    //});
     //click empty field week scheduler
     $(document).on('click', '.calendar-item:not(.not-empty)', function () {
        var _this = $(this);

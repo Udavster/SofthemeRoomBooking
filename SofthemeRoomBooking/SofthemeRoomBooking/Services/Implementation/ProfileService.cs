@@ -17,13 +17,15 @@ namespace SofthemeRoomBooking.Services.Implementation
     {
         private SignInManager<ApplicationUser, string> _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _dbContext;
 
         private bool _disposed;
 
-        public ProfileService(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ProfileService(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationDbContext dbContext)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public bool IsAdmin(string userId)
@@ -93,6 +95,13 @@ namespace SofthemeRoomBooking.Services.Implementation
         public IQueryable<ApplicationUser> GetAllUsers()
         {
             return _userManager.Users;
+        }
+
+        public IQueryable<string> GetAllAdminsEmails()
+        {
+            var role = _dbContext.Roles.SingleOrDefault(m => m.Name == "Admin");
+            var usersInRoleEmails = _dbContext.Users.Where(m => m.Roles.Any(r => r.RoleId == role.Id)).Select(x => x.Email);
+            return usersInRoleEmails;
         }
 
         public IQueryable<ApplicationUser> GetUsersByNameOrEmail(string searchString)

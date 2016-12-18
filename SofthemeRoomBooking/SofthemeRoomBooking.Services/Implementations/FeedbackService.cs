@@ -12,10 +12,12 @@ namespace SofthemeRoomBooking.Services.Implementations
     public class FeedbackService:IFeedbackService
     {
         private SofhemeRoomBookingContext _context;
+        private INotificationService _notificationService;
 
-        public FeedbackService(SofhemeRoomBookingContext context)
+        public FeedbackService(SofhemeRoomBookingContext context, INotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         public void Save(FeedbackModel model)
@@ -30,6 +32,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             };
             _context.Feedback.Add(dbModel);
             _context.SaveChanges();
+
         }
 
     }
