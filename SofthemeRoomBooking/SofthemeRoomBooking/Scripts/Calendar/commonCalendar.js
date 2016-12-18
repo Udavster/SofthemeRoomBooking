@@ -106,11 +106,11 @@ var createEvent = function (event) {
             var startTime = new Date(daySelected.day, daySelected.month, daySelected.year, startHour, startMinutes);
             var finishTime = new Date(daySelected.day, daySelected.month, daySelected.year, finishHour, finishMinutes);
             debugger;
-            setDateTime(startTime, finishTime);
+            setEventDateTime(startTime, finishTime);
 
             var roomNum = $event.parent().data('roomnum');
 
-            setRoom(roomNum);
+            setEventRoom(roomNum);
             
             setDefaultEventSettings();
 

@@ -41,11 +41,11 @@ if ($("#Nickname").val() === "") {
     $("#Nickname")[0].disabled = $("#ShowOrganizator")[0].checked = true;
 }
 
-setDateTime();
+setEventDateTime();
 
 
 
-function setDateTime(startTime, finishTime) {
+function setEventDateTime(startTime, finishTime) {
 
     var day = parseInt($("#Day").val()),
     month = parseInt($("#Month").val()) - 1,
@@ -80,6 +80,6 @@ function setDateTime(startTime, finishTime) {
     $("#event-date #arrow-down-day").click();
 };
 
-function setRoom(idRoom) {
+function setEventRoom(idRoom) {
     $("#IdRoom").val(idRoom);
 }
