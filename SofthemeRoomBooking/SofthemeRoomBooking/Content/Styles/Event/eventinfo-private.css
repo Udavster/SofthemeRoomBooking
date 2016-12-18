@@ -1,16 +1,18 @@
 ﻿.eventdetail{
-    width: 400px;
+    width: 350px;
     height: auto;
     background: #ffffff;
     border: 1px solid #9fa6b6;
     position: absolute;
     top: 135px;
     left: 630px;
+    z-index: 5;
 }
 .eventdetail__title {
     width: auto;
     height: 35px;
     background: #9fa6b6;
+    color: white;
 }
 
 .eventdetail__main {

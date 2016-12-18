@@ -1,4 +1,68 @@
-﻿function NextWeekDate() {
+﻿$(document).ready(function () {
+    localStorage.removeItem('cachedEvents');
+    var currentDate = new Date();
+    var prevDate = new Date();
+    //0 - sunday, 6 - saturday
+    if (currentDate.getDay() === 0) {
+        prevDate.setDate(currentDate.getDate() - 2);
+    }
+    else {
+        prevDate.setDate(currentDate.getDate() - 1);
+    }
+
+    nWeek = new NextWeekDate();
+    nWeek.set(prevDate.getDate());
+    
+    $(document).on('click', "#next-week", function () {
+        var plusDay = (nWeek.getFull().getDay() === 5) ? 10 : 9;
+
+        nWeek.set(nWeek.get() + +plusDay);
+
+        var data = {
+            date: convertDate(nWeek.getFull()),
+            id: $('#calendar').data('current-room')
+        }
+        $('#calendar').html('');
+        initCalendar(nWeek.getFull(), data);
+    });
+
+    $(document).on('click', "#prev-week", function () {
+
+        var plusDay = (nWeek.getFull().getDay() === 1) ? 10 : 9;
+
+        nWeek.set(nWeek.get() - +plusDay);
+        
+        var data = {
+            date: convertDate(nWeek.getFull()),
+            id: $('#calendar').data('current-room')
+        }
+        $('#calendar').html('');
+       
+        initCalendar(nWeek.getFull(), data);
+    });
+
+    $(document).on('click', '.back-to-today', function() {
+        var date = new Date();
+        nWeek = new NextWeekDate();
+        nWeek.set(prevDate.getDate());
+        date.setDate(date.getDate() - 1);
+        var data = {
+            date: convertDate(date),
+            id: $('#calendar').data('current-room')
+        }
+        $('#calendar').html('');
+        initCalendar(date, data);
+    });
+    
+
+    $('#calendar').show();
+
+    $('.room__general').click(function (event) { roomClickHandler(event, prevDate) });
+    nWeek = new NextWeekDate();
+
+});
+
+function NextWeekDate() {
     var nextWeek = new Date();
 
     return {
@@ -25,14 +89,13 @@ var roomClickHandler = function (event, prevDate) {
     getRoomScheduler($this, prevDate);
 }
 
-var getRoomSchedulerById = function(RoomId, prevDate) {
+var getRoomSchedulerById = function (RoomId, prevDate) {
     var $this = $('.room-' + RoomId);
     getRoomScheduler($this, prevDate);
 }
 
-var getRoomScheduler = function($this, prevDate) {
+var getRoomScheduler = function ($this, prevDate) {
     $('#calendar').html('');
-    console.log($this);
     $('#calendar').data('current-room', $this.data('roomid'));
 
     var date1 = new Date();
@@ -48,62 +111,30 @@ var getRoomScheduler = function($this, prevDate) {
     nWeek = new NextWeekDate();
 }
 
-$(document).ready(function () {
-    localStorage.removeItem('cachedEvents');
-    var currentDate = new Date();
-    var prevDate = new Date();
-    //0 - sunday, 6 - saturday
-    if (currentDate.getDay() === 0) {
-        prevDate.setDate(currentDate.getDate() - 2);
-    }
-    else {
-        prevDate.setDate(currentDate.getDate() - 1);
-    }
+var generateCalendarStructure = function (oldPrevDate, oldEvents, data) {
+    var prevDate = new Date(oldPrevDate);
+    for (var i = 0; i < 8; i++) {
 
-    nWeek = new NextWeekDate();
-   
-    nWeek.set(prevDate.getDate());
-    
-    $(document).on('click', "#next-week", function () {
-        var plusDay = (nWeek.getFull().getDay() === 5) ? 10 : 9;
+        generateCalendarCol(prevDate, oldEvents[i], i, data.id);
 
-        nWeek.set(nWeek.get() + +plusDay);
-
-        var data = {
-            date: convertDate(nWeek.getFull()),
-            id: $('#calendar').data('current-room')
+        if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
+            drawCursor(i);
         }
-        $('#calendar').html('');
-        initCalendar(nWeek.getFull(), data);
-    });
-
-    $(document).on('click', "#prev-week", function () {
-
-        var plusDay = (nWeek.getFull().getDay() === 1) ? 10 : 9;
-
-        nWeek.set(nWeek.get() - +plusDay);
-
-        var data = {
-            date: convertDate(nWeek.getFull()),
-            id: $('#calendar').data('current-room')
+        if (prevDate.getDay() === 6) {
+            prevDate.setDate(prevDate.getDate() + 2);
+        } else {
+            prevDate.setDate(prevDate.getDate() + 1);
         }
-        $('#calendar').html('');
-        initCalendar(nWeek.getFull(), data);
-    });
-    
+        if (i === 4) {
+            getMonthYear(prevDate);
 
-    $('#calendar').show();
-
-    $('.room__general').click(function (event) { roomClickHandler(event, prevDate) });
-
-});
+        }
+    }
+}
 
 function initCalendar(oldPrevDate, data) {
 
     generateMenu();
-    if (oldPrevDate.getDay() === 5 || oldPrevDate.getDay() === 0) {
-        $('.scheduler__header').css('width', '860px');
-    }
     var currentEvents = JSON.parse(localStorage.getItem('cachedEvents')) || [];
     var currentEvent = {
         room: data.id,
@@ -127,53 +158,21 @@ function initCalendar(oldPrevDate, data) {
 
     if (oldEvents.length > 0) {
         console.log('CACHED INFO');
-        var prevDate = new Date(oldPrevDate);
-        for (var i = 0; i < 8; i++) {
-
-            generateCalendarCol(prevDate, oldEvents[i], i, data.id);
-           
-            if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
-                drawCursor(i);
-            }
-            if (prevDate.getDay() === 6) {
-                prevDate.setDate(prevDate.getDate() + 2);
-            }
-            else {
-                prevDate.setDate(prevDate.getDate() + 1);
-            }
-            if (i === 7) {
-                getMonthYear(prevDate);
-
-            }
-        }
+        generateCalendarStructure(oldPrevDate, oldEvents, data);
     } else {
         $.getJSON("/Room/Events", data, function (jsonObject) {
-            var prevDate = new Date(oldPrevDate);
             currentEvent.events = jsonObject;
             currentEvents.push(currentEvent);
-            for (var i = 0; i < 8; i++) {
 
-                generateCalendarCol(prevDate, jsonObject[i], i, data.id);
-            
-                if (new Date().setHours(0, 0, 0, 0) === prevDate.setHours(0, 0, 0, 0)) {
-                    drawCursor(i);
-                }
-                if (prevDate.getDay() === 6) {
-                    prevDate.setDate(prevDate.getDate() + 2);
-                }
-                else {
-                    prevDate.setDate(prevDate.getDate() + 1);
-                }
-                if (i === 4) {
-                    getMonthYear(prevDate);
+            generateCalendarStructure(oldPrevDate, jsonObject, data);
 
-                }
-            }
             localStorage.setItem('cachedEvents', JSON.stringify(currentEvents));
         });
     }
+    drawTodayLabel(oldPrevDate);
 
 }
+
 function generateMenu() {
     var calendar = $('#calendar');
     var $controls = $('<div class="scheduler__header"></div>');
@@ -186,22 +185,20 @@ function generateMenu() {
 
 function generateCalendarCol(date, events, iteration, roomId) {
     var calendar = $('#calendar');
-    var ttt = iteration;
+    var currIteration = iteration;
     var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
     var isAuth = $('.week__scheduler').data('auth');
     var minInHour = 60;
     var heightCol = 48;
     //Generate HTML strucrure
 
-    //set column border active if date = current date
-
     if (new Date().setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) && date.getDay() != 6) {
-        var structure = '<div class="calendar-col-active c-' + ttt + '">';
+        var structure = '<div class="calendar-col-active c-' + currIteration + '"><span class="label-today" id="label-today">Сегодня</span>';
     } else {
         if (date.getDay() === 6 || date.getDay() === 0) {
-            var structure = '<div class="calendar-col-weekend c-' + ttt + '">';
+            var structure = '<div class="calendar-col-weekend c-' + currIteration + '">';
         } else {
-            var structure = '<div class="calendar-col c-' + ttt + '">';
+            var structure = '<div class="calendar-col c-' + currIteration + '">';
         }
     }
 
@@ -268,7 +265,7 @@ function generateCalendarCol(date, events, iteration, roomId) {
         var eventEnd = new Date(events[i].endDate);
         var eventEndHours = eventEnd.getHours();
         var eventEndMinutes = eventEnd.getMinutes();
-        var currentItem = $('.c-' + ttt).find('.item-' + (eventStartHours - 9));
+        var currentItem = $('.c-' + currIteration).find('.item-' + (eventStartHours - 9));
 
         //calculate height and top for displaying event
         var difference = (eventEndHours - eventStartHours) * minInHour + (eventEndMinutes - eventStartMinutes);
@@ -304,6 +301,7 @@ function generateCalendarCol(date, events, iteration, roomId) {
         }
         $(eventInfo).appendTo($(currentItem));
     }
+ 
 }
 
 function drawCursor(i) {
@@ -319,6 +317,25 @@ function drawCursor(i) {
         'px"><div class="cursor__arrows cursor__left-arrow"><i class="fa fa-caret-right" style="color:gray; font-size:25px" aria-hidden="true"></i></div><div class="cursor__arrows cursor__right-arrow"><i class="fa fa-caret-left" style="color:gray ;font-size:25px" aria-hidden="true"></i></div></div>';
     $(ctimeDiv).appendTo($(currentItem));
 }
+
+function drawTodayLabel(oldPrevDate) {
+
+    $('#back-to-today-right').addClass('hidden');
+    $('#back-to-today-left').addClass('hidden');
+
+    var now = new Date();
+    var todayArrow = new Date(oldPrevDate);
+
+    todayArrow.setDate(oldPrevDate.getDate() + 1);
+
+
+    if (todayArrow.setHours(0, 0, 0, 0) > now.setHours(0, 0, 0, 0)) {
+        $('#back-to-today-left').removeClass('hidden');
+    } else if (todayArrow.setHours(0, 0, 0, 0) < now.setHours(0, 0, 0, 0)) {
+        $('#back-to-today-right').removeClass('hidden');
+    }
+}
+
 
 function getMonthYear(date) {
     var monthArr = [

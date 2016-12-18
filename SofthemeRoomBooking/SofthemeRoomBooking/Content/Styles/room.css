@@ -26,6 +26,8 @@
 
 .room__arrow {
     pointer-events: none;
+    z-index: 6;
+    top: 80px;
 }
 .room__open {
     position: absolute;
@@ -409,11 +411,10 @@
     height: 167px;
     position: absolute;
     right: 10px;
-    bottom: -150px;
+    top: 125px;
     display: none;
     background-image: url(../../Content/Images/Equipment/LineDetails/line-details-english.png);
 }
-
 
 .room__path-9 {
     position: absolute;
@@ -421,8 +422,6 @@
     left: 23px;
     display: none;
 }
-
-
 
 .room__general:hover > .room__arrow{
     display: block;
