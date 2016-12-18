@@ -23,17 +23,19 @@ function Loading(show) {
     }
 }
 
-function getDate(a, Date) {
+function getDate(a, dateInfo) {
     Loading(true);
     $.ajax({
         url: '/Calendar',
-        data: { date: Date },
+        data: {
+            date: (dateInfo.getFullYear() + "" + tformat(dateInfo.getMonth() + 1) + "" + tformat(dateInfo.getDate()))
+        }, //year + "" + tformat(month + 1) + tformat(date) },
         method: 'get',
         dataType: "json",
 
-        success: function (data, textStatus) {
+        success: function (data) {
             Loading(false);
-
+            console.log(dateInfo);
             if (data.error) {
                 console.log("Date format is envalid or internal exception occured");
                 return;
@@ -56,7 +58,12 @@ function getDate(a, Date) {
 
             calendarMemo = rez;
             console.log(calendarMemo, rez['events']);
-            calendarMemo = a.sortEventsInMemo(calendarMemo);
+            
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (dateInfo >= today) {
+                 calendarMemo = a.sortEventsInMemo(calendarMemo);
+            }
             a.constructFromMemo(calendarMemo);
         },
 
@@ -182,7 +189,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
     }
 
     this.getClickedDate = function (date, dayOfWeek, month, year) {
-        getDate(a, year + "" + tformat(month + 1) + tformat(date));
+        getDate(a, new Date(year, month, date));
         var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
         a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
     };
@@ -197,7 +204,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
         }
 
         a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
-        getDate(a, today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
+        getDate(a, today);
     }
 
     var clickHandler = function(event) {
