@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Models.EventViewModel;
 using SofthemeRoomBooking.Services.Models;
@@ -10,7 +12,7 @@ namespace SofthemeRoomBooking.Converters
     {
         public static EventViewModel ToEventViewModel(this EventModel model, RoomModel[] rooms)
         {
-            return new EventViewModel(rooms)
+            var modelView = new EventViewModel
             {
                 Id = model.Id,
                 Title = model.Title,
@@ -24,9 +26,13 @@ namespace SofthemeRoomBooking.Converters
                 Year = model.StartTime.Year,
                 StartHour = model.StartTime.Hour,
                 StartMinutes = model.StartTime.Minute,
-                EndHour = model.FinishTime.Hour,
-                EndMinutes = model.FinishTime.Minute
+                FinishHour = model.FinishTime.Hour,
+                FinishMinutes = model.FinishTime.Minute
             };
+
+            modelView.SetUnlockedRooms(rooms);
+
+            return modelView;
         }
 
         public static EventModel ToEventModel(this EventViewModel model)
@@ -41,7 +47,7 @@ namespace SofthemeRoomBooking.Converters
                 Publicity = !model.Private,
                 AllowRegistration = model.AllowRegistration,
                 StartTime = new DateTime(model.Year, model.Month, model.Day, model.StartHour, model.StartMinutes, 0),
-                FinishTime = new DateTime(model.Year, model.Month, model.Day, model.EndHour, model.EndMinutes, 0)
+                FinishTime = new DateTime(model.Year, model.Month, model.Day, model.FinishHour, model.FinishMinutes, 0)
             };
         }
 
@@ -80,6 +86,8 @@ namespace SofthemeRoomBooking.Converters
                 ParticipantsQuantity = model.ParticipantsQuantity,
                 IdRoom = model.IdRoom,
                 IdUser = model.IdUser,
+                StartTime = model.StartTime,
+                FinishTime = model.FinishTime,
                 Day = model.StartTime.Day,
                 Month = model.StartTime.Month,
                 Year = model.StartTime.Year,

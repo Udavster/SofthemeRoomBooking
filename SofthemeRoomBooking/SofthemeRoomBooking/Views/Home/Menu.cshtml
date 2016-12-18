@@ -48,6 +48,8 @@
             success: function (result) {
                 $('#popup-create-event').html(result);
                 $('#popup-create-event').show();
+
+                $.validator.unobtrusive.parse("#event-form");
             }
         });
     });

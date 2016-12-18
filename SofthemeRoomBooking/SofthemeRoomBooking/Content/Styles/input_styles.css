@@ -215,10 +215,6 @@
     background-color: #F95752;
 }
 
-.button-active:hover {
-    background-color: #E2423F;
-}
-
 .whole-el-link {
     display: block;
     position: absolute;

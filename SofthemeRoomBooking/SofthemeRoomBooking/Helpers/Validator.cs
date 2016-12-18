@@ -27,7 +27,7 @@ namespace SofthemeRoomBooking.Helpers
             {
                 return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
             }
-            containerBuilder.AddCssClass("hidden");
+            containerBuilder.AddCssClass("hidden-error");
 
             return MvcHtmlString.Create(containerBuilder.ToString(TagRenderMode.Normal));
         }

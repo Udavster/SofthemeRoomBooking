@@ -57,19 +57,11 @@ namespace SofthemeRoomBooking.Models.EventViewModel
 
         [Required]
         [Range(0, 23, ErrorMessage = "Час не может выходить за интервал [0, 23]")]
-        public int EndHour { get; set; }
+        public int FinishHour { get; set; }
 
         [Required]
         [Range(0, 59, ErrorMessage = "Минуты не могут выходить за интервал [0, 59]")]
-        public int EndMinutes { get; set; }
-
-
-        public EventViewModel() { }
-
-        public EventViewModel(RoomModel[] rooms)
-        {
-            SetUnlockedRooms(rooms);
-        }
+        public int FinishMinutes { get; set; }
 
         public void SetUnlockedRooms(RoomModel[] rooms)
         {
@@ -77,7 +69,7 @@ namespace SofthemeRoomBooking.Models.EventViewModel
             {
                 Text = room.Name,
                 Value = room.Id.ToString(),
-                Selected = "select" == room.Id.ToString()
+                Selected = IdRoom.ToString() == room.Id.ToString()
             });
         }
     }

@@ -15,8 +15,8 @@
                 @Html.HiddenFor(model => model.Year)
                 @Html.HiddenFor(model => model.StartHour)
                 @Html.HiddenFor(model => model.StartMinutes)
-                @Html.HiddenFor(model => model.EndHour)
-                @Html.HiddenFor(model => model.EndMinutes)
+                @Html.HiddenFor(model => model.FinishHour)
+                @Html.HiddenFor(model => model.FinishMinutes)
                 <div id="event-date"></div>
                 <div id="event-timestart"></div>
                 <span>-</span>
@@ -43,19 +43,23 @@
                 })
             </div>
 
-            @Html.EditorFor(model => model.Description, new
-            {
-                htmlAttributes = new
+            <div class="group-input-error">
+                @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Description, new
                 {
-                    @class = "input-textarea event-input eventcontainer-body__event-description",
-                    placeholder = "Дополнительная информация"
-                }
-            })
+                    htmlAttributes = new
+                    {
+                        @class = "input-textarea event-input eventcontainer-body__event-description",
+                        placeholder = "Дополнительная информация"
+                    }
+                })
+            </div>
+
 
             <div class="eventcontainer-body__group">
                 <div class="container-checkbox">
-                    <input type="checkbox" class="checkbox" id="public-checkbox"/>
-                    <label for="public-checkbox">Регистрация желающих</label>
+                    @Html.CheckBoxFor(model => model.AllowRegistration, new { @class = "checkbox" })
+                    @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
                 </div>
 
                 <div class="container-switchbox">
@@ -70,25 +74,29 @@
 
             <div class="eventcontainer-body__group">
                 <div class="container-checkbox">
-                    <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
-                    <label for="organizator-checkbox">Показать автора</label>
+                    <input type="checkbox" class="checkbox" id="ShowOrganizator" />
+                    <label for="ShowOrganizator">Показать автора</label>
                 </div>
 
                 <span class="label-or">или</span>
 
-                @Html.EditorFor(model => model.Nickname, new
-                {
-                    htmlAttributes = new
+                <div class="group-input-error" style="width: 50%; height: 55px;">
+                    @Html.SignalValidationMessageFor(model => model.Nickname, new {@class = "error-box__text-danger"})
+                    @Html.EditorFor(model => model.Nickname, new
                     {
-                        @class = "input-text event-input eventcontainer-body__organizator-name",
-                        placeholder = "Указать организатора"
-                    }
-                })
+                        htmlAttributes = new
+                        {
+                            @class = "input-text event-input eventcontainer-body__organizator-name",
+                            placeholder = "Указать организатора"
+                        }
+                    })
+                </div>
             </div>
 
             <div class="eventcontainer-footer">
-                <div id="event-errors" class="eventcontainer-footer__error" style="display: none">
+                <div id="event-errors" class="eventcontainer-footer__error hidden-error">
                     <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
+                    <span class="error-text"></span>
                 </div>
                 <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
             </div>
@@ -96,6 +104,5 @@
     }
 </div>
 
-@Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/datetimepickers")
-@Scripts.Render("~/bundles/events")
+@Scripts.Render("~/bundles/event-edit")

@@ -44,7 +44,9 @@ namespace SofthemeRoomBooking.Controllers
         public ActionResult CreateEvent()
         {
             var rooms = _roomService.GetUnlockedRoomsByDate(DateTime.Today);
-            var modelView = new EventViewModel(rooms);
+
+            var modelView = new EventViewModel();
+            modelView.SetUnlockedRooms(rooms);
 
             return PartialView("_CreateEventPartial", modelView);
         }
@@ -82,12 +84,12 @@ namespace SofthemeRoomBooking.Controllers
             {
                 if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
                 {
-                    return Json(new { errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                    return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
                 }
 
                 _eventService.UpdateEvent(model);
 
-                return Json(new { redirectTo = Url.Action("Index", "Home") });
+                return Json(new { success = true, redirectTo = Url.Action("Index", "Home") });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 
@@ -95,14 +97,24 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditEventPartial(int eventId)
+        public ActionResult EditEventPartial(int eventId = -1)
         {
+            var rooms = _roomService.GetUnlockedRoomsByDate(DateTime.Today);
+
+            EventViewModel modelView;
+            if (eventId == -1)
+            {
+                modelView = new EventViewModel();
+                modelView.SetUnlockedRooms(rooms);
+
+                return PartialView("_EditEventPartial", modelView);
+            }
+
             var model = _eventService.GetEventById(eventId);
 
             if (model != null)
             {
-                var rooms = _roomService.GetUnlockedRoomsByDate(model.StartTime);
-                var modelView = model.ToEventViewModel(rooms);
+                modelView = model.ToEventViewModel(rooms);
 
                 return PartialView("_EditEventPartial", modelView);
             }
@@ -119,11 +131,14 @@ namespace SofthemeRoomBooking.Controllers
 
             if (ModelState.IsValid)
             {
-                //if the room is not occupied at this time
-                //save
-                //else
-                //return error
+                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
+                {
+                    return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                }
+
                 _eventService.UpdateEvent(model);
+
+                return Json(new { success = true, redirectTo = HttpContext.Request.RawUrl.Replace("Event/EventEditPartial","") });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SofthemeRoomBooking.Models.EventViewModel
 {
@@ -28,6 +29,10 @@ namespace SofthemeRoomBooking.Models.EventViewModel
         public int IdRoom { get; set; }
 
         public string IdUser { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime FinishTime { get; set; }
 
         public int Day { get; set; }
 

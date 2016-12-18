@@ -18,8 +18,7 @@
     font-size: 25px !important;
 }
 
-.hidden {
-    display: none;
+.hidden-error {
     visibility: hidden !important;
 }
 

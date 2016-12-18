@@ -16,7 +16,7 @@
             @Model.Description
         </p>
 
-        @if (Model.AllowRegistration)
+        @if (Model.AllowRegistration && Model.StartTime > DateTime.Now)
         {
             <div class="eventindex-info__join-to-event">
                 <span>Планируют принять участие @Model.ParticipantsQuantity человек</span>
@@ -31,8 +31,10 @@
     </div>
 
     <div class="eventindex-edit hidden">
-        @using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new {id = "eventindex-editform", enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "eventindex-editform", enctype = "multipart/form-data" }))
         {
+            @Html.AntiForgeryToken()
+
             <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
                 @Html.EditorFor(model => model.Title, new
@@ -53,15 +55,20 @@
 
                 <span class="label-or">или</span>
 
-                @Html.EditorFor(model => model.Nickname, new
-                {
-                    htmlAttributes = new
+                <div class="group-input-error" style="width: 60%;">
+                    @Html.SignalValidationMessageFor(model => model.Nickname, new {@class = "error-box__text-danger"})
+                    @Html.EditorFor(model => model.Nickname, new
                     {
-                        @class = "input-text event-input eventcontainer-body__organizator-name",
-                        placeholder = "Указать организатора"
-                    }
-                })
+                        htmlAttributes = new
+                        {
+                            @class = "input-text event-input eventindex-edit__organizator",
+                            placeholder = "Указать организатора"
+                        }
+                    })
+                </div>
             </div>
+
+
 
             <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
@@ -92,18 +99,18 @@
             </div>
 
             <span class="eventindex-edit__participants-count">Планируют принять участие @Model.ParticipantsQuantity человек</span>
+
+            @Html.HiddenFor(model => model.Day)
+            @Html.HiddenFor(model => model.Month)
+            @Html.HiddenFor(model => model.Year)
+            @Html.HiddenFor(model => model.StartHour)
+            @Html.HiddenFor(model => model.StartMinutes)
+            @Html.HiddenFor(model => model.EndHour)
+            @Html.HiddenFor(model => model.EndMinutes)
         }
     </div>
 
     <div class="eventindex-time">
-        @Html.HiddenFor(model => model.Day)
-        @Html.HiddenFor(model => model.Month)
-        @Html.HiddenFor(model => model.Year)
-        @Html.HiddenFor(model => model.StartHour)
-        @Html.HiddenFor(model => model.StartMinutes)
-        @Html.HiddenFor(model => model.EndHour)
-        @Html.HiddenFor(model => model.EndMinutes)
-
         <div class="eventindex-time__header">
             <div class="event-date-container">
                 <i class="fa fa-calendar calendar-icon" aria-hidden="true"></i>
@@ -214,7 +221,7 @@
     </table>
 </div>
 
-@Scripts.Render("~/bundles/jqueryval")
+
 @Scripts.Render("~/bundles/datetimepickers")
 
 <script>
@@ -286,11 +293,13 @@
             $("#event-timestart #minutes").text(startMinutes);
             $("#event-timefinish #hours").text(endHour);
             $("#event-timefinish #minutes").text(endMinutes);
+
+            displayErrors(true);
         });
 
         $("#cancelEventButton").bind("click", function (e) {
             e.preventDefault();
-            debugger;
+
             $.ajax({
                 url: window.location.origin + "/Event/CancelEventView",
                 method: "GET",
@@ -309,10 +318,7 @@
             var dateTimeValidator = dateTimeEventValidate();
 
             dateTimeValidator.showErrors(displayErrors);
-            var v = dateTimeValidator.validate();
-            var
-            d = $("#eventindex-editform").valid();
-            if (dateTimeValidator.validate() && $("#eventindex-editform").valid()) {
+            if (dateTimeValidator.valid() && $("#eventindex-editform").valid()) {
 
                 $.ajax({
                     url: window.location.origin + "/Event/EditEvent",
@@ -320,15 +326,16 @@
                     async: true,
                     data: $("#eventindex-editform").serialize(),
                     success: function (result) {
-                        if (result.redirectTo) {
+                        if (result.success) {
                             window.location.href = result.redirectTo;
-                        } else if (result.errorMessage) {
+                        } else {
                             dateTimeValidator.showErrors(false, result.errorMessage);
                         }
                     }
                 });
                 return true;
             } else {
+                dateTimeValidator.validate();
                 return false;
             }
         });
@@ -343,6 +350,14 @@
         $("#Private").change(function () {
             $('#AllowRegistration')[0].checked = !this.checked;
             $("#AllowRegistration")[0].disabled = this.checked;
+        });
+
+        $("#eventindex-editform .event-input").on("keyup blur", function () {
+            if ($("#eventindex-editform").valid()) {
+                $("#saveButton").attr("disabled", false);
+            } else {
+                $("#saveButton").attr("disabled", "disabled");
+            }
         });
 
         function initDateTimePickers() {
@@ -432,6 +447,14 @@
                 return { isValid: true };
             }
 
+            function valid() {
+                if (isValidStartTimeEvent().isValid && isValidDurationEvent().isValid) {
+                    return true;
+                }
+
+                return false;
+            };
+
             function validate() {
                 var isValidStartTime = isValidStartTimeEvent(),
                     isValidDuration = isValidDurationEvent(),
@@ -464,7 +487,7 @@
                 showErrorsHandler = handler;
             }
 
-            return { validate: validate, showErrors: showErrors };
+            return { valid: valid, validate: validate, showErrors: showErrors };
         }
 
         function displayErrors(isValid, errorMessage) {

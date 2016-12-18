@@ -2,7 +2,7 @@ function TimePicker() {
 
     if (this === window) {
         console.error('Use keyword new before function name DatePicker()');
-        return;
+        return false;
     }
 
     var wrap,
@@ -25,7 +25,7 @@ function TimePicker() {
         wrap.find("#arrow-up-minutes").bind("click", function(event) { this.switchMinutes(true, event); }.bind(this));
         wrap.find("#arrow-down-minutes").bind("click", function(event) { this.switchMinutes(false, event); }.bind(this));
 
-        $(hours).text(hourStart);
+        $(hours).text(('0' + hourStart).slice(-2));
         $(minutes).text('00');
 
         this.OnTimeChange = arrowClickHandler;

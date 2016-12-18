@@ -79,7 +79,7 @@
 .eventindex-time__header .event-date-container {
     display: flex;
     align-items: center;
-    margin: 0 10px 0 5px;
+    margin: 0 auto;
 }
 
 .eventindex-time__header .event-date-container .calendar-icon {
@@ -155,25 +155,37 @@
 }
 
 .eventindex-edit .eventindex-edit__title {
-    width: 500px;
+    display: block;
+    width: 550px;
     height: 30px;
+    margin-bottom: 10px;
 }
 
 .eventindex-edit .eventindex-edit__choose-organizator {
     display: flex;
     justify-content: space-between;
-    width: 500px;
-    margin: 15px 0;
+    width: 550px;
+    margin-bottom: 10px;
+}
+
+.eventindex-edit .eventindex-edit__choose-organizator .container-checkbox {
+    margin-top: 15px;
+}
+
+.eventindex-edit .eventindex-edit__choose-organizator .label-or {
+    margin-top: 22px;
 }
 
 .eventindex-edit .eventindex-edit__organizator {
     height: 30px;
+    margin: 0;
 }
 
 .eventindex-edit .eventindex-edit__description {
     width: 100%;
     height: auto;
     min-height: 80px;
+    margin: 0;
 }
 
 .eventindex-edit .eventindex-edit__publicity {

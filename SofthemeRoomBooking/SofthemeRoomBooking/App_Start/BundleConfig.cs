@@ -47,10 +47,14 @@ namespace SofthemeRoomBooking
                         "~/Scripts/DateTimePickers/timepicker.js"
                         ));
 
-            bundles.Add(new ScriptBundle("~/bundles/events").Include(
-                        "~/Scripts/Event/eventcreate.js",
-                        "~/Scripts/Event/eventedit.js",
-                        "~/Scripts/Event/eventcommon.js"
+            bundles.Add(new ScriptBundle("~/bundles/event-create").Include(
+                        "~/Scripts/Event/event-common.js",
+                        "~/Scripts/Event/event-create.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/event-edit").Include(
+                        "~/Scripts/Event/event-common.js",
+                        "~/Scripts/Event/event-edit.js"
                         ));
 
             //
