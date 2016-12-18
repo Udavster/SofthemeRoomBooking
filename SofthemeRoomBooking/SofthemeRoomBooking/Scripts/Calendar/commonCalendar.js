@@ -142,14 +142,16 @@ var editEvent = function (event) {
         if (!$event.hasClass('event')) return;
     }
 
+    console.log($event.data('id'));
+
     $.ajax({
-        url: window.location.origin + "/Event/EditEvent",
-        data: 'eventId=' + $event.data('id'),
+        url: window.location.origin + "/Event/EventDetails",
+        data: 'id=' + $event.data('id'),
         type: 'GET',
         success: function (result) {
             console.log(result);
-            $('#popup-edit-event').html(result);
-            $('#popup-edit-event').show();
+            $('#calendar__popup-edit-event').html(result);
+            $('#calendar__popup-edit-event').show();
         }
     });
 };
