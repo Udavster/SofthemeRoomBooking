@@ -334,8 +334,13 @@ div.calendar-events__description-row {
 .event-private:hover {
     background-color: #ebeef7;
 }
+.event-private .event__time {
+    position: relative;
+    color: black;
+    z-index: 6;    
+}
 .event-private div {
-    display: none;
+    /*display: none;*/
 }
 .event-private__lock {
     margin: 5px auto;

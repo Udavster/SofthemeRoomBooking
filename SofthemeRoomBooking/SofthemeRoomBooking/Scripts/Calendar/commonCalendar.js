@@ -23,17 +23,19 @@ function Loading(show) {
     }
 }
 
-function getDate(a, Date) {
+function getDate(a, dateInfo) {
     Loading(true);
     $.ajax({
         url: '/Calendar',
-        data: { date: Date },
+        data: {
+            date: (dateInfo.getFullYear() + "" + tformat(dateInfo.getMonth() + 1) + "" + tformat(dateInfo.getDate()))
+        }, //year + "" + tformat(month + 1) + tformat(date) },
         method: 'get',
         dataType: "json",
 
-        success: function (data, textStatus) {
+        success: function (data) {
             Loading(false);
-
+            console.log(dateInfo);
             if (data.error) {
                 console.log("Date format is envalid or internal exception occured");
                 return;
@@ -56,8 +58,13 @@ function getDate(a, Date) {
 
             calendarMemo = rez;
             console.log(calendarMemo, rez['events']);
-            calendarMemo = a.sortEventsInMemo(calendarMemo);
-            a.constructFromMemo(calendarMemo);
+            
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (dateInfo >= today) {
+                 calendarMemo = eventsCalendar.sortEventsInMemo(calendarMemo);
+            }
+            eventsCalendar.constructFromMemo(calendarMemo);
         },
 
         error: function () {
@@ -73,7 +80,7 @@ var monthNames = [
 ];
 
 var createEvent = function (event) {
-    if (!a.Auth) return;
+    if (!eventsCalendar.Auth) return;
     Loading(true);
     $.ajax({
         url: window.location.origin + "/Event/CreateEvent",
@@ -105,7 +112,7 @@ var createEvent = function (event) {
             $("#EndMinutes").val(endMinutes);
 
             
-            var daySelected = cal.getCurrentDay();
+            var daySelected = datePicker.getCurrentDay();
             $('.datepicker-chosen-date #day').html(daySelected.day);
             $('.datepicker-chosen-date #month').html(monthNames[daySelected.month]);
             $('.datepicker-chosen-date #year').html(daySelected.year);
@@ -135,14 +142,16 @@ var editEvent = function (event) {
         if (!$event.hasClass('event')) return;
     }
 
+    console.log($event.data('id'));
+
     $.ajax({
-        url: window.location.origin + "/Event/EditEvent",
-        data: 'eventId=' + $event.data('id'),
+        url: window.location.origin + "/Event/EventDetails",
+        data: 'id=' + $event.data('id'),
         type: 'GET',
         success: function (result) {
             console.log(result);
-            $('#popup-edit-event').html(result);
-            $('#popup-edit-event').show();
+            $('#calendar__popup-edit-event').html(result);
+            $('#calendar__popup-edit-event').show();
         }
     });
 };
@@ -153,38 +162,38 @@ $(document).ready(function () {
 
 function CommonCalendar(eventHandler, emptyHandler) {
     this.buildCalendars = function() {
-        cal = new DatePicker();
-        a = new Calendar("calendar-events", calendarMemo);
-        a.addEventOnClickHandler(function() { alert('Clicked'); });
-        a.changeWidth(930);
+        datePicker = new DatePicker();
+        eventsCalendar = new Calendar("calendar-events", calendarMemo);
+        eventsCalendar.addEventOnClickHandler(function() { alert('Clicked'); });
+        eventsCalendar.changeWidth(930);
         
-        cal.init(null);
-        cal.addDayClickHandler(this.getClickedDate);
+        datePicker.init(null);
+        datePicker.addDayClickHandler(this.getClickedDate);
         
-        $("#" + a.name + "-fw-control")
+        $("#" + eventsCalendar.name + "-fw-control")
             .click(function() {
 
                 $("#datepicker").hide();
                 $(".calendars__month").css('display', 'none');
                 $(this).attr('active', 'false');
-                $("#" + a.name + "-pw-control").attr('active', 'true');
-                //a.changeWidth("calc(100% - 100px)");
-                a.changeWidth("100%");
+                $("#" + eventsCalendar.name + "-pw-control").attr('active', 'true');
+                //eventsCalendar.changeWidth("calc(100% - 100px)");
+                eventsCalendar.changeWidth("100%");
             });
-        $("#" + a.name + "-pw-control")
+        $("#" + eventsCalendar.name + "-pw-control")
             .click(function() {
                 $("#datepicker").show();
                 $(".calendars__month").css('display', 'block');
                 $(this).attr('active', 'false');
-                $("#" + a.name + "-fw-control").attr('active', 'true');
-                a.changeWidth(930);
+                $("#" + eventsCalendar.name + "-fw-control").attr('active', 'true');
+                eventsCalendar.changeWidth(930);
             });
     }
 
     this.getClickedDate = function (date, dayOfWeek, month, year) {
-        getDate(a, year + "" + tformat(month + 1) + tformat(date));
+        getDate(eventsCalendar, new Date(year, month, date));
         var weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт"];
-        a.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
+        eventsCalendar.setToday(tformat(date) + ", " + weekdays[dayOfWeek]);
     };
 
     this.getSchedule = function() {
@@ -196,8 +205,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
             today.setDate(today.getDate() + 1);
         }
 
-        a.setToday(tformat(today.getDate()) + ", " + cal.getDayNames(today.getDay()));
-        getDate(a, today.getFullYear() + "" + tformat(today.getMonth() + 1) + tformat(today.getDate()));
+        eventsCalendar.setToday(tformat(today.getDate()) + ", " + datePicker.getDayNames(today.getDay()));
+        getDate(eventsCalendar, today);
     }
 
     var clickHandler = function(event) {
@@ -219,8 +228,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
     this.emptyHandler = createEvent;
     this.buildCalendars();
     this.getSchedule();
-    a.addEventOnClickHandler(clickHandler);
-    a.addNextPrevDayHandler(function(next) { cal.switchDay(next); });
+    eventsCalendar.addEventOnClickHandler(clickHandler);
+    eventsCalendar.addNextPrevDayHandler(function(next) { datePicker.switchDay(next); });
 }
 
 

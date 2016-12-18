@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SimpleInjector.Integration.Web.Mvc;
 using SofthemeRoomBooking.Models;
+using Logger = SofthemeRoomBooking.Services.Logger;
+
 
 namespace SofthemeRoomBooking
 {
@@ -20,6 +22,7 @@ namespace SofthemeRoomBooking
             //InitializeDataBase();
             //InsertUsers(100);
 
+            Logger.InitLogger();//инициализация - требуется один раз в начале
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -85,10 +88,7 @@ namespace SofthemeRoomBooking
         }
         protected void Application_Error(object sender, EventArgs e)
         {
-            Exception exception = Server.GetLastError();
-
-            //ILogger logger = Container.Resolve<ILogger>();
-            //logger.Error(exception);
+            Exception exception = Server.GetLastError();        
 
             Response.Clear();
 
@@ -97,6 +97,7 @@ namespace SofthemeRoomBooking
             RouteData routeData = new RouteData();
             routeData.Values.Add("controller", "Error");
 
+            bool log = true;
             if (httpException == null)
             {
                 routeData.Values.Add("action", "Error");
@@ -106,6 +107,7 @@ namespace SofthemeRoomBooking
                 switch (httpException.GetHttpCode())
                 {
                     case 404:
+                        log = false;
                         routeData.Values.Add("action", "NotFound");
                         break;
 
@@ -117,6 +119,12 @@ namespace SofthemeRoomBooking
                         routeData.Values.Add("action", "Error");
                         break;
                 }
+            }
+
+            if (log)
+            {
+                string logMessage = String.Format("{0}: {1}", DateTime.Now, exception.ToString());
+                Logger.Log.Error(logMessage);
             }
 
             //routeData.Values.Add("error", exception);

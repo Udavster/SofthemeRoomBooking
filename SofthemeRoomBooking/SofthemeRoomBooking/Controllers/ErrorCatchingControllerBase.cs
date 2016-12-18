@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Logger = SofthemeRoomBooking.Services.Logger;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -23,6 +22,9 @@ namespace SofthemeRoomBooking.Controllers
             var model = new HandleErrorInfo(filterContext.Exception, controllerName, actionName);
 
             var exception = model.Exception;
+
+            string logMessage = String.Format("{0}: {1}", DateTime.Now, exception.ToString());
+            Logger.Log.Error(logMessage);
 
             HttpException httpException = exception as HttpException;
             if (httpException != null)
