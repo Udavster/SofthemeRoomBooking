@@ -105,7 +105,7 @@ html {
     /* height: 33px;*/
 }
 
-.switch-calendars__option[active="true"] {
+.switch-calendars__option[active="false"] {
     color: #9fa6b6;
 }
 

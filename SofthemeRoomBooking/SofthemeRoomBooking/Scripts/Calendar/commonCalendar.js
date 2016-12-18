@@ -4,16 +4,16 @@ var calendarMemo = {
 
     }
 }
-calendarMemo2 = {
-    "roomArr": ['Einstein classroom2', 'Tesla classroom2', 'Newton classroom2'],
-    "events": {
+//calendarMemo2 = {
+//    "roomArr": ['Einstein classroom2', 'Tesla classroom2', 'Newton classroom2'],
+//    "events": {
         //'Einstein classroom2': [{ 'Title': 'event in the first room', 'Start': { 'h': 4, 'm': 0 }, 'Finish': { 'h': 5, 'm': 50 } }],
         //'Tesla classroom2': [{ 'Title': 'event in the room', 'Start': { 'h': 5, 'm': 0 }, 'Finish': { 'h': 6, 'm': 0 } }],
         //'Newton classroom2': [{ 'Title': 'event in the room', 'Start': { 'h': 4, 'm': 30 }, 'Finish': { 'h': 5, 'm': 0 } }],
         //'room42': [{ 'Title': 'event in the room', 'Start': { 'h': 2, 'm': 0 }, 'Finish': { 'h': 3, 'm': 0 } }],
         //'room5':[{'Title':'event in the room', 'Start':{'h':6,'m':0}, 'Finish': {'h':9,'m':0}}]             
-    }
-}
+//    }
+//}
 
 function Loading(show) {
     if (show) {
@@ -52,6 +52,8 @@ function getDate(a, Date) {
 
             rez["roomArr"] = roomArr;
             rez["events"] = data2;
+            rez["Auth"] = data["Authenticated"];
+
             calendarMemo = rez;
             console.log(calendarMemo, rez['events']);
             calendarMemo = a.sortEventsInMemo(calendarMemo);
@@ -71,6 +73,7 @@ var monthNames = [
 ];
 
 var createEvent = function (event) {
+    if (!a.Auth) return;
     Loading(true);
     $.ajax({
         url: window.location.origin + "/Event/CreateEvent",
@@ -153,10 +156,11 @@ function CommonCalendar(eventHandler, emptyHandler) {
         cal = new DatePicker();
         a = new Calendar("calendar-events", calendarMemo);
         a.addEventOnClickHandler(function() { alert('Clicked'); });
-
+        a.changeWidth(930);
+        
         cal.init(null);
         cal.addDayClickHandler(this.getClickedDate);
-      
+        
         $("#" + a.name + "-fw-control")
             .click(function() {
 
@@ -164,7 +168,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
                 $(".calendars__month").css('display', 'none');
                 $(this).attr('active', 'false');
                 $("#" + a.name + "-pw-control").attr('active', 'true');
-                a.changeWidth("calc(100% - 100px)");
+                //a.changeWidth("calc(100% - 100px)");
+                a.changeWidth("100%");
             });
         $("#" + a.name + "-pw-control")
             .click(function() {
@@ -172,7 +177,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
                 $(".calendars__month").css('display', 'block');
                 $(this).attr('active', 'false');
                 $("#" + a.name + "-fw-control").attr('active', 'true');
-                a.changeWidth(990);
+                a.changeWidth(930);
             });
     }
 
@@ -197,7 +202,7 @@ function CommonCalendar(eventHandler, emptyHandler) {
 
     var clickHandler = function(event) {
         var $target = $(event.target);
-        console.log($target.parent());
+
         if (!$target.hasClass("event-empty") && (!$target.parent().hasClass("event-empty"))) {
             if (this.eventHandler) {
                  this.eventHandler(event);
@@ -206,8 +211,8 @@ function CommonCalendar(eventHandler, emptyHandler) {
             if (this.emptyHandler) {
                  this.emptyHandler(event);
             }
-            
         }
+
     }.bind(this);
 
     this.eventHandler = editEvent;
@@ -218,9 +223,4 @@ function CommonCalendar(eventHandler, emptyHandler) {
     a.addNextPrevDayHandler(function(next) { cal.switchDay(next); });
 }
 
-
-$(document)
-    .ready(function() {
-
-    });
 

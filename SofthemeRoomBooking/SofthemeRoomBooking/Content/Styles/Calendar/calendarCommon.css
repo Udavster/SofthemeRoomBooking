@@ -1,8 +1,14 @@
-	.calendars{
+	.calendar-container {
 	    display: flex;
-	    justify-content: space-around;
-		width: 100%;
-    	min-width: 1024px;
+        justify-content: space-around;
+        width: 100%;
+	}
+    .calendars{
+	    display: flex;
+	    justify-content: space-between;
+		width: calc(100% - 100px);
+    	min-width: 1200px;
+	    max-width: 1330px;
         padding: 50px 10px 0 10px;
 	}
 	.calendars__day{

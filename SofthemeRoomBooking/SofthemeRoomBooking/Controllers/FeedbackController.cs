@@ -8,7 +8,7 @@ using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
-    public class FeedbackController : Controller
+    public class FeedbackController : ErrorCatchingControllerBase
     {
         private IFeedbackService _feedbackService;
 

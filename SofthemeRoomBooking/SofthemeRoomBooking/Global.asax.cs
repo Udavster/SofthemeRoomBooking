@@ -83,5 +83,52 @@ namespace SofthemeRoomBooking
 
             dbContext.Dispose();
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+
+            //ILogger logger = Container.Resolve<ILogger>();
+            //logger.Error(exception);
+
+            Response.Clear();
+
+            HttpException httpException = exception as HttpException;
+
+            RouteData routeData = new RouteData();
+            routeData.Values.Add("controller", "Error");
+
+            if (httpException == null)
+            {
+                routeData.Values.Add("action", "Error");
+            }
+            else
+            {
+                switch (httpException.GetHttpCode())
+                {
+                    case 404:
+                        routeData.Values.Add("action", "NotFound");
+                        break;
+
+                    case 500:
+                        routeData.Values.Add("action", "Error");
+                        break;
+
+                    default:
+                        routeData.Values.Add("action", "Error");
+                        break;
+                }
+            }
+
+            //routeData.Values.Add("error", exception);
+            
+            Server.ClearError();
+
+            Response.TrySkipIisCustomErrors = true;
+
+            IController errorController = new SofthemeRoomBooking.Controllers.ErrorController();
+            Response.ContentType = "text/html";
+            errorController.Execute(new RequestContext(
+                 new HttpContextWrapper(Context), routeData));
+        }
     }
 }

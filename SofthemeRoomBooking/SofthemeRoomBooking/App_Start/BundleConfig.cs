@@ -98,6 +98,9 @@ namespace SofthemeRoomBooking
             bundles.Add(new StyleBundle("~/bundles/Styles/profile").Include(
                 "~/Content/Styles/profile.css"));
 
+            bundles.Add(new StyleBundle("~/bundles/Styles/errors").Include(
+               "~/Content/Styles/errors.css"));
+
             bundles.Add(new StyleBundle("~/bundles/Styles/calendar").Include(
                 "~/Content/Styles/Calendar/calendarDatepicker.css",
                 "~/Content/Styles/Calendar/calendarEvents.css",

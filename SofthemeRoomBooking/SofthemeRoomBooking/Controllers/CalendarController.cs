@@ -13,7 +13,7 @@ using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
-    public class CalendarController : Controller
+    public class CalendarController : ErrorCatchingControllerBase
     {
         private IRoomService _roomService;
         private IEventService _eventService;
@@ -43,7 +43,11 @@ namespace SofthemeRoomBooking.Controllers
 
             var calendarEventListArray = CalendarEventConverter.GetCalendarEventModels(rooms, calendarEvent);
 
-            System.Collections.Hashtable ab = new Hashtable {{"Rooms", rooms}, {"Events", calendarEventListArray}};
+            System.Collections.Hashtable ab = new Hashtable {
+                                                            { "Rooms", rooms},
+                                                            { "Events", calendarEventListArray},
+                                                            { "Authenticated", (User.Identity.IsAuthenticated)}
+            };
             string json = JsonConvert.SerializeObject(ab, Formatting.Indented);
 
             return Content(json, "application/json");

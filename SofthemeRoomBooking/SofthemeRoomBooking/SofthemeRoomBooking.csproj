@@ -245,6 +245,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\ErrorCatchingControllerBase.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -357,6 +359,7 @@
     <Content Include="Content\Styles\DateTimePickers\datepicker.css" />
     <Content Include="Content\Styles\DateTimePickers\timepicker.css" />
     <Content Include="Content\Styles\equipment.css" />
+    <Content Include="Content\Styles\errors.css" />
     <Content Include="Content\Styles\Event\editevent.css" />
     <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\Event\eventcreate.css" />
@@ -492,6 +495,9 @@
     <Content Include="Views\Event\EventParticipants.cshtml" />
     <Content Include="Views\Event\AddParticipant.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Errors\Http400.cshtml" />
+    <Content Include="Views\Errors\Http404.cshtml" />
+    <Content Include="Views\Errors\Http500.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />

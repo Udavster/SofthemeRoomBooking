@@ -11,7 +11,7 @@ using SofthemeRoomBooking.Services.Contracts;
 namespace SofthemeRoomBooking.Controllers
 {
     [Authorize]
-    public class EventController : Controller
+    public class EventController : ErrorCatchingControllerBase
     {
         private readonly IEventService _eventService;
         private readonly IRoomService _roomService;
