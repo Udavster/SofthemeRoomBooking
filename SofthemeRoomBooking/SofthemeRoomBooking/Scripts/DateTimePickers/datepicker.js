@@ -5,12 +5,18 @@ function DatePickerChosen() {
         return false;
     }
 
-    var wrap, day, month, year,
-        startDate, endDate,
-        months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    var numberMonths = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+        wordMonths = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 
-    this.init = function (newWrap, newStartDate, newEndDate, arrowClickHandler) {
+    var wrap, separator,
+        day, month, year, months,
+        startDate, endDate;
+
+    this.init = function (newWrap, newSeparator, monthType, newStartDate, newEndDate, arrowClickHandler) {
         wrap = $(newWrap || '#datepicker-chosen');
+        separator = newSeparator === null ? '' : newSeparator;
+
+        months = monthType === 'number' ? numberMonths : wordMonths;
 
         startDate = (newStartDate instanceof Date) ? newStartDate : 0;
         endDate = (newEndDate instanceof Date) ? newEndDate : 0;
@@ -32,9 +38,14 @@ function DatePickerChosen() {
             currentMonth = new Date().getMonth(),
             currentYear = new Date().getFullYear();
 
-        if (currentDay < 10) {
-            currentDay = '0' + currentDay.toString();
+        if (separator !== '') {
+            wrap.find('.datepicker-chosen-day').removeClass('datepicker-chosen-day').addClass('datepicker-chosen-default');
+            wrap.find('.datepicker-chosen-month').removeClass('datepicker-chosen-month').addClass('datepicker-chosen-default');
+            wrap.find('.datepicker-chosen-year').removeClass('datepicker-chosen-year').addClass('datepicker-chosen-default');
         }
+
+        currentDay = ('0' + currentDay).slice(-2);
+        currentYear = separator !== '' ? (currentYear.toString()).slice(2) : currentYear;
 
         $(day).text(currentDay);
         $(month).text(months[currentMonth]);
@@ -45,9 +56,10 @@ function DatePickerChosen() {
     }.bind(this);
 
     this.getDateInfo = function () {
+
         var currentDay = parseInt(day.text(), 10),
             currentMonth = months.indexOf($(month).text()),
-            currentYear = parseInt(wrap.find('#year').text()),
+            currentYear = separator !== '' ? parseInt('20' + wrap.find('#year').text()) : parseInt(wrap.find('#year').text()),
             lastDay = new Date(currentYear, currentMonth + 1, 0).getDate(),
             lastDayOfPrevMonth = new Date(currentYear, currentMonth, 0).getDate(),
             lastDayOfNextMonth = new Date(currentYear, currentMonth + 2, 0).getDate();
@@ -82,9 +94,7 @@ function DatePickerChosen() {
             }
         }
 
-        if (currentDay < 10) {
-            currentDay = '0' + currentDay.toString();
-        }
+        currentDay = ('0' + currentDay).slice(-2);
 
         $(day).text(currentDay);
         this.changeDateHandler(event);
@@ -97,7 +107,7 @@ function DatePickerChosen() {
             currentMonth = dateInfo.currentMonth;
 
         if (forward) {
-            if (months[currentMonth] === 'Декабря') {
+            if (months[currentMonth] === 'Декабря' || months[currentMonth] === '12') {
                 currentMonth = 0;
                 this.switchYear(true, event);
             } else {
@@ -109,7 +119,7 @@ function DatePickerChosen() {
                 $(day).text(currentDay);
             }
         } else {
-            if (months[currentMonth] === 'Января') {
+            if (months[currentMonth] === 'Января' || months[currentMonth] === '01') {
                 currentMonth = 11;
                 this.switchYear(false, event);
             } else {
@@ -147,6 +157,8 @@ function DatePickerChosen() {
             }
         }
 
+        currentYear = separator !== '' ? (currentYear.toString()).slice(2) : currentYear;
+
         $(year).text(currentYear);
         this.changeDateHandler(event);
         this.checkLimitDate();
@@ -158,7 +170,8 @@ function DatePickerChosen() {
         if (startDate !== 0) {
             if (dateInfo.currentYear <= startDate.getFullYear()) {
                 wrap.find('#arrow-down-year').css('visibility', 'hidden');
-                $(year).text(startDate.getFullYear());
+                var startYear = separator !== '' ? (startDate.getFullYear().toString()).slice(2) : startDate.getFullYear();
+                $(year).text(startYear);
 
                 if (dateInfo.currentMonth <= startDate.getMonth()) {
                     wrap.find('#arrow-down-month').css('visibility', 'hidden');
@@ -166,18 +179,18 @@ function DatePickerChosen() {
 
                     if (dateInfo.currentDay <= startDate.getDate()) {
                         wrap.find('#arrow-down-day').css('visibility', 'hidden');
-                        $(day).text(startDate.getDate());
+                        $(day).text(('0' + startDate.getDate()).slice(-2));
                     } else {
-                        wrap.find('#arrow-down-day').css('visibility', 'visible');
+                        wrap.find('#arrow-down-day').css('visibility', '');
                     }
                 } else {
-                    wrap.find('#arrow-down-month').css('visibility', 'visible');
-                    wrap.find('#arrow-down-day').css('visibility', 'visible');
+                    wrap.find('#arrow-down-month').css('visibility', '');
+                    wrap.find('#arrow-down-day').css('visibility', '');
                 }
             } else {
-                wrap.find('#arrow-down-year').css('visibility', 'visible');
-                wrap.find('#arrow-down-month').css('visibility', 'visible');
-                wrap.find('#arrow-down-day').css('visibility', 'visible');
+                wrap.find('#arrow-down-year').css('visibility', '');
+                wrap.find('#arrow-down-month').css('visibility', '');
+                wrap.find('#arrow-down-day').css('visibility', '');
             }
         }
 
@@ -191,16 +204,16 @@ function DatePickerChosen() {
                     if (dateInfo.currentDay >= endDate.getDate()) {
                         wrap.find('#arrow-up-day').css('visibility', 'hidden');
                     } else {
-                        wrap.find('#arrow-up-day').css('visibility', 'visible');
+                        wrap.find('#arrow-up-day').css('visibility', '');
                     }
                 } else {
-                    wrap.find('#arrow-up-month').css('visibility', 'visible');
-                    wrap.find('#arrow-up-day').css('visibility', 'visible');
+                    wrap.find('#arrow-up-month').css('visibility', '');
+                    wrap.find('#arrow-up-day').css('visibility', '');
                 }
             } else {
-                wrap.find('#arrow-up-year').css('visibility', 'visible');
-                wrap.find('#arrow-up-month').css('visibility', 'visible');
-                wrap.find('#arrow-up-day').css('visibility', 'visible');
+                wrap.find('#arrow-up-year').css('visibility', '');
+                wrap.find('#arrow-up-month').css('visibility', '');
+                wrap.find('#arrow-up-day').css('visibility', '');
             }
         }
     }
@@ -214,7 +227,7 @@ function DatePickerChosen() {
 
         var day = parseInt(wrap.find('#day').text());
         var month = months.indexOf(wrap.find('#month').text());
-        var year = parseInt(wrap.find('#year').text());
+        var year = separator !== '' ? parseInt( '20' + wrap.find('#year').text()) : parseInt(wrap.find('#year').text());
 
         if (this.OnDateChanged != undefined) {
             try {
@@ -233,25 +246,31 @@ function DatePickerChosen() {
             + '<td id="arrow-up-day" class="datepicker-chosen-day">'
             + '<i class="fa fa-caret-up" aria-hidden="true"></i>'
             + '</td>'
+            + '<td></td>'
             + '<td id="arrow-up-month" class="datepicker-chosen-month">'
             + '<i class="fa fa-caret-up" aria-hidden="true"></i>'
             + '</td>'
+            + '<td></td>'
             + '<td id="arrow-up-year" class="datepicker-chosen-year">'
             + '<i class="fa fa-caret-up" aria-hidden="true"></i>'
             + '</td>'
             + '</tr>'
             + '<tr class="datepicker-chosen-date">'
             + '<td id="day" class="datepicker-chosen-day"></td>'
-            + '<td id="month" class="datepicker-chosen-month"></td>'
+            + '<td>' + separator + '</td>'
+            + '<td id="month"></td>'
+            + '<td>' + separator + '</td>'
             + '<td id="year" class="datepicker-chosen-year"></td>'
             + '</tr>'
             + '<tr  class="datepicker-chosen-arrow">'
             + '<td id="arrow-down-day" class="datepicker-chosen-day">'
             + '<i class="fa fa-caret-down" aria-hidden="true"></i>'
             + '</td>'
+            + '<td></td>'
             + '<td id="arrow-down-month" class="datepicker-chosen-month">'
             + '<i class="fa fa-caret-down" aria-hidden="true"></i>'
             + '</td>'
+            + '<td></td>'
             + '<td id="arrow-down-year" class="datepicker-chosen-year">'
             + '<i class="fa fa-caret-down" aria-hidden="true"></i>'
             + '</td>'

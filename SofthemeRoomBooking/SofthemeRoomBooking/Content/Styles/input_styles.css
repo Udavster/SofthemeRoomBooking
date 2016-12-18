@@ -204,6 +204,12 @@
     background-color: #F95752;
 }
 
+.button:disabled {
+    background-color: #F5F6FB;
+    color: #C7C8CB;
+    cursor: default;
+}
+
 .button-active {
     color: white;
     background-color: #F95752;

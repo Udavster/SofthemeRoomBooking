@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Services.Models;
+using SofthemeRoomBooking.Services.Models.EventModel;
 
 namespace SofthemeRoomBooking.Converters
 {

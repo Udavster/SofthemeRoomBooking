@@ -83,11 +83,11 @@ var createEvent = function (event) {
     if (!eventsCalendar.Auth) return;
     Loading(true);
     $.ajax({
-        url: window.location.origin + "/Event/CreateEvent",
+        url: window.location.origin + "/Event/EditEventPartial",
         type: 'GET',
         success: function (result) {
-            $('#calendar__popup-create-event').html(result);
-            $('#calendar__popup-create-event').show();
+            $('#popup-edit-event').html(result);
+            $('#popup-edit-event').show();
 
             var $event;
             if ($(event.target).hasClass('event-empty')) {
@@ -96,35 +96,24 @@ var createEvent = function (event) {
                 $event = $(event.target).parent();
             }
 
-            var startHour = $event.data('sh');
-            var startMinutes = $event.data('sm');
-            var endHour = $event.data('eh');
-            var endMinutes = $event.data('em');
+            var daySelected = cal.getCurrentDay();
 
-            $('#event-timestart #hours').html(tformat(startHour));
-            $('#event-timestart #minutes').html(tformat(startMinutes));
-            $("#StartHour").val(startHour);
-            $("#StartMinutes").val(startMinutes);
+            var startHour = parseInt($event.data('sh'), 10);
+            var startMinutes = parseInt($event.data('sm'), 10);
+            var finishHour = parseInt($event.data('eh'), 10);
+            var finishMinutes = parseInt($event.data('em'), 10);
 
-            $('#event-timefinish #hours').html(tformat(endHour));
-            $('#event-timefinish #minutes').html(tformat(endMinutes));
-            $("#EndHour").val(endHour);
-            $("#EndMinutes").val(endMinutes);
-
-            
-            var daySelected = datePicker.getCurrentDay();
-            $('.datepicker-chosen-date #day').html(daySelected.day);
-            $('.datepicker-chosen-date #month').html(monthNames[daySelected.month]);
-            $('.datepicker-chosen-date #year').html(daySelected.year);
-
-            $("#Day").val(daySelected.day);
-            $("#Month").val(daySelected.month + 1);
-            $("#Year").val(daySelected.year);
-            
-
+            var startTime = new Date(daySelected.day, daySelected.month, daySelected.year, startHour, startMinutes);
+            var finishTime = new Date(daySelected.day, daySelected.month, daySelected.year, finishHour, finishMinutes);
+            debugger;
+            setEventDateTime(startTime, finishTime);
 
             var roomNum = $event.parent().data('roomnum');
-            $('#IdRoom option')[roomNum].selected = true;
+
+            setEventRoom(roomNum);
+            
+            setDefaultEventSettings();
+
             Loading(false);
         },
         error: function () {

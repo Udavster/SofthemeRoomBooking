@@ -24,6 +24,10 @@
     cursor: default;
 }
 
+.datepicker-chosen .datepicker-chosen-default {
+    width: 18px;
+}
+
 .datepicker-chosen .datepicker-chosen-day {
     width: 25px;
 }

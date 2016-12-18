@@ -9,8 +9,7 @@
     padding: 4% 6% 0 6%;
 }
 
-.eventindex-info,
-.eventindex-edit {
+.eventindex-info {
     width: 65%;
 }
 
@@ -80,7 +79,7 @@
 .eventindex-time__header .event-date-container {
     display: flex;
     align-items: center;
-    margin: 0 10px 0 5px;
+    margin: 0 auto;
 }
 
 .eventindex-time__header .event-date-container .calendar-icon {
@@ -147,20 +146,46 @@
     font-size: 35px;
 }
 
+.eventindex-edit {
+    width: 65%;
+}
+
+.eventindex-editform {
+    width: 100%;
+}
+
 .eventindex-edit .eventindex-edit__title {
-    width: 500px;
+    display: block;
+    width: 550px;
     height: 30px;
+    margin-bottom: 10px;
 }
 
 .eventindex-edit .eventindex-edit__choose-organizator {
     display: flex;
-    width: 500px;
-    margin: 15px 0;
+    justify-content: space-between;
+    width: 550px;
+    margin-bottom: 10px;
+}
+
+.eventindex-edit .eventindex-edit__choose-organizator .container-checkbox {
+    margin-top: 15px;
+}
+
+.eventindex-edit .eventindex-edit__choose-organizator .label-or {
+    margin-top: 22px;
+}
+
+.eventindex-edit .eventindex-edit__organizator {
+    height: 30px;
+    margin: 0;
 }
 
 .eventindex-edit .eventindex-edit__description {
+    width: 100%;
     height: auto;
     min-height: 80px;
+    margin: 0;
 }
 
 .eventindex-edit .eventindex-edit__publicity {
@@ -170,8 +195,14 @@
     margin: 15px 0;
 }
 
+.eventindex-edit .eventindex-edit__participants-count {
+    display: block;
+    padding: 15px 0;
+}
+
 .eventindex-participants {
     width: 100%;
+    margin-top: 50px;
     padding: 0 6%;
 }
 
@@ -210,4 +241,17 @@
 
 .eventindex-participants .participants-table-item:hover i:hover {
     color: #747B87;
+}
+
+
+
+/*commom styles*/
+.event-addparticipant {
+    display: flex;
+}
+
+.event-addparticipants__button-add {
+    background: transparent;
+    border: none;
+    outline: none;
 }

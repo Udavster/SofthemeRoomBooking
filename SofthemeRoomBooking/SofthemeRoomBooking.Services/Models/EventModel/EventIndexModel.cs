@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace SofthemeRoomBooking.Services.Models
+namespace SofthemeRoomBooking.Services.Models.EventModel
 {
-    public class EventModel
+    public class EventIndexModel
     {
         public int Id { get; set; }
 
@@ -14,7 +14,11 @@ namespace SofthemeRoomBooking.Services.Models
 
         public bool AllowRegistration { get; set; }
 
+        public int ParticipantsQuantity { get; set; }
+
         public int IdRoom { get; set; }
+
+        public string IdUser { get; set; }
 
         public string Nickname { get; set; }
 

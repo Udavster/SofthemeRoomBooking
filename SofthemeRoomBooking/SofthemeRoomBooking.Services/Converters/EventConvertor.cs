@@ -1,5 +1,5 @@
 ﻿using SofthemeRoomBooking.DAL;
-using SofthemeRoomBooking.Services.Models;
+using SofthemeRoomBooking.Services.Models.EventModel;
 
 namespace SofthemeRoomBooking.Services.Converters
 {
@@ -61,6 +61,43 @@ namespace SofthemeRoomBooking.Services.Converters
                 UserId = model.Id_user,
                 Publicity = model.Publicity,
                 AllowRegistration = model.AllowRegistration
+            };
+        }
+
+        public static EventIndexModel ToEventIndexModel(this Events model, int participantsQuantity)
+        {
+            return new EventIndexModel
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                Nickname = model.Nickname,
+                Publicity = model.Publicity,
+                AllowRegistration = model.AllowRegistration,
+                ParticipantsQuantity = participantsQuantity,
+                IdRoom = model.Id_room,
+                IdUser = model.Id_user,
+                StartTime = model.Start,
+                FinishTime = model.Finish
+            };
+        }
+
+        public static EventParticipantModel ToEventParticipantModel(this EventsUser model)
+        {
+            return new EventParticipantModel
+            {
+                Id = model.Id,
+                IdEvent = model.IdEvent,
+                Email = model.Email
+            };
+        }
+
+        public static EventsUser ToEventParticipantEntity(this EventParticipantModel model)
+        {
+            return new EventsUser
+            {
+                Email = model.Email,
+                IdEvent = model.IdEvent
             };
         }
 

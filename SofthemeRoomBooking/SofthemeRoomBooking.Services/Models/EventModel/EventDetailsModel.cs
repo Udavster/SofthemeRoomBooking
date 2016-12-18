@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SofthemeRoomBooking.Services.Models
+namespace SofthemeRoomBooking.Services.Models.EventModel
 {
     public class EventDetailsModel
     {

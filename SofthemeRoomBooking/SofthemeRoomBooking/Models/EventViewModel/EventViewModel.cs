@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
+using SofthemeRoomBooking.Services.Models;
 
-namespace SofthemeRoomBooking.Models
+namespace SofthemeRoomBooking.Models.EventViewModel
 {
-    public class EventIndexViewModel
+    public class EventViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -19,11 +24,16 @@ namespace SofthemeRoomBooking.Models
         public bool Private { get; set; }
 
         [Required]
+        public bool AllowRegistration { get; set; }
+
+        [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Неверный идентификатор комнаты")]
         public int IdRoom { get; set; }
 
         [StringLength(50, ErrorMessage = "Имя организатора не может быть длиннее 50 символов")]
         public string Nickname { get; set; }
+
+        public IEnumerable<SelectListItem> Rooms { get; set; }
 
         [Required]
         [Range(1, 31, ErrorMessage = "День должен находиться в интервале [1, 31]")]
@@ -47,10 +57,20 @@ namespace SofthemeRoomBooking.Models
 
         [Required]
         [Range(0, 23, ErrorMessage = "Час не может выходить за интервал [0, 23]")]
-        public int EndHour { get; set; }
+        public int FinishHour { get; set; }
 
         [Required]
         [Range(0, 59, ErrorMessage = "Минуты не могут выходить за интервал [0, 59]")]
-        public int EndMinutes { get; set; }
+        public int FinishMinutes { get; set; }
+
+        public void SetUnlockedRooms(RoomModel[] rooms)
+        {
+            Rooms = rooms.Select(room => new SelectListItem
+            {
+                Text = room.Name,
+                Value = room.Id.ToString(),
+                Selected = IdRoom.ToString() == room.Id.ToString()
+            });
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model SofthemeRoomBooking.Models.EventViewModel
+﻿@model SofthemeRoomBooking.Models.EventViewModel.EventViewModel
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
@@ -20,8 +20,8 @@
             @Html.HiddenFor(model => model.Year)
             @Html.HiddenFor(model => model.StartHour)
             @Html.HiddenFor(model => model.StartMinutes)
-            @Html.HiddenFor(model => model.EndHour)
-            @Html.HiddenFor(model => model.EndMinutes)
+            @Html.HiddenFor(model => model.FinishHour)
+            @Html.HiddenFor(model => model.FinishMinutes)
             <span>Когда</span>
             <div id="event-date"></div>
             <div id="event-timestart"></div>
@@ -78,32 +78,34 @@
 
         <div class="eventcontainer-body__group">
             <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
-                <label for="organizator-checkbox">Показать автора</label>
+                <input type="checkbox" class="checkbox" id="ShowOrganizator"/>
+                <label for="ShowOrganizator">Показать автора</label>
             </div>
 
             <span class="label-or">или</span>
 
-            @Html.EditorFor(model => model.Nickname, new
-            {
-                htmlAttributes = new
+            <div class="group-input-error" style="width: 50%; height: 55px;">
+                @Html.SignalValidationMessageFor(model => model.Nickname, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Nickname, new
                 {
-                    @class = "input-text event-input eventcontainer-body__organizator-name",
-                    placeholder = "Указать организатора"
-                }
-            })
+                    htmlAttributes = new
+                    {
+                        @class = "input-text event-input eventcontainer-body__organizator-name",
+                        placeholder = "Указать организатора"
+                    }
+                })
+            </div>
         </div>
 
         <div class="eventcontainer-footer">
-            <div id="event-errors" class="eventcontainer-footer__error hidden">
+            <div id="event-errors" class="eventcontainer-footer__error hidden-error">
                 <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
                 <span class="error-text"></span>
             </div>
-            <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
+            <input id="createButton" class="input-submit event-button" type="submit" value="Создать"/>
         </div>
     }
 </div>
 
-@Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/bundles/datetimepickers")
-@Scripts.Render("~/bundles/events")
+@Scripts.Render("~/bundles/event-create")

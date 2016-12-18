@@ -1,85 +1,113 @@
-﻿@model SofthemeRoomBooking.Models.EventViewModel
+﻿@using Microsoft.AspNet.Identity
+@model SofthemeRoomBooking.Models.EventViewModel.EventIndexViewModel
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
+<div id="popup-confirmation" class="overlay"></div>
+
 <div class="eventindex">
     <div class="eventindex-info">
-        <p class="eventindex-info__title">English Class for Juniors & Seniors</p>
+        <p class="eventindex-info__title">@Model.Title</p>
         <p class="eventindex-info__autor">
             <i class="fa fa-user user-icon" aria-hidden="true"></i>
-            <span class="user-name">Daniel</span>
+            <span class="user-name">@Model.Organizator</span>
         </p>
-        <p class="eventindex-info__description">@Model.Description
-            При нажатии на кнопку “Отменить” должен показываться попап с уточнением,
-            действительно ли пользователь хочет отменить выбранное событие.
-            При нажатии на кнопку “Изменить” данные о событии меняются на текстовые поля, на
-            карте скрывается путь к выбранной аудитории и пользователь имеет возможность
-            выбрать другую активную аудиторию, кликнув по ней
+        <p class="eventindex-info__description">
+            @Model.Description
         </p>
-        <div class="eventindex-info__join-to-event">
-            <span>Планируют принять участие 9 человек</span>
-            <span class="join-label">Присоединиться</span>
-            <div class="group-input-error join-email">
+
+        @if (Model.AllowRegistration && Model.StartTime > DateTime.Now)
+        {
+            <div class="eventindex-info__join-to-event">
+                <span>Планируют принять участие @Model.ParticipantsQuantity человек</span>
+                
+                @if (Model.IdUser != User.Identity.GetUserId())
+                {
+                    <span class="join-label">Присоединиться</span>
+                    @Html.Action("AddParticipant", "Event", new { eventId =  Model.Id })
+                }
+            </div>
+        }
+    </div>
+
+    <div class="eventindex-edit hidden">
+        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "eventindex-editform", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
                 @Html.EditorFor(model => model.Title, new
                 {
                     htmlAttributes = new
                     {
-                        @class = "input-text event-input eventcontainer-body__event-title",
-                        placeholder = "Укажите e-mail, чтобы присоединиться"
+                        @class = "input-text event-input eventindex-edit__title",
+                        placeholder = "Заголовок"
                     }
                 })
             </div>
-            <i class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
-        </div>
-    </div>
-    <div class="eventindex-edit">
-        <div class="group-input-error">
-            @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
-            @Html.EditorFor(model => model.Title, new
-            {
-                htmlAttributes = new
-                {
-                    @class = "input-text event-input eventindex-edit__title",
-                    placeholder = "Заголовок"
-                }
-            })
-        </div>
 
-        <div class="eventindex-edit__choose-organizator">
-            <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="organizator-checkbox"/>
-                <label for="organizator-checkbox">Показать автора</label>
+            <div class="eventindex-edit__choose-organizator">
+                <div class="container-checkbox">
+                    <input type="checkbox" class="checkbox" id="ShowOrganizator"/>
+                    <label for="ShowOrganizator">Показать автора</label>
+                </div>
+
+                <span class="label-or">или</span>
+
+                <div class="group-input-error" style="width: 60%;">
+                    @Html.SignalValidationMessageFor(model => model.Nickname, new {@class = "error-box__text-danger"})
+                    @Html.EditorFor(model => model.Nickname, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "input-text event-input eventindex-edit__organizator",
+                            placeholder = "Указать организатора"
+                        }
+                    })
+                </div>
             </div>
 
-            <span class="label-or">или</span>
 
-            @Html.EditorFor(model => model.Nickname, new
-            {
-                htmlAttributes = new
+
+            <div class="group-input-error">
+                @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
+                @Html.EditorFor(model => model.Description, new
                 {
-                    @class = "input-text event-input eventcontainer-body__organizator-name",
-                    placeholder = "Указать организатора"
-                }
-            })
-        </div>
-
-        @Html.EditorFor(model => model.Description, new
-        {
-            htmlAttributes = new
-            {
-                @class = "input-textarea event-input eventindex-edit__description",
-                placeholder = "Дополнительная информация"
-            }
-        })
-
-        <div class="eventindex-edit__publicity">
-            <div class="container-checkbox">
-                <input type="checkbox" class="checkbox" id="public-checkbox"/>
-                <label for="public-checkbox">Регистрация желающих</label>
+                    htmlAttributes = new
+                    {
+                        @class = "input-textarea event-input eventindex-edit__description",
+                        placeholder = "Дополнительная информация"
+                    }
+                })
             </div>
-            <span>Планируют принять участие 9 человек</span>
-        </div>
+
+            <div class="eventindex-edit__publicity">
+                <div class="container-checkbox">
+                    @Html.CheckBoxFor(model => model.AllowRegistration, new {@class = "checkbox"})
+                    @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
+                </div>
+
+                <div class="container-switchbox">
+                    <span class="label-publicity">Публично</span>
+                    <div class="switchbox-publicity">
+                        @Html.CheckBoxFor(model => model.Private, new {@class = "switchbox"})
+                        @Html.LabelFor(model => model.Private, " ")
+                    </div>
+                    <span class="label-private">Приватно</span>
+                </div>
+            </div>
+
+            <span class="eventindex-edit__participants-count">Планируют принять участие @Model.ParticipantsQuantity человек</span>
+
+            @Html.HiddenFor(model => model.Day)
+            @Html.HiddenFor(model => model.Month)
+            @Html.HiddenFor(model => model.Year)
+            @Html.HiddenFor(model => model.StartHour)
+            @Html.HiddenFor(model => model.StartMinutes)
+            @Html.HiddenFor(model => model.EndHour)
+            @Html.HiddenFor(model => model.EndMinutes)
+        }
     </div>
 
     <div class="eventindex-time">
@@ -99,16 +127,20 @@
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <i class="fa fa-print" aria-hidden="true"></i>
         </div>
-        <div class="eventindex-time__buttons">
-            <button id="editButton" class="button event-btn edit-btn">Изменить</button>
-            <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
-            <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
-            <button id="saveButton" class="button event-btn save-btn hidden">Сохранить</button>
-        </div>
-        <div id="event-errors" class="eventindex-time__errors">
-            <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
-            <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
-        </div>
+
+        @if (Model.IdUser == User.Identity.GetUserId())
+        {
+            <div class="eventindex-time__buttons">
+                <button id="editButton" class="button event-btn edit-btn">Изменить</button>
+                <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
+                <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
+                <button id="saveButton" class="button button-active event-btn hidden">Сохранить</button>
+            </div>
+            <div id="event-errors" class="eventindex-time__errors hidden">
+                <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
+                <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
+            </div>
+        }
     </div>
 </div>
 
@@ -189,31 +221,294 @@
     </table>
 </div>
 
-@Scripts.Render("~/bundles/jqueryval")
+
 @Scripts.Render("~/bundles/datetimepickers")
 
 <script>
+    $(document).ready(function () {
+        var title = $("#Title").val(),
+            description = $("#Description").val(),
+            nickname = $("#Nickname").val(),
+            showOrganizator = $('#ShowOrganizator').is(":checked"),
+            allowRegistration = $('#AllowRegistration').is(":checked"),
+            isPrivate = $('#Private').is(":checked"),
 
-    $("#editButton").bind("click", function () {
-        $("#editButton").addClass("hidden");
-        $("#cancelEventButton").addClass("hidden");
+            currday = ("0" + $("#Day").val()).slice(-2),
+            currmonth = ("0" + $("#Month").val()).slice(-2),
+            curryear = $("#Year").val().slice(2),
 
-        $("#cancelEditButton").removeClass("hidden");
-        $("#saveButton").removeClass("hidden");
-    });
+            startHour = ("0" + $("#StartHour").val()).slice(-2),
+            startMinutes = ("0" + $("#StartMinutes").val()).slice(-2),
+            endHour = ("0" + $("#EndHour").val()).slice(-2),
+            endMinutes = ("0" + $("#EndMinutes").val()).slice(-2);
 
-    var eventDate = new DatePickerChosen();
-    eventDate.init("#event-date", new Date(), null, function (day, month, year) {
+        initDateTimePickers();
 
-    });
+        $("#editButton").bind("click", function () {
+            $("#editButton").addClass("hidden");
+            $("#cancelEventButton").addClass("hidden");
+            $(".eventindex-info").addClass("hidden");
 
-    var eventTimeStart = new TimePicker();
-    eventTimeStart.init("#event-timestart", 9, 20, function (hours, minutes) {
 
-    });
+            $("#cancelEditButton").removeClass("hidden");
+            $("#saveButton").removeClass("hidden");
+            $(".eventindex-edit").removeClass("hidden");
 
-    var eventTimeFinish = new TimePicker();
-    eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
+            $(".datepicker-chosen-arrow").css("visibility", "visible");
+            $(".timepicker-arrow").css("visibility", "visible");
+        });
+
+        $("#cancelEditButton").bind("click", function () {
+            $("#editButton").removeClass("hidden");
+            $("#cancelEventButton").removeClass("hidden");
+            $(".eventindex-info").removeClass("hidden");
+
+            $("#cancelEditButton").addClass("hidden");
+            $("#saveButton").addClass("hidden");
+            $(".eventindex-edit").addClass("hidden");
+
+            $(".datepicker-chosen-arrow").css("visibility", "hidden");
+            $(".timepicker-arrow").css("visibility", "hidden");
+
+            $(".eventindex-edit #Title").val(title);
+            $(".eventindex-edit #Description").val(description);
+            $(".eventindex-edit #Nickname").val(nickname);
+            $(".eventindex-edit #ShowOrganizator")[0].checked = showOrganizator;
+            $(".eventindex-edit #AllowRegistration")[0].checked = allowRegistration;
+            $(".eventindex-edit #Private")[0].checked = isPrivate;
+
+            if (isPrivate) {
+                $("#AllowRegistration")[0].disabled = true;
+            }
+
+            if (!showOrganizator) {
+                $("#Nickname")[0].disabled = false;
+            }
+
+            $("#event-date #day").text(currday);
+            $("#event-date #month").text(currmonth);
+            $("#event-date #year").text(curryear);
+
+            $("#event-timestart #hours").text(startHour);
+            $("#event-timestart #minutes").text(startMinutes);
+            $("#event-timefinish #hours").text(endHour);
+            $("#event-timefinish #minutes").text(endMinutes);
+
+            displayErrors(true);
+        });
+
+        $("#cancelEventButton").bind("click", function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: window.location.origin + "/Event/CancelEventView",
+                method: "GET",
+                data: { participantId: '@Model.Id' },
+                dataType: 'html',
+                success: function (result) {
+                    $('#popup-confirmation').html(result);
+                    $('#popup-confirmation').show();
+                }
+            });
+        });
+
+        $("#saveButton").bind("click", function (e) {
+            e.preventDefault();
+            debugger;
+            var dateTimeValidator = dateTimeEventValidate();
+
+            dateTimeValidator.showErrors(displayErrors);
+            if (dateTimeValidator.valid() && $("#eventindex-editform").valid()) {
+
+                $.ajax({
+                    url: window.location.origin + "/Event/EditEvent",
+                    method: "POST",
+                    async: true,
+                    data: $("#eventindex-editform").serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            window.location.href = result.redirectTo;
+                        } else {
+                            dateTimeValidator.showErrors(false, result.errorMessage);
+                        }
+                    }
+                });
+                return true;
+            } else {
+                dateTimeValidator.validate();
+                return false;
+            }
+        });
+
+
+        $("#Nickname")[0].disabled = $("#ShowOrganizator")[0].checked;
+        $("#ShowOrganizator").change(function () {
+            $("#Nickname")[0].disabled = this.checked;
+        });
+
+        $("#AllowRegistration")[0].disabled = $("#Private")[0].checked;
+        $("#Private").change(function () {
+            $('#AllowRegistration')[0].checked = !this.checked;
+            $("#AllowRegistration")[0].disabled = this.checked;
+        });
+
+        $("#eventindex-editform .event-input").on("keyup blur", function () {
+            if ($("#eventindex-editform").valid()) {
+                $("#saveButton").attr("disabled", false);
+            } else {
+                $("#saveButton").attr("disabled", "disabled");
+            }
+        });
+
+        function initDateTimePickers() {
+
+            var eventDate = new DatePickerChosen();
+            eventDate.init("#event-date", ".", "number", new Date(), null, function (day, month, year) {
+                $("#Day").val(day);
+                $("#Month").val(month + 1);
+                $("#Year").val(year);
+
+                var dateTimeValidator = dateTimeEventValidate();
+
+                dateTimeValidator.showErrors(displayErrors);
+                dateTimeValidator.validate();
+            });
+
+            var eventTimeStart = new TimePicker();
+            eventTimeStart.init("#event-timestart", 9, 20, function (hours, minutes) {
+
+                $("#StartHour").val(hours);
+                $("#StartMinutes").val(minutes);
+                debugger;
+
+                var dateTimeValidator = dateTimeEventValidate();
+                dateTimeValidator.showErrors(displayErrors);
+
+                dateTimeValidator.validate();
+            });
+
+            var eventTimeFinish = new TimePicker();
+            eventTimeFinish.init("#event-timefinish", 9, 20, function (hours, minutes) {
+                $("#EndHour").val(hours);
+                $("#EndMinutes").val(minutes);
+                debugger;
+                var dateTimeValidator = dateTimeEventValidate();
+                dateTimeValidator.showErrors(displayErrors);
+
+                dateTimeValidator.validate();
+            });
+
+            $(".datepicker-chosen-arrow").css("visibility", "hidden");
+            $(".timepicker-arrow").css("visibility", "hidden");
+
+            $("#event-date #day").text(("0" + $("#Day").val()).slice(-2));
+            $("#event-date #month").text(("0" + $("#Month").val()).slice(-2));
+            $("#event-date #year").text($("#Year").val().slice(2));
+
+            $("#event-timestart #hours").text(("0" + $("#StartHour").val()).slice(-2));
+            $("#event-timestart #minutes").text(("0" + $("#StartMinutes").val()).slice(-2));
+            $("#event-timefinish #hours").text(("0" + $("#EndHour").val()).slice(-2));
+            $("#event-timefinish #minutes").text(("0" + $("#EndMinutes").val()).slice(-2));
+        };
+
+        function dateTimeEventValidate() {
+            var day = parseInt($("#Day").val(), 10),
+
+                starthour = parseInt($("#StartHour").val(), 10),
+                startminutes = parseInt($("#StartMinutes").val(), 10),
+                endhour = parseInt($("#EndHour").val(), 10),
+                endminutes = parseInt($("#EndMinutes").val(), 10),
+
+                currentDate = new Date().getDate(),
+                currentHour = new Date().getHours(),
+                currentMinutes = new Date().getMinutes(),
+                    
+                showErrorsHandler;
+
+            function isValidDurationEvent() {
+                if (endhour > starthour || (endhour === starthour && endminutes - startminutes >= 20)) {
+                    return { isValid: true };
+                }
+
+                return { isValid: false, error: "Минимальное время бронирования аудитории 20 минут." };
+            }
+
+            function isValidStartTimeEvent() {
+                if (starthour > endhour || (starthour === endhour && startminutes > endminutes)) {
+                    return { isValid: false, error: "Время начала события не может быть больше времени окончания." };
+                }
+
+                if (day === currentDate) {
+                    if (starthour < currentHour || (starthour === currentHour && startminutes < currentMinutes)) {
+                        return { isValid: false, error: "Нельзя назначить событие в прошлом." };
+                    }
+                }
+
+                return { isValid: true };
+            }
+
+            function valid() {
+                if (isValidStartTimeEvent().isValid && isValidDurationEvent().isValid) {
+                    return true;
+                }
+
+                return false;
+            };
+
+            function validate() {
+                var isValidStartTime = isValidStartTimeEvent(),
+                    isValidDuration = isValidDurationEvent(),
+                    errorMessageTime = isValidStartTime.error,
+                    errorMessageDuration = isValidDuration.error,
+                        
+                    isValid = false, errorMessage;
+
+                if (!isValidDuration.isValid && !isValidStartTime.isValid) {
+                    errorMessage = errorMessageTime + " " + errorMessageDuration;
+                } else if (!isValidStartTime.isValid) {
+                    errorMessage = errorMessageTime;
+                } else if (!isValidDuration.isValid) {
+                    errorMessage = errorMessageDuration;
+                } else {
+                    isValid = true;
+                }
+
+
+                if (showErrorsHandler != undefined) {
+                    try {
+                        showErrorsHandler(isValid, errorMessage);
+                    } catch (ex) {
+                        console.log('Exception at showErrorHandler');
+                    }
+                }
+            }
+
+            this.showErrors = function(handler) {
+                showErrorsHandler = handler;
+            }
+
+            return { valid: valid, validate: validate, showErrors: showErrors };
+        }
+
+        function displayErrors(isValid, errorMessage) {
+            var messageContaiter = "<span>" + errorMessage + "</span>";
+            debugger;
+            if (isValid) {
+                if (!$("#event-errors").hasClass("hidden")) {
+                    $("#event-errors").addClass("hidden");
+                }
+
+                $("#saveButton").attr("disabled", false);
+            } else {
+                $(".error-text").html(messageContaiter);
+
+                if ($("#event-errors").hasClass("hidden")) {
+                    $("#event-errors").removeClass("hidden");
+                }
+
+                $("#saveButton").attr("disabled", "disabled");
+            }
+        }
 
     });
 </script>
