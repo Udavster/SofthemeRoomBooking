@@ -31,7 +31,8 @@ namespace SofthemeRoomBooking.Controllers
 
             if (model != null)
             {
-                var modelView = model.ToEventIndexViewModel();
+                var organizator = _profileService.GetUserById(model.IdUser);
+                var modelView = model.ToEventIndexViewModel(organizator);
 
                 return View(modelView);
             }
@@ -65,22 +66,6 @@ namespace SofthemeRoomBooking.Controllers
                 _eventService.CreateEvent(model, userId);
 
                 return Json(new { redirectTo = Url.Action("Index", "Home") });
-            }
-            ModelState.AddModelError("", "Что-то пошло не так");
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpGet]
-        public ActionResult EditEvent(int eventId)
-        {
-            var model = _eventService.GetEventIndexModelById(eventId);
-
-            if (model != null)
-            {
-                var modelView = model.ToEventIndexViewModel();
-
-                return PartialView("EditEvent", modelView);
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 

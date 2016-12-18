@@ -104,6 +104,7 @@
 .eventcontainer-body__organizator-name:disabled::-moz-placeholder          {color: #C7C8CB;}
 .eventcontainer-body__organizator-name:disabled:-moz-placeholder           {color: #C7C8CB;}
 .eventcontainer-body__organizator-name:disabled:-ms-input-placeholder      {color: #C7C8CB;}
+.eventcontainer-body__organizator-name:disabled {color: #C7C8CB;}
 
 .eventcontainer-footer {
     display: flex;

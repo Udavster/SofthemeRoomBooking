@@ -1,4 +1,5 @@
 ﻿using System;
+using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Models.EventViewModel;
 using SofthemeRoomBooking.Services.Models;
 using SofthemeRoomBooking.Services.Models.EventModel;
@@ -65,7 +66,7 @@ namespace SofthemeRoomBooking.Converters
             };
         }
 
-        public static EventIndexViewModel ToEventIndexViewModel(this EventIndexModel model)
+        public static EventIndexViewModel ToEventIndexViewModel(this EventIndexModel model, ApplicationUser organizator)
         {
             return new EventIndexViewModel
             {
@@ -73,6 +74,7 @@ namespace SofthemeRoomBooking.Converters
                 Title = model.Title,
                 Description = model.Description,
                 Nickname = model.Nickname,
+                Organizator = string.IsNullOrWhiteSpace(model.Nickname) ? $"{organizator.Name} {organizator.Surname}" : model.Nickname,
                 Private = !model.Publicity,
                 AllowRegistration = model.AllowRegistration,
                 ParticipantsQuantity = model.ParticipantsQuantity,

@@ -14,6 +14,8 @@ namespace SofthemeRoomBooking.Models.EventViewModel
         [StringLength(500, ErrorMessage = "Дополнительная информация не может быть длиннее 500 символов")]
         public string Description { get; set; }
 
+        public string Organizator { get; set; }
+
         [StringLength(150, ErrorMessage = "Имя организатора не может быть длиннее 150 символов")]
         public string Nickname { get; set; }
 

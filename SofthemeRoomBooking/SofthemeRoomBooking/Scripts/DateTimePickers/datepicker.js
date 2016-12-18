@@ -181,16 +181,16 @@ function DatePickerChosen() {
                         wrap.find('#arrow-down-day').css('visibility', 'hidden');
                         $(day).text(('0' + startDate.getDate()).slice(-2));
                     } else {
-                        wrap.find('#arrow-down-day').css('visibility', 'visible');
+                        wrap.find('#arrow-down-day').css('visibility', '');
                     }
                 } else {
-                    wrap.find('#arrow-down-month').css('visibility', 'visible');
-                    wrap.find('#arrow-down-day').css('visibility', 'visible');
+                    wrap.find('#arrow-down-month').css('visibility', '');
+                    wrap.find('#arrow-down-day').css('visibility', '');
                 }
             } else {
-                wrap.find('#arrow-down-year').css('visibility', 'visible');
-                wrap.find('#arrow-down-month').css('visibility', 'visible');
-                wrap.find('#arrow-down-day').css('visibility', 'visible');
+                wrap.find('#arrow-down-year').css('visibility', '');
+                wrap.find('#arrow-down-month').css('visibility', '');
+                wrap.find('#arrow-down-day').css('visibility', '');
             }
         }
 
@@ -204,16 +204,16 @@ function DatePickerChosen() {
                     if (dateInfo.currentDay >= endDate.getDate()) {
                         wrap.find('#arrow-up-day').css('visibility', 'hidden');
                     } else {
-                        wrap.find('#arrow-up-day').css('visibility', 'visible');
+                        wrap.find('#arrow-up-day').css('visibility', '');
                     }
                 } else {
-                    wrap.find('#arrow-up-month').css('visibility', 'visible');
-                    wrap.find('#arrow-up-day').css('visibility', 'visible');
+                    wrap.find('#arrow-up-month').css('visibility', '');
+                    wrap.find('#arrow-up-day').css('visibility', '');
                 }
             } else {
-                wrap.find('#arrow-up-year').css('visibility', 'visible');
-                wrap.find('#arrow-up-month').css('visibility', 'visible');
-                wrap.find('#arrow-up-day').css('visibility', 'visible');
+                wrap.find('#arrow-up-year').css('visibility', '');
+                wrap.find('#arrow-up-month').css('visibility', '');
+                wrap.find('#arrow-up-day').css('visibility', '');
             }
         }
     }
@@ -227,7 +227,7 @@ function DatePickerChosen() {
 
         var day = parseInt(wrap.find('#day').text());
         var month = months.indexOf(wrap.find('#month').text());
-        var year = parseInt(wrap.find('#year').text());
+        var year = separator !== '' ? parseInt( '20' + wrap.find('#year').text()) : parseInt(wrap.find('#year').text());
 
         if (this.OnDateChanged != undefined) {
             try {
