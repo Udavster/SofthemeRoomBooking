@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SofthemeRoomBooking.Models;
 using SofthemeRoomBooking.Services.Contracts;
 using Newtonsoft.Json;
 using SofthemeRoomBooking.Converters;
-using SofthemeRoomBooking.Services.Models;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -44,9 +39,9 @@ namespace SofthemeRoomBooking.Controllers
             var calendarEventListArray = CalendarEventConverter.GetCalendarEventModels(rooms, calendarEvent);
 
             System.Collections.Hashtable ab = new Hashtable {
-                                                            { "Rooms", rooms},
-                                                            { "Events", calendarEventListArray},
-                                                            { "Authenticated", (User.Identity.IsAuthenticated)}
+                                                                { "Rooms", rooms},
+                                                                { "Events", calendarEventListArray},
+                                                                { "Authenticated", (User.Identity.IsAuthenticated)}
             };
             string json = JsonConvert.SerializeObject(ab, Formatting.Indented);
 
