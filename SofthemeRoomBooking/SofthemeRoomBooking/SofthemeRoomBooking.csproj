@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -287,6 +291,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Contracts\IProfileService.cs" />
     <Compile Include="Services\Implementation\ProfileService.cs" />
+    <Compile Include="Services\Logger.cs" />
     <Compile Include="SimpleInjectorConfiguration.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Helpers\Validator.cs" />
@@ -410,6 +415,7 @@
     <Content Include="Scripts\Event\event-common.js" />
     <Content Include="Scripts\Event\event-create.js" />
     <Content Include="Scripts\Event\event-edit.js" />
+    <Content Include="Scripts\Event\eventInfo.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -485,7 +491,7 @@
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\NewEvent.cshtml" />
-    <Content Include="Views\Shared\_EventDetailEditPartial.cshtml" />
+    <Content Include="Views\Shared\_EventDetailPublicPartial.cshtml" />
     <Content Include="Views\Shared\_WeekScheduler.cshtml" />
     <Content Include="Views\Shared\_EventCancelationPopup.cshtml" />
     <Content Include="Views\Shared\_CreateEventPartial.cshtml" />

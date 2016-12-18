@@ -3,41 +3,43 @@
 
 <div class="eventdetailedit">
     <div class="eventdetailedit__title">
-        <div>
-            <div style="display: inline-flex">
-                <div>
-                    <span style="color: white; margin: 1px 6px; font-size: 9pt;"> @Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
-                </div>
-                @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
+     
+        <div class="detailed-header">
+            <div class="detailed-time">
+                <span>@Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
+                <span>@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
+            </div>
+            @if (User.IsInRole("Admin") || User.Identity.GetUserId() == Model.UserId)
+            {
+                if (DateTime.Now <= Model.StartTime)
                 {
-                    <div style="margin-left: 30px">
+                    <div class="detailed-buttons">
                         <div class="eventdetailedit-change">Изменить</div>
                         <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
                     </div>
                 }
-                <div class="eventdetailedit-close">
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                </div>
+            }
+            <div class="eventdetailedit-close">
+                <i class="fa fa-window-minimize" aria-hidden="true"></i>
             </div>
         </div>
-        <div>
-            <span style="color : white; margin: 5px 10px; font-size: 9pt;">@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
-        </div>
+       
+        
     </div>
     <div class="eventdetailedit__main">
         <div>
-            <p style="font-size: 20px;">@Model.Title</p>
+            <h3>@Model.Title</h3>
         </div>
         @if (Model.AllowRegistration)
             {
             <div>
                 <p>@Model.Description</p>
             </div>
-            <div>
-                <div style="float: left">
+            <div class="detailed-user">
+                <div class="detailed-name">
                     <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
                     @if (Model.Nickname != null)
-                {
+                    {
                         <span>@Model.Nickname</span>
                     }
                     else
@@ -45,26 +47,24 @@
                         <span>@Model.UserName</span>
                     }
                 </div>
-                <div style="float: right">
+                <div class="detailed-num">
                     <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
                     <span>@Model.ParticipantsQuantity</span>
                 </div>
             </div>
 
-            <div style="display: inline-flex">
-                <div>
-                    <input type="text" class="input-text eventdetailedit__email-button" placeholder="Укажите e-mail что бы присоединится.">
-                </div>
-                <div style="margin-top: 19px">
+            <div>
+                <input type="text" class="input-text eventdetailedit__email-input" placeholder="Укажите e-mail что бы присоединится.">
+                <div class="eventdetailedit__email-button">
                     <i class="fa fa-plus" aria-hidden="true" style="font-size: 25px; color: #A6ABB6;"></i>
                 </div>
             </div>
         }
-        <div class="eventdetailedit__icons" style="margin: 0 90px;">
+        <div class="eventdetailedit__icons">
             <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <i class="fa fa-print" aria-hidden="true"></i>
-            <i class="fa fa-link" aria-hidden="true"></i>
+            <i class="fa fa-link" data-id="@Model.Id" id="eventdetail__link" aria-hidden="true"></i>
         </div>
     </div>
 </div>

@@ -1,6 +1,12 @@
 function tformat(num) {
     return ("0" + num).slice(-2);
 }
+function formatText(text) {
+    if (text&&text.length > 20) {
+        return text.slice(0, 17) + "...";
+    }
+    return text;
+}
 
 function isContained(event, time) {
     if (60 * event['Start']['h'] + event['Start']['m'] > 60 * time['h'] + time['m']) {
@@ -312,6 +318,7 @@ class Calendar {
         this.slider.setBoundingWidth(null, true);
         this.updateTimeTimer(this.timeSlider, false);
         this.updateTimeTimer(this.slider, true);
+        this.timeSlider.hide();
     }
 
     addRooms(calendarMemo) {
@@ -367,7 +374,7 @@ class Calendar {
         if (duration > 0.5) eventTag += '<div class="event__time">' + time + '</div>';
         else eventTag += '<div class="event__time event__time-center">' + tformat(startTime["h"]) + ":" + tformat(startTime["m"]) + '</div>' + '<div class="event__time event__time-center">-</div>' + '<div class="event__time event__time-center">' + tformat(endTime["h"]) + ":" + tformat(endTime["m"]) + '</div>';
         if (event.addedElements && (duration > 0.33)) eventTag += event.addedElements;
-        if (duration > 0.5) eventTag += '<div>' + event['Title'] + '</div>';
+        if (duration > 0.5) eventTag += '<div>' + formatText(event['Title']) + '</div>';
         eventTag += '</div>';
         var eventHtml = $(eventTag);
 

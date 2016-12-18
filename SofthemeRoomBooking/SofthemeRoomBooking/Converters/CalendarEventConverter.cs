@@ -53,8 +53,8 @@ namespace SofthemeRoomBooking.Converters
                 calendarEventModels[roomNum].Add(new CalendarEventModel()
                 {
                     Id = calendarEvent[i].Id,
-                    Title = calendarEvent[i].Title,
-                    Description = calendarEvent[i].Description,
+                    Title = (calendarEvent[i].Publicity) ? calendarEvent[i].Title : "",
+                    Description = (calendarEvent[i].Publicity) ? calendarEvent[i].Description : "",
                     Start = eventStart,
                     Finish = eventFinish,
                     Publicity = calendarEvent[i].Publicity

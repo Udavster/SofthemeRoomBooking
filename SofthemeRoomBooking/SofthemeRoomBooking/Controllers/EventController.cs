@@ -67,7 +67,7 @@ namespace SofthemeRoomBooking.Controllers
 
                 _eventService.CreateEvent(model, userId);
 
-                return Json(new { redirectTo = Url.Action("Index", "Home") });
+                return Json(new { redirectTo = Url.Action("Index", "Room", new { id = model.IdRoom } ) });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 
@@ -163,7 +163,7 @@ namespace SofthemeRoomBooking.Controllers
                 return PartialView("_EventDetailsPrivatePartial", viewModel);
             }
 
-            return PartialView("_EventDetailEditPartial",viewModel);
+            return PartialView("_EventDetailPublicPartial",viewModel);
         }
 
         [HttpGet]

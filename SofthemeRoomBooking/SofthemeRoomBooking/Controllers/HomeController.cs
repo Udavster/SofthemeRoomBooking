@@ -21,8 +21,6 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Index()
         {
-           // var a = new SofthemeRoomBooking.Services.Implementations.EventService();
-           // SofthemeRoomBooking.Services.Implementations.RoomService
             return View();
         }
 

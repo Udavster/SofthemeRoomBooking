@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Net.Mail;
@@ -27,14 +28,12 @@ namespace SofthemeRoomBooking
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
 
-            var username = "azure_3317a4b295234287fdf7f224e4766c38@azure.com";
-            var pswd = "qwe123Q!";
+            var username = ConfigurationManager.AppSettings["sendGridName"];
+            var pswd = ConfigurationManager.AppSettings["sendGridPassword"];
 
             var credentials = new NetworkCredential(username, pswd);
-            // Create a Web transport for sending email.
             var transportWeb = new Web(credentials);
 
-            // Send the email.
             if (transportWeb != null)
             {
                 return transportWeb.DeliverAsync(myMessage);
@@ -75,4 +74,5 @@ namespace SofthemeRoomBooking
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
     }
+
 }

@@ -14,9 +14,11 @@ namespace SofthemeRoomBooking.Services.Implementations
     public class RoomService : IRoomService
     {
         private SofhemeRoomBookingContext _context;
-        public RoomService(SofhemeRoomBookingContext context)
+        private INotificationService _notificationService;
+        public RoomService(SofhemeRoomBookingContext context, INotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         public List<RoomModel> GetAllRooms()
@@ -175,7 +177,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             return result;
         }
 
-        public bool CloseRoom(int id, string userId)
+        public bool CloseRoom(int id, string userId, DateTime? finish = null)
         {
             if (userId != null)
             {
@@ -184,12 +186,25 @@ namespace SofthemeRoomBooking.Services.Implementations
                     IdRoom = id,
                     IdUser = userId,
                     Start = DateTime.Now.AddMinutes(-1),
-                    Finish = null
+                    Finish = finish
                 };
 
                 _context.RoomsLocks.Add(room);
+                var events = GetEventsToCancel(id,finish);
+                foreach (var @event in events)
+                {
+                    @event.Cancelled = true;
+                }
 
                 _context.SaveChanges();
+
+                foreach (var @event in events)
+                {
+                    var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == @event.Id).Select(x => x.Email).ToList();
+                    var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == @event.Id);
+
+                   _notificationService.CancelEventNotification(usersEmails,eventInfo);
+                }
 
                 return true;
             }
@@ -217,6 +232,23 @@ namespace SofthemeRoomBooking.Services.Implementations
             return _context.Events.Count(ev => ev.Id_room == idRoom && !ev.Cancelled && 
                                               ((ev.Start >= startTime && ev.Start <= finishTime) || 
                                                (ev.Finish >= startTime && ev.Finish <= finishTime))) > 0;
+        }
+
+        private IQueryable<Events> GetEventsToCancel(int id, DateTime? finish)
+        {
+            var now = DateTime.Now;
+            if (finish == null)
+            {
+                return _context.Events.Where(ev => (ev.Id_room == id) && (!ev.Cancelled)
+                                            && ((ev.Start >= now)
+                                            || (ev.Finish >= now)
+                                            || (ev.Start <=now && ev.Finish >= now)) );
+            }
+            return _context.Events.Where(ev => (ev.Id_room == id ) 
+                                        && (!ev.Cancelled)
+                                        && ((ev.Start >= now && ev.Start <= finish) 
+                                        ||(ev.Finish >= now && ev.Finish <= finish)
+                                        || (ev.Start <= now) && ev.Finish >= now));
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SofthemeRoomBooking.Services.Contracts
         RoomEquipmentModel GetEquipmentByRoom(int roomId);
         bool UpdateRoomEquipment(RoomEquipmentModel model);
         RoomModel[] GetUnlockedRoomsByDate(DateTime date);
-        bool CloseRoom(int id, string userId);
+        bool CloseRoom(int id, string userId, DateTime? finish = null);
         bool OpenRoom(int id);
 
         bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime);

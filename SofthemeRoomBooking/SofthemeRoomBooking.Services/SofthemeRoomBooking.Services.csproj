@@ -38,8 +38,36 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid, Version=8.0.5.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.8.0.5\lib\SendGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.CSharp.HTTP.Client, Version=3.0.0.0, Culture=neutral, PublicKeyToken=79219bf4e5ecaaca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.CSharp.HTTP.Client.3.0.0\lib\SendGrid.CSharp.HTTP.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.1.3.0, Culture=neutral, PublicKeyToken=55aa52d3c3c0d2b2, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.1.3\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGridMail, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.Net40.5.1.0.0\lib\net40\SendGridMail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SimpleInjector, Version=3.2.7.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
@@ -52,7 +80,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc">
       <HintPath>..\SofthemeRoomBooking\Bin\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -66,17 +101,20 @@
   <ItemGroup>
     <Compile Include="Contracts\IEventService.cs" />
     <Compile Include="Contracts\IFeedbackService.cs" />
+    <Compile Include="Contracts\INotificationService.cs" />
     <Compile Include="Contracts\IRoomService.cs" />
     <Compile Include="Converters\EventConvertor.cs" />
     <Compile Include="Converters\ToRoomModel.cs" />
     <Compile Include="Implementations\EventService.cs" />
     <Compile Include="Implementations\FeedbackService.cs" />
+    <Compile Include="Implementations\NotificationService.cs" />
     <Compile Include="Implementations\RoomService.cs" />
     <Compile Include="Models\EventModel\EventIndexModel.cs" />
     <Compile Include="Models\EventModel\EventModel.cs" />
     <Compile Include="Models\EventModel\EventParticipantModel.cs" />
     <Compile Include="Models\EventModel\EventWeekModel.cs" />
     <Compile Include="Models\EventModel\EventDetailsModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\RoomEquipmentModel.cs" />
     <Compile Include="Models\RoomModel.cs" />
     <Compile Include="Models\EventModel\EventsForUserCount.cs" />
@@ -86,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
@@ -96,6 +135,11 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
