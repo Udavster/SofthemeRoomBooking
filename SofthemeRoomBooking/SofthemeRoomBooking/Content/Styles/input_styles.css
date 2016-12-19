@@ -8,6 +8,7 @@
     background-color: #F5F6FB;
     font-size: 14px;
     outline: none;
+    margin: 0 0 5px 0;
 }
 
 .input-text::-webkit-input-placeholder {color: #C7C8CB;}
