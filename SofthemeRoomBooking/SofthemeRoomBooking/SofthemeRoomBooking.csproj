@@ -412,6 +412,7 @@
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\DateTimePickers\datepicker.js" />
     <Content Include="Scripts\DateTimePickers\timepicker.js" />
+    <Content Include="Scripts\event-details-popup.js" />
     <Content Include="Scripts\Event\event-common.js" />
     <Content Include="Scripts\Event\event-create.js" />
     <Content Include="Scripts\Event\event-edit.js" />
