@@ -25,9 +25,9 @@ namespace SofthemeRoomBooking.Controllers
         }
         
         [AllowAnonymous]
-        public ActionResult Index(int eventId)
+        public ActionResult Index(int id)
         {
-            var model = _eventService.GetEventIndexModelById(eventId);
+            var model = _eventService.GetEventIndexModelById(id);
 
             if (model != null)
             {
@@ -129,16 +129,32 @@ namespace SofthemeRoomBooking.Controllers
         {
             var model = modelView.ToEventModel();
 
+            var eventId = model.Id;
+
             if (ModelState.IsValid)
             {
-                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
+                if (modelView.Id == null)
                 {
-                    return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                    var userId = User.Identity.GetUserId();
+
+                    if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
+                    {
+                        return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                    }
+
+                    eventId = _eventService.CreateEvent(model, userId);
                 }
+                else
+                {
+                    if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
+                    {
+                        return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                    }
 
-                _eventService.UpdateEvent(model);
+                    _eventService.UpdateEvent(model);
+                }               
 
-                return Json(new { success = true, redirectTo = HttpContext.Request.RawUrl.Replace("Event/EventEditPartial","") });
+                return Json(new { success = true, redirectTo = "/Event/Index/" + eventId });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 
@@ -180,7 +196,10 @@ namespace SofthemeRoomBooking.Controllers
         [ActionName("CancelEvent")]
         public ActionResult CancelEventConfirm(int id)
         {
-            _eventService.CancelEvent(id);
+            var currentEvent = _eventService.GetEventIndexModelById(id);
+            var creatorEmail = _profileService.GetUserById(currentEvent.IdUser).Email;
+            _eventService.CancelEvent(id,creatorEmail);
+            
             return Content(@"Home/Index");
         }
 

@@ -20,12 +20,14 @@ namespace SofthemeRoomBooking.Services.Implementations
             _notificationService = notificationService;
         }
 
-        public void CreateEvent(EventModel model, string userId)
+        public int CreateEvent(EventModel model, string userId)
         {
             var @event = model.ToEventEntity(userId);
 
             _context.Events.Add(@event);
             _context.SaveChanges();
+
+            return @event.Id;
         }
 
         public bool UpdateEvent(EventModel model)
@@ -50,7 +52,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             return false;
         }
 
-        public bool CancelEvent(int eventId)
+        public bool CancelEvent(int eventId,string creatorEmail)
         {
             var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
 
@@ -61,8 +63,15 @@ namespace SofthemeRoomBooking.Services.Implementations
                 _context.SaveChanges();
 
                 var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == eventId).Select(x => x.Email).ToList();
+                usersEmails.Add(creatorEmail);
+                
                 var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
-                _notificationService.CancelEventNotification(usersEmails, eventInfo);
+                var roomInfo = _context.Rooms.FirstOrDefault(x => x.Id == eventInfo.Id_room);
+                if (roomInfo != null)
+                {
+                    var roomName = roomInfo.Name;
+                    _notificationService.CancelEventNotification(usersEmails, eventInfo, roomName);
+                }
                 return true;
             }
 

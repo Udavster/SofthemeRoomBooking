@@ -18,7 +18,6 @@ $("#event-submit").bind("click", function (e) {
         if ($("#ShowOrganizator")[0].checked) {
             $("#Nickname").val("");
         }
-
         $.ajax({
             url: window.location.origin + "/Event/EditEventPartial",
             method: "POST",

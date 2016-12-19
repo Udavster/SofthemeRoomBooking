@@ -7,11 +7,11 @@ namespace SofthemeRoomBooking.Services.Contracts
 {
     public interface IEventService
     {
-        void CreateEvent(EventModel model, string userId);
+        int CreateEvent(EventModel model, string userId);
 
         bool UpdateEvent(EventModel model);
 
-        bool CancelEvent(int eventId);
+        bool CancelEvent(int eventId, string creatorEmail);
 
         EventModel GetEventById(int eventId);
 

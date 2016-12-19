@@ -202,8 +202,12 @@ namespace SofthemeRoomBooking.Services.Implementations
                 {
                     var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == @event.Id).Select(x => x.Email).ToList();
                     var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == @event.Id);
-
-                   _notificationService.CancelEventNotification(usersEmails,eventInfo);
+                    var roomInfo = _context.Rooms.FirstOrDefault(x => x.Id == eventInfo.Id_room);
+                    if (roomInfo != null)
+                    {
+                        var roomName = roomInfo.Name;
+                        _notificationService.CancelEventNotification(usersEmails,eventInfo, roomName);
+                    }
                 }
 
                 return true;

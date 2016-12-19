@@ -90,6 +90,7 @@
 
     $(document).on('click', '#changeevent', function () {
         var _this = $(this);
+
         $('#popup-edit-event').html('');
         var id = _this.data('id');
         console.log(id);
