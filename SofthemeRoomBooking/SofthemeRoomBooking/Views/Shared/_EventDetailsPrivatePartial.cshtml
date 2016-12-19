@@ -22,17 +22,4 @@
     </div>
 </div>
 
-<script>
-    $(document).on('click', '#cancelevent', function () {
-        var _this = $(this);
-        var id = _this.data('id');
-        $.ajax({
-            url: window.location.origin + "/Event/CancelEventView",
-            data: 'id=' + id,
-            type: 'GET',
-            success: function (res) {
-                $('.week__scheduler').append(res);
-            }
-        });
-    });
-</script>
+@Scripts.Render("~/bundles/event-details")
