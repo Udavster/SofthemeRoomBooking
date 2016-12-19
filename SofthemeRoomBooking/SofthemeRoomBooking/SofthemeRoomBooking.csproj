@@ -497,7 +497,6 @@
     <Content Include="Views\Shared\_EventCancelationPopup.cshtml" />
     <Content Include="Views\Shared\_CreateEventPartial.cshtml" />
     <Content Include="Views\Shared\_EditEventPartial.cshtml" />
-    <Content Include="Views\Event\EditEvent.cshtml" />
     <Content Include="Views\Login\RegisterEmailConfirmation.cshtml" />
     <Content Include="Views\Event\EventParticipants.cshtml" />
     <Content Include="Views\Event\AddParticipant.cshtml" />
