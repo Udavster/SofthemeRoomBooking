@@ -428,6 +428,7 @@
     <None Include="Scripts\Validation\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\Room\schedulerEvents.js" />
     <Content Include="Scripts\Validation\jquery.validate.js" />
     <Content Include="Scripts\Validation\jquery.validate.min.js" />
     <Content Include="Scripts\Validation\jquery.validate.unobtrusive.js" />
