@@ -14,7 +14,7 @@
                 if (DateTime.Now <= Model.StartTime)
                 {
                     <div class="detailed-buttons">
-                        <div class="eventdetailedit-change">Изменить</div>
+                        <div id="changeevent" class="eventdetailedit-change" data-id="@Model.Id">Изменить</div>
                         <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
                     </div>
                 }
@@ -30,29 +30,28 @@
         <div>
             <h3>@Model.Title</h3>
         </div>
+        <div>
+            <p>@Model.Description</p>
+        </div>
+        <div class="detailed-user">
+            <div class="detailed-name">
+                <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
+                @if (Model.Nickname != null)
+                {
+                    <span>@Model.Nickname</span>
+                }
+                else
+                {
+                    <span>@Model.UserName</span>
+                }
+            </div>
+            <div class="detailed-num">
+                <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
+                <span>@Model.ParticipantsQuantity</span>
+            </div>
+        </div>
         @if (Model.AllowRegistration)
             {
-            <div>
-                <p>@Model.Description</p>
-            </div>
-            <div class="detailed-user">
-                <div class="detailed-name">
-                    <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
-                    @if (Model.Nickname != null)
-                    {
-                        <span>@Model.Nickname</span>
-                    }
-                    else
-                    {
-                        <span>@Model.UserName</span>
-                    }
-                </div>
-                <div class="detailed-num">
-                    <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
-                    <span>@Model.ParticipantsQuantity</span>
-                </div>
-            </div>
-
             <div>
                 <input type="text" class="input-text eventdetailedit__email-input" placeholder="Укажите e-mail что бы присоединится.">
                 <div class="eventdetailedit__email-button">
