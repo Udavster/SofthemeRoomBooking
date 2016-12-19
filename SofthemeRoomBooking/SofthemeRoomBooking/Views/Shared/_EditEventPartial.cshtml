@@ -3,7 +3,7 @@
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
 <div class="eventcontainer">
-    @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "event-form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "event-edit-form", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)
@@ -98,7 +98,7 @@
                     <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
                     <span class="error-text"></span>
                 </div>
-                <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
+                <input id="createButton" class="input-submit event-button" type="submit" value="Создать"/>
             </div>
         </div>
     }

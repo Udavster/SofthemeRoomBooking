@@ -1,39 +1,23 @@
-﻿$("#event-form .event-input").on("keyup blur", function () {
-    if ($("#event-form").valid()) {
-        $("#event-submit").attr("disabled", false);
-    } else {
-        $("#event-submit").attr("disabled", "disabled");
-    }
-});
-
-$("#Private").change(function () {
-    $('#AllowRegistration')[0].checked = !this.checked;
-    $("#AllowRegistration")[0].disabled = this.checked;
-});
-
-$("#ShowOrganizator").change(function () {
-    $("#Nickname")[0].disabled = this.checked;
-});
-
-setDefaltDateTime();
-
-function setDefaultEventSettings() {
+﻿function setDefaultEventSettings() {
     $("#Private")[0].checked = false;
     $("#AllowRegistration")[0].checked = true;
     $("#ShowOrganizator")[0].checked = true;
 };
 
-function setDefaltDateTime() {
+function initDateTime(monthType, dateSepartor, submitButton) {
+
+    dateSepartor = dateSepartor === null ? '' : dateSepartor;
+
     var eventDate = new DatePickerChosen();
-    eventDate.init("#event-date", null, "word", new Date(), null, function (day, month, year) {
+    eventDate.init("#event-date", dateSepartor, monthType, new Date(), null, function (day, month, year) {
         $("#Day").val(day);
         $("#Month").val(month + 1);
         $("#Year").val(year);
 
         if (eventValidate().validate()) {
-            $("#event-submit").attr("disabled", false);
+            submitButton.attr("disabled", false);
         } else {
-            $("#event-submit").attr("disabled", "disabled");
+            submitButton.attr("disabled", "disabled");
         }
     });
 
@@ -43,9 +27,9 @@ function setDefaltDateTime() {
         $("#StartMinutes").val(minutes);
 
         if (eventValidate().validate()) {
-            $("#event-submit").attr("disabled", false);
+            submitButton.attr("disabled", false);
         } else {
-            $("#event-submit").attr("disabled", "disabled");
+            submitButton.attr("disabled", "disabled");
         }
     });
 
@@ -55,9 +39,9 @@ function setDefaltDateTime() {
         $("#FinishMinutes").val(minutes);
 
         if (eventValidate().validate()) {
-            $("#event-submit").attr("disabled", false);
+            submitButton.attr("disabled", false);
         } else {
-            $("#event-submit").attr("disabled", "disabled");
+            submitButton.attr("disabled", "disabled");
         }
     });
 }

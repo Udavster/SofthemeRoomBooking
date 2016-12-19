@@ -2,7 +2,7 @@
 <div class="eventindex-participants">
     <p>Зарегистрированные участники:</p>
     <table class="eventindex-participants__participants-table">
-        @foreach (var paticipant in Model)
+        @foreach (var participant in Model)
         {
             <tr>
                 @{ var count = 0; }
@@ -11,7 +11,8 @@
                     <td>
                         <i class="fa fa-circle" aria-hidden="true"></i>
                         <div class="participants-table-item">
-                            <span>@paticipant.Email;</span>
+                            @Html.Hidden(participant.Id.ToString())
+                            <span>@participant.Email;</span>
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </div>
                     </td>
@@ -24,3 +25,4 @@
     </table>
 </div>
 
+@Scripts.Render("~/bundles/event-participants")

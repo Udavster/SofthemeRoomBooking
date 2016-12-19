@@ -9,7 +9,7 @@
         <i id="closeButton" class="fa fa-times createevent-header__close" aria-hidden="true"></i>
     </div>
 
-    @using (Html.BeginForm("CreateEvent", "Event", FormMethod.Post, new { id = "event-form", @class = "eventcontainer-body", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("CreateEvent", "Event", FormMethod.Post, new { id = "event-create-form", @class = "eventcontainer-body", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)

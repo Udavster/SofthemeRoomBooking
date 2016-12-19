@@ -63,6 +63,10 @@ namespace SofthemeRoomBooking
                         "~/Scripts/Event/event-index.js"
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/event-participants").Include(
+                        "~/Scripts/Event/event-participants.js"
+                        ));
+
             //
             bundles.Add(new StyleBundle("~/bundles/Layout/css").Include(
                       //"~/Content/font-awesome.css",
