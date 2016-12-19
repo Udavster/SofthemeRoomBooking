@@ -25,7 +25,7 @@ namespace SofthemeRoomBooking.Controllers
         }
         
         [AllowAnonymous]
-        public ActionResult Index(int eventId = 5)
+        public ActionResult Index(int eventId)
         {
             var model = _eventService.GetEventIndexModelById(eventId);
 

@@ -46,7 +46,7 @@
     //click empty field week scheduler
     $(document).on('click', '.calendar-item:not(.not-empty)', function () {
         var _this = $(this);
-        var id = _this.data('roomid');
+        var id = parseInt(_this.data('roomid'),10);
         var start = parseInt(_this.data('start'), 10);
         var finish = parseInt(_this.data('finish'), 10);
         var day = parseInt(_this.data('day'), 10);
@@ -55,6 +55,18 @@
 
         var startDate = new Date(year, month - 1, day, start);
         var endDate = new Date(year, month - 1, day, finish);
+
+        $.ajax({
+            url: window.location.origin + "/Event/EditEventPartial",
+            type: 'GET',
+            success: function (res) {
+                $('#popup-edit-event').html(res);
+                $('#popup-edit-event').show();
+                setEventDateTime(startDate, endDate);
+                setEventRoom(id);
+                setDefaultEventSettings();
+            }
+        });
 
     });
     $(document).on("click", "#closeButton", function () {
@@ -66,14 +78,32 @@
         var id = _this.data('id');
         console.log(id);
         $.ajax({
-            url: window.location.origin + "/Room/Index",
-            data: 'id=' + id,
+            url: window.location.origin + "/Event/Index",
+            data: 'eventId=' + id,
             type: 'GET',
             success: function (res) {
-                if (res.redirect) {
-                    window.location.href = res.redirect;
-                }
+                $('.wrapper').html(res);
             }
         });
+    });
+
+
+    $(document).on('click', '#changeevent', function () {
+        var _this = $(this);
+        $('#popup-edit-event').html('');
+        var id = _this.data('id');
+        console.log(id);
+        $.ajax({
+            url: window.location.origin + "/Event/EditEventPartial",
+            data: 'eventId=' + id,
+            type: 'GET',
+            success: function (res) {
+                $('#popup-edit-event').html(res);
+                $('#popup-edit-event').show();
+            }
+        });
+    });
+    $("#minimizeButton").bind("click", function () {
+        $("#popup-edit-event").remove();
     });
 });

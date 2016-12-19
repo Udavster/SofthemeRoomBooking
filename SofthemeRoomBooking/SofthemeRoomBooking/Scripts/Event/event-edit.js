@@ -43,13 +43,13 @@ if ($("#Nickname").val() === "") {
 
 if ($("#Id").val() !== "") {
     var year = parseInt($(".editevent-header__date #Year").val()),
-        month = parseInt($(".editevent-header__date #Month").val()),
+        month = parseInt($(".editevent-header__date #Month").val()) - 1,
         day = parseInt($(".editevent-header__date #Day").val()),
 
         startHour = parseInt($(".editevent-header__date #StartHour").val()),
-        startMinutes = parseInt($(".editevent-header__date #StartHour").val()),
-        finishHour = parseInt($(".editevent-header__date #StartHour").val()),
-        finishMinutes = parseInt($(".editevent-header__date #StartHour").val());
+        startMinutes = parseInt($(".editevent-header__date #StartMinutes").val()),
+        finishHour = parseInt($(".editevent-header__date #FinishHour").val()),
+        finishMinutes = parseInt($(".editevent-header__date #FinishMinutes").val());
 
     setEventDateTime(new Date(year, month, day, startHour, startMinutes), new Date(year, month, day, finishHour, finishMinutes));
 }
