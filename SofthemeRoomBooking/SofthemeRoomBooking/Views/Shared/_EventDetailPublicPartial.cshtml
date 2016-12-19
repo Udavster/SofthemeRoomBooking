@@ -63,7 +63,9 @@
             <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <i class="fa fa-print" aria-hidden="true"></i>
-            <i class="fa fa-link" data-id="@Model.Id" id="eventdetail__link" aria-hidden="true"></i>
+            <i class="fa fa-link eventdetail__link" aria-hidden="true">
+               <a class="whole-el-link" href="@Url.Action("Index", "Event", new {id = Model.Id})"></a>
+            </i>
         </div>
     </div>
 </div>

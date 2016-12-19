@@ -72,25 +72,9 @@
     $(document).on("click", "#closeButton", function () {
         $(".eventcontainer").remove();
     });
-    // click on chain to open event view
-    $(document).on('click', '#eventdetail__link', function () {
-        var _this = $(this);
-        var id = _this.data('id');
-        console.log(id);
-        $.ajax({
-            url: window.location.origin + "/Event/Index",
-            data: 'eventId=' + id,
-            type: 'GET',
-            success: function (res) {
-                $('.wrapper').html(res);
-            }
-        });
-    });
-
 
     $(document).on('click', '#changeevent', function () {
         var _this = $(this);
-
         $('#popup-edit-event').html('');
         var id = _this.data('id');
         console.log(id);
