@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $('#AllowRegistration')[0].disabled = $('#Private')[0].checked;
 
-    $('#event-edit-form .event-input').on('keyup blur', function () {
+    $('#event-edit-form .event-input').on('keyup blur', function (e) {
         var validator = $('#event-edit-form').validate();
 
         if (validator.element(e.target)) {

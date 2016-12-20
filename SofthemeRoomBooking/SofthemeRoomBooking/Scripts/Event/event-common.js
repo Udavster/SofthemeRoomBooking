@@ -19,8 +19,9 @@
 
             $('.submit-btn').attr('disabled', false);
         } else {
-            validator.element($that[0]);
-            $('.submit-btn').attr('disabled', 'disabled');
+            if (!validator.element($that[0])) {
+                $('.submit-btn').attr('disabled', 'disabled');
+            }
         }
         
         $('#Nickname')[0].disabled = this.checked;
