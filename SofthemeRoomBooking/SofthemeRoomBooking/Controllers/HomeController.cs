@@ -10,8 +10,6 @@ using SofthemeRoomBooking.Services.Contracts;
 
 namespace SofthemeRoomBooking.Controllers
 {
-    [Authorize]
-    [AllowAnonymous]
     public class HomeController : ErrorCatchingControllerBase
     {
         private readonly IProfileService _profileService;
