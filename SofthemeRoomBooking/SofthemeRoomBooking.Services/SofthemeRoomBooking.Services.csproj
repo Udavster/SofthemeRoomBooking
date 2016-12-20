@@ -105,6 +105,7 @@
     <Compile Include="Contracts\IRoomService.cs" />
     <Compile Include="Converters\EventConvertor.cs" />
     <Compile Include="Converters\ToRoomModel.cs" />
+    <Compile Include="Exceptions\EmailSendingException.cs" />
     <Compile Include="Implementations\EventService.cs" />
     <Compile Include="Implementations\FeedbackService.cs" />
     <Compile Include="Implementations\NotificationService.cs" />

@@ -388,8 +388,9 @@ class Calendar {
     }
 
     changeHeight(calendarHeight) {
-        $(this.className + '__visible-wrapper').css('height', 40 + 60 + calendarHeight + "px"); //TODO: delete magic numbers (40 - padding top, 60 - ?)
+        $(this.className + '__visible-wrapper').css('height', 40 + 60 + calendarHeight + "px");
         calendarHeight += 'px';
+
         $(this.className).css('height', calendarHeight);
         $(this.className + '__background-layer').css('height', calendarHeight);
         $(this.className + '__background-layer').css('height', calendarHeight);
@@ -399,7 +400,7 @@ class Calendar {
         if (!isNaN(width)) {
             width += 'px';
         }
-        console.warn('Width changed', width);
+
         $(this.className).css('width', width);
         this.slider.setBoundingWidth(null, true);
         this.updateTimeTimer(this.timeSlider, false);
@@ -410,12 +411,13 @@ class Calendar {
     addRooms(calendarMemo) {
         var roomList = $(this.className + "__room-list");
         var $roomCells = $(this.className + '__event-hour-layer');
+
         for (var i = 0; i < calendarMemo["roomArr"].length; i++) {
             roomList.append('<div class="' + this.name + '__room clearable "><span>' + calendarMemo["roomArr"][i] + '</span></div>');
             $roomCells.append('<div class="' + this.name + '__room-hours clearable ' + this.name + '__room-hour-tr ' + this.name + '__room-hours-cell"></div>');
         }
     }
-
+    
     addRoomHours($roomHours) {
         for (var i = this.startHour; i < this.finishHour + 1; i++) {
             $roomHours.append('<div class="' + this.name + '__room-hour clearable ' + this.name + '__room-hour-inner"><div class="' + this.name + '__room-hour-inner"></div></div>')
@@ -433,17 +435,17 @@ class Calendar {
         var visibleEventsLayer = $(this.className + "__background-layer");
         var currentHeight = this.calendarDescRowHeight + 1;
         for (var i in calendarMemo["events"]) {
+
             if (calendarMemo["events"].hasOwnProperty(i)) {
-                var roomName = calendarMemo["events"][i]['roomName'];
+                var roomId = calendarMemo["events"][i]['roomName'];
                 var events = calendarMemo["events"][i]['events'];
+
                 if (events == undefined) return;
+
                 visibleEventsLayer.append('<div data-roomnum=' +
-                    i +
-                    ' id="room-' +
-                    i +
-                    '" class="' +
-                    this.name +
-                    '__room-events clearable"></div>');
+                    i + ' id="room-' + i + '" data-roomid='+roomId+' class="' + 
+                    this.name + '__room-events clearable"></div>');
+
                 var $room = $('#room-' + i);
                 $room.css('top', (currentHeight) + 'px');
 
@@ -452,7 +454,9 @@ class Calendar {
                 }
                 currentHeight += this.roomHeight;
             }
+
         }
+
         this.addEventOnClickHandler(this.eventOnClickHandler);
     }
 
@@ -592,7 +596,6 @@ class Calendar {
         this.timeline.sort(function (a, b) {
              a = JSON.parse(Object.keys(a)[0]);
              b = JSON.parse(Object.keys(b)[0]);
-             //console.log(a, b);
              return 60 * (a['h'] - b['h']) + (a['m'] - b['m'])
         });
         

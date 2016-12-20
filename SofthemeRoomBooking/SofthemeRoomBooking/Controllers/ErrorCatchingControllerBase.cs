@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Logger = SofthemeRoomBooking.Services.Logger;
+using EmailSendingException = SofthemeRoomBooking.Services.Exceptions.EmailSendingException;
 
 namespace SofthemeRoomBooking.Controllers
 {
@@ -24,7 +25,6 @@ namespace SofthemeRoomBooking.Controllers
             var exception = model.Exception;
 
             string logMessage = String.Format("{0}: {1}", DateTime.Now, exception.ToString());
-            Logger.Log.Error(logMessage);
 
             HttpException httpException = exception as HttpException;
             if (httpException != null)
@@ -37,6 +37,14 @@ namespace SofthemeRoomBooking.Controllers
                 this.RedirectToAction("BadRequest", "Error").ExecuteResult(this.ControllerContext);
                 return;
             }
+            if (exception is EmailSendingException)
+            {
+                this.RedirectToAction("MessageSending", "Error").ExecuteResult(this.ControllerContext);
+                logMessage = String.Format("Message Sending Exception: {0}", exception.InnerException.ToString());
+                return;
+            }
+
+            Logger.Log.Error(logMessage);
 
             this.RedirectToAction("Error", "Error").ExecuteResult(this.ControllerContext);
         }
