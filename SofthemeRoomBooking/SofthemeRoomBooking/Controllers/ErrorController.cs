@@ -27,5 +27,10 @@ namespace SofthemeRoomBooking.Controllers
             //Response.StatusCode = 500;
             return View("~/Views/Errors/Http500.cshtml");
         }
+
+        public ActionResult MessageSending()
+        {
+            return View("~/Views/Errors/MessageSending.cshtml");
+        }
     }
 }

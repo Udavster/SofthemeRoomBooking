@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SendGrid;
 using System;
 using SofthemeRoomBooking.DAL;
+using SofthemeRoomBooking.Services.Exceptions;
 
 namespace SofthemeRoomBooking.Services.Implementations
 {
@@ -20,18 +21,25 @@ namespace SofthemeRoomBooking.Services.Implementations
 
         private void SendMail(EmailModel model)
         {
-            var message = new SendGridMessage();
-            message.AddTo(model.Emails);
-            message.From = new MailAddress(emailSender,senderName);
-            message.Subject = model.Subject;
-            message.Text = model.Text;
-
-            var credentials = new NetworkCredential(username, pswd);
-            var transportWeb = new Web(credentials);
-
-            if (transportWeb != null)
+            try
             {
-                transportWeb.Deliver(message);
+                var message = new SendGridMessage();
+                message.AddTo(model.Emails);
+                message.From = new MailAddress(emailSender, senderName);
+                message.Subject = model.Subject;
+                message.Text = model.Text;
+
+                var credentials = new NetworkCredential(username, pswd);
+                var transportWeb = new Web(credentials);
+
+                if (transportWeb != null)
+                {
+                    transportWeb.Deliver(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new EmailSendingException("Message sending failed", ex);
             }
         }
 

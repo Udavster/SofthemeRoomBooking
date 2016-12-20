@@ -506,6 +506,7 @@
     <Content Include="Views\Errors\Http400.cshtml" />
     <Content Include="Views\Errors\Http404.cshtml" />
     <Content Include="Views\Errors\Http500.cshtml" />
+    <Content Include="Views\Errors\MessageSending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />
