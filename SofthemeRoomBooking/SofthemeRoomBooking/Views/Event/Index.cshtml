@@ -225,7 +225,6 @@
 @Scripts.Render("~/bundles/datetimepickers")
 @Scripts.Render("~/bundles/event-index")
 
-@Html.Action("RoomPartial", "Room", new { id = Model.IdRoom })
+@Html.Action("RoomPartial", "Room", new { id = (int?)null })
 
 @Html.Partial("_MapPartial")
-

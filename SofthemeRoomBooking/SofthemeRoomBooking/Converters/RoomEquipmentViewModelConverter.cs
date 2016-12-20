@@ -15,7 +15,7 @@ namespace SofthemeRoomBooking.Converters
             {
                 Id = model.Id,
                 Equipments = model.Equipments,
-                Equipment = model.Equipment,
+                Equipment = model.Equipment.Select(e => new EquipmentViewModel {Id = e.Id,Quantity =e.Quantity }).ToList(),
                 IsAvalaible = model.IsAvalaible,
                 Name = model.Name
             };
@@ -27,7 +27,7 @@ namespace SofthemeRoomBooking.Converters
             {
                 Id = model.Id,
                 Equipments = model.Equipments,
-                Equipment = model.Equipment,
+                Equipment = model.Equipment.Select(e => new EquipmentModel { Id = e.Id, Quantity = e.Quantity }).ToList(),
                 IsAvalaible = model.IsAvalaible,
                 Name = model.Name
             };

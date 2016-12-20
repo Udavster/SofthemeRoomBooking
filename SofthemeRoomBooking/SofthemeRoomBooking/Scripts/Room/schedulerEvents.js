@@ -7,8 +7,6 @@
         $('.eventdetailedit').remove();
     });
 
-
-    //close private info popup
     $(document).on('click', '.eventdetailedit-close', function () {
         $('.eventdetail').remove();
     });

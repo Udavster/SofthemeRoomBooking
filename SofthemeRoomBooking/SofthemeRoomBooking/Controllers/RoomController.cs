@@ -18,10 +18,12 @@ namespace SofthemeRoomBooking.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly IEventService _eventService;
-        public RoomController(IRoomService roomService, IEventService eventService)
+        private readonly IProfileService _profileService;
+        public RoomController(IRoomService roomService, IEventService eventService, IProfileService profileService)
         {
             _roomService = roomService;
             _eventService = eventService;
+            _profileService = profileService;
         }
 
         public ActionResult Index(int? id)
@@ -124,7 +126,7 @@ namespace SofthemeRoomBooking.Controllers
         [ActionName("Open")]
         public ActionResult OpenRoomConfirmation(int id)
         {
-            
+         
             _roomService.OpenRoom(id);
 
             return RedirectToAction("Index", "Home");
@@ -136,7 +138,13 @@ namespace SofthemeRoomBooking.Controllers
         public ActionResult CloseRoomConfirmation(int id)
         {
             var userId = User.Identity.GetUserId();
-            _roomService.CloseRoom(id, userId);
+            var events = _eventService.GetEventsByRoom(id);
+            Dictionary<int,string> creatorEmailByEvent = new Dictionary<int, string>();
+            foreach (var @event in events)
+            {
+                creatorEmailByEvent.Add(@event.Id,_profileService.GetUserById(@event.UserId).Email);
+            }
+            _roomService.CloseRoom(id, userId, creatorEmailByEvent);
 
             return RedirectToAction("Index", "Home");
         }

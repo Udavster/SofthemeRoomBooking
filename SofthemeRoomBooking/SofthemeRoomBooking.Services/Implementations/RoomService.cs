@@ -7,6 +7,7 @@ using SofthemeRoomBooking.DAL;
 using SofthemeRoomBooking.Services.Contracts;
 using SofthemeRoomBooking.Services.Converters;
 using SofthemeRoomBooking.Services.Models;
+using SofthemeRoomBooking.Services.Models.EventModel;
 
 
 namespace SofthemeRoomBooking.Services.Implementations
@@ -177,8 +178,9 @@ namespace SofthemeRoomBooking.Services.Implementations
             return result;
         }
 
-        public bool CloseRoom(int id, string userId, DateTime? finish = null)
+        public bool CloseRoom(int id, string userId, Dictionary<int, string> creatorsEmails, DateTime? finish = null)
         {
+            List<int> eventsId = new List<int>();
             if (userId != null)
             {
                 var room = new RoomsLocks()
@@ -194,19 +196,21 @@ namespace SofthemeRoomBooking.Services.Implementations
                 foreach (var @event in events)
                 {
                     @event.Cancelled = true;
+                    eventsId.Add(@event.Id);
                 }
 
                 _context.SaveChanges();
 
-                foreach (var @event in events)
+                foreach (var idEvents in eventsId)
                 {
-                    var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == @event.Id).Select(x => x.Email).ToList();
-                    var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == @event.Id);
+                    var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == idEvents).Select(x => x.Email).ToList();
+                    usersEmails.Add(creatorsEmails[idEvents]);
+                    var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == idEvents);
                     var roomInfo = _context.Rooms.FirstOrDefault(x => x.Id == eventInfo.Id_room);
                     if (roomInfo != null)
                     {
                         var roomName = roomInfo.Name;
-                        _notificationService.CancelEventNotification(usersEmails,eventInfo, roomName);
+                        _notificationService.CancelEventNotification(usersEmails, eventInfo, roomName);
                     }
                 }
 
