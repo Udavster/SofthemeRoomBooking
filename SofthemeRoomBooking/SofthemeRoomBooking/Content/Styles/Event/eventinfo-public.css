@@ -122,6 +122,9 @@
     margin-top: 20px;
 }
 
-#eventdetail__link {
+.eventdetail__link {
     cursor: pointer;
+    width: 24px;
+    height: 25px;
+    position: relative;
 }

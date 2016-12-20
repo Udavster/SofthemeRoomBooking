@@ -424,7 +424,7 @@
 }
 
 .room__general:hover > .room__arrow{
-    display: block;
+    display: none;
 }
 .room-change .room__general:hover > .room__arrow{
     display: none;

@@ -202,8 +202,12 @@ namespace SofthemeRoomBooking.Services.Implementations
                 {
                     var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == @event.Id).Select(x => x.Email).ToList();
                     var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == @event.Id);
-
-                   _notificationService.CancelEventNotification(usersEmails,eventInfo);
+                    var roomInfo = _context.Rooms.FirstOrDefault(x => x.Id == eventInfo.Id_room);
+                    if (roomInfo != null)
+                    {
+                        var roomName = roomInfo.Name;
+                        _notificationService.CancelEventNotification(usersEmails,eventInfo, roomName);
+                    }
                 }
 
                 return true;
@@ -227,11 +231,18 @@ namespace SofthemeRoomBooking.Services.Implementations
             return false;
         }
 
-        public bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime)
+        public bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime, int? idEvent = null)
         {
-            return _context.Events.Count(ev => ev.Id_room == idRoom && !ev.Cancelled && 
-                                              ((ev.Start >= startTime && ev.Start <= finishTime) || 
-                                               (ev.Finish >= startTime && ev.Finish <= finishTime))) > 0;
+            var result = _context.Events.Where(ev => ev.Id_room == idRoom && !ev.Cancelled &&
+                                              ((ev.Start > startTime && ev.Start < finishTime) ||
+                                               (ev.Finish > startTime && ev.Finish < finishTime)));
+
+            if (idEvent != null)
+            {
+                return result.Count(ev => ev.Id != idEvent.Value) > 0;
+            }
+
+            return result.Any();
         }
 
         private IQueryable<Events> GetEventsToCancel(int id, DateTime? finish)

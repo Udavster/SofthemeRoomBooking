@@ -111,8 +111,8 @@ var createEvent = function (event) {
             var finishHour = parseInt($event.data('eh'), 10);
             var finishMinutes = parseInt($event.data('em'), 10);
 
-            var startTime = new Date(daySelected.day, daySelected.month, daySelected.year, startHour, startMinutes);
-            var finishTime = new Date(daySelected.day, daySelected.month, daySelected.year, finishHour, finishMinutes);
+            var startTime = new Date(daySelected.year, daySelected.month, daySelected.day, startHour, startMinutes);
+            var finishTime = new Date(daySelected.year, daySelected.month, daySelected.day, finishHour, finishMinutes);
 
             setEventDateTime(startTime, finishTime);
 

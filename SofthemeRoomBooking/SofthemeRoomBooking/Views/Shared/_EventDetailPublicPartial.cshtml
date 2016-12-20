@@ -14,7 +14,7 @@
                 if (DateTime.Now <= Model.StartTime)
                 {
                     <div class="detailed-buttons">
-                        <div class="eventdetailedit-change">Изменить</div>
+                        <div id="changeevent" class="eventdetailedit-change" data-id="@Model.Id">Изменить</div>
                         <div id="cancelevent" data-id="@Model.Id" class="eventdetailedit-cancel">Отменить</div>
                     </div>
                 }
@@ -30,29 +30,28 @@
         <div>
             <h3>@Model.Title</h3>
         </div>
+        <div>
+            <p>@Model.Description</p>
+        </div>
+        <div class="detailed-user">
+            <div class="detailed-name">
+                <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
+                @if (Model.Nickname != null)
+                {
+                    <span>@Model.Nickname</span>
+                }
+                else
+                {
+                    <span>@Model.UserName</span>
+                }
+            </div>
+            <div class="detailed-num">
+                <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
+                <span>@Model.ParticipantsQuantity</span>
+            </div>
+        </div>
         @if (Model.AllowRegistration)
             {
-            <div>
-                <p>@Model.Description</p>
-            </div>
-            <div class="detailed-user">
-                <div class="detailed-name">
-                    <i class="fa fa-user" aria-hidden="true" style="font-size: 25px;"></i>
-                    @if (Model.Nickname != null)
-                    {
-                        <span>@Model.Nickname</span>
-                    }
-                    else
-                    {
-                        <span>@Model.UserName</span>
-                    }
-                </div>
-                <div class="detailed-num">
-                    <i class="fa fa-users" aria-hidden="true" style="font-size: 25px;"></i>
-                    <span>@Model.ParticipantsQuantity</span>
-                </div>
-            </div>
-
             <div>
                 <input type="text" class="input-text eventdetailedit__email-input" placeholder="Укажите e-mail что бы присоединится.">
                 <div class="eventdetailedit__email-button">
@@ -64,22 +63,12 @@
             <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
             <i class="fa fa-print" aria-hidden="true"></i>
-            <i class="fa fa-link" data-id="@Model.Id" id="eventdetail__link" aria-hidden="true"></i>
+            <i class="fa fa-link eventdetail__link" aria-hidden="true">
+               <a class="whole-el-link" href="@Url.Action("Index", "Event", new {id = Model.Id})"></a>
+            </i>
         </div>
     </div>
 </div>
 
-<script>
-    $(document).on('click', '#cancelevent', function () {
-        var _this = $(this);
-        var id = _this.data('id');
-        $.ajax({
-            url: window.location.origin + "/Event/CancelEventView",
-            data: 'id=' + id,
-            type: 'GET',
-            success: function (res) {
-                $('.week__scheduler').append(res);
-            }
-        });
-    });
-</script>
+@Scripts.Render("~/bundles/eventInfo")
+@Scripts.Render("~/bundles/event-details")

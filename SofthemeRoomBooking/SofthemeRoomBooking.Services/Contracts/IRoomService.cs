@@ -14,6 +14,6 @@ namespace SofthemeRoomBooking.Services.Contracts
         bool CloseRoom(int id, string userId, DateTime? finish = null);
         bool OpenRoom(int id);
 
-        bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime);
+        bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime, int? idEvent = null);
     }
 }

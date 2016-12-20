@@ -70,6 +70,7 @@ var openRoom = function ($this) {
 function clickOnRoom() {
     $('.room__general')
     .mouseover(function () {
+        $('.room__general:hover').children().css('display', 'block');
         var equip = $(this).data('num').split(',');
 
         $('.equipmentuser').children().each(function (i, elem) {
@@ -91,6 +92,7 @@ function clickOnRoom() {
     })
     .mouseout(function () {
         $('.room__equipment').hide();
+        $('.room__arrow').hide();
     }).click(roomClickHighlightHandler);
 }
 
@@ -107,6 +109,7 @@ function changeRoomNameEquipment() {
                 $('.room__general').each(function (i, elem) {
                     if ($(elem).data('roomid') == _this.data("roomid")) {
                         $(elem).addClass('active-room').parents('.room__image').addClass('room-change');
+                        $(elem).children().css('display','block');
                         $(elem).find('.text').hide();
                         $('.room__general').css('pointer-events', 'none');
                     }
@@ -163,6 +166,7 @@ function closeAdminEquipmentPopup() {
         $('.room__general').css('pointer-events', '');
         $('.equipmentadmin').hide();
         $('.active-room').removeClass('active-room');
+        $('.room__arrow').hide();
         $('.room__general').each(function (i, elem) {
             $(elem).parents('.room__image').removeClass('room-change');
         });

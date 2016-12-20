@@ -39,7 +39,7 @@ namespace SofthemeRoomBooking.Converters
         {
             return new EventModel
             {
-                Id = model.Id,
+                Id = model.Id == null ? 0 : model.Id.Value,
                 Title = model.Title,
                 Description = model.Description,
                 IdRoom = model.IdRoom,

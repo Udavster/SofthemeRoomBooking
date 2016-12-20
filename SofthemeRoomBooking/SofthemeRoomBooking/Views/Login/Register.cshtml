@@ -10,7 +10,7 @@
 {
     <div class="form__label">Регистрация</div>
     @Html.AntiForgeryToken()
-    <div class="group-input-error">
+    <div class="group-input-error input-stairs" id="input-name">
         @*<input class="input-text form__text-input" type="text" placeholder="Имя Фамилия">*@
         @Html.SignalValidationMessageFor(model => model.Name, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.Name, new
@@ -22,7 +22,7 @@
             }
         })
     </div>
-    <div class="group-input-error">
+    <div class="group-input-error input-stairs" id="input-surname">
         @*<input class="input-text form__text-input" type="text" placeholder="Имя Фамилия">*@
         @Html.SignalValidationMessageFor(model => model.Surname, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.Surname, new
@@ -34,7 +34,7 @@
             }
         })
     </div>
-    <div class="group-input-error">
+    <div class="group-input-error input-stairs" id="input-email">
         @Html.SignalValidationMessageFor(model => model.Email, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.Email, new
         {
@@ -46,7 +46,7 @@
             }
         })
     </div>
-    <div class="group-input-error">
+    <div class="group-input-error input-stairs" id="input-password">
         @Html.SignalValidationMessageFor(model => model.Password, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.Password, new
         {
@@ -58,7 +58,7 @@
         })
     </div>
 
-    <div class="group-input-error">
+    <div class="group-input-error input-stairs" id="input-confirm-password">
         @Html.SignalValidationMessageFor(model => model.ConfirmPassword, new { @class = "error-box__text-danger" })
         @Html.EditorFor(model => model.ConfirmPassword, new
         {
@@ -69,6 +69,6 @@
             }
         })
     </div>
-    <button class="button  form__button" type="submit">Зарегестрироваться</button>
+    <button class="button  form__button input-stairs" type="submit" id="input-submit">Зарегестрироваться</button>
 }
 

@@ -18,7 +18,6 @@ $("#event-submit").bind("click", function (e) {
         if ($("#ShowOrganizator")[0].checked) {
             $("#Nickname").val("");
         }
-
         $.ajax({
             url: window.location.origin + "/Event/EditEventPartial",
             method: "POST",
@@ -41,29 +40,27 @@ if ($("#Nickname").val() === "") {
     $("#Nickname")[0].disabled = $("#ShowOrganizator")[0].checked = true;
 }
 
-setEventDateTime();
+if ($("#Id").val() !== "") {
+    var year = parseInt($(".editevent-header__date #Year").val()),
+        month = parseInt($(".editevent-header__date #Month").val()) - 1,
+        day = parseInt($(".editevent-header__date #Day").val()),
 
+        startHour = parseInt($(".editevent-header__date #StartHour").val()),
+        startMinutes = parseInt($(".editevent-header__date #StartMinutes").val()),
+        finishHour = parseInt($(".editevent-header__date #FinishHour").val()),
+        finishMinutes = parseInt($(".editevent-header__date #FinishMinutes").val());
 
+    setEventDateTime(new Date(year, month, day, startHour, startMinutes), new Date(year, month, day, finishHour, finishMinutes));
+}
 
 function setEventDateTime(startTime, finishTime) {
-
-    var day = parseInt($("#Day").val()),
-    month = parseInt($("#Month").val()) - 1,
-    year = parseInt($("#Year").val()),
-    startHour = parseInt($("#StartHour").val()),
-    startMinutes = parseInt($("#StartMinutes").val()),
-    finishHour = parseInt($("#FinishHour").val()),
-    finishMinutes = parseInt($("#FinishMinutes").val()),
-        
-    months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    var months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 
     if (!startTime || !(startTime instanceof Date)) {
-
         startTime = new Date(year, month, day, startHour, startMinutes);
     }
 
     if (!finishTime || !(finishTime instanceof Date)) {
-
         finishTime = new Date(year, month, day, finishHour, finishMinutes);
     }
 
@@ -75,6 +72,15 @@ function setEventDateTime(startTime, finishTime) {
     $("#event-timestart #minutes").text(("0" + startTime.getMinutes()).slice(-2));
     $("#event-timefinish #hours").text(("0" + finishTime.getHours()).slice(-2));
     $("#event-timefinish #minutes").text(("0" + finishTime.getMinutes()).slice(-2));
+
+    $(".editevent-header__date #Year").val(startTime.getFullYear());
+    $(".editevent-header__date #Month").val(startTime.getMonth());
+    $(".editevent-header__date #Day").val(startTime.getDate());
+
+    $(".editevent-header__date #StartHour").val(startTime.getHours());
+    $(".editevent-header__date #StartMinutes").val(startTime.getMinutes());
+    $(".editevent-header__date #FinishHour").val(finishTime.getHours());
+    $(".editevent-header__date #FinishMinutes").val(finishTime.getMinutes());
 
     $("#event-date #arrow-up-day").click();
     $("#event-date #arrow-down-day").click();

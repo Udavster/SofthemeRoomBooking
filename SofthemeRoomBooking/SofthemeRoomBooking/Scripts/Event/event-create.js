@@ -21,7 +21,6 @@ $("#event-submit").bind("click", function (e) {
         $.ajax({
             url: window.location.origin + "/Event/CreateEvent",
             method: "POST",
-            async: true,
             data: $("#event-form").serialize(),
             success: function (result) {
                 if (result.success) {

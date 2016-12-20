@@ -225,8 +225,28 @@ function generateCalendarCol(date, events, iteration, roomId) {
 
         for (var i = 0; i < 11; i++) {
 
-            if (isAuth ==="True") {
-                structure += '<div class="calendar-item item-' +
+            if (isAuth === "True") {
+                if (new Date().setHours(0, 0, 0, 0) > date.setHours(0, 0, 0, 0)) {
+                    structure += '<div class="calendar-item not-empty item-' + 
+                    i +
+                    '" data-start=' +(i + 9) +
+                    ' data-finish=' + (i + 10) +
+                    ' data-day=' + date.getDate() +
+                    ' data-month=' + (date.getMonth() + 1) +
+                    ' data-year=' + date.getFullYear() +
+                    ' data-roomid=' + roomId +
+                    ' >';
+                } else {
+                    structure += '<div class="calendar-item item-' +
+                    i +
+                    '" data-start=' + (i + 9) +
+                    ' data-finish=' + (i + 10) +
+                    ' data-day=' + date.getDate() +
+                    ' data-month=' + (date.getMonth() + 1) +
+                    ' data-year=' + date.getFullYear() +
+                    ' data-roomid=' + roomId +
+                    ' >';
+                }
                     i +
                     '" data-start=' +(i + 9) +
                     ' data-finish=' + (i + 10) +
