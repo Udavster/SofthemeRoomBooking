@@ -2,10 +2,16 @@ function tformat(num) {
     return ("0" + num).slice(-2);
 }
 function formatText(text) {
-    if (text&&text.length > 20) {
+    if (text && text.length > 20) {
         return text.slice(0, 17) + "...";
     }
     return text;
+}
+function compareTime(a, b) {
+    if (60 * a['h'] + a['m'] > 60 * b['h'] + b['m']) {
+        return 1;
+    }
+    return -1;
 }
 
 function isContained(event, time) {
@@ -43,14 +49,14 @@ function PrivateEvent(id, start, finish, title, description) {
 }
 
 function EventPrivacyCheck(event) {
-    if (event.Empty||event.Publicity) return event;
+    if (event.Empty || event.Publicity) return event;
     event.Classes += ' event-private';
     event.addedElements = '<i class="fa fa-loc event-pivate__lock" aria-hidden="true"></i>';
     event.Private = true;
     return event;
 }
 
-function Slider(name, startHour, finishHour, boundingElName, dragHandler, borderBox, static , bottomText, overflow) {
+function Slider(name, startHour, finishHour, boundingElName, dragHandler, borderBox, static , bottomText, overflow, timeline) {
 
     this.getBoundingLeftRight = function (elementName) {
         $box = $(elementName);
@@ -67,6 +73,10 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     this.hide = function () {
         this["$self"].hide();
     }.bind(this);
+
+    this.setTimeline = function (timeline) {
+            this.timeline = timeline;
+        }.bind(this);
 
     this.show = function () {
         this["$self"].show();
@@ -126,7 +136,75 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         var hours = Math.floor(hourDuration * part);
         var minutes = Math.floor(60 * (hourDuration * part - hours)); //m = 60*(24*p-h); m/60 = 24*p - h; p = (m/60 + h)/24
         $('#' + this.name + '-time').html(tformat(hours + this.startHour) + ":" + tformat(minutes));
+
+        hours += this.startHour;
+        var time = { 'h': hours, 'm': minutes };
+        this.highlight(time);
+
     }.bind(this);
+
+    this.highlight = function(time) {
+        var prev = null;
+        var prevk = null;
+        this.previ = 0;
+
+        if (this.timeline) {
+            var tk = Object.keys(this.timeline[0])[0];
+            var t = JSON.parse(tk);
+            if (compareTime(t, time) > 0) {
+                this.complexApply(0, -1);
+                return;
+            }
+            prevk = tk;
+            prev = t;
+            for (var i = 1; i < this.timeline.length; i++) {
+                tk = Object.keys(this.timeline[i])[0];
+                t = JSON.parse(tk);
+                if ((compareTime(prev, time) < 0) && (compareTime(t, time) > 0)) {
+                    this.complexApply(i, this.previ);
+                    return;
+                }
+                prevk = tk;
+                prev = t;
+            }
+            if (compareTime(prev, time) < 0) {
+                this.complexApply(this.timeline.length, -1);
+            }
+        }
+    }
+
+    this.complexApply = function(i, previ) {
+
+        if (previ === i) return;
+        for (var k = 0; k < 12; k++) {
+            var room = $('.room__general.room-' + k + '');
+            room.css('background', '');
+            room.children('.text').css('background-color', '');
+        }
+        if (i === this.timeline.length) return;
+            for (var j = 0; j < i; j++) {
+                this.apply(this.apply(this.timeline[j][Object.keys(this.timeline[j])[0]]), true);
+            }
+        this.previ = i;
+    }
+
+    this.apply = function (info, forward) {
+        //console.log(info);
+        for (key in info) {
+            if (info.hasOwnProperty(key)) {
+                if (info[key] === true) {
+                    var room = $('.room__general.room-' + key + '');
+                    room.css('background', '#f95752');
+                    room.children('.text').css('background-color', 'red');
+                } else {
+                    var room = $('.room__general.room-' + key + '');
+                    room.css('background', '');
+                    room.children('.text').css('background-color', '');
+                }
+            }
+        }
+
+    }
 
     this.setBoundingWidth = function (width, update) {
 
@@ -160,6 +238,9 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
 
         this["$self"].css('left', x);
         $('#' + this.name + '-time').html(tformat(hours) + ":" + tformat(minutes));
+
+        this.highlight({ 'h': hours, 'm': minutes });
+
         return x;
     }.bind(this);
 
@@ -185,6 +266,7 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     this.boundingElName = boundingElName;
     this.bottomText = bottomText;
     this.overflow = overflow;
+    this.timeline = timeline;
 
     var sliderHtml = '<div id="' + this.name + '" class="calendar-events__slider vertical-slider">' +
             '<div class="vertical-slider__top">' +
@@ -243,7 +325,7 @@ class Calendar {
             self.changeBackgroundPos.apply(self, [pos]);
             self.changeNowVisibility(pos, self.timeSlider);
         }
-        this.slider = new Slider("drag-slider", this.startHour, this.finishHour, this.className, slideHandle, this.sliderBorderBox);
+        this.slider = new Slider("drag-slider", this.startHour, this.finishHour, this.className, slideHandle, this.sliderBorderBox, null, null, null);
 
         $("#drag-slider").css('z-index', 4);
 
@@ -346,18 +428,26 @@ class Calendar {
         }
         var visibleEventsLayer = $(this.className + "__background-layer");
         var currentHeight = this.calendarDescRowHeight + 1;
-        for (var i = 0; i < calendarMemo["roomArr"].length; i++) {
-            var roomName = calendarMemo["roomArr"][i];
-            var events = calendarMemo["events"][roomName];
-            if (events == undefined) return;
-            visibleEventsLayer.append('<div data-roomnum='+i+' id="room-' + i + '" class="' + this.name + '__room-events clearable"></div>');
-            var $room = $('#room-' + i);
-            $room.css('top', (currentHeight) + 'px');
+        for (var i in calendarMemo["events"]) {
+            if (calendarMemo["events"].hasOwnProperty(i)) {
+                var roomName = calendarMemo["events"][i]['roomName'];
+                var events = calendarMemo["events"][i]['events'];
+                if (events == undefined) return;
+                visibleEventsLayer.append('<div data-roomnum=' +
+                    i +
+                    ' id="room-' +
+                    i +
+                    '" class="' +
+                    this.name +
+                    '__room-events clearable"></div>');
+                var $room = $('#room-' + i);
+                $room.css('top', (currentHeight) + 'px');
 
-            for (var j = 0; j < events.length; j++) {
-                this.addEvent($room, EventPrivacyCheck(events[j]));
+                for (var j = 0; j < events.length; j++) {
+                    this.addEvent($room, EventPrivacyCheck(events[j]));
+                }
+                currentHeight += this.roomHeight;
             }
-            currentHeight += this.roomHeight;
         }
         this.addEventOnClickHandler(this.eventOnClickHandler);
     }
@@ -387,7 +477,7 @@ class Calendar {
         eventHtml.attr('data-title', event.Title);
 
         $room.append(eventHtml);
-        
+
     }
 
     constructBase($calendar) {
@@ -448,16 +538,74 @@ class Calendar {
         this.addRoomHours($roomHours);
         this.setEvents(memo);
         this.Auth = memo.Auth;
+
+        if (this.slider && this.timeSlider) {
+            this.updateTimeTimer(this.timeSlider, false);
+            this.updateTimeTimer(this.slider, true);
+            this.timeSlider.hide();
+        }
     }
 
-    sortEventsInMemo(memo) {
+    createTimeLine(memo) {
+        var timeline = {};
+
+
+        for (var key in memo['events']) {
+            if (memo['events'].hasOwnProperty(key)) {
+                //console.log(memo);
+                for (var i in memo['events'][key]['events']) {
+                    //console.log(i);
+                    if (memo['events'][key]['events'].hasOwnProperty(i)) {
+                        var event = memo['events'][key]['events'][i];
+                        console.log( key);
+                        var start = JSON.stringify(event.Start);
+
+                        if (!(start in timeline)) {
+                            timeline[start] = {};
+                        }
+                        timeline[start][memo['events'][key]['roomName']] = true;
+
+                        var finish = JSON.stringify(event.Finish);
+                        if (!(finish in timeline)) {
+                            timeline[finish] = {};
+                        }
+                        timeline[finish][memo['events'][key]['roomName']] = false;
+                    }
+                }
+            }
+        }
+        console.log('timeline', timeline);
+        this.timeline = [];
+        for (var key in timeline) {
+            if (timeline.hasOwnProperty(key)) {
+                var obj = {};
+                obj[key] = timeline[key];
+                this.timeline.push(obj);
+            }
+        }
+
         
+        this.timeline.sort(function (a, b) {
+             a = JSON.parse(Object.keys(a)[0]);
+             b = JSON.parse(Object.keys(b)[0]);
+             //console.log(a, b);
+             return 60 * (a['h'] - b['h']) + (a['m'] - b['m'])
+        });
+        
+        this.slider.setTimeline(this.timeline);
+    }
+
+
+    sortEventsInMemo(memo) {
+        //console.log(memo);
         if (!memo.Auth) return memo;
 
         for (var key in memo["events"]) {
-            if (memo["roomArr"].indexOf(key) > -1) {
-                this.sortEventsInRoom(memo["events"][key]);
-                memo["events"][key] = memo["events"][key].concat(this.findEmptyPlaces(memo["events"][key], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
+            console.log(memo['events']);
+            if (memo['events'].hasOwnProperty(key)) {
+                this.sortEventsInRoom(memo["events"][key]['events']);
+                //console.log(memo["events"][key]['events']);
+                memo["events"][key]['events'] = memo["events"][key]['events'].concat(this.findEmptyPlaces(memo["events"][key]['events'], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
             }
         }
 
@@ -495,7 +643,7 @@ class Calendar {
             var hourStart = { 'h': evArr[j]['Start']['h'] + 1, 'm': 0 };
 
             if (isContained(evArr[j], hourStart)) {
-                rez.push(new EmptyEvent(evArr[j]['Start'], hourStart, 'Blank'));   
+                rez.push(new EmptyEvent(evArr[j]['Start'], hourStart, 'Blank'));
                 for (var hs = hourStart['h']; hs < evArr[j]['Finish']['h']; hs++) {
                     rez.push(new EmptyEvent({ 'h': hs, 'm': 0 }, { 'h': hs + 1, 'm': 0 }, 'Blank'));
                 }
