@@ -13,6 +13,9 @@ var calendarMemo = {
         //'room42': [{ 'Title': 'event in the room', 'Start': { 'h': 2, 'm': 0 }, 'Finish': { 'h': 3, 'm': 0 } }],
         //'room5':[{'Title':'event in the room', 'Start':{'h':6,'m':0}, 'Finish': {'h':9,'m':0}}]             
 //    }
+//    "eventLine":{
+//        [{'h': 1,'m': 20}:{1:true,3:false,5:true],{'h':2,'m':30}:{2:true, 3:true} ]
+//    }
 //}
 
 function Loading(show) {
@@ -29,13 +32,13 @@ function getDate(a, dateInfo) {
         url: '/Calendar',
         data: {
             date: (dateInfo.getFullYear() + "" + tformat(dateInfo.getMonth() + 1) + "" + tformat(dateInfo.getDate()))
-        }, //year + "" + tformat(month + 1) + tformat(date) },
+        }, 
         method: 'get',
         dataType: "json",
 
         success: function (data) {
             Loading(false);
-            console.log(dateInfo);
+            console.log(data);
             if (data.error) {
                 console.log("Date format is envalid or internal exception occured");
                 return;
@@ -45,11 +48,15 @@ function getDate(a, dateInfo) {
             var data2 = {};
 
             for (var i = 0; i < data.Events.length; i++) {
-                data2[data.Rooms[i].Name] = data.Events[i];
+                data2[i] = { 'roomName': data.Rooms[i].Id, 'events': data.Events[i] };
             }
             var roomArr = [];
+            rez["Rooms"] = {};
             for (var i = 0; i < data.Rooms.length; i++) {
                 roomArr.push(data.Rooms[i].Name);
+                roomArr[i].Id = i;
+                rez["Rooms"][data.Rooms[i].Name] = data.Rooms[i].Id;
+
             }
 
             rez["roomArr"] = roomArr;
@@ -57,12 +64,13 @@ function getDate(a, dateInfo) {
             rez["Auth"] = data["Authenticated"];
 
             calendarMemo = rez;
-            console.log(calendarMemo, rez['events']);
-            
+            console.log(calendarMemo);
+            eventsCalendar.createTimeLine(calendarMemo);
+
             var today = new Date();
             today.setHours(0, 0, 0, 0);
             if (dateInfo >= today) {
-                 calendarMemo = eventsCalendar.sortEventsInMemo(calendarMemo);
+                calendarMemo = eventsCalendar.sortEventsInMemo(calendarMemo);
             }
             eventsCalendar.constructFromMemo(calendarMemo);
         },
@@ -95,7 +103,7 @@ var createEvent = function (event) {
             } else if ($(event.target).parent().hasClass('event-empty')) {
                 $event = $(event.target).parent();
             }
-            
+
             var daySelected = datePicker.getCurrentDay();
 
             var startHour = parseInt($event.data('sh'), 10);
@@ -105,7 +113,7 @@ var createEvent = function (event) {
 
             var startTime = new Date(daySelected.year, daySelected.month, daySelected.day, startHour, startMinutes);
             var finishTime = new Date(daySelected.year, daySelected.month, daySelected.day, finishHour, finishMinutes);
-            
+
             setEventDateTime(startTime, finishTime);
 
             var idRoom = $event.parent().data('roomnum') + 1;

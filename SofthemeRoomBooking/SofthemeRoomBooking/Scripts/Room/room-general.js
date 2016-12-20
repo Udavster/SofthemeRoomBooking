@@ -14,8 +14,6 @@
         $('.room__open').data('id', _this.data("roomid"));
     });
 
-    clickOnRoom();
-
     changeRoomNameEquipment();
 
     unlockRoom();
@@ -26,7 +24,6 @@
 });
 
 var openRoomById = function (RoomId) {
-    console.log('.room-' + RoomId);
     openRoom($('.room-' + RoomId));
     
 }
@@ -46,7 +43,6 @@ var openRoom = function ($this) {
     $('.room__open').hide();
     $('.room__close').hide();
     $('.room__change').data('roomid', $this.data('roomid'));
-
     if ($this.hasClass('room__general-blocked')) {
         $('.room__open').show();
         $('.week__scheduler').hide();
@@ -172,3 +168,4 @@ function closeAdminEquipmentPopup() {
         });
     });
 }
+

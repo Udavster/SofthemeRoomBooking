@@ -8,11 +8,11 @@
         {
             htmlAttributes = new
             {
-                @class = "equipment-elem equipmentadmin-inputname"
+                @class = "equipment-elem equipmentadmin-general equipmentadmin-inputname"
             }
         })
         <div class="equipment-elem equipmentadmin-cancel">Отменить</div>
-        <input class="equipment-elem equipmentadmin-submit" type="submit" value="Сохранить" />
+        <input id="saveButton" class="equipment-elem equipmentadmin-submit" type="submit" value="Сохранить" />
 
     </div>
     <div class="equipmentadmin_down">
@@ -22,7 +22,7 @@
             htmlAttributes = new
             {
                 type = "text",
-                @class = "equipmentadmin-input"
+                @class = "equipmentadmin-general equipmentadmin-input"
             }
         })
         <a class="equipmentuser__board"></a>
@@ -31,7 +31,7 @@
             htmlAttributes = new
             {
                 type = "text",
-                @class = "equipmentadmin-input"
+                @class = "equipmentadmin-general equipmentadmin-input"
             }
         })
        
@@ -41,7 +41,7 @@
             htmlAttributes = new
             {
                 type = "text",
-                @class = "equipmentadmin-input"
+                @class = "equipmentadmin-general equipmentadmin-input"
             }
         })
         <a class="equipmentuser__print"></a>
@@ -50,7 +50,7 @@
             htmlAttributes = new
             {
                 type= "text",
-                @class = "equipmentadmin-input"
+                @class = "equipmentadmin-general equipmentadmin-input"
             }
         })
         <a class="equipmentuser__proect"></a>
@@ -59,9 +59,15 @@
             htmlAttributes = new
             {
                 type = "text",
-                @class = "equipmentadmin-input"
+                @class = "equipmentadmin-general equipmentadmin-input"
             }
         })
     </div>
+    <div id="event-errors" class="equipment-error hidden-error">
+        <i aria-hidden="true" class="error-box__signal fa-exclamation-circle fa"></i>
+        <span class="error-text"></span>
+    </div>
     @Html.HiddenFor(model => model.Id)
 }
+
+@Scripts.Render("~/bundles/equipmentAdmin")

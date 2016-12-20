@@ -41,25 +41,31 @@ html { min-height: 1000px; }
 }
 
 .feedback-form__field-sname {
-    width: 280px;
+    width: 255px;
     margin: 5px;
 }
 
 .feedback-form__field-email {
-    width: 520px;
+    width: 500px;
     margin: 5px;
 }
 
 .feedback-form__field-message {
     display: block;
-    width: 520px;
+    width: 500px;
     height: 180px;
     margin: 5px;
 }
 
 .feedback-form__submit {
-    display: inline-block;
+    display: table;
     width: 160px;
-    margin: 20px 210px;
+    margin: 20px calc(50% - 80px + 15px);
+}
+
+.feedback-form__field-message .input-textarea {
+    width: 100%;
+    height: calc(100% - 14px);
+    margin-right: 0;
 }
 

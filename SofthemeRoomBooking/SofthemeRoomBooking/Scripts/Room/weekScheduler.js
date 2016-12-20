@@ -189,7 +189,7 @@ function generateCalendarCol(date, events, iteration, roomId) {
     var dateArray = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
     var isAuth = $('.week__scheduler').data('auth');
     var minInHour = 60;
-    var heightCol = 48;
+    var heightCol = 44;
     //Generate HTML strucrure
 
     if (new Date().setHours(0, 0, 0, 0) === date.setHours(0, 0, 0, 0) && date.getDay() != 6) {
@@ -247,14 +247,6 @@ function generateCalendarCol(date, events, iteration, roomId) {
                     ' data-roomid=' + roomId +
                     ' >';
                 }
-                    i +
-                    '" data-start=' +(i + 9) +
-                    ' data-finish=' + (i + 10) +
-                    ' data-day=' + date.getDate() +
-                    ' data-month=' + (date.getMonth() + 1) +
-                    ' data-year=' + date.getFullYear() +
-                    ' data-roomid=' + roomId +
-                    ' >';
             } else {
                 structure += '<div class="calendar-item not-empty item-' +
                     i +
@@ -289,7 +281,7 @@ function generateCalendarCol(date, events, iteration, roomId) {
 
         //calculate height and top for displaying event
         var difference = (eventEndHours - eventStartHours) * minInHour + (eventEndMinutes - eventStartMinutes);
-        var top = Math.round((eventStartMinutes) / minInHour * heightCol);
+        var top = Math.round((eventStartMinutes) / minInHour * heightCol) + 1;
         var height = Math.round(difference / minInHour * heightCol);
         if (!events[i].isPublic) {
             var eventInfo = '<div class="event-private" data-id=' + events[i].eventId + ' style="top:' + top + 'px;height:' + height + 'px;">';

@@ -274,6 +274,7 @@
     <Compile Include="Models\CalendarEventModel.cs" />
     <Compile Include="Models\CancelPopupViewModel.cs" />
     <Compile Include="Models\ConfirmationViewModel.cs" />
+    <Compile Include="Models\EquipmentViewModel.cs" />
     <Compile Include="Models\EventViewModel\EventDetailsViewModel.cs" />
     <Compile Include="Models\EventViewModel\EventIndexViewModel.cs" />
     <Compile Include="Models\EventViewModel\EventParticipantViewModel.cs" />
@@ -429,6 +430,8 @@
     <None Include="Scripts\Validation\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\Room\equipmentValidation.js" />
+    <Content Include="Scripts\Room\roomHome.js" />
     <Content Include="Scripts\Room\schedulerEvents.js" />
     <Content Include="Scripts\Validation\jquery.validate.js" />
     <Content Include="Scripts\Validation\jquery.validate.min.js" />
@@ -438,7 +441,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Room\room.js" />
+    <Content Include="Scripts\Room\room-general.js" />
     <Content Include="Scripts\Room\weekScheduler.js" />
     <Content Include="Scripts\Validation\validation.js" />
     <Content Include="Scripts\_references.js" />
@@ -507,6 +510,7 @@
     <Content Include="Views\Errors\Http400.cshtml" />
     <Content Include="Views\Errors\Http404.cshtml" />
     <Content Include="Views\Errors\Http500.cshtml" />
+    <Content Include="Views\Login\RegisterFail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Profile\Index.cshtml" />

@@ -68,7 +68,7 @@ body {
 }
 
 .form__text-input {
-    width: 300px;
+    width: 270px;
     margin: 5px;
 }
 
@@ -110,7 +110,7 @@ body {
 
 .form__button {
     display: table;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .form__success {
@@ -194,7 +194,7 @@ body {
 }
 #input-submit {
     left: 350px;
-    top: -209px;
+    top: -219px;
 }
 
 .input-stairs {

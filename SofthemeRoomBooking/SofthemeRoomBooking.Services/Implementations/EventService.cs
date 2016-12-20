@@ -278,5 +278,18 @@ namespace SofthemeRoomBooking.Services.Implementations
                 return null;
             }
         }
+
+        public List<EventCreatorModel> GetEventsByRoom(int roomId)
+        {
+            var now = DateTime.Now;
+            List<EventCreatorModel> model = new List<EventCreatorModel>();
+            var events = _context.Events.Where(ev => (ev.Id_room == roomId) && (!ev.Cancelled) && (ev.Start >= now));
+
+            foreach (var item in events)
+            {
+                model.Add(item.ToEventCreator());
+            }
+            return model;
+        }
     }
 }

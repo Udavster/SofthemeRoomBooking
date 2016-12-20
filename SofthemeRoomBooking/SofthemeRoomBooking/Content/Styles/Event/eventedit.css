@@ -32,6 +32,15 @@
     font-size: 14px;
 }
 
+.editevent-header__dropdown-list option {
+    background: white;
+    color: #9FA6B6;
+}
+
+.editevent-header__dropdown-list select.decorated option:hover {
+    box-shadow: 0 0 10px 100px #9FA6B6 inset;
+}
+
 .eventcontainer-header .editevent-header__minimize {
     margin: auto;
     margin-top: 5px;

@@ -11,3 +11,13 @@
         }
     });
 });
+
+$(document).on('click', '.eventdetailedit-close', function () {
+    $('.eventdetailedit').remove();
+});
+
+
+//close private info popup
+$(document).on('click', '.eventdetailedit-close', function () {
+    $('.eventdetail').remove();
+});
