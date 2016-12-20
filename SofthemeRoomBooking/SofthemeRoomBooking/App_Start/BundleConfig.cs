@@ -70,7 +70,17 @@ namespace SofthemeRoomBooking
                         "~/Scripts/Room/schedulerEvents.js"
                         ));
 
-            //
+            bundles.Add(new ScriptBundle("~/bundles/room-general").Include(
+                        "~/Scripts/Room/room-general.js"
+                        ));
+            bundles.Add(new ScriptBundle("~/bundles/room-home").Include(
+                        "~/Scripts/Room/roomHome.js"
+                        ));
+
+            bundles.Add(new ScriptBundle("~/bundles/equipmentAdmin").Include(
+                        "~/Scripts/Room/equipmentValidation.js"
+                        ));
+
             bundles.Add(new StyleBundle("~/bundles/Layout/css").Include(
                       //"~/Content/font-awesome.css",
                       //"~/fonts/font-awesome.css",

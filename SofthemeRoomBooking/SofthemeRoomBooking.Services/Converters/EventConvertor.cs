@@ -126,5 +126,14 @@ namespace SofthemeRoomBooking.Services.Converters
                 Finish = events.Finish.ToString("yyyy-MM-dd HH:mm")
             };
         }
+
+        public static EventCreatorModel ToEventCreator(this Events events)
+        {
+            return new EventCreatorModel()
+            {
+                Id = events.Id,
+                UserId = events.Id_user
+            };
+        }
     }
 }

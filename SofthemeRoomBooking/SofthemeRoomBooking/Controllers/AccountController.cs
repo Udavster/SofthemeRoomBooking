@@ -148,7 +148,6 @@ namespace SofthemeRoomBooking.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //  await _signInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action(
@@ -160,8 +159,6 @@ namespace SofthemeRoomBooking.Controllers
                        "Confirm your account",
                        "Please confirm your account by clicking this <a href=\""
                                                        + callbackUrl + "\">link</a>");
-                    // ViewBag.Link = callbackUrl;   // Used only for initial demo.
-
                     return View("~/Views/Login/RegisterEmailConfirmation.cshtml");
                 }
                 AddErrors(result);

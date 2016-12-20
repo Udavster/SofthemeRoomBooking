@@ -56,21 +56,21 @@
 .event-info{
     z-index :5;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 98%;
     color: white;
     background: #f95752;
     cursor: pointer;
+    left: 1px;
 }
 
 .event-private{
     z-index :5;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 98%;
     color: black;
     background: #ebeef7;
     cursor: pointer;
+    left: 1px;
 }
 
 .event-private:before {

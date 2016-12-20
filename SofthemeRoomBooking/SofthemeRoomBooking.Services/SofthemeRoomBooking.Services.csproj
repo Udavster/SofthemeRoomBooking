@@ -110,6 +110,7 @@
     <Compile Include="Implementations\FeedbackService.cs" />
     <Compile Include="Implementations\NotificationService.cs" />
     <Compile Include="Implementations\RoomService.cs" />
+    <Compile Include="Models\EventModel\EventCreatorModel.cs" />
     <Compile Include="Models\EventModel\EventIndexModel.cs" />
     <Compile Include="Models\EventModel\EventModel.cs" />
     <Compile Include="Models\EventModel\EventParticipantModel.cs" />

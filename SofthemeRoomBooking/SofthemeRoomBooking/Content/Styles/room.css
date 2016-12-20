@@ -79,7 +79,7 @@
 .room__equipmentadmin {
     z-index: 2;
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     right: 275px;
 }
 .room-1 {
