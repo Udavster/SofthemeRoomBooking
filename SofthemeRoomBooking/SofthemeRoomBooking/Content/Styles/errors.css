@@ -18,3 +18,13 @@
 .error-header-h2 {
     font-size: 32px;
 }
+
+.error-paragraph {
+    text-align: center;   
+    color: #373a3c; 
+    line-height: 0.9;
+}
+
+.error-image {
+    margin: 10px 0 0 50%;
+}

@@ -318,11 +318,14 @@
     <Content Include="Content\Images\Equipment\LineDetails\line-details-web-1.png" />
     <Content Include="Content\Images\Equipment\LineDetails\line-details-web-2.png" />
     <Content Include="Content\Images\Equipment\LineDetails\line-details-web-3.png" />
+    <Content Include="Content\Images\Icons\crying.png" />
     <Content Include="Content\Images\Icons\icon-board.png" />
     <Content Include="Content\Images\Icons\icon-laptop.png" />
     <Content Include="Content\Images\Icons\icon-print.png" />
     <Content Include="Content\Images\Icons\icon-proect.png" />
     <Content Include="Content\Images\Icons\icon-table.png" />
+    <Content Include="Content\Images\Icons\sad.png" />
+    <Content Include="Content\Images\Icons\stop.png" />
     <Content Include="Content\Images\Line Details\line-details-einstein.png" />
     <Content Include="Content\Images\Line Details\line-details-empty.png" />
     <Content Include="Content\Images\Line Details\line-details-english.png" />
@@ -509,6 +512,7 @@
     <Content Include="Views\Errors\Http400.cshtml" />
     <Content Include="Views\Errors\Http404.cshtml" />
     <Content Include="Views\Errors\Http500.cshtml" />
+    <Content Include="Views\Errors\MessageSending.cshtml" />
     <Content Include="Views\Login\RegisterFail.cshtml" />
   </ItemGroup>
   <ItemGroup>

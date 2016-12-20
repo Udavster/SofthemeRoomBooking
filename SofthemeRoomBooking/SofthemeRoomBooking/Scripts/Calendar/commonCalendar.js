@@ -73,11 +73,13 @@ function getDate(a, dateInfo) {
                 calendarMemo = eventsCalendar.sortEventsInMemo(calendarMemo);
             }
             eventsCalendar.constructFromMemo(calendarMemo);
+            
         },
 
         error: function () {
             //console.warn("error");
             //retries
+            Loading(false);
         }
 
     });
@@ -96,7 +98,7 @@ var createEvent = function (event) {
         success: function (result) {
             $('#popup-edit-event').html(result);
             $('#popup-edit-event').show();
-
+            Loading(false);
             var $event;
             if ($(event.target).hasClass('event-empty')) {
                 $event = $(event.target);
@@ -115,14 +117,10 @@ var createEvent = function (event) {
             var finishTime = new Date(daySelected.year, daySelected.month, daySelected.day, finishHour, finishMinutes);
 
             setEventDateTime(startTime, finishTime);
-
-            var roomNum = $event.parent().data('roomnum');
-
-            setEventRoom(roomNum);
+            var roomId = parseInt($event.parent().data('roomid'));
+            setEventRoom(roomId);
             
             setDefaultEventSettings();
-
-            Loading(false);
         },
         error: function () {
             //console.warn("error");
@@ -138,17 +136,21 @@ var editEvent = function (event) {
         $event = $event.parent();
         if (!$event.hasClass('event')) return;
     }
-
-    console.log($event.data('id'));
+    Loading(true);
 
     $.ajax({
         url: window.location.origin + "/Event/EventDetails",
         data: 'id=' + $event.data('id'),
         type: 'GET',
         success: function (result) {
-            console.log(result);
+            Loading(false);
             $('#calendar__popup-edit-event').html(result);
             $('#calendar__popup-edit-event').show();
+        },
+        error: function () {
+            //console.warn("error");
+            //retries
+            Loading(false);
         }
     });
 };

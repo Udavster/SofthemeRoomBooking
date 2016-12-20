@@ -166,7 +166,7 @@ namespace SofthemeRoomBooking.Controllers
                     {
                         await _userManager.DeleteAsync(user);
                         return View("~/Views/Login/RegisterFail.cshtml");
-                    }                         + callbackUrl + "\">link</a>");
+                    }                        
                     return View("~/Views/Login/RegisterEmailConfirmation.cshtml");
                 }
                 AddErrors(result);
