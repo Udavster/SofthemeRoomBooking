@@ -67,5 +67,19 @@ namespace SofthemeRoomBooking.Services.Implementations
             };
             SendMail(model);
         }
+
+        public void EventUserAddedNotification(string authorEmail, string subscriberEmail, Events eventInfo)
+        {
+            EmailModel model = new EmailModel()
+            {
+                Emails = new List<string>() {authorEmail},
+                Subject = String.Format("New {0} subscriber", eventInfo.Title),
+                Text = String.Format("Event '{0}' has new subscriber! {1} joined your event today ({2}).", 
+                                     eventInfo.Title, subscriberEmail, DateTime.Now.Date)
+
+            };
+            SendMail(model);
+        }
+
     }
 }
