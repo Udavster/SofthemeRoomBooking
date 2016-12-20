@@ -155,10 +155,18 @@ namespace SofthemeRoomBooking.Controllers
                        new { userId = user.Id, code = code },
                        protocol: Request.Url.Scheme);
 
-                    await _userManager.SendEmailAsync(user.Id,
-                       "Confirm your account",
-                       "Please confirm your account by clicking this <a href=\""
-                                                       + callbackUrl + "\">link</a>");
+                    try
+                    {
+                        await _userManager.SendEmailAsync(user.Id,
+                            "Confirm your account",
+                            "Please confirm your account by clicking this <a href=\""
+                            + callbackUrl + "\">link</a>");
+                    }
+                    catch (Exception e)
+                    {
+                        await _userManager.DeleteAsync(user);
+                        return View("~/Views/Login/RegisterFail.cshtml");
+                    }                        
                     return View("~/Views/Login/RegisterEmailConfirmation.cshtml");
                 }
                 AddErrors(result);
