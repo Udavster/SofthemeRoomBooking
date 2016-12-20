@@ -180,6 +180,8 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
             var room = $('.room__general.room-' + k + '');
             room.css('background', '');
             room.children('.text').css('background-color', '');
+            $('.room__general-blocked').css('background', '#d7d9de');
+            $('.room__general-blocked').children('.text').css('background-color', '#acb0b6');
         }
         if (i === this.timeline.length) return;
             for (var j = 0; j < i; j++) {
@@ -200,6 +202,8 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
                     var room = $('.room__general.room-' + key + '');
                     room.css('background', '');
                     room.children('.text').css('background-color', '');
+                    $('.room__general-blocked').css('background', '#d7d9de');
+                    $('.room__general-blocked').children('.text').css('background-color', '#acb0b6');
                 }
             }
         }
@@ -597,14 +601,12 @@ class Calendar {
 
 
     sortEventsInMemo(memo) {
-        //console.log(memo);
         if (!memo.Auth) return memo;
 
         for (var key in memo["events"]) {
             console.log(memo['events']);
             if (memo['events'].hasOwnProperty(key)) {
                 this.sortEventsInRoom(memo["events"][key]['events']);
-                //console.log(memo["events"][key]['events']);
                 memo["events"][key]['events'] = memo["events"][key]['events'].concat(this.findEmptyPlaces(memo["events"][key]['events'], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
             }
         }

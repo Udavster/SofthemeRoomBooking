@@ -10,6 +10,8 @@ using SofthemeRoomBooking.Services.Contracts;
 
 namespace SofthemeRoomBooking.Controllers
 {
+    [Authorize]
+    [AllowAnonymous]
     public class HomeController : ErrorCatchingControllerBase
     {
         private readonly IProfileService _profileService;
@@ -26,7 +28,7 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Menu()
         {
-            if (User.Identity.IsAuthenticated)
+            if ((User!=null)&&User.Identity.IsAuthenticated)
             {
                 var model = _profileService.GetLayoutUserViewModelById(User.Identity.GetUserId());
                 if (model != null)
