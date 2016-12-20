@@ -6,28 +6,28 @@
         allowRegistration = $('#AllowRegistration').is(':checked'),
         isPrivate = $('#Private').is(':checked'),
 
-        currday = ('0' + $('#Day').val()).slice(-2),
-        currmonth = ('0' + $('#Month').val()).slice(-2),
-        curryear = $('#Year').val().slice(2),
+        currDay = ('0' + $('#Day').val()).slice(-2),
+        currMonth = ('0' + $('#Month').val()).slice(-2),
+        currYear = $('#Year').val().slice(2),
 
         startHour = ('0' + $('#StartHour').val()).slice(-2),
         startMinutes = ('0' + $('#StartMinutes').val()).slice(-2),
-        endHour = ('0' + $('#EndHour').val()).slice(-2),
-        endMinutes = ('0' + $('#EndMinutes').val()).slice(-2);
+        finishHour = ('0' + $('#finishHour').val()).slice(-2),
+        finishMinutes = ('0' + $('#finishMinutes').val()).slice(-2);
 
     initDateTime('number', '.', $('#saveButton'));
 
     $('.datepicker-chosen-arrow').css('visibility', 'hidden');
     $('.timepicker-arrow').css('visibility', 'hidden');
 
-    $('#event-date #day').text(('0' + $('#Day').val()).slice(-2));
-    $('#event-date #month').text(('0' + $('#Month').val()).slice(-2));
-    $('#event-date #year').text($('#Year').val().slice(2));
+    $('#event-date #day').text(currDay);
+    $('#event-date #month').text(currMonth);
+    $('#event-date #year').text(currYear);
 
-    $('#event-timestart #hours').text(('0' + $('#StartHour').val()).slice(-2));
-    $('#event-timestart #minutes').text(('0' + $('#StartMinutes').val()).slice(-2));
-    $('#event-timefinish #hours').text(('0' + $('#EndHour').val()).slice(-2));
-    $('#event-timefinish #minutes').text(('0' + $('#EndMinutes').val()).slice(-2));
+    $('#event-timestart #hours').text(startHour);
+    $('#event-timestart #minutes').text(startMinutes);
+    $('#event-timefinish #hours').text(finishHour);
+    $('#event-timefinish #minutes').text(finishMinutes);
 
     $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked;
     $('#AllowRegistration')[0].disabled = $('#Private')[0].checked;
@@ -79,15 +79,15 @@
 
         $('#event-timestart #hours').text(startHour);
         $('#event-timestart #minutes').text(startMinutes);
-        $('#event-timefinish #hours').text(endHour);
-        $('#event-timefinish #minutes').text(endMinutes);
+        $('#event-timefinish #hours').text(finishHour);
+        $('#event-timefinish #minutes').text(finishMinutes);
 
         eventValidate().validate();
     });
 
     $('#cancelEventButton').bind('click', function (e) {
         e.preventDefault();
-        debugger;
+        
         var eventId = parseInt($('#Id').val(), 10);
 
         $.ajax({
@@ -105,7 +105,7 @@
 
     $('#saveButton').bind('click', function (e) {
         e.preventDefault();
-        debugger;
+        
         var eventValidator = eventValidate();
 
         if ($('#Nickname').val() === '' && !$('#ShowOrganizator')[0].checked) {

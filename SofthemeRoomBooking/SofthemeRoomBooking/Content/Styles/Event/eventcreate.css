@@ -55,10 +55,7 @@
 .createevent-body__dropdown-list {
     margin-left: 10px;
     width: 200px;
-    /*-ms-border-radius: 20px;
-    border-radius: 20px;*/
     height: 30px;
-    /*border: 1px solid #EBEEF7;*/
 }
 
 .dropdown {
@@ -110,4 +107,8 @@
 .dropdown-wrapper:hover,
 .dropdown-wrapper:after:hover {
     color: #747B87;
+}
+
+.eventcreate-button {
+    margin: auto 0 auto auto;
 }

@@ -1,19 +1,12 @@
 ﻿$(document).ready(function() {
-    $('#event-create-form .event-input').on('keyup blur', function () {
-        if ($('#event-create-form').valid()) {
+    $('#event-create-form .event-input').on('keyup blur', function (e) {
+        var validator = $('#event-create-form').validate();
+
+        if (validator.element(e.target)) {
             $('#createButton').attr('disabled', false);
         } else {
             $('#createButton').attr('disabled', 'disabled');
         }
-    });
-
-    $('#Private').change(function () {
-        $('#AllowRegistration')[0].checked = !this.checked;
-        $('#AllowRegistration')[0].disabled = this.checked;
-    });
-
-    $('#ShowOrganizator').change(function () {
-        $('#Nickname')[0].disabled = this.checked;
     });
 
     $('#closeButton').bind('click', function () {
@@ -26,15 +19,14 @@
         
         var eventValidator = eventValidate();
 
-        if ($('#Nickname').val() === '' && !$('#ShowOrganizator')[0].checked) {
-            eventValidator.showErrors(false, 'Не указан организатор события.');
-            return false;
+        if (!checkSetOrganizator()) return false;
+
+        var nickname = $('#Nickname').val();
+        if ($('#ShowOrganizator')[0].checked) {
+            $('#Nickname').val('');
         }
 
         if (eventValidator.validate() && $('#event-create-form').valid()) {
-            if ($('#ShowOrganizator')[0].checked) {
-                $('#Nickname').val('');
-            }
 
             $.ajax({
                 url: window.location.origin + '/Event/CreateEvent',
@@ -43,27 +35,29 @@
                 success: function (result) {
                     if (result.success) {
                         window.location.href = result.redirectTo;
-                    } else if (result.errorMessage) {
+                    } else {
                         eventValidator.showErrors(false, result.errorMessage);
+                        $('#Nickname').val(nickname);
                     }
                 }
             });
             return true;
         } else {
             $('#createButton').attr('disabled', 'disabled');
+            $('#Nickname').val(nickname);
             return false;
         }
     });
     
     initDateTime('word', null, $('#createButton'));
-    debugger;
-    var weekday = parseInt($('#datepicker').find('#current-month').data('day'), 10),
-        month = parseInt($('#datepicker').find('#current-month').data('month'), 10),
-        year = parseInt($('#datepicker').find('#current-month').data('year'), 10);
-
-    var startTime = new Date(year, month, weekday, 9);
-    var finishTime = new Date(year, month, weekday, 9);
+    
+    var weekday = getNearestWeekday();
+    var startTime = new Date(weekday.getFullYear(), weekday.getMonth(), weekday.getDate(), 9);
+    var finishTime = new Date(weekday.getFullYear(), weekday.getMonth(), weekday.getDate(), 10);
 
     setEventDateTime(startTime, finishTime);
+    eventValidate().showErrors(true);
     setDefaultEventSettings();
+
+    $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked = true;
 });

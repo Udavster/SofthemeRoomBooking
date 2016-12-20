@@ -2,24 +2,24 @@
     $('#AllowRegistration')[0].disabled = $('#Private')[0].checked;
 
     $('#event-edit-form .event-input').on('keyup blur', function () {
-        if ($('#event-edit-form').valid()) {
+        var validator = $('#event-edit-form').validate();
+
+        if (validator.element(e.target)) {
             $('.submit-btn').attr('disabled', false);
         } else {
             $('.submit-btn').attr('disabled', 'disabled');
         }
     });
 
-    $('#Private').change(function () {
-        $('#AllowRegistration')[0].checked = !this.checked;
-        $('#AllowRegistration')[0].disabled = this.checked;
-    });
-
-    $('#ShowOrganizator').change(function () {
-        $('#Nickname')[0].disabled = this.checked;
-    });
-
     $('#minimizeButton').bind('click', function () {
-        $('#popup-edit-event').hide('');
+        $('#popup-edit-event').html('');
+        $('#popup-edit-event').hide();
+    });
+
+    $('#cancelButton').bind('click', function (e) {
+        e.preventDefault();
+        
+        $('#popup-edit-event').html('');
         $('#popup-edit-event').hide();
     });
 
@@ -27,16 +27,15 @@
         e.preventDefault();
         var eventValidator = eventValidate();
 
-        if ($('#Nickname').val() === '' && !$('#ShowOrganizator')[0].checked) {
-            eventValidator.showErrors(false, 'Не указан организатор события.');
-            return false;
+        if (!checkSetOrganizator()) return false;
+
+        var nickname = $('#Nickname').val();
+        if ($('#ShowOrganizator')[0].checked) {
+            $('#Nickname').val('');
         }
 
-        if (eventValidator.validate() && $('#event-form').valid()) {
-            if ($('#ShowOrganizator')[0].checked) {
-                $('#Nickname').val('');
-            }
-
+        if (eventValidator.validate() && $('#event-edit-form').valid()) {
+            
             $.ajax({
                 url: window.location.origin + '/Event/EditEventPartial',
                 method: 'POST',
@@ -46,17 +45,19 @@
                         window.location.href = result.redirectTo;
                     } else {
                         eventValidator.showErrors(false, result.errorMessage);
+                        $('#Nickname').val(nickname);
                     }
                 }
             });
             return true;
         } else {
             $('.submit-btn').attr('disabled', 'disabled');
+            $('#Nickname').val(nickname);
             return false;
         }
     });
 
-    initDateTime("word", null, $(".submit-btn"));
+    initDateTime('word', null, $('.submit-btn'));
 
     if ($('#Nickname').val() === '') {
         $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked = true;
@@ -68,9 +69,9 @@
             day = parseInt($('#Day').val()),
 
             startHour = parseInt($('#StartHour').val()),
-            startMinutes = parseInt($('#StartHour').val()),
-            finishHour = parseInt($('#StartHour').val()),
-            finishMinutes = parseInt($('#StartHour').val());
+            startMinutes = parseInt($('#StartMinutes').val()),
+            finishHour = parseInt($('#FinishHour').val()),
+            finishMinutes = parseInt($('#FinishMinutes').val());
 
         setEventDateTime(new Date(year, month, day, startHour, startMinutes), new Date(year, month, day, finishHour, finishMinutes));
     }

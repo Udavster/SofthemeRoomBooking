@@ -44,3 +44,23 @@
 .eventcontainer-header .editevent-header__minimize:hover {
     color: #747B87;
 }
+
+.eventedit-footer-edit {
+    display: block;
+    padding: 0;
+    height: auto;
+    text-align: center;
+}
+
+.eventedit-footer-edit .eventcontainer-footer__error {
+    width: 100%;
+    text-align: start;
+}
+
+.eventcreate-button {
+    margin: auto 0 auto auto;
+}
+
+.eventedit-button {
+    margin: 10px 15px;
+}
