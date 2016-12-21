@@ -148,7 +148,7 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
         var prevk = null;
         this.previ = 0;
 
-        if (this.timeline) {
+        if (this.timeline&&this.timeline[0]) {
             var tk = Object.keys(this.timeline[0])[0];
             var t = JSON.parse(tk);
             if (compareTime(t, time) > 0) {
@@ -191,7 +191,6 @@ function Slider(name, startHour, finishHour, boundingElName, dragHandler, border
     }
 
     this.apply = function (info, forward) {
-        //console.log(info);
         for (key in info) {
             if (info.hasOwnProperty(key)) {
                 if (info[key] === true) {
@@ -560,12 +559,9 @@ class Calendar {
 
         for (var key in memo['events']) {
             if (memo['events'].hasOwnProperty(key)) {
-                //console.log(memo);
                 for (var i in memo['events'][key]['events']) {
-                    //console.log(i);
                     if (memo['events'][key]['events'].hasOwnProperty(i)) {
                         var event = memo['events'][key]['events'][i];
-                        console.log( key);
                         var start = JSON.stringify(event.Start);
 
                         if (!(start in timeline)) {
@@ -582,7 +578,6 @@ class Calendar {
                 }
             }
         }
-        console.log('timeline', timeline);
         this.timeline = [];
         for (var key in timeline) {
             if (timeline.hasOwnProperty(key)) {
@@ -607,7 +602,6 @@ class Calendar {
         if (!memo.Auth) return memo;
 
         for (var key in memo["events"]) {
-            console.log(memo['events']);
             if (memo['events'].hasOwnProperty(key)) {
                 this.sortEventsInRoom(memo["events"][key]['events']);
                 memo["events"][key]['events'] = memo["events"][key]['events'].concat(this.findEmptyPlaces(memo["events"][key]['events'], { 'h': this.startHour, 'm': 0 }, { 'h': this.finishHour + 1, 'm': 0 }));
@@ -641,7 +635,6 @@ class Calendar {
         evArr.push(new EmptyEvent(events[len - 1]['Finish'], maxTime, 'Blank'));
         var rez = [];
         var k = 0;
-        console.warn(evArr);
 
         for (var j = 0; j < evArr.length; j++) {
             var start = {};

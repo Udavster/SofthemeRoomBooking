@@ -28,17 +28,20 @@ function Loading(show) {
 
 function getDate(a, dateInfo) {
     Loading(true);
+    var objData = {
+        date: (dateInfo.getFullYear() + "" + tformat(dateInfo.getMonth() + 1) + "" + tformat(dateInfo.getDate()))
+    }
+    if ($('.profile-id').length > 0) {
+        objData.profileId = $('.profile-id').val();
+    }
     $.ajax({
         url: '/Calendar',
-        data: {
-            date: (dateInfo.getFullYear() + "" + tformat(dateInfo.getMonth() + 1) + "" + tformat(dateInfo.getDate()))
-        }, 
+        data: objData, 
         method: 'get',
         dataType: "json",
 
         success: function (data) {
             Loading(false);
-            console.log(data);
             if (data.error) {
                 console.log("Date format is envalid or internal exception occured");
                 return;
@@ -64,7 +67,6 @@ function getDate(a, dateInfo) {
             rez["Auth"] = data["Authenticated"];
 
             calendarMemo = rez;
-            console.log(calendarMemo);
             eventsCalendar.createTimeLine(calendarMemo);
 
             var today = new Date();

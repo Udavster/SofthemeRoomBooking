@@ -74,6 +74,7 @@ function clickOnEmptyField() {
                 setEventDateTime(startDate, endDate);
                 setEventRoom(id);
                 setDefaultEventSettings();
+                $.validator.unobtrusive.parse("#event-edit-form");
             }
         });
 

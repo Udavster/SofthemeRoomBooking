@@ -2,7 +2,7 @@
     var $this = $(this);
     var id = $this.data('id');
     $.ajax({
-        url: window.location.origin + "/Event/CancelEventView",
+        url: window.location.origin + "/Event/CancelEvent",
         data: 'id=' + id,
         type: 'GET',
         success: function (res) {

@@ -7,6 +7,7 @@
 
 <div class="container-button">
     <input id="deleteButton" class="input-submit container-button-form button-control hidden" type="submit" value="Удалить"/>
+    @Html.HiddenFor(model => model.Id, new { @class = "profile-id" })
 
     @if (Model.Id == User.Identity.GetUserId())
     {
@@ -48,6 +49,8 @@
         @Html.Action("ChangePassword", new {userId = Model.Id})
     </div>
 }
+
+@Html.Partial("_CalendarPartial")
 
 @Scripts.Render("~/bundles/jqueryval");
 

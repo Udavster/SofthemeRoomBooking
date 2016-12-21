@@ -21,6 +21,8 @@ namespace SofthemeRoomBooking.Services.Contracts
 
         EventModel[] GetEventsByDate(DateTime day);
 
+        EventModel[] GetEventsByDateAndProfile(DateTime day, string profileId);
+        
         List<List<EventWeekModel>> GetEventsByWeek(DateTime date, int id);
 
         void CreateParticipant(EventParticipantModel model);
