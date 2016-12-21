@@ -15,7 +15,7 @@
                     <i class="fa fa-circle" aria-hidden="true"></i>
                     <div class="participants-table-item" >
                         <span>@Model[i].Email</span>
-                        <i id='@Url.Action("DeleteParticipant", "Event", new {participantId = Model[i].Id})' class="fa fa-times delete-participant-sign" aria-hidden="true" data-></i>
+                        <i id='@Model[i].Id' class="fa fa-times delete-participant-sign" aria-hidden="true" data-></i>
                     </div>
                 </td>
                 i++;
@@ -28,13 +28,14 @@
     $(document).ready(function() {
         $('.delete-participant-sign').bind('click', function(e) {
             e.preventDefault();
-            
-            var participantId = $(this).attr('id');
+
+            var participantId = parseInt($(this).attr('id'), 10);
+
 
             $.ajax({
                 url: window.location.origin + '/Event/DeleteParticipant',
                 method: 'GET',
-                data: new { id: participantId },
+                data: { id: participantId },
                 dataType: 'html',
                 success: function (result) {
                     $('#popup-confirmation').html(result);

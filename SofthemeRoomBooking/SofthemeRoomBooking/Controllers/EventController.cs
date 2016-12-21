@@ -39,6 +39,7 @@ namespace SofthemeRoomBooking.Controllers
                 modelView.IsAdminOrOrganizator = _profileService.IsAdmin(currUserId) || model.IdUser == currUserId;
 
                 return View(modelView);
+
             }
 
             return RedirectToAction("Index", "Home");
@@ -267,8 +268,8 @@ namespace SofthemeRoomBooking.Controllers
                 {
                     Question = "Вы уверены, что хотите исключить этого участника из события?",
                     Message = participant.Email,
-                    Action = "Delete",
-                    Controller = "Profile",
+                    Action = "DeleteParticipant",
+                    Controller = "Event",
                     DataId = participant.Id.ToString()
                 };
 
