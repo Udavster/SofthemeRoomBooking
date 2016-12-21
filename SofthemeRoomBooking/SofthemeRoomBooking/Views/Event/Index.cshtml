@@ -28,7 +28,7 @@
                     <span>Принимало участие @Model.ParticipantsQuantity человек</span>
                 }
 
-                @if (Model.IdUser != User.Identity.GetUserId())
+                @if (Model.IsAdminOrOrganizator)
                 {
                     <span class="join-label">Присоединиться</span>
                     @Html.Action("AddParticipant", "Event", new {eventId = Model.Id})
@@ -133,7 +133,7 @@
             <i class="fa fa-print" aria-hidden="true"></i>
         </div>
 
-        @if (Model.IdUser == User.Identity.GetUserId() && Model.StartTime > DateTime.Now)
+        @if (Model.IsAdminOrOrganizator && Model.StartTime > DateTime.Now)
         {
             <div class="eventindex-time__buttons">
                 <button id="editButton" class="button event-btn edit-btn">Изменить</button>

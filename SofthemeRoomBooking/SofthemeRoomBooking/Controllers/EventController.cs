@@ -35,6 +35,9 @@ namespace SofthemeRoomBooking.Controllers
                 var organizator = _profileService.GetUserById(model.IdUser);
                 var modelView = model.ToEventIndexViewModel(organizator);
 
+                var currUserId = User.Identity.GetUserId();
+                modelView.IsAdminOrOrganizator = _profileService.IsAdmin(currUserId) || model.IdUser == currUserId;
+
                 return View(modelView);
             }
 

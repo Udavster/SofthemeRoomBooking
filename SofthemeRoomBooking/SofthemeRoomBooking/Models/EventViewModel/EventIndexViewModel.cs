@@ -30,6 +30,8 @@ namespace SofthemeRoomBooking.Models.EventViewModel
 
         public string IdUser { get; set; }
 
+        public bool IsAdminOrOrganizator { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public DateTime FinishTime { get; set; }
