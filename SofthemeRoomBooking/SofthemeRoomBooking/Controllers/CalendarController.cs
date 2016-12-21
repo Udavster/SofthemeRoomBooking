@@ -20,7 +20,7 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index(string date)
+        public ActionResult Index(string date, string profileId)
         {
             DateTime day;
             try
@@ -33,7 +33,11 @@ namespace SofthemeRoomBooking.Controllers
                 return Content("{\n\"error\": \n\"true\"\n}", "application/json");
             }
 
-            var calendarEvent = _eventService.GetEventsByDate(day);
+
+            var calendarEvent = (profileId==null)?
+                                _eventService.GetEventsByDate(day):
+                                _eventService.GetEventsByDateAndProfile(day, profileId);
+
             var rooms = _roomService.GetUnlockedRoomsByDate(day);
 
             var calendarEventListArray = CalendarEventConverter.GetCalendarEventModels(rooms, calendarEvent);
