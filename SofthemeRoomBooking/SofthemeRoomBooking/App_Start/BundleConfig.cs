@@ -64,6 +64,7 @@ namespace SofthemeRoomBooking
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/event-participants").Include(
+                        "~/Scripts/Event/event-common.js",
                         "~/Scripts/Event/event-participants.js"
                         ));
 
@@ -107,7 +108,8 @@ namespace SofthemeRoomBooking
                       "~/Content/Styles/Event/eventcreate.css",
                       "~/Content/Styles/Event/eventedit.css",
                       "~/Content/Styles/Event/eventinfo-private.css",
-                      "~/Content/Styles/Event/eventinfo-public.css"
+                      "~/Content/Styles/Event/eventinfo-public.css",
+                      "~/Content/Styles/Event/eventparticipants.css"
                       ));
 
             bundles.Add(new StyleBundle("~/bundles/Login/css").Include(

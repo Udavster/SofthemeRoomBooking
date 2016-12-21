@@ -14,7 +14,7 @@ namespace SofthemeRoomBooking.Models.EventViewModel
         [DataType(DataType.MultilineText)]
         [StringLength(500, ErrorMessage = "Дополнительная информация не может быть длиннее 500 символов")]
         public string Description { get; set; }
-
+        
         public string Organizator { get; set; }
 
         [StringLength(150, ErrorMessage = "Имя организатора не может быть длиннее 150 символов")]
@@ -30,6 +30,8 @@ namespace SofthemeRoomBooking.Models.EventViewModel
 
         public string IdUser { get; set; }
 
+        public bool IsAdminOrOrganizator { get; set; }
+
         public DateTime StartTime { get; set; }
 
         public DateTime FinishTime { get; set; }
@@ -44,8 +46,8 @@ namespace SofthemeRoomBooking.Models.EventViewModel
 
         public int StartMinutes { get; set; }
 
-        public int EndHour { get; set; }
+        public int FinishHour { get; set; }
 
-        public int EndMinutes { get; set; }
+        public int FinishMinutes { get; set; }
     }
 }

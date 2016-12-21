@@ -35,6 +35,9 @@ namespace SofthemeRoomBooking.Controllers
                 var organizator = _profileService.GetUserById(model.IdUser);
                 var modelView = model.ToEventIndexViewModel(organizator);
 
+                var currUserId = User.Identity.GetUserId();
+                modelView.IsAdminOrOrganizator = _profileService.IsAdmin(currUserId) || model.IdUser == currUserId;
+
                 return View(modelView);
             }
 
@@ -77,12 +80,12 @@ namespace SofthemeRoomBooking.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEvent(EventViewModel modelView)
+        public ActionResult EditEvent(EventIndexViewModel modelView)
         {
-            var model = modelView.ToEventModel();
-
             if (ModelState.IsValid)
             {
+                var model = modelView.ToEventModel();
+
                 if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
                 {
                     return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
@@ -90,11 +93,15 @@ namespace SofthemeRoomBooking.Controllers
 
                 _eventService.UpdateEvent(model);
 
-                return Json(new { success = true, redirectTo = Url.Action("Index", "Home") });
+                return Json(new { success = true, redirectTo = Url.Action("Index", "Event", new { id = model.Id }) });
             }
-            ModelState.AddModelError("", "Что-то пошло не так");
 
-            return PartialView("_EditEventPartial", modelView);
+            var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
+                                                                        .SelectMany(e => e.Errors)
+                                                                        .Select(e => e.ErrorMessage)
+                                                                        .ToArray());
+
+            return Json(new { success = false, errorMessage = errors });
         }
 
         [HttpGet]
@@ -199,7 +206,7 @@ namespace SofthemeRoomBooking.Controllers
             var creatorEmail = _profileService.GetUserById(currentEvent.IdUser).Email;
             _eventService.CancelEvent(id,creatorEmail);
             
-            return Content(@"Home/Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult EventParticipants(int id)
@@ -229,21 +236,30 @@ namespace SofthemeRoomBooking.Controllers
             if (ModelState.IsValid)
             {
                 var model = modelView.ToEventParticipantModel();
+
+                if (_eventService.ContainsParticipantInEvent(model))
+                {
+                    return Json(new { success = false, errorMessage = "Данный email уже зарегистрирован на это событие." });
+                }
+
                 var creatorId = _eventService.GetEventIndexModelById(modelView.IdEvent).IdUser;
                 var creatorEmail = _profileService.GetUserById(creatorId).Email;
 
                 _eventService.CreateParticipant(model, creatorEmail);
+		return Json(new { success = true, redirectTo = HttpContext.Request.QueryString });
             }
+            var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
+                                                                        .SelectMany(e => e.Errors)
+                                                                        .Select(e => e.ErrorMessage)
+                                                                        .ToArray());
 
-            ModelState.AddModelError("", "Что-то пошло не так");
-
-            return RedirectToAction("Index", modelView.IdEvent);
+            return Json(new { success = false, errorMessage = errors });
         }
 
         [HttpGet]
-        public ActionResult DeleteParticipant(int participantId)
+        public ActionResult DeleteParticipant(int id)
         {
-            var participant = _eventService.GetParticipantById(participantId);
+            var participant = _eventService.GetParticipantById(id);
 
             if (participant != null)
             {

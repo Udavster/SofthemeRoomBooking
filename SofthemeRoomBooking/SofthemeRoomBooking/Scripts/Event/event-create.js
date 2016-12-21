@@ -1,9 +1,26 @@
 ﻿$(document).ready(function() {
     $('#event-create-form .event-input').on('keyup blur', function (e) {
         var validator = $('#event-create-form').validate();
-
+        
         if (validator.element(e.target)) {
-            $('#createButton').attr('disabled', false);
+            if (e.target === $('#Nickname')[0]) {
+
+                var $errors = $('#event-create-form .error-text span').text();
+                if ($errors.includes('Не указан организатор события.')) {
+
+                    $errors = $errors.replace(/Не указан организатор события./g, '');
+                    if ($errors === '') {
+                        eventValidate().showErrors(true);
+                        $('#createButton').attr('disabled', false);
+                    } else {
+                        eventValidate().showErrors(false, $errors);
+                    }
+                }
+
+                checkSetOrganizator();
+            } else {
+                $('#createButton').attr('disabled', false);
+            }
         } else {
             $('#createButton').attr('disabled', 'disabled');
         }

@@ -42,27 +42,15 @@
     margin: auto 10px auto auto;
 }
 
-.eventindex-info__join-to-event .join-email {
-    display: block;
-    width: 300px;
-    margin: auto 20px auto 0;
-}
-
-.eventindex-info__join-to-event .join-button {
+.eventindex-info__addparticipant {
     margin: auto 0;
-    font-size: 20px;
-    color: #C8CEDA;
-    cursor: pointer;
-}
-
-.eventindex-info__join-to-event .join-button:hover {
-    color: #747B87;
+    width: 300px;
 }
 
 .eventindex-time {
     display: block;
     width: 30%;
-    min-height: 300px;
+    min-height: 350px;
     padding: 0 10px;
 }
 
@@ -150,15 +138,11 @@
     width: 65%;
 }
 
-.eventindex-editform {
-    width: 100%;
-}
-
 .eventindex-edit .eventindex-edit__title {
     display: block;
     width: 550px;
     height: 30px;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
 }
 
 .eventindex-edit .eventindex-edit__choose-organizator {
@@ -184,8 +168,9 @@
 .eventindex-edit .eventindex-edit__description {
     width: 100%;
     height: auto;
-    min-height: 80px;
+    min-height: 100px;
     margin: 0;
+    overflow: hidden;
 }
 
 .eventindex-edit .eventindex-edit__publicity {
@@ -198,58 +183,4 @@
 .eventindex-edit .eventindex-edit__participants-count {
     display: block;
     padding: 15px 0;
-}
-
-.eventindex-participants {
-    width: 100%;
-    margin-top: 50px;
-    padding: 0 6%;
-}
-
-.eventindex-participants .eventindex-participants__participants-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
-
-.eventindex-participants .eventindex-participants__participants-table td{
-    height: 40px;
-    width: 35%;
-    vertical-align: middle;
-}
-
-.eventindex-participants .participants-table-item {
-    display: inline-flex;
-    margin: auto auto auto 10px;
-    cursor: pointer;
-}
-
-.eventindex-participants .participants-table-item span {
-    margin: auto;
-}
-
-.eventindex-participants .participants-table-item i {
-    margin: auto auto auto 10px;
-    font-size: 20px;
-    color: #C8CEDA;
-    visibility: hidden;
-}
-
-.eventindex-participants .participants-table-item:hover i {
-    visibility: visible;
-}
-
-.eventindex-participants .participants-table-item:hover i:hover {
-    color: #747B87;
-}
-
-/*commom styles*/
-.event-addparticipant {
-    display: flex;
-}
-
-.event-addparticipants__button-add {
-    background: transparent;
-    border: none;
-    outline: none;
 }

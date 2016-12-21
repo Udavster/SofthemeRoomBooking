@@ -2,26 +2,47 @@
 
 <p>Зарегистрированные участники:</p>
 <table class="eventindex-participants__participants-table">
-    @for(int i = 0; i < Model.Count; i++)
+    @for (int i = 0; i < Model.Count;)
     {
         <tr>
             @for (int j = 0; j < 3; j++)
             {
-                if (i == Model.Count - 1)
+                if (i == Model.Count)
                 {
                     break;
                 }
                 <td>
                     <i class="fa fa-circle" aria-hidden="true"></i>
-                    <div class="participants-table-item" data-id="@Model[i].Id.ToString()">
-                        <span>@Model[i].Email;</span>
-                        <i class="fa fa-times" aria-hidden="true"></i>
+                    <div class="participants-table-item" >
+                        <span>@Model[i].Email</span>
+                        <i id='@Url.Action("DeleteParticipant", "Event", new {participantId = Model[i].Id})' class="fa fa-times delete-participant-sign" aria-hidden="true" data-></i>
                     </div>
                 </td>
                 i++;
-            }           
+            }
         </tr>
     }
 </table>
 
-@Scripts.Render("~/bundles/event-participants")
+<script>
+    $(document).ready(function() {
+        $('.delete-participant-sign').bind('click', function(e) {
+            e.preventDefault();
+            
+            var participantId = $(this).attr('id');
+
+            $.ajax({
+                url: window.location.origin + '/Event/DeleteParticipant',
+                method: 'GET',
+                data: new { id: participantId },
+                dataType: 'html',
+                success: function (result) {
+                    $('#popup-confirmation').html(result);
+                    $('#popup-confirmation').show();
+                }
+            });
+
+        });
+    });
+
+</script>

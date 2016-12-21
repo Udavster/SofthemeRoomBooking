@@ -3,10 +3,15 @@
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
+<style>
+    .room__link { display: none; }
+</style>
+
 <div id="popup-confirmation" class="overlay"></div>
 
 <div class="eventindex">
     <div class="eventindex-info">
+        @Html.HiddenFor(model => model.Id)
         <p class="eventindex-info__title">@Model.Title</p>
         <p class="eventindex-info__autor">
             <i class="fa fa-user user-icon" aria-hidden="true"></i>
@@ -28,19 +33,23 @@
                     <span>Принимало участие @Model.ParticipantsQuantity человек</span>
                 }
 
-                @if (Model.IdUser != User.Identity.GetUserId())
+                @if (Model.IsAdminOrOrganizator && Model.IdUser != User.Identity.GetUserId())
                 {
                     <span class="join-label">Присоединиться</span>
-                    @Html.Action("AddParticipant", "Event", new {eventId = Model.Id})
+                    <div class="eventindex-info__addparticipant">
+                        @Html.Action("AddParticipant", "Event", new { eventId = Model.Id })
+                    </div>
                 }
             </div>
         }
     </div>
 
     <div class="eventindex-edit hidden">
-        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new {id = "eventindex-editform", enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new {id = "eventindex-edit-form", enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.IdRoom)
 
             <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
@@ -110,8 +119,8 @@
             @Html.HiddenFor(model => model.Year)
             @Html.HiddenFor(model => model.StartHour)
             @Html.HiddenFor(model => model.StartMinutes)
-            @Html.HiddenFor(model => model.EndHour)
-            @Html.HiddenFor(model => model.EndMinutes)
+            @Html.HiddenFor(model => model.FinishHour)
+            @Html.HiddenFor(model => model.FinishMinutes)
         }
     </div>
 
@@ -133,15 +142,15 @@
             <i class="fa fa-print" aria-hidden="true"></i>
         </div>
 
-        @if (Model.IdUser == User.Identity.GetUserId() && Model.StartTime > DateTime.Now)
+        @if (Model.IsAdminOrOrganizator && Model.StartTime > DateTime.Now)
         {
             <div class="eventindex-time__buttons">
                 <button id="editButton" class="button event-btn edit-btn">Изменить</button>
                 <button id="cancelEventButton" class="button event-btn cancel-btn">Отменить</button>
                 <button id="cancelEditButton" class="button event-btn edit-btn hidden">Отменить</button>
-                <button id="saveButton" class="button button-active event-btn hidden">Сохранить</button>
+                <button id="saveButton" class="button button-active event-btn submit-btn hidden">Сохранить</button>
             </div>
-            <div id="event-errors" class="eventindex-time__errors hidden">
+            <div id="event-errors" class="eventindex-time__errors hidden-error">
                 <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
                 <span class="error-text"></span>
             </div>
@@ -149,12 +158,18 @@
     </div>
 </div>
 
+<div id="loading">
+    <div class="loading">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw loading-sign"></i>
+    </div>
+</div>
+
 <div class="eventindex-participants">
-    @Html.Action("EventParticipants","Event", new { id = Model.Id })
+    @Html.Action("EventParticipants", "Event", new {id = Model.Id})
 </div>
 
 
-@Html.Action("RoomPartial", "Room", new { id = Model.IdRoom })
+@Html.Action("RoomPartial", "Room", new { id = (int?)null })
 
 @Html.Partial("_MapPartial")
 

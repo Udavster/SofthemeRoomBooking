@@ -1,11 +1,28 @@
 ﻿$(document).ready(function () {
     $('#AllowRegistration')[0].disabled = $('#Private')[0].checked;
 
-    $('#event-edit-form .event-input').on('keyup blur', function (e) {
+    $('#event-edit-form .event-input').on('keyup blur', function(e) {
         var validator = $('#event-edit-form').validate();
 
         if (validator.element(e.target)) {
-            $('.submit-btn').attr('disabled', false);
+            if (e.target === $('#Nickname')[0]) {
+
+                var $errors = $('#event-edit-form .error-text span').text();
+                if ($errors.includes('Не указан организатор события.')) {
+
+                    $errors = $errors.replace(/Не указан организатор события./g, '');
+                    if ($errors === '') {
+                        eventValidate().showErrors(true);
+                        $('.submit-btn').attr('disabled', false);
+                    } else {
+                        eventValidate().showErrors(false, $errors);
+                    }
+                }
+
+                checkSetOrganizator();
+            } else {
+                $('.submit-btn').attr('disabled', false);
+            }
         } else {
             $('.submit-btn').attr('disabled', 'disabled');
         }

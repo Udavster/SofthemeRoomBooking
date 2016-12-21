@@ -130,8 +130,8 @@ namespace SofthemeRoomBooking.Services.Implementations
         public void CreateParticipant(EventParticipantModel model, string creatorEmail)
         {
             var participant = model.ToEventParticipantEntity();
-            //?
-            var a = _context.EventsUsers.Add(participant);
+            
+            _context.EventsUsers.Add(participant);
             _context.SaveChanges();
 
             var @event = _context.Events.Where(ev => ev.Id == model.IdEvent).FirstOrDefault();
@@ -151,6 +151,11 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
 
             return false;
+        }
+
+        public bool ContainsParticipantInEvent(EventParticipantModel model)
+        {
+            return _context.EventsUsers.Any(eu => eu.IdEvent == model.IdEvent && eu.Email == model.Email);
         }
 
         public EventParticipantModel GetParticipantById(int participantId)

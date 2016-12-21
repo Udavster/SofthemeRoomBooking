@@ -11,10 +11,16 @@
     margin: 0 0 5px 0;
 }
 
-.input-text::-webkit-input-placeholder {color: #C7C8CB;}
-.input-text::-moz-placeholder          {color: #C7C8CB;}
-.input-text:-moz-placeholder           {color: #C7C8CB;}
-.input-text:-ms-input-placeholder      {color: #C7C8CB;}
+.input-text:disabled {
+    background-color: #F5F6FB;
+    border-color: #F5F6FB;
+}
+
+.input-text::-webkit-input-placeholder, .input-text:disabled::-webkit-input-placeholder {color: #C7C8CB;}
+.input-text::-moz-placeholder,          .input-text:disabled::-moz-placeholder          {color: #C7C8CB;}
+.input-text:-moz-placeholder,           .input-text:disabled:-moz-placeholder           {color: #C7C8CB;}
+.input-text:-ms-input-placeholder,      .input-text:disabled:-ms-input-placeholder      {color: #C7C8CB;}
+.input-text:disabled {color: #C7C8CB;}
 .input-text:focus::-webkit-input-placeholder {color: transparent}
 .input-text:focus::-moz-placeholder          {color: transparent}
 .input-text:focus:-moz-placeholder           {color: transparent}
