@@ -38,7 +38,6 @@ function getDate(a, dateInfo) {
 
         success: function (data) {
             Loading(false);
-            console.log(data);
             if (data.error) {
                 console.log("Date format is envalid or internal exception occured");
                 return;
@@ -64,7 +63,6 @@ function getDate(a, dateInfo) {
             rez["Auth"] = data["Authenticated"];
 
             calendarMemo = rez;
-            console.log(calendarMemo);
             eventsCalendar.createTimeLine(calendarMemo);
 
             var today = new Date();
