@@ -279,10 +279,11 @@ namespace SofthemeRoomBooking.Services.Implementations
             try
             {
                 count =
-                    _context.Events.Where(ev => (ev.Id_user == userId) && (ev.Finish < now))
+                    _context.Events.Where(ev => (ev.Id_user == userId) && (ev.Start > now))
                         .GroupBy(ev => ev.Id_user)
-                        .Select(group => group.Count()).First();
-            } catch (Exception)
+                        .Select(group => group.Count()).FirstOrDefault();
+            } catch (Exception ex)
+
             {
                 return -1;
             }
@@ -296,7 +297,7 @@ namespace SofthemeRoomBooking.Services.Implementations
 
             try
             {
-                return _context.Events.Where(ev => (ev.Finish < now))
+                return _context.Events.Where(ev => (ev.Start > now))
                         .GroupBy(ev => ev.Id_user)
                         .Select(group => new EventsForUserCount() { UserId = group.Key, EventCount = group.Count() });
             } catch (Exception)

@@ -36,5 +36,9 @@ namespace SofthemeRoomBooking.Services.Contracts
         int GetParticipantCountByEventId(int eventId);
 
         List<EventCreatorModel> GetEventsByRoom(int roomId);
+
+        int GetEventCountByUser(string userId);
+
+        IEnumerable<EventsForUserCount> GetEventCountEnumerable();
     }
 }
