@@ -38,7 +38,8 @@ namespace SofthemeRoomBooking.Controllers
                 var currUserId = User.Identity.GetUserId();
                 modelView.IsAdminOrOrganizator = _profileService.IsAdmin(currUserId) || model.IdUser == currUserId;
 
-                return View("Index", modelView);
+                return View(modelView);
+
             }
 
             return RedirectToAction("Index", "Home");
