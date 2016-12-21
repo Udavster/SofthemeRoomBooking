@@ -283,6 +283,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                         .GroupBy(ev => ev.Id_user)
                         .Select(group => group.Count()).FirstOrDefault();
             } catch (Exception ex)
+
             {
                 return -1;
             }
