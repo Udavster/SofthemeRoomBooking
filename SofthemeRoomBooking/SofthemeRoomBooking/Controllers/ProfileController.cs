@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Models;
@@ -11,15 +12,19 @@ namespace SofthemeRoomBooking.Controllers
     public class ProfileController : ErrorCatchingControllerBase
     {
         private readonly IProfileService _profileService;
+        private readonly IEventService _eventService;
 
-        public ProfileController(IProfileService profileService)
+        public ProfileController(IProfileService profileService, IEventService eventService)
         {
             _profileService = profileService;
+            _eventService = eventService;
         }
 
         public ActionResult Index(string userId)
         {
             var model = _profileService.GetProfileUserViewModelById(userId);
+
+            model.ActiveEvents = _eventService.GetEventCountByUser(model.Id);            
 
             if (model != null)
             {
@@ -54,6 +59,15 @@ namespace SofthemeRoomBooking.Controllers
                 var model = !string.IsNullOrWhiteSpace(searchString)
                     ? _profileService.GetUsersByNameOrEmailByPage(searchString, page, itemsOnPage)
                     : _profileService.GetAllUsersByPage(page, itemsOnPage);
+
+                var usersEvents = _eventService.GetEventCountEnumerable();
+
+                var arr = model.List.ToArray();
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    arr[i].ActiveEvents = _eventService.GetEventCountByUser(arr[i].Id);
+                }
+                model.List = arr;
 
                 return PartialView(model);
             }
