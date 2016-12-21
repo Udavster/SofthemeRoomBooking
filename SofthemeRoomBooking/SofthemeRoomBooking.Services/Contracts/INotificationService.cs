@@ -8,5 +8,6 @@ namespace SofthemeRoomBooking.Services.Contracts
     {
         void CancelEventNotification(List<string> emails, Events eventInfo, string roomName);
         void FeedbackNotification(List<string> emails, FeedbackModel model);
+        void EventUserAddedNotification(string authorEmail, string subscriberEmail, Events eventInfo);
     }
 }
