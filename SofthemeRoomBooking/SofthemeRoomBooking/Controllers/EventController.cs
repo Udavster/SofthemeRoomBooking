@@ -229,8 +229,12 @@ namespace SofthemeRoomBooking.Controllers
             if (ModelState.IsValid)
             {
                 var model = modelView.ToEventParticipantModel();
-                _eventService.CreateParticipant(model);
+                var creatorId = _eventService.GetEventIndexModelById(modelView.IdEvent).IdUser;
+                var creatorEmail = _profileService.GetUserById(creatorId).Email;
+
+                _eventService.CreateParticipant(model, creatorEmail);
             }
+
             ModelState.AddModelError("", "Что-то пошло не так");
 
             return RedirectToAction("Index", modelView.IdEvent);

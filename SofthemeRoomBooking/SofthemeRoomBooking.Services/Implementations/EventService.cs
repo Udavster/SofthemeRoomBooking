@@ -52,7 +52,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             return false;
         }
 
-        public bool CancelEvent(int eventId,string creatorEmail)
+        public bool CancelEvent(int eventId, string creatorEmail)
         {
             var @event = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
 
@@ -64,7 +64,7 @@ namespace SofthemeRoomBooking.Services.Implementations
 
                 var usersEmails = _context.EventsUsers.Where(ev => ev.IdEvent == eventId).Select(x => x.Email).ToList();
                 usersEmails.Add(creatorEmail);
-                
+
                 var eventInfo = _context.Events.FirstOrDefault(ev => ev.Id == eventId);
                 var roomInfo = _context.Rooms.FirstOrDefault(x => x.Id == eventInfo.Id_room);
                 if (roomInfo != null)
@@ -127,12 +127,15 @@ namespace SofthemeRoomBooking.Services.Implementations
             return null;
         }
 
-        public void CreateParticipant(EventParticipantModel model)
+        public void CreateParticipant(EventParticipantModel model, string creatorEmail)
         {
             var participant = model.ToEventParticipantEntity();
             //?
             var a = _context.EventsUsers.Add(participant);
             _context.SaveChanges();
+
+            var @event = _context.Events.Where(ev => ev.Id == model.IdEvent).FirstOrDefault();
+            _notificationService.EventUserAddedNotification(creatorEmail, participant.Email, @event);
         }
 
         public bool DeleteParticipant(int participantId)
@@ -144,7 +147,6 @@ namespace SofthemeRoomBooking.Services.Implementations
             {
                 _context.EventsUsers.Remove(participant);
                 _context.SaveChanges();
-
                 return true;
             }
 
@@ -192,13 +194,39 @@ namespace SofthemeRoomBooking.Services.Implementations
                          orderby Event.Id_room, Event.Start
                          select new EventModel
                          {
-                            Id = Event.Id,                         
-                            Title = Event.Title,
-                            Description = Event.Description,
-                            Publicity = Event.Publicity,
-                            Nickname = Event.Nickname,
-                            IdRoom = Event.Id_room,
-                            StartTime = Event.Start,
+                             Id = Event.Id,
+                             Title = Event.Title,
+                             Description = Event.Description,
+                             Publicity = Event.Publicity,
+                             Nickname = Event.Nickname,
+                             IdRoom = Event.Id_room,
+                             StartTime = Event.Start,
+                             FinishTime = Event.Finish
+                         };
+
+            return events.ToArray();
+        }
+        public EventModel[] GetEventsByDateAndProfile(DateTime day, string profileId)
+        {
+            if (profileId == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var nextDay = day.AddDays(1);
+
+            var events = from Event in _context.Events
+                         where Event.Start >= day && Event.Finish < nextDay && !Event.Cancelled && Event.Id_user == profileId
+                         orderby Event.Id_room, Event.Start
+                         select new EventModel
+                         {
+                             Id = Event.Id,
+                             Title = Event.Title,
+                             Description = Event.Description,
+                             Publicity = Event.Publicity,
+                             Nickname = Event.Nickname,
+                             IdRoom = Event.Id_room,
+                             StartTime = Event.Start,
                              FinishTime = Event.Finish
                          };
 
@@ -267,8 +295,8 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
             return events;
         }
-		
-		public int GetEventCountByUser(string userId)
+
+        public int GetEventCountByUser(string userId)
         {
             DateTime now = DateTime.Now;
 
@@ -280,8 +308,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                     _context.Events.Where(ev => (ev.Id_user == userId) && (ev.Finish < now))
                         .GroupBy(ev => ev.Id_user)
                         .Select(group => group.Count()).First();
-            }
-            catch (Exception)
+            } catch (Exception)
             {
                 return -1;
             }
@@ -297,9 +324,8 @@ namespace SofthemeRoomBooking.Services.Implementations
             {
                 return _context.Events.Where(ev => (ev.Finish < now))
                         .GroupBy(ev => ev.Id_user)
-                        .Select(group => new EventsForUserCount() {UserId = group.Key, EventCount = group.Count()});
-            }
-            catch (Exception)
+                        .Select(group => new EventsForUserCount() { UserId = group.Key, EventCount = group.Count() });
+            } catch (Exception)
             {
                 return null;
             }
