@@ -80,12 +80,12 @@ namespace SofthemeRoomBooking.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditEvent(EventViewModel modelView)
+        public ActionResult EditEvent(EventIndexViewModel modelView)
         {
-            var model = modelView.ToEventModel();
-
             if (ModelState.IsValid)
             {
+                var model = modelView.ToEventModel();
+
                 if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
                 {
                     return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
@@ -95,9 +95,13 @@ namespace SofthemeRoomBooking.Controllers
 
                 return Json(new { success = true, redirectTo = Url.Action("Index", "Home") });
             }
-            ModelState.AddModelError("", "Что-то пошло не так");
 
-            return PartialView("_EditEventPartial", modelView);
+            var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
+                                                                        .SelectMany(e => e.Errors)
+                                                                        .Select(e => e.ErrorMessage)
+                                                                        .ToArray());
+
+            return Json(new { success = false, errorMessage = errors });
         }
 
         [HttpGet]
@@ -202,7 +206,7 @@ namespace SofthemeRoomBooking.Controllers
             var creatorEmail = _profileService.GetUserById(currentEvent.IdUser).Email;
             _eventService.CancelEvent(id,creatorEmail);
             
-            return Content(@"Home/Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult EventParticipants(int id)
@@ -232,11 +236,22 @@ namespace SofthemeRoomBooking.Controllers
             if (ModelState.IsValid)
             {
                 var model = modelView.ToEventParticipantModel();
-                _eventService.CreateParticipant(model);
-            }
-            ModelState.AddModelError("", "Что-то пошло не так");
 
-            return RedirectToAction("Index", modelView.IdEvent);
+                if (_eventService.ContainsParticipantInEvent(model))
+                {
+                    return Json(new { success = false, errorMessage = "Данный email уже зарегистрирован на это событие." });
+                }
+
+                _eventService.CreateParticipant(model);
+                return Json(new { success = true });
+            }
+
+            var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
+                                                                        .SelectMany(e => e.Errors)
+                                                                        .Select(e => e.ErrorMessage)
+                                                                        .ToArray());
+
+            return Json(new { success = false, errorMessage = errors });
         }
 
         [HttpGet]

@@ -16,8 +16,17 @@
 
             var $errors = $form.find('.field-validation-error span');
             $errors.each(function () { validator.settings.success($(this)); });
-
-            $('.submit-btn').attr('disabled', false);
+            
+            $errors = $('.error-text span').text();
+            if ($errors.includes('Не указан организатор события.')) {
+                $errors = $errors.replace(/Не указан организатор события./g, '');
+                if ($errors === '') {
+                    eventValidate().showErrors(true);
+                    $('.submit-btn').attr('disabled', false);
+                } else {
+                    eventValidate().showErrors(false, $errors);
+                }
+            }
         } else {
             if (!validator.element($that[0])) {
                 $('.submit-btn').attr('disabled', 'disabled');

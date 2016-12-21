@@ -130,8 +130,8 @@ namespace SofthemeRoomBooking.Services.Implementations
         public void CreateParticipant(EventParticipantModel model)
         {
             var participant = model.ToEventParticipantEntity();
-            //?
-            var a = _context.EventsUsers.Add(participant);
+            
+            _context.EventsUsers.Add(participant);
             _context.SaveChanges();
         }
 
@@ -149,6 +149,11 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
 
             return false;
+        }
+
+        public bool ContainsParticipantInEvent(EventParticipantModel model)
+        {
+            return _context.EventsUsers.Any(eu => eu.IdEvent == model.IdEvent && eu.Email == model.Email);
         }
 
         public EventParticipantModel GetParticipantById(int participantId)

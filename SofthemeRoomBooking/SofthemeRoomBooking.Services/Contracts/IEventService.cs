@@ -27,6 +27,8 @@ namespace SofthemeRoomBooking.Services.Contracts
 
         bool DeleteParticipant(int participantId);
 
+        bool ContainsParticipantInEvent(EventParticipantModel model);
+
         EventParticipantModel GetParticipantById(int participantId);
 
         IQueryable<EventParticipantModel> GetParticipantsByEventId(int eventId);

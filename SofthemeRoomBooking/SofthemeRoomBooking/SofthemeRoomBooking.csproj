@@ -370,6 +370,7 @@
     <Content Include="Content\Styles\equipment.css" />
     <Content Include="Content\Styles\errors.css" />
     <Content Include="Content\Styles\Event\editevent.css" />
+    <Content Include="Content\Styles\Event\eventparticipants.css" />
     <Content Include="Content\Styles\Event\eventcommon.css" />
     <Content Include="Content\Styles\Event\eventcreate.css" />
     <Content Include="Content\Styles\Event\eventedit.css" />

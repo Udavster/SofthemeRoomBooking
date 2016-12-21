@@ -1,20 +1,26 @@
 ﻿@model SofthemeRoomBooking.Models.EventViewModel.EventParticipantViewModel
 
-@using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new { @class = "event-addparticipant", enctype = "multipart/form-data"}))
+@using (Html.BeginForm("AddParticipant", "Event", FormMethod.Post, new {id = "event-addparticipant-form", @class = "event-addparticipant-form", enctype = "multipart/form-data"}))
 {
-    <div class="group-input-error join-email">
-        @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
-        @Html.EditorFor(model => model.Email, new
-        {
-            htmlAttributes = new
+    <div class="event-addparticipant">
+        <div class="group-input-error">
+            @Html.HiddenFor(model => model.IdEvent)
+            @Html.SignalValidationMessageFor(model => model.Email, new {@class = "error-box__text-danger"})
+            @Html.EditorFor(model => model.Email, new
             {
-                @class = "input-text event-input eventcontainer-body__event-title",
-                placeholder = "Укажите e-mail, чтобы присоединиться"
-            }
-        })
+                htmlAttributes = new
+                {
+                    @class = "input-text event-input event-addparticipant__input-email",
+                    placeholder = "Укажите e-mail, чтобы присоединиться"
+                }
+            })
+        </div>
+        <i id="addParticipant" class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
     </div>
-    <button class="event-addparticipants__button-add" type="submit">
-        <i class="fa fa-plus plus-icon join-button" aria-hidden="true"></i>
-    </button>
+    <div id="event-errors" class="event-addparticipants__errors hidden-error">
+        <i aria-hidden="true" class="error-box__signal fa-exclamation-circle fa"></i>
+        <span class="error-text"></span>
+    </div>
 }
 
+@Scripts.Render("~/bundles/event-participants")

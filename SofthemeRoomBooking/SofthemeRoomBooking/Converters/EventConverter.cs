@@ -93,8 +93,24 @@ namespace SofthemeRoomBooking.Converters
                 Year = model.StartTime.Year,
                 StartHour = model.StartTime.Hour,
                 StartMinutes = model.StartTime.Minute,
-                EndHour = model.FinishTime.Hour,
-                EndMinutes = model.FinishTime.Minute
+                FinishHour = model.FinishTime.Hour,
+                FinishMinutes = model.FinishTime.Minute
+            };
+        }
+
+        public static EventModel ToEventModel(this EventIndexViewModel model)
+        {
+            return new EventModel
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Description = model.Description,
+                IdRoom = model.IdRoom,
+                Nickname = model.Nickname,
+                Publicity = !model.Private,
+                AllowRegistration = model.AllowRegistration,
+                StartTime = new DateTime(model.Year, model.Month, model.Day, model.StartHour, model.StartMinutes, 0),
+                FinishTime = new DateTime(model.Year, model.Month, model.Day, model.FinishHour, model.FinishMinutes, 0)
             };
         }
 
