@@ -25,7 +25,7 @@ namespace SofthemeRoomBooking.Services.Contracts
         
         List<List<EventWeekModel>> GetEventsByWeek(DateTime date, int id);
 
-        void CreateParticipant(EventParticipantModel model);
+        void CreateParticipant(EventParticipantModel model, string creatorEmail);
 
         bool DeleteParticipant(int participantId);
 
@@ -38,5 +38,9 @@ namespace SofthemeRoomBooking.Services.Contracts
         int GetParticipantCountByEventId(int eventId);
 
         List<EventCreatorModel> GetEventsByRoom(int roomId);
+
+        int GetEventCountByUser(string userId);
+
+        IEnumerable<EventsForUserCount> GetEventCountEnumerable();
     }
 }

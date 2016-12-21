@@ -242,10 +242,12 @@ namespace SofthemeRoomBooking.Controllers
                     return Json(new { success = false, errorMessage = "Данный email уже зарегистрирован на это событие." });
                 }
 
-                _eventService.CreateParticipant(model);
-                return Json(new { success = true, redirectTo = HttpContext.Request.QueryString });
-            }
+                var creatorId = _eventService.GetEventIndexModelById(modelView.IdEvent).IdUser;
+                var creatorEmail = _profileService.GetUserById(creatorId).Email;
 
+                _eventService.CreateParticipant(model, creatorEmail);
+		return Json(new { success = true, redirectTo = HttpContext.Request.QueryString });
+            }
             var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
                                                                         .SelectMany(e => e.Errors)
                                                                         .Select(e => e.ErrorMessage)
