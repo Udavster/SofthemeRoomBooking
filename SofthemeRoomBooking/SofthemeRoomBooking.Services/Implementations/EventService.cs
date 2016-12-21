@@ -204,6 +204,32 @@ namespace SofthemeRoomBooking.Services.Implementations
 
             return events.ToArray();
         }
+        public EventModel[] GetEventsByDateAndProfile(DateTime day, string profileId)
+        {
+            if (profileId == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            var nextDay = day.AddDays(1);
+
+            var events = from Event in _context.Events
+                         where Event.Start >= day && Event.Finish < nextDay && !Event.Cancelled && Event.Id_user == profileId
+                         orderby Event.Id_room, Event.Start
+                         select new EventModel
+                         {
+                             Id = Event.Id,
+                             Title = Event.Title,
+                             Description = Event.Description,
+                             Publicity = Event.Publicity,
+                             Nickname = Event.Nickname,
+                             IdRoom = Event.Id_room,
+                             StartTime = Event.Start,
+                             FinishTime = Event.Finish
+                         };
+
+            return events.ToArray();
+        }
 
         public List<List<EventWeekModel>> GetEventsByWeek(DateTime date, int id)
         {
