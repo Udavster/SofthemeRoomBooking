@@ -6,13 +6,11 @@
 
     var wrap, label,
         currDay, currMonth, currYear,
+        workDay, workMonth, workYear,
         todayMonth = new Date().getMonth(),
         todayYear = new Date().getFullYear(),
         dayClickHandler;
 
-    this.date = new Date().getDate();
-    this.month = todayMonth;
-    this.year = todayYear;
 
     this.getCurrentDay = function() {
         console.log($("#datepicker-body .day.selected").html());
@@ -32,13 +30,16 @@
         wrap.find("#to-next-month").bind("click", function () { this.switchMonth(true); }.bind(this));
         wrap.find("#back-to-today-left").bind("click", function () { this.switchMonth(null); }.bind(this));
         wrap.find("#back-to-today-right").bind("click", function () { this.switchMonth(null); }.bind(this));
-        wrap.find("#label-today").bind("click", function () { this.switchDay(true); }.bind(this));
 
         currMonth = todayMonth;
         currYear = todayYear;
 
         this.switchMonth(null);
         this.switchDay(null);
+
+        workMonth = currMonth;
+        workYear = currYear;
+        workDay = currDay;
     }.bind(this);
 
     this.addDayClickHandler = function (handler) {
@@ -48,7 +49,6 @@
     this.changeDate = function (event) {
         if ($(event.target).hasClass("disabled")) return;
 
-        var date = parseInt($(event.target).text());
         var dayOfWeek = parseInt($(event.target).data('weekday'));
 
         if (isNaN(dayOfWeek)) {
@@ -56,12 +56,8 @@
         }
 
         if (dayClickHandler != undefined) {
-            try {
-                this.date = date;
-                this.month = currMonth;
-                this.year = currYear;
-                
-                dayClickHandler(date, dayOfWeek, currMonth, currYear);
+            try {               
+                dayClickHandler(currDay, dayOfWeek, currMonth, currYear);
             } catch (ex) {
                 console.warn("Exception at dayClickHandler");
                 console.log(ex);
@@ -94,17 +90,18 @@
 
         var calendar = this.initDatepickerStruct(currMonth, currYear);
 
-        backToTodayLabel(currMonth, currYear);
-        setToday(calendar.days);
-
         $(".day", calendar.days).bind("click", selectDay);
         $(".day", calendar.days).bind("click", this.changeDate);
 
         $("td.disabled .day", calendar.days).unbind("click", selectDay);
         $("td.disabled .day", calendar.days).unbind("click", this.changeDate);
 
+        backToTodayLabel(currMonth, currYear);
+        setToday(calendar.days);
+
         wrap.find("#datepicker-body").find("tbody").replaceWith(calendar.days);
         label.text(calendar.label);
+
     }.bind(this);
 
     this.switchDay = function (forward) {
@@ -273,6 +270,12 @@
 
         $(selected).removeClass("selected");
         $(this).addClass("selected");
+        
+        currDay = parseInt($(this).text(), 10);
+        
+        $('#current-month').data('day', currDay).attr('data-day', currDay);
+        $('#current-month').data('month', currMonth).attr('data-month', currMonth);
+        $('#current-month').data('year', currYear).attr('data-year', currYear);
     }
 
     function setToday(days) {
@@ -285,6 +288,14 @@
         if (today && isWeekday) {
             $(today).removeClass("today");
             $(today).addClass("selected");
+
+            today.click();
+        }
+        
+        if (currMonth === workMonth && currYear === workYear) {
+            $(".day", days).filter(function () {
+                return $(this).text() === workDay.toString();
+            }).addClass('selected').click();
         }
     }
 
@@ -293,7 +304,7 @@
 			'<div id="datepicker-header">' +
 			'<span class="to-prev-month" id="to-prev-month"><i class="fa fa-caret-left" aria-hidden="true"></i></span>'
 			+
-			'<span class="current-month" id="current-month"></span>'
+			'<span class="current-month" id="current-month" data-day="" data-month="" data-year=""></span>'
 			+
 			'<span class="to-next-month" id="to-next-month"><i class="fa fa-caret-right" aria-hidden="true"></i></span>'
 			+

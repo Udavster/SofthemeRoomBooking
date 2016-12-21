@@ -3,7 +3,7 @@
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
 <div class="eventcontainer">
-    @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "event-form", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new {id = "event-edit-form", enctype = "multipart/form-data"}))
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)
@@ -24,7 +24,7 @@
             </div>
 
             <div class="editevent-header__dropdown-rooms">
-                @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new {@class = "editevent-header__dropdown-list" })
+                @Html.DropDownListFor(model => model.IdRoom, Model.Rooms, new {@class = "editevent-header__dropdown-list"})
             </div>
 
             <i id="minimizeButton" class="fa fa-minus editevent-header__minimize" aria-hidden="true"></i>
@@ -58,7 +58,7 @@
 
             <div class="eventcontainer-body__group">
                 <div class="container-checkbox">
-                    @Html.CheckBoxFor(model => model.AllowRegistration, new { @class = "checkbox" })
+                    @Html.CheckBoxFor(model => model.AllowRegistration, new {@class = "checkbox"})
                     @Html.LabelFor(model => model.AllowRegistration, "Регистрация желающих")
                 </div>
 
@@ -74,7 +74,7 @@
 
             <div class="eventcontainer-body__group">
                 <div class="container-checkbox">
-                    <input type="checkbox" class="checkbox" id="ShowOrganizator" />
+                    <input type="checkbox" class="checkbox" id="ShowOrganizator"/>
                     <label for="ShowOrganizator">Показать автора</label>
                 </div>
 
@@ -93,13 +93,28 @@
                 </div>
             </div>
 
-            <div class="eventcontainer-footer">
-                <div id="event-errors" class="eventcontainer-footer__error hidden-error">
-                    <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
-                    <span class="error-text"></span>
+
+            @if (Model.Id == null)
+            {
+                <div class="eventcontainer-footer">
+                    <div id="event-errors" class="eventcontainer-footer__error hidden-error">
+                        <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
+                        <span class="error-text"></span>
+                    </div>
+                    <button id="createButton" class="button eventcreate-button submit-btn">Создать</button>
                 </div>
-                <input id="event-submit" class="input-submit event-button" type="submit" value="Создать"/>
-            </div>
+            }
+            else
+            {
+                <div class="eventcontainer-footer eventedit-footer-edit">
+                    <div id="event-errors" class="eventcontainer-footer__error hidden-error">
+                        <i class="fa fa-frown-o error-sign" aria-hidden="true"></i>
+                        <span class="error-text"></span>
+                    </div>
+                    <button id="cancelButton" class="button eventedit-button">Отменить</button>
+                    <button id="saveButton" class="button eventedit-button button-active submit-btn">Сохранить</button>
+                </div>
+            }
         </div>
     }
 </div>

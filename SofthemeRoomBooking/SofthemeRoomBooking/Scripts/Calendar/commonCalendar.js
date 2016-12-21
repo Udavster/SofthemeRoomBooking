@@ -117,10 +117,15 @@ var createEvent = function (event) {
             var finishTime = new Date(daySelected.year, daySelected.month, daySelected.day, finishHour, finishMinutes);
 
             setEventDateTime(startTime, finishTime);
+
             var roomId = parseInt($event.parent().data('roomid'));
             setEventRoom(roomId);
             
             setDefaultEventSettings();
+
+            $.validator.unobtrusive.parse("#event-edit-form");
+
+            Loading(false);
         },
         error: function () {
             //console.warn("error");

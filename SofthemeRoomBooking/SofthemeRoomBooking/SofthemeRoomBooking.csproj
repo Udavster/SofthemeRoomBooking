@@ -421,6 +421,7 @@
     <Content Include="Scripts\Event\event-create.js" />
     <Content Include="Scripts\Event\event-edit.js" />
     <Content Include="Scripts\Event\event-index.js" />
+    <Content Include="Scripts\Event\event-participants.js" />
     <Content Include="Scripts\Event\eventInfo.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />

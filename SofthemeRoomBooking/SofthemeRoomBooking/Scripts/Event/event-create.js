@@ -1,49 +1,63 @@
-﻿$("#closeButton").bind("click", function () {
-    $("#popup-create-event").html("");
-    $("#popup-create-event").hide();
-});
+﻿$(document).ready(function() {
+    $('#event-create-form .event-input').on('keyup blur', function (e) {
+        var validator = $('#event-create-form').validate();
 
-$("#event-submit").bind("click", function (e) {
-    e.preventDefault();
+        if (validator.element(e.target)) {
+            $('#createButton').attr('disabled', false);
+        } else {
+            $('#createButton').attr('disabled', 'disabled');
+        }
+    });
 
-    var eventValidator = eventValidate();
+    $('#closeButton').bind('click', function () {
+        $('#popup-create-event').html('');
+        $('#popup-create-event').hide();
+    });
 
-    if ($("#Nickname").val() === "" && !$("#ShowOrganizator")[0].checked) {
-        eventValidator.showErrors(false, "Не указан организатор события.");
-        return false;
-    }
+    $('#createButton').bind('click', function (e) {
+        e.preventDefault();
+        
+        var eventValidator = eventValidate();
 
-    if (eventValidator.validate() && $("#event-form").valid()) {
-        if ($("#ShowOrganizator")[0].checked) {
-            $("#Nickname").val("");
+        if (!checkSetOrganizator()) return false;
+
+        var nickname = $('#Nickname').val();
+        if ($('#ShowOrganizator')[0].checked) {
+            $('#Nickname').val('');
         }
 
-        $.ajax({
-            url: window.location.origin + "/Event/CreateEvent",
-            method: "POST",
-            data: $("#event-form").serialize(),
-            success: function (result) {
-                if (result.success) {
-                    window.location.href = result.redirectTo;
-                } else if (result.errorMessage) {
-                    eventValidator.showErrors(false, result.errorMessage);
-                } 
-            }
-        });
-        return true;
-    } else {
-        return false;
-    }
+        if (eventValidator.validate() && $('#event-create-form').valid()) {
+
+            $.ajax({
+                url: window.location.origin + '/Event/CreateEvent',
+                method: 'POST',
+                data: $('#event-create-form').serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        window.location.href = result.redirectTo;
+                    } else {
+                        eventValidator.showErrors(false, result.errorMessage);
+                        $('#Nickname').val(nickname);
+                    }
+                }
+            });
+            return true;
+        } else {
+            $('#createButton').attr('disabled', 'disabled');
+            $('#Nickname').val(nickname);
+            return false;
+        }
+    });
+    
+    initDateTime('word', null, $('#createButton'));
+    
+    var weekday = getNearestWeekday();
+    var startTime = new Date(weekday.getFullYear(), weekday.getMonth(), weekday.getDate(), 9);
+    var finishTime = new Date(weekday.getFullYear(), weekday.getMonth(), weekday.getDate(), 10);
+
+    setEventDateTime(startTime, finishTime);
+    eventValidate().showErrors(true);
+    setDefaultEventSettings();
+
+    $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked = true;
 });
-
-$("#Day").val(new Date().getDate());
-$("#Month").val(new Date().getMonth());
-$("#Year").val(new Date().getFullYear());
-
-$("#StartHour").val($("#event-timestart #hours").text());
-$("#StartMinutes").val($("#event-timestart #minutes").text());
-$("#EndHour").val($("#event-timefinish #hours").text());
-$("#EndMinutes").val($("#event-timefinish #minutes").text());
-
-setDefaultEventSettings();
-

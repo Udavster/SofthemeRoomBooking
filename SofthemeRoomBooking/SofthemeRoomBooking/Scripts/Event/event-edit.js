@@ -1,91 +1,78 @@
-﻿$("#minimizeButton").bind("click", function () {
-    $("#popup-edit-event").hide("");
-    $("#popup-edit-event").hide();
-});
+﻿$(document).ready(function () {
+    $('#AllowRegistration')[0].disabled = $('#Private')[0].checked;
 
-$("#AllowRegistration")[0].disabled = $("#Private")[0].checked;
+    $('#event-edit-form .event-input').on('keyup blur', function (e) {
+        var validator = $('#event-edit-form').validate();
 
-$("#event-submit").bind("click", function (e) {
-    e.preventDefault();
-    var eventValidator = eventValidate();
-
-    if ($("#Nickname").val() === "" && !$("#ShowOrganizator")[0].checked) {
-        eventValidator.showErrors(false, "Не указан организатор события.");
-        return false;
-    }
-
-    if (eventValidator.validate() && $("#event-form").valid()) {
-        if ($("#ShowOrganizator")[0].checked) {
-            $("#Nickname").val("");
+        if (validator.element(e.target)) {
+            $('.submit-btn').attr('disabled', false);
+        } else {
+            $('.submit-btn').attr('disabled', 'disabled');
         }
-        $.ajax({
-            url: window.location.origin + "/Event/EditEventPartial",
-            method: "POST",
-            data: $("#event-form").serialize(),
-            success: function (result) {
-                if (result.success) {
-                    window.location.href = result.redirectTo;
-                } else {
-                    eventValidator.showErrors(false, result.errorMessage);
+    });
+
+    $('#minimizeButton').bind('click', function () {
+        $('#popup-edit-event').html('');
+        $('#popup-edit-event').hide();
+    });
+
+    $('#cancelButton').bind('click', function (e) {
+        e.preventDefault();
+        
+        $('#popup-edit-event').html('');
+        $('#popup-edit-event').hide();
+    });
+
+    $('.submit-btn').bind('click', function (e) {
+        e.preventDefault();
+        var eventValidator = eventValidate();
+
+        if (!checkSetOrganizator()) return false;
+
+        var nickname = $('#Nickname').val();
+        if ($('#ShowOrganizator')[0].checked) {
+            $('#Nickname').val('');
+        }
+
+        if (eventValidator.validate() && $('#event-edit-form').valid()) {
+            
+            $.ajax({
+                url: window.location.origin + '/Event/EditEventPartial',
+                method: 'POST',
+                data: $('#event-edit-form').serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        window.location.href = result.redirectTo;
+                    } else {
+                        eventValidator.showErrors(false, result.errorMessage);
+                        $('#Nickname').val(nickname);
+                    }
                 }
-            }
-        });
-        return true;
-    } else {
-        return false;
+            });
+            return true;
+        } else {
+            $('.submit-btn').attr('disabled', 'disabled');
+            $('#Nickname').val(nickname);
+            return false;
+        }
+    });
+
+    initDateTime('word', null, $('.submit-btn'));
+
+    if ($('#Nickname').val() === '') {
+        $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked = true;
+    }
+
+    if ($('#Id').val() !== '') {
+        var year = parseInt($('#Year').val()),
+            month = parseInt($('#Month').val()) - 1,
+            day = parseInt($('#Day').val()),
+
+            startHour = parseInt($('#StartHour').val()),
+            startMinutes = parseInt($('#StartMinutes').val()),
+            finishHour = parseInt($('#FinishHour').val()),
+            finishMinutes = parseInt($('#FinishMinutes').val());
+
+        setEventDateTime(new Date(year, month, day, startHour, startMinutes), new Date(year, month, day, finishHour, finishMinutes));
     }
 });
-
-if ($("#Nickname").val() === "") {
-    $("#Nickname")[0].disabled = $("#ShowOrganizator")[0].checked = true;
-}
-
-if ($("#Id").val() !== "") {
-    var year = parseInt($(".editevent-header__date #Year").val()),
-        month = parseInt($(".editevent-header__date #Month").val()) - 1,
-        day = parseInt($(".editevent-header__date #Day").val()),
-
-        startHour = parseInt($(".editevent-header__date #StartHour").val()),
-        startMinutes = parseInt($(".editevent-header__date #StartMinutes").val()),
-        finishHour = parseInt($(".editevent-header__date #FinishHour").val()),
-        finishMinutes = parseInt($(".editevent-header__date #FinishMinutes").val());
-
-    setEventDateTime(new Date(year, month, day, startHour, startMinutes), new Date(year, month, day, finishHour, finishMinutes));
-}
-
-function setEventDateTime(startTime, finishTime) {
-    var months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
-
-    if (!startTime || !(startTime instanceof Date)) {
-        startTime = new Date(year, month, day, startHour, startMinutes);
-    }
-
-    if (!finishTime || !(finishTime instanceof Date)) {
-        finishTime = new Date(year, month, day, finishHour, finishMinutes);
-    }
-
-    $("#event-date #day").text(("0" + startTime.getDate()).slice(-2));
-    $("#event-date #month").text(months[startTime.getMonth()]);
-    $("#event-date #year").text(startTime.getFullYear());
-
-    $("#event-timestart #hours").text(("0" + startTime.getHours()).slice(-2));
-    $("#event-timestart #minutes").text(("0" + startTime.getMinutes()).slice(-2));
-    $("#event-timefinish #hours").text(("0" + finishTime.getHours()).slice(-2));
-    $("#event-timefinish #minutes").text(("0" + finishTime.getMinutes()).slice(-2));
-
-    $(".editevent-header__date #Year").val(startTime.getFullYear());
-    $(".editevent-header__date #Month").val(startTime.getMonth());
-    $(".editevent-header__date #Day").val(startTime.getDate());
-
-    $(".editevent-header__date #StartHour").val(startTime.getHours());
-    $(".editevent-header__date #StartMinutes").val(startTime.getMinutes());
-    $(".editevent-header__date #FinishHour").val(finishTime.getHours());
-    $(".editevent-header__date #FinishMinutes").val(finishTime.getMinutes());
-
-    $("#event-date #arrow-up-day").click();
-    $("#event-date #arrow-down-day").click();
-};
-
-function setEventRoom(idRoom) {
-    $("#IdRoom").val(idRoom);
-}

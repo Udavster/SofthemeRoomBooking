@@ -195,25 +195,41 @@
     border: none;
     border-radius: 20px;
     background-color: #C8CDD9;
-    color: #E9EBF0;
+    color: #000000;
     outline: none;
     cursor: pointer;
 }
 
 .button:hover {
-    color: white;
-    background-color: #F95752;
+    color: #FFFFFF;
+    background-color: #9FA6B6;
 }
 
-.button:disabled {
-    background-color: #F5F6FB;
-    color: #C7C8CB;
-    cursor: default;
+.button-cancel {
+    color: #FFFFFF;
+    background-color: #9FA6B6;
+}
+
+.button-cancel:hover {
+    color: #000000;
+    background-color: #C8CDD9;
 }
 
 .button-active {
-    color: white;
+    color: #FFFFFF;
     background-color: #F95752;
+}
+
+.button-active:hover {
+    background-color: #E74845;
+}
+
+.button:disabled,
+.button-cancel:disabled,
+.button-active:disabled {
+    background-color: #F5F6FB;
+    color: #C7C8CB;
+    cursor: default;
 }
 
 .whole-el-link {

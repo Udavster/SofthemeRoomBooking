@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -62,12 +63,12 @@ namespace SofthemeRoomBooking.Controllers
             {
                 if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
                 {
-                    return Json(new { errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                    return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
                 }
 
-                _eventService.CreateEvent(model, userId);
+                var eventId = _eventService.CreateEvent(model, userId);
 
-                return Json(new { redirectTo = Url.Action("Index", "Room", new { id = model.IdRoom } ) });
+                return Json(new { success = true, redirectTo = "/Event/Index/" + eventId });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 
@@ -129,32 +130,25 @@ namespace SofthemeRoomBooking.Controllers
         {
             var model = modelView.ToEventModel();
 
-            var eventId = model.Id;
-
             if (ModelState.IsValid)
             {
+                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
+                {
+                    return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
+                }
+
                 if (modelView.Id == null)
                 {
                     var userId = User.Identity.GetUserId();
 
-                    if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
-                    {
-                        return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
-                    }
-
-                    eventId = _eventService.CreateEvent(model, userId);
+                    _eventService.CreateEvent(model, userId);
                 }
                 else
                 {
-                    if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
-                    {
-                        return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
-                    }
-
                     _eventService.UpdateEvent(model);
-                }               
-
-                return Json(new { success = true, redirectTo = "/Event/Index/" + eventId });
+                }
+                
+                return Json(new { success = true, redirectTo = HttpContext.Request.QueryString });
             }
             ModelState.AddModelError("", "Что-то пошло не так");
 
@@ -183,13 +177,18 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult CancelEventView(int id)
+        public ActionResult CancelEvent(int id)
         {
-            CancelPopupViewModel model = new CancelPopupViewModel()
+            var model = new ConfirmationViewModel
             {
-                Id = id
+                Question = "Вы уверены, что хотите отменить событие?",
+                Message = "",
+                Action = "CancelEvent",
+                Controller = "Event",
+                DataId = id.ToString()
             };
-            return PartialView("_EventCancelationPopup",model);
+
+            return PartialView("_PopupConfirmationPartial", model);
         }
 
         [HttpPost]
@@ -203,11 +202,17 @@ namespace SofthemeRoomBooking.Controllers
             return Content(@"Home/Index");
         }
 
-        public ActionResult EventParticipants(int eventId)
+        public ActionResult EventParticipants(int id)
         {
-            var model = _eventService.GetParticipantsByEventId(eventId);
+            var model = _eventService.GetParticipantsByEventId(id);
 
-            return PartialView(model);
+            var modelView = model.Select(x => new EventParticipantViewModel
+            {
+                Id = x.Id,
+                Email = x.Email
+            }).ToList();
+
+            return PartialView(modelView);
         }
 
         [HttpGet]

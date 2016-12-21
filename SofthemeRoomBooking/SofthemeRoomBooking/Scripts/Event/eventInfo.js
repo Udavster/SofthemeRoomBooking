@@ -8,6 +8,8 @@
         success: function (res) {
             $('#popup-edit-event').html(res);
             $('#popup-edit-event').show();
+
+            $.validator.unobtrusive.parse("#event-edit-form");
         }
     });
 });
