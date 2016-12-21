@@ -3,6 +3,10 @@
 
 @Styles.Render("~/bundles/Styles/datetimepickers")
 
+<style>
+    .room__link { display: none; }
+</style>
+
 <div id="popup-confirmation" class="overlay"></div>
 
 <div class="eventindex">
@@ -29,7 +33,7 @@
                     <span>Принимало участие @Model.ParticipantsQuantity человек</span>
                 }
 
-                @if (Model.IsAdminOrOrganizator @*&& Model.IdUser != User.Identity.GetUserId()*@)
+                @if (Model.IsAdminOrOrganizator && Model.IdUser != User.Identity.GetUserId())
                 {
                     <span class="join-label">Присоединиться</span>
                     <div class="eventindex-info__addparticipant">
@@ -44,6 +48,8 @@
         @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new {id = "eventindex-edit-form", enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.IdRoom)
 
             <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Title, new {@class = "error-box__text-danger"})
@@ -163,7 +169,7 @@
 </div>
 
 
-@*@Html.Action("RoomPartial", "Room", new { id = Model.IdRoom })*@
+@Html.Action("RoomPartial", "Room", new { id = (int?)null })
 
 @Html.Partial("_MapPartial")
 

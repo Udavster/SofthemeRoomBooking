@@ -17,7 +17,6 @@
 
 $('#addParticipant').bind('click', function (e) {
     e.preventDefault();
-    debugger;
     
     var showErrors = eventValidate().showErrors;
 
@@ -27,7 +26,8 @@ $('#addParticipant').bind('click', function (e) {
         data: $('#event-addparticipant-form').serialize(),
         success: function (result) {
             if (result.success) {
-                updateParticipants();
+                    window.location.href = result.redirectTo;
+                    updateParticipants();
             } else {
                 showErrors(false, result.errorMessage);
             }
@@ -49,7 +49,6 @@ function clearAddParticipantForm() {
 };
 
 function updateParticipants() {
-    debugger;
     var eventId = parseInt($('#IdEvent').val());
 
     $.ajax({
@@ -69,27 +68,9 @@ function updateParticipants() {
     });
 };
 
-function deleteParticipant(e) {
-    e.preventDefault();
-
-    var participantId = parseInt($('.eventindex-participants #Id').val(), 10);
-
-    $.ajax({
-        url: window.location.origin + '/Event/DeleteParticipant',
-        method: 'GET',
-        data: new { participantId : participantId },
-        dataType: 'html',
-        success: function (result) {
-            $('#popup-confirmation').html(result);
-            $('#popup-confirmation').show();
-        }
-    });
-}
 
 function Loading(loading, updateSelector) {
-    if (updateSelector === undefined) return;
     var selector = $(updateSelector);
-
     if (loading) {
         $(selector).html('');
         $('#loading').show();

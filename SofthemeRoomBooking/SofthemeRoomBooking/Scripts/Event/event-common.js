@@ -237,7 +237,7 @@ function eventValidate() {
 
 function checkSetOrganizator() {
     var eventValidator = eventValidate();
-
+    
     if ($('#Nickname').val() === '' && !$('#ShowOrganizator')[0].checked) {
         eventValidator.showErrors(false, 'Не указан организатор события.');
 

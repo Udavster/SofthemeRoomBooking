@@ -93,7 +93,7 @@ namespace SofthemeRoomBooking.Controllers
 
                 _eventService.UpdateEvent(model);
 
-                return Json(new { success = true, redirectTo = Url.Action("Index", "Home") });
+                return Json(new { success = true, redirectTo = Url.Action("Index", "Event", new { id = model.Id }) });
             }
 
             var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
@@ -243,7 +243,7 @@ namespace SofthemeRoomBooking.Controllers
                 }
 
                 _eventService.CreateParticipant(model);
-                return Json(new { success = true });
+                return Json(new { success = true, redirectTo = HttpContext.Request.QueryString });
             }
 
             var errors = string.Join(". ", ModelState.Values.Where(e => e.Errors.Count > 0)
@@ -255,9 +255,9 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteParticipant(int participantId)
+        public ActionResult DeleteParticipant(int id)
         {
-            var participant = _eventService.GetParticipantById(participantId);
+            var participant = _eventService.GetParticipantById(id);
 
             if (participant != null)
             {

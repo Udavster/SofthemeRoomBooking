@@ -5,6 +5,7 @@
     var showOrganizator = $('#ShowOrganizator')[0].checked = nickname === "";
     var allowRegistration = $('#AllowRegistration').is(':checked');
     var isPrivate = $('#Private').is(':checked');
+    var idRoom = parseInt($('#IdRoom').val(), 10);
 
     var currDay = ('0' + $('#Day').val()).slice(-2);
     var currMonth = ('0' + $('#Month').val()).slice(-2);
@@ -170,4 +171,63 @@
             $('#saveButton').attr('disabled', 'disabled');
         }
     });
+    
+    highlightRoom(idRoom);
+
+    clickChange();
+
+    clickCancel(idRoom);
+
+    chooseRoom();
 });
+
+function highlightRoom(elem) {
+    var room = $('.room__general.room-' + elem + '');
+    $('.room__image').find($('#' + room.data('pathid'))).show();
+    $('.room__image').css('pointer-events', 'none');
+    room.css('background', '#f95752');
+    room.children('.text').css('background-color', 'red');
+}
+
+function clickChange() {
+    $(document).on('click', '#editButton', function () {
+        $('.room__number').text('Выберите аудитория на этаже 10');
+        $('.room__number').css('left', '244px');
+        $('.room__image').css('pointer-events', 'auto');
+        $('.room__general-blocked').css('pointer-events', 'none');
+    });
+}
+function clickCancel(elem) {
+    $(document).on('click', '#cancelEditButton', function () {
+        $('.room__number').text('Этаж 10');
+        $('.room__number').css('left', '458px');
+        $('.room__image').css('pointer-events', 'none');
+        $('.room__path').hide();
+        $('.room__general').css('background', '#9fa6b6');
+        $('.room__general').children('.text').css('background-color', '#858c9a');
+        $('.room__general-blocked').css('background', '#d7d9de');
+        $('.room__general-blocked').children('.text').css('background-color', '#acb0b6');
+        var room = $('.room__general.room-' + elem + '');
+        $('.room__image').find($('#' + room.data('pathid'))).show();
+        $('.room__image').css('pointer-events', 'none');
+        room.css('background', '#f95752');
+        room.children('.text').css('background-color', 'red');
+    });
+}
+
+function chooseRoom() {
+    $(document).on('click', '.room__general', function () {
+        _this = $(this);
+        $('.room__path').hide();
+        $('.room__image').find($('#' + _this.data('pathid'))).show();
+        $('.room__general').css('background', '#9fa6b6');
+        $('.room__general').children('.text').css('background-color', '#858c9a');
+        $('.room__general-blocked').css('background', '#d7d9de');
+        $('.room__general-blocked').children('.text').css('background-color', '#acb0b6');
+        _this.css('background', '#f95752');
+        _this.children('.text').css('background-color', 'red');
+
+        var idRoom = $(this).data('roomid');
+        $('#IdRoom').val(idRoom);
+    });
+}
