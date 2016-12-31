@@ -6,10 +6,13 @@
                 <span>@Model.DayOfWeek, @Model.StartTime.Day @Model.Month</span>
                 <span>@Model.StartTime.Hour:@Model.StartTime.Minute.ToString("00") - @Model.FinishTime.Hour:@Model.FinishTime.Minute.ToString("00")</span>
             </div>
-            <div class="detailed-buttons">
-                <div class="eventdetail-change">Изменить</div>
-                <div id="cancelevent" data-id="@Model.Id" class="eventdetail-cancel">Отменить</div>
-            </div>
+            @if (DateTime.Now <= Model.StartTime)
+            {
+                <div class="detailed-buttons">
+                    <div id="changeevent" class="eventdetail-change" data-id="@Model.Id">Изменить</div>
+                    <div id="cancelevent" data-id="@Model.Id" class="eventdetail-cancel">Отменить</div>
+                </div>
+            }
             <div class="eventdetailedit-close">
                 <i class="fa fa-window-minimize" aria-hidden="true"></i>
             </div>
@@ -18,21 +21,20 @@
     <div class="eventdetailedit__main">
         <div>
             <h3>@Model.Title</h3>
+        </div>
+        <div>
+            <p>@Model.Description</p>
+        </div>
+        <div class="eventdetailedit__icons">
+            <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            <i class="fa fa-print" aria-hidden="true"></i>
+            <i class="fa fa-link eventdetail__link" aria-hidden="true">
+                <a class="whole-el-link" href="@Url.Action("Index", "Event", new {id = Model.Id})"></a>
+            </i>
         </div>   
     </div>
 </div>
 
-<script>
-    $(document).on('click', '#cancelevent', function () {
-        var _this = $(this);
-        var id = _this.data('id');
-        $.ajax({
-            url: window.location.origin + "/Event/CancelEventView",
-            data: 'id=' + id,
-            type: 'GET',
-            success: function (res) {
-                $('.week__scheduler').append(res);
-            }
-        });
-    });
-</script>
+@Scripts.Render("~/bundles/eventInfo")
+@Scripts.Render("~/bundles/event-details")

@@ -176,3 +176,28 @@ body {
 .logo {
     background: url(../../Content/Images/Login/logo.png) no-repeat;
 }
+
+#input-name {
+    left: -190px;
+}
+#input-surname {
+    left: -140px;
+}
+#input-email {
+    left: -95px;
+}
+#input-password {
+    left: -40px;
+}
+#input-confirm-password {
+    left: 15px;
+}
+#input-submit {
+    left: 350px;
+    top: -209px;
+}
+
+.input-stairs {
+    position: relative;
+    top: -40px;
+}

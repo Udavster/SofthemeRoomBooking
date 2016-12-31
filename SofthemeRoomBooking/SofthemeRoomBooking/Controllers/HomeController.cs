@@ -26,17 +26,17 @@ namespace SofthemeRoomBooking.Controllers
 
         public ActionResult Menu()
         {
-            if (User.Identity.IsAuthenticated)
+            if ((User != null) && User.Identity.IsAuthenticated)
             {
                 var model = _profileService.GetLayoutUserViewModelById(User.Identity.GetUserId());
                 if (model != null)
                 {
                     ViewBag.AdminRole = _profileService.IsAdmin(User.Identity.GetUserId());
-                                    
+
                     return PartialView("Menu", model);
                 }
             }
-            
+
             return PartialView("Menu", null);
         }
     }

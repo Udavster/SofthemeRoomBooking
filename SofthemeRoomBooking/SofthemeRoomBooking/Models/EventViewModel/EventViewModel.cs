@@ -9,7 +9,6 @@ namespace SofthemeRoomBooking.Models.EventViewModel
 {
     public class EventViewModel
     {
-        [Required]
         public int? Id { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]

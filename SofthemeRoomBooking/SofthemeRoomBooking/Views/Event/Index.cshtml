@@ -153,7 +153,8 @@
     @Html.Action("EventParticipants","Event")
 </div>
 
-@Html.Action("RoomPartial", "Room")
+
+@Html.Action("RoomPartial", "Room", new { id = Model.IdRoom })
 
 @Html.Partial("_MapPartial")
 

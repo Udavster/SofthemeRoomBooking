@@ -6,7 +6,7 @@ namespace SofthemeRoomBooking.Services.Contracts
 {
     public interface INotificationService
     {
-        void CancelEventNotification(List<string> emails, Events eventInfo);
+        void CancelEventNotification(List<string> emails, Events eventInfo, string roomName);
         void FeedbackNotification(List<string> emails, FeedbackModel model);
     }
 }

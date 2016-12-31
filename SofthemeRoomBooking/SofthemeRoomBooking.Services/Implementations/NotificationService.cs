@@ -35,7 +35,7 @@ namespace SofthemeRoomBooking.Services.Implementations
             }
         }
 
-        public void CancelEventNotification(List<string> emails, Events eventInfo)
+        public void CancelEventNotification(List<string> emails, Events eventInfo, string roomName)
         {
             EmailModel model = new EmailModel()
             {
@@ -43,7 +43,7 @@ namespace SofthemeRoomBooking.Services.Implementations
                 Subject = "Event cancelation",
                 Text =
                            "Event " + eventInfo.Title + ", which will starts in " + eventInfo.Start.ToString("f") +
-                           " in room " + eventInfo.Rooms.Name + " was canceled. Thanks for your attention!"
+                           " in room " + roomName + " was canceled. Thanks for your attention!"
 
             };
             SendMail(model);
