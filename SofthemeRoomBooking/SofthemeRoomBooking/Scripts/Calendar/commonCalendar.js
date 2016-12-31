@@ -86,7 +86,6 @@ var createEvent = function (event) {
         url: window.location.origin + "/Event/EditEventPartial",
         type: 'GET',
         success: function (result) {
-
             $('#popup-edit-event').html(result);
             $('#popup-edit-event').show();
 
