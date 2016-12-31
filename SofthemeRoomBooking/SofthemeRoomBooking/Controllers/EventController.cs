@@ -82,7 +82,7 @@ namespace SofthemeRoomBooking.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
+                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
                 {
                     return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
                 }
@@ -97,20 +97,20 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditEventPartial(int eventId = -1)
+        public ActionResult EditEventPartial(int? eventId)
         {
             var rooms = _roomService.GetUnlockedRoomsByDate(DateTime.Today);
 
             EventViewModel modelView;
-            if (eventId == -1)
+            if (eventId == null)
             {
-                modelView = new EventViewModel();
+                modelView = new EventViewModel { Id = null};
                 modelView.SetUnlockedRooms(rooms);
 
                 return PartialView("_EditEventPartial", modelView);
             }
 
-            var model = _eventService.GetEventById(eventId);
+            var model = _eventService.GetEventById(eventId.Value);
 
             if (model != null)
             {
@@ -131,7 +131,7 @@ namespace SofthemeRoomBooking.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime))
+                if (_roomService.IsBusyRoom(model.IdRoom, model.StartTime, model.FinishTime, model.Id))
                 {
                     return Json(new { success = false, errorMessage = "Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое." });
                 }

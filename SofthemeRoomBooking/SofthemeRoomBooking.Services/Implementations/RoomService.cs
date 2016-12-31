@@ -227,11 +227,18 @@ namespace SofthemeRoomBooking.Services.Implementations
             return false;
         }
 
-        public bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime)
+        public bool IsBusyRoom(int idRoom, DateTime startTime, DateTime finishTime, int? idEvent = null)
         {
-            return _context.Events.Count(ev => ev.Id_room == idRoom && !ev.Cancelled && 
-                                              ((ev.Start >= startTime && ev.Start <= finishTime) || 
-                                               (ev.Finish >= startTime && ev.Finish <= finishTime))) > 0;
+            var result = _context.Events.Where(ev => ev.Id_room == idRoom && !ev.Cancelled &&
+                                              ((ev.Start > startTime && ev.Start < finishTime) ||
+                                               (ev.Finish > startTime && ev.Finish < finishTime)));
+
+            if (idEvent != null)
+            {
+                return result.Count(ev => ev.Id != idEvent.Value) > 0;
+            }
+
+            return result.Any();
         }
 
         private IQueryable<Events> GetEventsToCancel(int id, DateTime? finish)

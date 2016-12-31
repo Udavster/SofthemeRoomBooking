@@ -10,7 +10,7 @@ namespace SofthemeRoomBooking.Models.EventViewModel
     public class EventViewModel
     {
         [Required]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно для заполнения")]
         [StringLength(50, ErrorMessage = "Заголовок не может быть длиннее 50 символов")]

@@ -86,6 +86,7 @@ var createEvent = function (event) {
         url: window.location.origin + "/Event/EditEventPartial",
         type: 'GET',
         success: function (result) {
+
             $('#popup-edit-event').html(result);
             $('#popup-edit-event').show();
 
@@ -95,17 +96,17 @@ var createEvent = function (event) {
             } else if ($(event.target).parent().hasClass('event-empty')) {
                 $event = $(event.target).parent();
             }
-
-            var daySelected = cal.getCurrentDay();
+            
+            var daySelected = datePicker.getCurrentDay();
 
             var startHour = parseInt($event.data('sh'), 10);
             var startMinutes = parseInt($event.data('sm'), 10);
             var finishHour = parseInt($event.data('eh'), 10);
             var finishMinutes = parseInt($event.data('em'), 10);
 
-            var startTime = new Date(daySelected.day, daySelected.month, daySelected.year, startHour, startMinutes);
-            var finishTime = new Date(daySelected.day, daySelected.month, daySelected.year, finishHour, finishMinutes);
-            debugger;
+            var startTime = new Date(daySelected.year, daySelected.month, daySelected.day, startHour, startMinutes);
+            var finishTime = new Date(daySelected.year, daySelected.month, daySelected.day, finishHour, finishMinutes);
+            
             setEventDateTime(startTime, finishTime);
 
             var roomNum = $event.parent().data('roomnum');

@@ -70,7 +70,7 @@ function eventValidate() {
         startminutes = parseInt($("#StartMinutes").val(), 10),
         endhour = parseInt($("#FinishHour").val(), 10),
         endminutes = parseInt($("#FinishMinutes").val(), 10);
-
+    
     function isValidDurationEvent() {
         if (endhour > starthour || (endhour === starthour && endminutes - startminutes >= 20)) {
             return { isValid: true };

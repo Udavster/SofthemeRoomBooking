@@ -5,7 +5,7 @@
     }
 
     var wrap, label,
-        currMonth, currYear,
+        currDay, currMonth, currYear,
         todayMonth = new Date().getMonth(),
         todayYear = new Date().getFullYear(),
         dayClickHandler;
@@ -16,7 +16,7 @@
 
     this.getCurrentDay = function() {
         console.log($("#datepicker-body .day.selected").html());
-        return { 'day': this.date, 'month': this.month, 'year': this.year };
+        return { day: currDay, month: currMonth, year: currYear };
     }.bind(this);
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
@@ -38,6 +38,7 @@
         currYear = todayYear;
 
         this.switchMonth(null);
+        this.switchDay(null);
     }.bind(this);
 
     this.addDayClickHandler = function (handler) {
@@ -45,7 +46,7 @@
     }
 
     this.changeDate = function (event) {
-        if ($(event.target).hasClass("disable")) return;
+        if ($(event.target).hasClass("disabled")) return;
 
         var date = parseInt($(event.target).text());
         var dayOfWeek = parseInt($(event.target).data('weekday'));
@@ -67,7 +68,6 @@
             }
         }
     }.bind(this);
-
 
     this.switchMonth = function (forward) {
 
@@ -100,40 +100,74 @@
         $(".day", calendar.days).bind("click", selectDay);
         $(".day", calendar.days).bind("click", this.changeDate);
 
+        $("td.disabled .day", calendar.days).unbind("click", selectDay);
+        $("td.disabled .day", calendar.days).unbind("click", this.changeDate);
+
         wrap.find("#datepicker-body").find("tbody").replaceWith(calendar.days);
         label.text(calendar.label);
     }.bind(this);
 
-    this.switchDay = function(forward) {
-
-        if (forward === null) return;
-
+    this.switchDay = function (forward) {
         var days = wrap.find(".day"),
-            currDay = wrap.find(".selected")[0];
+            weekends = wrap.find("td.disabled").find(".day");
 
-        var currIndex = $.inArray(currDay, days);
+        var currentDay = forward === null ? wrap.find("#today")[0] : wrap.find(".selected")[0];
+        var currIndex = $.inArray(currentDay, days);
 
-        var newIndex;
-        if (forward) {
-            if (currIndex === days.length - 1) {
-                this.switchMonth(true);
+        var newIndex = currIndex;
+        if (forward === null || forward) {
+            if (forward) {
+                if (currIndex === days.length - 1) {
+                    this.switchMonth(true);
 
-                days = wrap.find(".day");
-                newIndex = 0;
-            } else {
-                newIndex = currIndex + 1;
+                    days = wrap.find(".day");
+                    weekends = wrap.find("td.disabled .day");
+                    newIndex = 0;
+                } else {
+                    newIndex++;
+                }
+            }
+
+            while ($.inArray(days[newIndex], weekends) >= 0) {
+                if (newIndex === days.length - 1) {
+                    this.switchMonth(true);
+
+                    days = wrap.find(".day");
+                    weekends = wrap.find("td.disabled .day");
+                    newIndex = 0;
+
+                    continue;
+                }
+
+                newIndex++;
             }
         } else {
             if (currIndex === 0) {
                 this.switchMonth(false);
 
                 days = wrap.find(".day");
+                weekends = wrap.find("td.disabled .day");
                 newIndex = days.length - 1;
             } else {
-                newIndex = currIndex - 1;
+                newIndex--;
+            }
+
+            while ($.inArray(days[newIndex], weekends) >= 0) {
+                if (newIndex === 0) {
+                    this.switchMonth(false);
+
+                    days = wrap.find(".day");
+                    weekends = wrap.find("td.disabled .day");
+                    newIndex = days.length - 1;
+
+                    continue;
+                }
+
+                newIndex--;
             }
         }
 
+        currDay = newIndex + 1;
         days[newIndex].click();
     }.bind(this);
 
@@ -166,26 +200,26 @@
             for (var j = 0; j < 7; j++) {
                 if (i === 0) {
                     if (j < firstWeekDay) {
-                        days[i][j] = '<td class="disable">' + (lastDayLastMonth - firstWeekDay + 1 + j) + '</td>';
+                        days[i][j] = '<td class="disabled">' + (lastDayLastMonth - firstWeekDay + 1 + j) + '</td>';
                     } else {
                         if (j === 5 || j === 6) {
-                            days[i][j] = '<td class="disable">' + day++ + '</td>';
+                            days[i][j] = '<td class="disabled"><span class="day">' + day++ + '</span></td>';
                         } else {
                             days[i][j] = '<td data-weekday="' + j + '"><span class="day">' + day++ + '</span></td>';
                         }
                     }
                 } else if (day <= lastDay) {
                     if (j === 5 || j === 6) {
-                        days[i][j] = '<td class="disable">' + day++ + '</td>';
+                        days[i][j] = '<td class="disabled"><span class="day">' + day++ + '</span></td>';
                     } else {
                         days[i][j] = '<td data-weekday="' + j + '"><span class="day">' + day++ + '</span></td>';
                     }
                 } else {
                     if (i === 4) {
-                        days[i][j] = '<td class="disable">' + dayNextMonth++ + '</td>';
+                        days[i][j] = '<td class="disabled">' + dayNextMonth++ + '</td>';
                         weekedsOrAnotherMonth = false;
                     } else if (weekedsOrAnotherMonth) {
-                        days[i][j] = '<td class="disable">' + dayNextMonth++ + '</td>';
+                        days[i][j] = '<td class="disabled">' + dayNextMonth++ + '</td>';
                     } else {
                         days[i][j] = '<td></td>';
                     }
@@ -198,13 +232,11 @@
         }
 
         days = $("<tbody>" + days.join("") + "</tbody>");
-
+        
         if (month === todayMonth && year === todayYear) {
             $(".day", days).filter(function() {
                      return $(this).text() === new Date().getDate().toString();
-                })
-				.attr("id", "today")
-				.addClass("selected");
+                }).attr("id", "today");
         }
 
         this.initDatepickerStruct.cache[year][month] = { days: days, label: months[month] + ", " + year };
@@ -227,8 +259,10 @@
     }
 
     function selectDay() {
-        var selected = wrap.find(".selected");
-        
+        var selected = wrap.find(".selected")[0];
+
+        if (selected === this) return;
+
         if ($(this).attr("id") === "today") {
             $(this).removeClass("today");
         }
@@ -244,8 +278,11 @@
     function setToday(days) {
         $(".selected", days).removeClass("selected");
 
-        var today = $("#today", days);
-        if (today) {
+        var today = $("#today", days)[0];
+        var weekends = $("td.disabled .day", days);
+        var isWeekday = !(today in weekends);
+
+        if (today && isWeekday) {
             $(today).removeClass("today");
             $(today).addClass("selected");
         }

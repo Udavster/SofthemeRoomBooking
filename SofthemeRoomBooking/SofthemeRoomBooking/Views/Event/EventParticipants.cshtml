@@ -1,1 +1,26 @@
-﻿
+﻿@model IQueryable<SofthemeRoomBooking.Models.EventViewModel.EventParticipantViewModel>
+<div class="eventindex-participants">
+    <p>Зарегистрированные участники:</p>
+    <table class="eventindex-participants__participants-table">
+        @foreach (var paticipant in Model)
+        {
+            <tr>
+                @{ var count = 0; }
+                @do
+                {
+                    <td>
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                        <div class="participants-table-item">
+                            <span>@paticipant.Email;</span>
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                    </td>
+
+                    count++;
+                }
+                while (count < 3) ;
+            </tr>
+        }
+    </table>
+</div>
+
