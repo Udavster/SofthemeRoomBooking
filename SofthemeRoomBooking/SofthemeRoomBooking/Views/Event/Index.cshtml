@@ -19,19 +19,26 @@
         @if (Model.AllowRegistration && Model.StartTime > DateTime.Now)
         {
             <div class="eventindex-info__join-to-event">
-                <span>Планируют принять участие @Model.ParticipantsQuantity человек</span>
-                
+                @if (Model.StartTime > DateTime.Now)
+                {
+                    <span>Планируют принять участие @Model.ParticipantsQuantity человек</span>
+                }
+                else
+                {
+                    <span>Принимало участие @Model.ParticipantsQuantity человек</span>
+                }
+
                 @if (Model.IdUser != User.Identity.GetUserId())
                 {
                     <span class="join-label">Присоединиться</span>
-                    @Html.Action("AddParticipant", "Event", new { eventId =  Model.Id })
+                    @Html.Action("AddParticipant", "Event", new {eventId = Model.Id})
                 }
             </div>
         }
     </div>
 
     <div class="eventindex-edit hidden">
-        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new { id = "eventindex-editform", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("EditEvent", "Event", FormMethod.Post, new {id = "eventindex-editform", enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
 
@@ -67,8 +74,6 @@
                     })
                 </div>
             </div>
-
-
 
             <div class="group-input-error">
                 @Html.SignalValidationMessageFor(model => model.Description, new {@class = "error-box__text-danger"})
@@ -138,94 +143,19 @@
             </div>
             <div id="event-errors" class="eventindex-time__errors hidden">
                 <i class="fa fa-frown-o frown-icon" aria-hidden="true"></i>
-                <span class="error-text">Эта аудитория занята на выбраное время. Выберите, пожалуйста, другое.</span>
+                <span class="error-text"></span>
             </div>
         }
     </div>
 </div>
 
 <div class="eventindex-participants">
-    <p>Зарегистрированные участники:</p>
-    <table class="eventindex-participants__participants-table">
-        <tr>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-            <td>
-                <i class="fa fa-circle" aria-hidden="true"></i>
-                <div class="participants-table-item">
-                    <span>user@softheme.com</span>
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </div>
-            </td>
-        </tr>
-    </table>
+    @Html.Action("EventParticipants","Event")
 </div>
-
-
-@Scripts.Render("~/bundles/datetimepickers")
-@Scripts.Render("~/bundles/event-index")
 
 @Html.Action("RoomPartial", "Room")
 
 @Html.Partial("_MapPartial")
 
+@Scripts.Render("~/bundles/datetimepickers")
+@Scripts.Render("~/bundles/event-index")

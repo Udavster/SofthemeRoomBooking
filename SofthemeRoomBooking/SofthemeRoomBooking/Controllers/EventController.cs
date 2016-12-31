@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using SofthemeRoomBooking.Converters;
@@ -167,13 +168,18 @@ namespace SofthemeRoomBooking.Controllers
         }
 
         [HttpGet]
-        public ActionResult CancelEventView(int id)
+        public ActionResult CancelEvent(int id)
         {
-            CancelPopupViewModel model = new CancelPopupViewModel()
+            var model = new ConfirmationViewModel
             {
-                Id = id
+                Question = "Вы уверены, что хотите отменить событие?",
+                Message = "",
+                Action = "CancelEvent",
+                Controller = "Event",
+                DataId = id.ToString()
             };
-            return PartialView("_EventCancelationPopup",model);
+
+            return PartialView("_PopupConfirmationPartial", model);
         }
 
         [HttpPost]
@@ -188,7 +194,13 @@ namespace SofthemeRoomBooking.Controllers
         {
             var model = _eventService.GetParticipantsByEventId(eventId);
 
-            return PartialView(model);
+            var modelView = model.Select(x => new EventParticipantViewModel
+            {
+                Id = x.Id,
+                Email = x.Email
+            });
+
+            return PartialView(modelView);
         }
 
         [HttpGet]

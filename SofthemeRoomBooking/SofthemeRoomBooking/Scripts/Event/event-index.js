@@ -82,16 +82,16 @@
         $('#event-timefinish #hours').text(endHour);
         $('#event-timefinish #minutes').text(endMinutes);
 
-        displayErrors(true);
+        eventValidate().validate();
     });
 
     $('#cancelEventButton').bind('click', function (e) {
         e.preventDefault();
-
+        debugger;
         var eventId = parseInt($('#Id').val(), 10);
 
         $.ajax({
-            url: window.location.origin + '/Event/CancelEventView',
+            url: window.location.origin + '/Event/CancelEvent',
             method: 'GET',
             data: { id: eventId },
             dataType: 'html',

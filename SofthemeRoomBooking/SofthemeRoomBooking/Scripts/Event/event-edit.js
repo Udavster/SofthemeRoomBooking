@@ -3,11 +3,9 @@
 
     $('#event-edit-form .event-input').on('keyup blur', function () {
         if ($('#event-edit-form').valid()) {
-            $('#createButton').attr('disabled', false);
-            $('#saveButton').attr('disabled', false);
+            $('.submit-btn').attr('disabled', false);
         } else {
-            $('#createButton').attr('disabled', 'disabled');
-            $('#saveButton').attr('disabled', 'disabled');
+            $('.submit-btn').attr('disabled', 'disabled');
         }
     });
 
@@ -53,11 +51,12 @@
             });
             return true;
         } else {
+            $('.submit-btn').attr('disabled', 'disabled');
             return false;
         }
     });
 
-    initDateTime("number", null, $(".submit-btn"));
+    initDateTime("word", null, $(".submit-btn"));
 
     if ($('#Nickname').val() === '') {
         $('#Nickname')[0].disabled = $('#ShowOrganizator')[0].checked = true;

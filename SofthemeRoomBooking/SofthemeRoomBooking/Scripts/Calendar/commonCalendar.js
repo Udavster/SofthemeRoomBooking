@@ -108,11 +108,13 @@ var createEvent = function (event) {
             
             setEventDateTime(startTime, finishTime);
 
-            var roomNum = $event.parent().data('roomnum');
+            var idRoom = $event.parent().data('roomnum') + 1;
 
-            setEventRoom(roomNum);
+            setEventRoom(idRoom);
             
             setDefaultEventSettings();
+
+            $.validator.unobtrusive.parse("#event-edit-form");
 
             Loading(false);
         },

@@ -1,9 +1,9 @@
 ﻿$(document).ready(function() {
     $('#event-create-form .event-input').on('keyup blur', function () {
         if ($('#event-create-form').valid()) {
-            $('#saveButton').attr('disabled', false);
+            $('#createButton').attr('disabled', false);
         } else {
-            $('#saveButton').attr('disabled', 'disabled');
+            $('#createButton').attr('disabled', 'disabled');
         }
     });
 
@@ -21,9 +21,9 @@
         $('#popup-create-event').hide();
     });
 
-    $('#saveButton').bind('click', function (e) {
+    $('#createButton').bind('click', function (e) {
         e.preventDefault();
-
+        
         var eventValidator = eventValidate();
 
         if ($('#Nickname').val() === '' && !$('#ShowOrganizator')[0].checked) {
@@ -50,13 +50,15 @@
             });
             return true;
         } else {
+            $('#createButton').attr('disabled', 'disabled');
             return false;
         }
     });
+    
+    initDateTime('word', null, $('#createButton'));
 
-    initDateTime('word', null, $('#saveButton'));
-
-    $('#Day').val(new Date().getDate());
+    var weekday = parseInt($('#datepicker').find('.selected').text(), 10);
+    $('#Day').val(weekday);
     $('#Month').val(new Date().getMonth());
     $('#Year').val(new Date().getFullYear());
 

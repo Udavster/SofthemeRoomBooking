@@ -6,13 +6,11 @@
 
     var wrap, label,
         currDay, currMonth, currYear,
+        workDay, workMonth, workYear,
         todayMonth = new Date().getMonth(),
         todayYear = new Date().getFullYear(),
         dayClickHandler;
 
-    this.date = new Date().getDate();
-    this.month = todayMonth;
-    this.year = todayYear;
 
     this.getCurrentDay = function() {
         console.log($("#datepicker-body .day.selected").html());
@@ -32,13 +30,16 @@
         wrap.find("#to-next-month").bind("click", function () { this.switchMonth(true); }.bind(this));
         wrap.find("#back-to-today-left").bind("click", function () { this.switchMonth(null); }.bind(this));
         wrap.find("#back-to-today-right").bind("click", function () { this.switchMonth(null); }.bind(this));
-        wrap.find("#label-today").bind("click", function () { this.switchDay(true); }.bind(this));
 
         currMonth = todayMonth;
         currYear = todayYear;
 
         this.switchMonth(null);
         this.switchDay(null);
+
+        workMonth = currMonth;
+        workYear = currYear;
+        workDay = currDay;
     }.bind(this);
 
     this.addDayClickHandler = function (handler) {
@@ -48,7 +49,6 @@
     this.changeDate = function (event) {
         if ($(event.target).hasClass("disabled")) return;
 
-        var date = parseInt($(event.target).text());
         var dayOfWeek = parseInt($(event.target).data('weekday'));
 
         if (isNaN(dayOfWeek)) {
@@ -56,12 +56,8 @@
         }
 
         if (dayClickHandler != undefined) {
-            try {
-                this.date = date;
-                this.month = currMonth;
-                this.year = currYear;
-                
-                dayClickHandler(date, dayOfWeek, currMonth, currYear);
+            try {               
+                dayClickHandler(currDay, dayOfWeek, currMonth, currYear);
             } catch (ex) {
                 console.warn("Exception at dayClickHandler");
                 console.log(ex);
@@ -273,6 +269,8 @@
 
         $(selected).removeClass("selected");
         $(this).addClass("selected");
+        
+        currDay = parseInt($(this).text(), 10);
     }
 
     function setToday(days) {
@@ -285,6 +283,14 @@
         if (today && isWeekday) {
             $(today).removeClass("today");
             $(today).addClass("selected");
+
+            today.click();
+        }
+        
+        if (currMonth === workMonth && currYear === workYear) {
+            $(".day", days).filter(function () {
+                return $(this).text() === workDay;
+            }).addClass('selected');
         }
     }
 
