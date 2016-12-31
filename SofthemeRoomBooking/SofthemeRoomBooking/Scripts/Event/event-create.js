@@ -56,16 +56,14 @@
     });
     
     initDateTime('word', null, $('#createButton'));
+    debugger;
+    var weekday = parseInt($('#datepicker').find('#current-month').data('day'), 10),
+        month = parseInt($('#datepicker').find('#current-month').data('month'), 10),
+        year = parseInt($('#datepicker').find('#current-month').data('year'), 10);
 
-    var weekday = parseInt($('#datepicker').find('.selected').text(), 10);
-    $('#Day').val(weekday);
-    $('#Month').val(new Date().getMonth());
-    $('#Year').val(new Date().getFullYear());
+    var startTime = new Date(year, month, weekday, 9);
+    var finishTime = new Date(year, month, weekday, 9);
 
-    $('#StartHour').val($('#event-timestart #hours').text());
-    $('#StartMinutes').val($('#event-timestart #minutes').text());
-    $('#EndHour').val($('#event-timefinish #hours').text());
-    $('#EndMinutes').val($('#event-timefinish #minutes').text());
-
+    setEventDateTime(startTime, finishTime);
     setDefaultEventSettings();
 });

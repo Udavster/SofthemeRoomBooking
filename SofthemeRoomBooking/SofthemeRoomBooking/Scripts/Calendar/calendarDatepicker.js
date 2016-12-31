@@ -90,17 +90,18 @@
 
         var calendar = this.initDatepickerStruct(currMonth, currYear);
 
-        backToTodayLabel(currMonth, currYear);
-        setToday(calendar.days);
-
         $(".day", calendar.days).bind("click", selectDay);
         $(".day", calendar.days).bind("click", this.changeDate);
 
         $("td.disabled .day", calendar.days).unbind("click", selectDay);
         $("td.disabled .day", calendar.days).unbind("click", this.changeDate);
 
+        backToTodayLabel(currMonth, currYear);
+        setToday(calendar.days);
+
         wrap.find("#datepicker-body").find("tbody").replaceWith(calendar.days);
         label.text(calendar.label);
+
     }.bind(this);
 
     this.switchDay = function (forward) {
@@ -271,6 +272,10 @@
         $(this).addClass("selected");
         
         currDay = parseInt($(this).text(), 10);
+        
+        $('#current-month').data('day', currDay).attr('data-day', currDay);
+        $('#current-month').data('month', currMonth).attr('data-month', currMonth);
+        $('#current-month').data('year', currYear).attr('data-year', currYear);
     }
 
     function setToday(days) {
@@ -289,8 +294,8 @@
         
         if (currMonth === workMonth && currYear === workYear) {
             $(".day", days).filter(function () {
-                return $(this).text() === workDay;
-            }).addClass('selected');
+                return $(this).text() === workDay.toString();
+            }).addClass('selected').click();
         }
     }
 
@@ -299,7 +304,7 @@
 			'<div id="datepicker-header">' +
 			'<span class="to-prev-month" id="to-prev-month"><i class="fa fa-caret-left" aria-hidden="true"></i></span>'
 			+
-			'<span class="current-month" id="current-month"></span>'
+			'<span class="current-month" id="current-month" data-day="" data-month="" data-year=""></span>'
 			+
 			'<span class="to-next-month" id="to-next-month"><i class="fa fa-caret-right" aria-hidden="true"></i></span>'
 			+
